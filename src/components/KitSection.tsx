@@ -72,24 +72,24 @@ const KitSection = () => {
               >
                 <div className="relative group isolate">
                   <div
-                    className="absolute inset-[-18%] rounded-full blur-[78px]"
+                    className="absolute left-1/2 top-1/2 h-[82%] w-[82%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[68px]"
                     style={{
                       background:
-                        "radial-gradient(circle, hsl(var(--gold) / 0.98) 0%, hsl(var(--gold) / 0.82) 25%, hsl(var(--primary) / 0.45) 52%, transparent 76%)",
+                        "radial-gradient(circle, hsl(var(--gold) / 0.92) 0%, hsl(var(--gold) / 0.62) 34%, hsl(var(--gold) / 0.24) 58%, transparent 78%)",
                     }}
                   />
                   <div
-                    className="absolute inset-x-[-8%] inset-y-[10%] rounded-[48%] blur-3xl"
+                    className="absolute left-1/2 top-1/2 h-[66%] w-[66%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[38px]"
                     style={{
                       background:
-                        "radial-gradient(circle, hsl(var(--gold) / 0.45) 0%, hsl(var(--gold) / 0.18) 48%, transparent 76%)",
+                        "radial-gradient(circle, hsl(var(--gold) / 0.72) 0%, hsl(var(--gold) / 0.28) 52%, transparent 76%)",
                       boxShadow:
-                        "0 0 110px hsl(var(--gold) / 0.38), inset 0 0 50px hsl(var(--gold) / 0.22)",
+                        "0 0 110px hsl(var(--gold) / 0.34)",
                     }}
                   />
                   <div
-                    className="absolute inset-x-[8%] bottom-[6%] top-[74%] rounded-full blur-3xl"
-                    style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.7) 0%, transparent 72%)" }}
+                    className="absolute left-1/2 top-[72%] h-[18%] w-[48%] -translate-x-1/2 rounded-full blur-[30px]"
+                    style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.56) 0%, transparent 72%)" }}
                   />
                   <img
                     src={item.image}
