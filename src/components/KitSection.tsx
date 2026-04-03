@@ -68,11 +68,12 @@ const KitSection = () => {
               >
                   <div className="relative group isolate">
                     <div
-                      className="absolute -inset-4 bottom-0 top-8 rounded-full opacity-90 blur-3xl"
-                      style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.45) 0%, hsl(var(--gold) / 0.3) 40%, transparent 75%)" }}
+                      className="absolute -inset-8 rounded-full blur-3xl"
+                      style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.6) 0%, hsl(var(--primary) / 0.4) 45%, transparent 70%)" }}
                     />
                     <div
-                      className="absolute -inset-x-2 bottom-0 h-20 rounded-full border border-primary/15 bg-primary/10 opacity-90 blur-2xl"
+                      className="absolute -inset-4 rounded-full blur-2xl"
+                      style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.35) 0%, transparent 65%)" }}
                     />
                     <img
                       src={item.image}
