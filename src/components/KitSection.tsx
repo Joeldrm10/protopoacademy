@@ -34,10 +34,11 @@ const KitSection = () => {
             {kitItems.map((item, i) => (
               <AnimateOnScroll key={item.name} delay={i * 150}>
                 <button
+                  type="button"
                   onClick={() => setSelectedItem(selectedItem === i ? null : i)}
                   className={`bg-card border rounded-lg px-8 py-6 flex items-center gap-4 transition-all duration-300 cursor-pointer ${
                     selectedItem === i
-                      ? "border-primary shadow-[0_0_20px_hsl(var(--primary)/0.3)] scale-105"
+                      ? "border-primary shadow-[0_0_24px_hsl(var(--gold)/0.4)] scale-105"
                       : "border-border hover:border-primary/40"
                   }`}
                 >
@@ -48,10 +49,11 @@ const KitSection = () => {
             ))}
           </div>
 
-          {/* Product Image Display */}
           <div
-            className="relative mt-12 flex justify-center overflow-hidden transition-all duration-500 ease-out"
-            style={{ height: selectedItem !== null ? "360px" : "0", opacity: selectedItem !== null ? 1 : 0 }}
+            className={`relative mt-12 flex justify-center transition-all duration-500 ease-out ${
+              selectedItem !== null ? "overflow-visible" : "overflow-hidden"
+            }`}
+            style={{ height: selectedItem !== null ? "430px" : "0", opacity: selectedItem !== null ? 1 : 0 }}
           >
             {kitItems.map((item, i) => (
               <div
@@ -59,30 +61,45 @@ const KitSection = () => {
                 className="absolute inset-0 flex flex-col items-center justify-center"
                 style={{
                   opacity: selectedItem === i ? 1 : 0,
-                  transform: selectedItem === i
-                    ? "scale(1) translateY(0)"
-                    : "scale(0.8) translateY(30px)",
-                  transition: "opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)",
+                  transform:
+                    selectedItem === i
+                      ? "scale(1) translateY(0)"
+                      : "scale(0.8) translateY(30px)",
+                  transition:
+                    "opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)",
                   pointerEvents: selectedItem === i ? "auto" : "none",
                 }}
               >
-                  <div className="relative group isolate">
-                    <div
-                      className="absolute -inset-8 rounded-full blur-3xl"
-                      style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.6) 0%, hsl(var(--primary) / 0.4) 45%, transparent 70%)" }}
-                    />
-                    <div
-                      className="absolute -inset-4 rounded-full blur-2xl"
-                      style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.35) 0%, transparent 65%)" }}
-                    />
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="relative z-10 w-64 h-72 md:w-80 md:h-80 object-contain drop-shadow-[0_24px_50px_hsl(var(--background)/0.85)] group-hover:scale-[1.04] group-hover:-translate-y-1 transition-transform duration-500"
+                <div className="relative group isolate">
+                  <div
+                    className="absolute inset-[-18%] rounded-full blur-[78px]"
+                    style={{
+                      background:
+                        "radial-gradient(circle, hsl(var(--gold) / 0.98) 0%, hsl(var(--gold) / 0.82) 25%, hsl(var(--primary) / 0.45) 52%, transparent 76%)",
+                    }}
+                  />
+                  <div
+                    className="absolute inset-x-[-8%] inset-y-[10%] rounded-[48%] blur-3xl"
+                    style={{
+                      background:
+                        "radial-gradient(circle, hsl(var(--gold) / 0.45) 0%, hsl(var(--gold) / 0.18) 48%, transparent 76%)",
+                      boxShadow:
+                        "0 0 110px hsl(var(--gold) / 0.38), inset 0 0 50px hsl(var(--gold) / 0.22)",
+                    }}
+                  />
+                  <div
+                    className="absolute inset-x-[8%] bottom-[6%] top-[74%] rounded-full blur-3xl"
+                    style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.7) 0%, transparent 72%)" }}
+                  />
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="relative z-10 w-80 h-80 md:w-[24rem] md:h-[24rem] object-contain drop-shadow-[0_24px_50px_hsl(var(--background)/0.95)] group-hover:scale-[1.05] group-hover:-translate-y-1 transition-transform duration-500"
                   />
                   <button
+                    type="button"
                     onClick={() => setSelectedItem(null)}
-                    className="absolute -top-2 -right-2 bg-card border border-border rounded-full p-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                    className="absolute -top-2 -right-2 z-20 bg-card border border-border rounded-full p-1.5 text-muted-foreground hover:text-foreground transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
