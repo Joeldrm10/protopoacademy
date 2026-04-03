@@ -66,15 +66,18 @@ const KitSection = () => {
                   pointerEvents: selectedItem === i ? "auto" : "none",
                 }}
               >
-                <div className="relative group">
+                <div className="relative group isolate">
                   <div
-                    className="absolute -inset-4 rounded-2xl opacity-50 blur-xl"
-                    style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.3), hsl(var(--gold) / 0.2))" }}
+                    className="absolute inset-x-6 bottom-2 top-14 rounded-full opacity-70 blur-3xl"
+                    style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.22) 0%, hsl(var(--gold) / 0.12) 45%, transparent 78%)" }}
+                  />
+                  <div
+                    className="absolute inset-x-10 bottom-0 h-16 rounded-full border border-primary/10 bg-card/20 opacity-80 blur-2xl"
                   />
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="relative w-52 h-64 md:w-64 md:h-72 object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                    className="relative z-10 w-52 h-64 md:w-64 md:h-72 object-contain drop-shadow-[0_24px_50px_hsl(var(--background)/0.85)] group-hover:scale-[1.04] group-hover:-translate-y-1 transition-transform duration-500"
                   />
                   <button
                     onClick={() => setSelectedItem(null)}
