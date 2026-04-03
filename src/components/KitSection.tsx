@@ -49,7 +49,10 @@ const KitSection = () => {
           </div>
 
           {/* Product Image Display */}
-          <div className="relative mt-12 flex justify-center" style={{ minHeight: selectedItem !== null ? "420px" : "0" }}>
+          <div
+            className="relative mt-12 flex justify-center overflow-hidden transition-all duration-500 ease-out"
+            style={{ height: selectedItem !== null ? "360px" : "0", opacity: selectedItem !== null ? 1 : 0 }}
+          >
             {kitItems.map((item, i) => (
               <div
                 key={item.name}
@@ -57,8 +60,8 @@ const KitSection = () => {
                 style={{
                   opacity: selectedItem === i ? 1 : 0,
                   transform: selectedItem === i
-                    ? "scale(1) rotateY(0deg)"
-                    : "scale(0.7) rotateY(90deg)",
+                    ? "scale(1) translateY(0)"
+                    : "scale(0.8) translateY(30px)",
                   transition: "opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)",
                   pointerEvents: selectedItem === i ? "auto" : "none",
                 }}
@@ -71,7 +74,7 @@ const KitSection = () => {
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="relative w-64 h-80 object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                    className="relative w-52 h-64 md:w-64 md:h-72 object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                   />
                   <button
                     onClick={() => setSelectedItem(null)}
@@ -80,7 +83,7 @@ const KitSection = () => {
                     <X className="w-4 h-4" />
                   </button>
                 </div>
-                <p className="mt-4 font-heading font-semibold text-foreground text-lg">{item.name}</p>
+                <p className="mt-3 font-heading font-semibold text-foreground text-lg">{item.name}</p>
               </div>
             ))}
           </div>
