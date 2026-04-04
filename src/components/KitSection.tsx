@@ -13,6 +13,17 @@ const kitItems = [
 
 const KitSection = () => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  const handleSelect = useCallback((i: number) => {
+    const isClosing = selectedItem === i;
+    setSelectedItem(isClosing ? null : i);
+    if (!isClosing) {
+      setTimeout(() => {
+        imageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, [selectedItem]);
 
   return (
     <section className="py-24 bg-secondary">
