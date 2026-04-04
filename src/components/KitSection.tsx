@@ -61,6 +61,7 @@ const KitSection = () => {
           </div>
 
           <div
+            ref={imageRef}
             className={`relative mt-12 flex justify-center transition-all duration-500 ease-out ${
               selectedItem !== null ? "overflow-visible" : "overflow-hidden"
             }`}
