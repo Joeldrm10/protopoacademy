@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Shirt, X } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import kitTshirt from "@/assets/kit-tshirt.png";
@@ -13,6 +13,17 @@ const kitItems = [
 
 const KitSection = () => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  const handleSelect = useCallback((i: number) => {
+    const isClosing = selectedItem === i;
+    setSelectedItem(isClosing ? null : i);
+    if (!isClosing) {
+      setTimeout(() => {
+        imageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, [selectedItem]);
 
   return (
     <section className="py-24 bg-secondary">
@@ -35,7 +46,7 @@ const KitSection = () => {
               <AnimateOnScroll key={item.name} delay={i * 150}>
                 <button
                   type="button"
-                  onClick={() => setSelectedItem(selectedItem === i ? null : i)}
+                  onClick={() => handleSelect(i)}
                   className={`bg-card border rounded-lg px-8 py-6 flex items-center gap-4 transition-all duration-300 cursor-pointer ${
                     selectedItem === i
                       ? "border-primary shadow-[0_0_24px_hsl(var(--gold)/0.4)] scale-105"
@@ -50,6 +61,7 @@ const KitSection = () => {
           </div>
 
           <div
+            ref={imageRef}
             className={`relative mt-12 flex justify-center transition-all duration-500 ease-out ${
               selectedItem !== null ? "overflow-visible" : "overflow-hidden"
             }`}
