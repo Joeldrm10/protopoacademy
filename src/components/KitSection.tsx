@@ -46,7 +46,7 @@ const KitSection = () => {
               <AnimateOnScroll key={item.name} delay={i * 150}>
                 <button
                   type="button"
-                  onClick={() => setSelectedItem(selectedItem === i ? null : i)}
+                  onClick={() => handleSelect(i)}
                   className={`bg-card border rounded-lg px-8 py-6 flex items-center gap-4 transition-all duration-300 cursor-pointer ${
                     selectedItem === i
                       ? "border-primary shadow-[0_0_24px_hsl(var(--gold)/0.4)] scale-105"
