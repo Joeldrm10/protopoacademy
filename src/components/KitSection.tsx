@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Shirt, X } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import kitTshirt from "@/assets/kit-tshirt.png";
