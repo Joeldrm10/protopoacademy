@@ -4,6 +4,7 @@ import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import TeamSection from "@/components/TeamSection";
 import CampSection from "@/components/CampSection";
+import GallerySection from "@/components/GallerySection";
 import KitSection from "@/components/KitSection";
 import LocationSection from "@/components/LocationSection";
 import FinalCTA from "@/components/FinalCTA";
