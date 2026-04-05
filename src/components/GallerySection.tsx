@@ -100,10 +100,18 @@ const GallerySection = () => {
         {/* Placeholder for group photo */}
         <AnimateOnScroll delay={200}>
           <div className="max-w-6xl mx-auto mt-4">
-            <div className="rounded-lg border-2 border-dashed border-border bg-card/50 h-[200px] md:h-[300px] flex items-center justify-center">
-              <p className="text-muted-foreground font-heading text-center px-4">
-                📷 Foto de grupo em breve — "Uma equipa unida, com o mesmo objetivo: evoluir."
-              </p>
+            <div className="relative overflow-hidden rounded-lg">
+              <img
+                src={galleryGroup}
+                alt="Foto de grupo ProTopo Academy"
+                loading="lazy"
+                className="w-full h-[200px] md:h-[300px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent flex items-end justify-center pb-6">
+                <p className="text-foreground font-heading font-semibold text-lg md:text-xl text-center px-4">
+                  Uma equipa unida, com o mesmo objetivo: evoluir.
+                </p>
+              </div>
             </div>
           </div>
         </AnimateOnScroll>
