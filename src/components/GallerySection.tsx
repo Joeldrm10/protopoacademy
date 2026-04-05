@@ -12,6 +12,7 @@ import galleryCoach from "@/assets/gallery-coach.jpg";
 import galleryCircle from "@/assets/gallery-circle.jpg";
 import galleryGk from "@/assets/gallery-gk.jpg";
 import galleryKids from "@/assets/gallery-kids.jpg";
+import galleryGroup from "@/assets/gallery-group.jpg";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
