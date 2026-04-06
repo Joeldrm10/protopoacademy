@@ -14,13 +14,13 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { label: "Sobre", href: "#sobre" },
-    { label: "Serviços", href: "#servicos" },
-    { label: "Football Camp", href: "#camp" },
+    { label: "Sobre Nós", href: "#sobre" },
+    { label: "O Que Oferecemos", href: "#servicos" },
+    { label: "Quem Somos", href: "#equipa" },
     { label: "Galeria", href: "#galeria" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Equipamento", href: "#equipamento" },
     { label: "Localização", href: "#localizacao" },
-    { label: "Contactos", href: "#contactos" },
+    { label: "FAQ", href: "#faq" },
   ];
 
   return (

@@ -26,7 +26,7 @@ const KitSection = () => {
   }, [selectedItem]);
 
   return (
-    <section className="py-24 bg-secondary">
+    <section id="equipamento" className="py-24 bg-secondary">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <AnimateOnScroll>
