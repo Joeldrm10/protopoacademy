@@ -5,14 +5,15 @@ import AnimateOnScroll from "./AnimateOnScroll";
 import galleryCover from "@/assets/gallery-cover.jpg";
 import galleryCones from "@/assets/gallery-cones.jpg";
 import gallery1v1 from "@/assets/gallery-1v1.jpg";
-import galleryHurdles from "@/assets/gallery-hurdles.jpg";
+import galleryHurdles from "@/assets/gallery-hurdles-new.jpg";
 import gallerySprint from "@/assets/gallery-sprint.jpg";
 import galleryField from "@/assets/gallery-field.jpg";
-import galleryCoach from "@/assets/gallery-coach.jpg";
+import galleryCoach from "@/assets/gallery-coach-new.jpg";
 import galleryCircle from "@/assets/gallery-circle.jpg";
 import galleryGk from "@/assets/gallery-gk.jpg";
-import galleryKids from "@/assets/gallery-kids.jpg";
-import galleryGroup from "@/assets/gallery-group.jpg";
+import galleryKids from "@/assets/gallery-kids-new.jpg";
+import galleryGroup from "@/assets/gallery-group-new.jpg";
+import galleryFootcamp from "@/assets/gallery-footcamp.jpg";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
@@ -32,10 +33,10 @@ const galleryItems: GalleryItem[] = [
   { src: galleryHurdles, alt: "Saltos com barreiras", category: "Intensidade & Performance", description: "Desenvolvimento físico, velocidade e resistência." },
   { src: gallerySprint, alt: "Sprint explosivo", category: "Intensidade & Performance", description: "Desenvolvimento físico, velocidade e resistência." },
   { src: galleryField, alt: "Jogo em campo inteiro", category: "Jogo Real", description: "Aplicação prática do treino em contexto real.", span: "md:col-span-2" },
-  { src: galleryCover, alt: "Situação de jogo", category: "Jogo Real", description: "Aplicação prática do treino em contexto real." },
+  { src: galleryFootcamp, alt: "Situação de jogo", category: "Jogo Real", description: "Aplicação prática do treino em contexto real." },
+  { src: galleryGk, alt: "Treino de guarda-redes", category: "Especialização", description: "Treino específico para todas as posições." },
   { src: galleryCoach, alt: "Treinador a orientar atletas", category: "Organização & Disciplina", description: "Estrutura, foco e acompanhamento constante." },
   { src: galleryCircle, alt: "Roda de equipa no campo", category: "Organização & Disciplina", description: "Estrutura, foco e acompanhamento constante.", span: "md:col-span-2" },
-  { src: galleryGk, alt: "Treino de guarda-redes", category: "Especialização", description: "Treino específico para todas as posições." },
 ];
 
 const GallerySection = () => {
