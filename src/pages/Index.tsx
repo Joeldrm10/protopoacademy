@@ -7,6 +7,7 @@ import CampSection from "@/components/CampSection";
 import GallerySection from "@/components/GallerySection";
 import KitSection from "@/components/KitSection";
 import LocationSection from "@/components/LocationSection";
+import FAQSection from "@/components/FAQSection";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
@@ -22,6 +23,7 @@ const Index = () => {
       <GallerySection />
       <KitSection />
       <LocationSection />
+      <FAQSection />
       <FinalCTA />
       <Footer />
     </div>
