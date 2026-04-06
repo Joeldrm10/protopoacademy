@@ -1,65 +1,20 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import heroBg from "@/assets/hero-bg.jpg";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
-const clips = [
-  "/videos/clip1.mp4",
-  "/videos/clip2.mp4",
-  "/videos/clip3.mp4",
-  "/videos/clip4.mp4",
-];
-
-const CLIP_DURATION = 1800; // ~1.8s per clip
-
 const HeroSection = () => {
-  const [currentClip, setCurrentClip] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const nextVideoRef = useRef<HTMLVideoElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-
-  const advanceClip = useCallback(() => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentClip((prev) => (prev + 1) % clips.length);
-      setIsTransitioning(false);
-    }, 400);
-  }, []);
-
-  useEffect(() => {
-    timeoutRef.current = setTimeout(advanceClip, CLIP_DURATION);
-    return () => clearTimeout(timeoutRef.current);
-  }, [currentClip, advanceClip]);
-
-  // Preload next clip
-  const nextClip = (currentClip + 1) % clips.length;
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Current video */}
+      {/* Background image */}
       <div className="absolute inset-0">
-        <video
-          ref={videoRef}
-          key={clips[currentClip]}
-          src={clips[currentClip]}
-          autoPlay
-          muted
-          playsInline
-          className="w-full h-full object-cover transition-opacity duration-500"
+        <img
+          src={heroBg}
+          alt="ProTopo Academy - Treino de futebol"
+          className="w-full h-full object-cover"
           style={{
-            opacity: isTransitioning ? 0 : 1,
             transform: "scale(1.05)",
             animation: "hero-zoom 8s ease-out infinite",
           }}
-        />
-        {/* Preload next */}
-        <video
-          ref={nextVideoRef}
-          src={clips[nextClip]}
-          muted
-          playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none"
         />
       </div>
 
