@@ -17,6 +17,8 @@ const Navbar = () => {
     { label: "Sobre", href: "#sobre" },
     { label: "Serviços", href: "#servicos" },
     { label: "Football Camp", href: "#camp" },
+    { label: "Galeria", href: "#galeria" },
+    { label: "FAQ", href: "#faq" },
     { label: "Localização", href: "#localizacao" },
     { label: "Contactos", href: "#contactos" },
   ];
