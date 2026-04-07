@@ -3,7 +3,7 @@ import AnimateOnScroll from "./AnimateOnScroll";
 
 const services = [
   { icon: Target, title: "Treinos personalizados", desc: "Planos ajustados ao perfil e objetivos de cada atleta." },
-  { icon: Users, title: "Acompanhamento individual", desc: "Atenção dedicada para maximizar o teu potencial." },
+  { icon: Users, title: "Acompanhamento de perto", desc: "Atenção dedicada para maximizar o teu potencial." },
   { icon: TrendingUp, title: "Evolução contínua", desc: "Metodologia focada no progresso constante." },
   { icon: Dumbbell, title: "Desenvolvimento técnico e físico", desc: "Trabalho completo para um atleta completo." },
   { icon: Trophy, title: "Performance em jogo", desc: "Melhoria direta no teu rendimento competitivo." },
