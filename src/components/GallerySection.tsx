@@ -26,7 +26,7 @@ interface GalleryItem {
 }
 
 const galleryItems: GalleryItem[] = [
-  { src: galleryCover, alt: "ProTopo Footcamp", category: "Capa", description: "A experiência ProTopo começa aqui.", span: "md:col-span-2 md:row-span-2" },
+  { src: galleryCover, alt: "ProTopo Footcamp", category: "Capa", description: "A experiência ProTopo começa aqui.", span: "md:col-span-2" },
   { src: galleryCones, alt: "Exercício com cones", category: "Treino Técnico", description: "Foco no detalhe e evolução técnica de cada atleta." },
   { src: gallery1v1, alt: "Treino individual", category: "Treino Técnico", description: "Foco no detalhe e evolução técnica de cada atleta." },
   { src: galleryKids, alt: "Exercício técnico com bola", category: "Treino Técnico", description: "Foco no detalhe e evolução técnica de cada atleta.", span: "md:col-span-2" },
