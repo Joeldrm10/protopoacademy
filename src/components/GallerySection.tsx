@@ -30,7 +30,7 @@ const galleryItems: GalleryItem[] = [
   // 1. Treino & Ação
   { src: galleryCover, alt: "ProTopo Footcamp — início do treino", category: "Treino & Ação", description: "Tudo começa com preparação, foco e disciplina.", span: "md:col-span-2" },
   { src: galleryCones, alt: "Exercício com cones", category: "Treino & Ação", description: "Coordenação, agilidade e domínio de bola desde o primeiro minuto." },
-  { src: gallery1v1, alt: "Exercício técnico individual", category: "Treino & Ação", description: "Trabalho técnico individualizado para cada atleta." },
+  { src: gallery1v1, alt: "Exercício técnico individual", category: "Treino & Ação", description: "Trabalho técnico para cada atleta." },
   { src: galleryHurdles, alt: "Saltos com barreiras", category: "Treino & Ação", description: "Velocidade, explosão e superação de limites." },
   { src: gallerySprint, alt: "Sprint explosivo", category: "Treino & Ação", description: "Treino de alta intensidade para ganhar vantagem em campo.", span: "md:col-span-2" },
   { src: galleryField, alt: "Jogo em campo inteiro", category: "Treino & Ação", description: "Aplicação prática do treino em contexto real de jogo." },
@@ -42,7 +42,7 @@ const galleryItems: GalleryItem[] = [
   { src: galleryTalk, alt: "Treinador a conversar com atletas", category: "Acompanhamento", description: "Comunicação, liderança e transmissão de valores." },
 
   // 3. Espírito de Grupo (todas as fotos de grupo juntas, melhor foto no final)
-  { src: galleryFootcamp, alt: "Reunião de equipa no campo", category: "Espírito de Grupo", description: "Momento de união e conversa entre atletas e treinadores no final do treino." },
+  { src: galleryFootcamp, alt: "Reunião de equipa no campo", category: "Espírito de Grupo", description: "Momento de união e conversa entre atletas e treinadores no final e ínicio do treino." },
   { src: galleryCircle, alt: "Roda de equipa no campo", category: "Espírito de Grupo", description: "Juntos somos mais fortes — o espírito de equipa em cada treino.", span: "md:col-span-2" },
 ];
 
