@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     question: "O que é necessário levar para o treino?",
-    answer: "Os atletas devem levar equipamento desportivo adequado, chuteiras, caneleiras, água e vontade de trabalhar. Sempre que necessário, a academia poderá dar indicações adicionais antes de atividades ou eventos específicos.",
+    answer: "Os atletas devem levar equipamento desportivo adequado, chuteiras e vontade de trabalhar. Sempre que necessário, a academia poderá dar indicações adicionais antes de atividades ou eventos específicos.",
   },
   {
     question: "Como funciona a inscrição?",
