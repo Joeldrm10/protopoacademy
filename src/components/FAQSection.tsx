@@ -31,7 +31,7 @@ const faqs = [
     answer: "Sim. Os treinos são organizados tendo em conta a idade, o nível e as necessidades dos atletas, para garantir um acompanhamento adequado e uma evolução progressiva.",
   },
   {
-    question: "Há acompanhamento individual?",
+    question: "Há acompanhamento de perto?",
     answer: "Sim. A ProTopo Academy valoriza o acompanhamento próximo de cada atleta, procurando desenvolver as suas capacidades técnicas, físicas e competitivas de forma personalizada.",
   },
   {
