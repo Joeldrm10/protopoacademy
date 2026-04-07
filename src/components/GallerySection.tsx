@@ -37,7 +37,7 @@ const galleryItems: GalleryItem[] = [
   { src: galleryHurdles, alt: "Saltos com barreiras", category: "Intensidade & Ação", description: "Velocidade, explosão e superação de limites." },
   { src: gallerySprint, alt: "Sprint explosivo", category: "Intensidade & Ação", description: "Treino de alta intensidade para ganhar vantagem em campo." },
   { src: galleryField, alt: "Jogo em campo inteiro", category: "Intensidade & Ação", description: "Aplicação prática do treino em contexto real de jogo.", span: "md:col-span-2" },
-  { src: galleryFootcamp, alt: "Situação de jogo real", category: "Intensidade & Ação", description: "Momentos de competição que preparam para o próximo nível." },
+  { src: galleryFootcamp, alt: "Reunião de equipa no campo", category: "Espírito de Grupo", description: "Momento de união e conversa entre atletas e treinadores no final do treino." },
   { src: galleryGk, alt: "Treino de guarda-redes", category: "Intensidade & Ação", description: "Treino específico para todas as posições, incluindo guarda-redes." },
 
   // 3. Acompanhamento — Treinadores
