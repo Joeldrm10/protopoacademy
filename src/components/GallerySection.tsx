@@ -14,6 +14,7 @@ import galleryGk from "@/assets/gallery-gk.jpg";
 import galleryKids from "@/assets/gallery-kids-new.jpg";
 import galleryGroup from "@/assets/gallery-group-new.jpg";
 import galleryFootcamp from "@/assets/gallery-footcamp.jpg";
+import galleryTalk from "@/assets/gallery-talk.jpg";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
