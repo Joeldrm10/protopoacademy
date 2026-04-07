@@ -52,8 +52,8 @@ const Footer = () => {
         <div className="border-t border-border" />
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6">
-          <p className="text-muted-foreground text-xs">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-center">
+          <p className="text-muted-foreground text-xs text-left">
             © {new Date().getFullYear()} ProTopo Academy. Todos os direitos reservados.
           </p>
 
