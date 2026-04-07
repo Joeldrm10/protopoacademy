@@ -27,18 +27,25 @@ interface GalleryItem {
 }
 
 const galleryItems: GalleryItem[] = [
-  { src: galleryCover, alt: "ProTopo Footcamp", category: "Capa", description: "A experiência ProTopo começa aqui.", span: "md:col-span-2" },
-  { src: galleryCones, alt: "Exercício com cones", category: "Treino Técnico", description: "Foco no detalhe e evolução técnica de cada atleta." },
-  { src: gallery1v1, alt: "Treino individual", category: "Treino Técnico", description: "Foco no detalhe e evolução técnica de cada atleta." },
-  { src: galleryKids, alt: "Exercício técnico com bola", category: "Treino Técnico", description: "Foco no detalhe e evolução técnica de cada atleta.", span: "md:col-span-2" },
-  { src: galleryHurdles, alt: "Saltos com barreiras", category: "Intensidade & Performance", description: "Desenvolvimento físico, velocidade e resistência." },
-  { src: gallerySprint, alt: "Sprint explosivo", category: "Intensidade & Performance", description: "Desenvolvimento físico, velocidade e resistência." },
-  { src: galleryField, alt: "Jogo em campo inteiro", category: "Jogo Real", description: "Aplicação prática do treino em contexto real.", span: "md:col-span-2" },
-  { src: galleryFootcamp, alt: "Situação de jogo", category: "Jogo Real", description: "Aplicação prática do treino em contexto real." },
-  { src: galleryGk, alt: "Treino de guarda-redes", category: "Especialização", description: "Treino específico para todas as posições." },
-  { src: galleryCoach, alt: "Treinador a orientar atletas", category: "Organização & Disciplina", description: "Estrutura, foco e acompanhamento constante." },
-  { src: galleryTalk, alt: "Treinador a falar com atletas", category: "Organização & Disciplina", description: "Estrutura, foco e acompanhamento constante." },
-  { src: galleryCircle, alt: "Roda de equipa no campo", category: "Organização & Disciplina", description: "Estrutura, foco e acompanhamento constante.", span: "md:col-span-2" },
+  // 1. Início — Aquecimento & Técnica
+  { src: galleryCover, alt: "ProTopo Footcamp — início do treino", category: "Aquecimento & Técnica", description: "Tudo começa com preparação, foco e disciplina.", span: "md:col-span-2" },
+  { src: galleryCones, alt: "Exercício com cones", category: "Aquecimento & Técnica", description: "Coordenação, agilidade e domínio de bola desde o primeiro minuto." },
+  { src: gallery1v1, alt: "Exercício técnico individual", category: "Aquecimento & Técnica", description: "Trabalho técnico individualizado para cada atleta." },
+  { src: galleryKids, alt: "Exercício técnico com bola", category: "Aquecimento & Técnica", description: "Exercícios pensados para desenvolver confiança com bola.", span: "md:col-span-2" },
+
+  // 2. Meio — Intensidade & Ação
+  { src: galleryHurdles, alt: "Saltos com barreiras", category: "Intensidade & Ação", description: "Velocidade, explosão e superação de limites." },
+  { src: gallerySprint, alt: "Sprint explosivo", category: "Intensidade & Ação", description: "Treino de alta intensidade para ganhar vantagem em campo." },
+  { src: galleryField, alt: "Jogo em campo inteiro", category: "Intensidade & Ação", description: "Aplicação prática do treino em contexto real de jogo.", span: "md:col-span-2" },
+  { src: galleryFootcamp, alt: "Situação de jogo real", category: "Intensidade & Ação", description: "Momentos de competição que preparam para o próximo nível." },
+  { src: galleryGk, alt: "Treino de guarda-redes", category: "Intensidade & Ação", description: "Treino específico para todas as posições, incluindo guarda-redes." },
+
+  // 3. Acompanhamento — Treinadores
+  { src: galleryCoach, alt: "Treinador a orientar atletas", category: "Acompanhamento", description: "Orientação constante, com feedback individual e coletivo." },
+  { src: galleryTalk, alt: "Treinador a conversar com atletas", category: "Acompanhamento", description: "Comunicação, liderança e transmissão de valores." },
+
+  // 4. Final — Espírito de Grupo
+  { src: galleryCircle, alt: "Roda de equipa no campo", category: "Espírito de Grupo", description: "Juntos somos mais fortes — o espírito de equipa em cada treino.", span: "md:col-span-2" },
 ];
 
 const GallerySection = () => {
