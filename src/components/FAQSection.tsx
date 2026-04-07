@@ -36,7 +36,7 @@ const faqs = [
   },
   {
     question: "Como posso obter mais informações?",
-    answer: "Os pais podem entrar em contacto com a ProTopo Academy através do Instagram ou do formulário de inscrição disponível no site.",
+    answer: "Os pais podem entrar em contacto com a ProTopo Academy através do Instagram ou do nosso email.",
   },
 ];
 
