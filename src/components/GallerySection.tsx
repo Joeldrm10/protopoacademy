@@ -41,7 +41,7 @@ const galleryItems: GalleryItem[] = [
   { src: galleryGk, alt: "Treino de guarda-redes", category: "Intensidade & Ação", description: "Treino específico para todas as posições, incluindo guarda-redes." },
 
   // 3. Acompanhamento — Treinadores
-  { src: galleryCoach, alt: "Treinador a orientar atletas", category: "Acompanhamento", description: "Orientação constante, com feedback individual e coletivo." },
+  { src: galleryCoach, alt: "Treino individual com treinador", category: "Acompanhamento", description: "Acompanhamento próximo em exercícios de 1v1 e técnica com bola." },
   { src: galleryTalk, alt: "Treinador a conversar com atletas", category: "Acompanhamento", description: "Comunicação, liderança e transmissão de valores." },
 
   // 4. Final — Espírito de Grupo
