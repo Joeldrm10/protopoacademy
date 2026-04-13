@@ -65,6 +65,10 @@ const Galeria = () => {
     setLightbox((lightbox + dir + filtered.length) % filtered.length);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
