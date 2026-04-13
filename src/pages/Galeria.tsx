@@ -16,6 +16,10 @@ import galleryKids from "@/assets/gallery-kids-new.jpg";
 import galleryGroup from "@/assets/gallery-group-new.jpg";
 import galleryFootcamp from "@/assets/gallery-footcamp.jpg";
 import galleryTalk from "@/assets/gallery-talk.jpg";
+import galleryResistance from "@/assets/gallery-resistance.png";
+import galleryCoachKid from "@/assets/gallery-coach-kid.png";
+import galleryCoachDrill from "@/assets/gallery-coach-drill.png";
+import galleryTeamFull from "@/assets/gallery-team-full.png";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
@@ -31,6 +35,7 @@ const galleryItems: GalleryItem[] = [
   // Treino & Ação
   { src: galleryCover, alt: "ProTopo Footcamp — início do treino", category: "Treino & Ação", description: "Tudo começa com preparação, foco e disciplina.", span: "md:col-span-2" },
   { src: gallerySprint, alt: "Sprint explosivo", category: "Treino & Ação", description: "Treino de alta intensidade para ganhar vantagem em campo.", span: "md:col-span-2" },
+  { src: galleryResistance, alt: "Treino de resistência com elástico", category: "Treino & Ação", description: "Exercícios de resistência para ganhar força e explosão." },
   { src: galleryField, alt: "Jogo em campo inteiro", category: "Treino & Ação", description: "Aplicação prática do treino em contexto real de jogo." },
   { src: galleryGk, alt: "Treino de guarda-redes", category: "Treino & Ação", description: "Treino específico para todas as posições, incluindo guarda-redes." },
 
@@ -40,6 +45,8 @@ const galleryItems: GalleryItem[] = [
   { src: galleryHurdles, alt: "Saltos com barreiras", category: "Exercícios", description: "Velocidade, explosão e superação de limites." },
   { src: galleryKids, alt: "Exercício técnico com bola", category: "Exercícios", description: "Exercícios pensados para desenvolver confiança com bola.", span: "md:col-span-2" },
   { src: galleryCoach, alt: "Treino individual com treinador", category: "Exercícios", description: "Acompanhamento próximo em exercícios de 1v1 e técnica com bola." },
+  { src: galleryCoachKid, alt: "Treinador a orientar jovem atleta", category: "Exercícios", description: "Orientação individual para desenvolver confiança e técnica." },
+  { src: galleryCoachDrill, alt: "Treinador em exercício com atletas", category: "Exercícios", description: "Trabalho próximo com os atletas em contexto de jogo." },
   { src: galleryTalk, alt: "Treinador a conversar com atletas", category: "Exercícios", description: "Comunicação, liderança e transmissão de valores." },
 
   // Momentos de Grupo

@@ -15,6 +15,10 @@ import galleryKids from "@/assets/gallery-kids-new.jpg";
 import galleryGroup from "@/assets/gallery-group-new.jpg";
 import galleryFootcamp from "@/assets/gallery-footcamp.jpg";
 import galleryTalk from "@/assets/gallery-talk.jpg";
+import galleryResistance from "@/assets/gallery-resistance.png";
+import galleryCoachKid from "@/assets/gallery-coach-kid.png";
+import galleryCoachDrill from "@/assets/gallery-coach-drill.png";
+import galleryTeamFull from "@/assets/gallery-team-full.png";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
@@ -32,6 +36,7 @@ const galleryItems: GalleryItem[] = [
   { src: galleryCones, alt: "Exercício com cones", category: "Treino & Ação", description: "Coordenação, agilidade e domínio de bola desde o primeiro minuto." },
   { src: gallery1v1, alt: "Exercício técnico individual", category: "Treino & Ação", description: "Trabalho técnico para cada atleta." },
   { src: galleryHurdles, alt: "Saltos com barreiras", category: "Treino & Ação", description: "Velocidade, explosão e superação de limites." },
+  { src: galleryResistance, alt: "Treino de resistência com elástico", category: "Treino & Ação", description: "Exercícios de resistência para ganhar força e explosão.", span: "md:col-span-2" },
   { src: gallerySprint, alt: "Sprint explosivo", category: "Treino & Ação", description: "Treino de alta intensidade para ganhar vantagem em campo.", span: "md:col-span-2" },
   { src: galleryField, alt: "Jogo em campo inteiro", category: "Treino & Ação", description: "Aplicação prática do treino em contexto real de jogo." },
   { src: galleryGk, alt: "Treino de guarda-redes", category: "Treino & Ação", description: "Treino específico para todas as posições, incluindo guarda-redes." },
@@ -39,10 +44,12 @@ const galleryItems: GalleryItem[] = [
 
   // 2. Acompanhamento — Treinadores
   { src: galleryCoach, alt: "Treino individual com treinador", category: "Acompanhamento", description: "Acompanhamento próximo em exercícios de 1v1 e técnica com bola." },
+  { src: galleryCoachKid, alt: "Treinador a orientar jovem atleta", category: "Acompanhamento", description: "Orientação individual para desenvolver confiança e técnica." },
+  { src: galleryCoachDrill, alt: "Treinador em exercício com atletas", category: "Acompanhamento", description: "Trabalho próximo com os atletas em contexto de jogo." },
   { src: galleryTalk, alt: "Treinador a conversar com atletas", category: "Acompanhamento", description: "Comunicação, liderança e transmissão de valores." },
 
-  // 3. Espírito de Grupo (todas as fotos de grupo juntas, melhor foto no final)
-  { src: galleryFootcamp, alt: "Reunião de equipa no campo", category: "Espírito de Grupo", description: "Momento de união e conversa entre atletas e treinadores no final e ínicio do treino." },
+  // 3. Espírito de Grupo
+  { src: galleryFootcamp, alt: "Reunião de equipa no campo", category: "Espírito de Grupo", description: "Momento de união e conversa entre atletas e treinadores no final e início do treino." },
   { src: galleryCircle, alt: "Roda de equipa no campo", category: "Espírito de Grupo", description: "Juntos somos mais fortes — o espírito de equipa em cada treino.", span: "md:col-span-2" },
 ];
 
