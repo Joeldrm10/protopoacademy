@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import teamFinalBg from "@/assets/team-final-cta.png";
 
@@ -7,9 +8,7 @@ const FinalCTA = () => {
   return (
     <section className="relative w-full overflow-hidden">
       {/* Background image with cinematic zoom */}
-      <div
-        className="absolute inset-0 animate-[hero-zoom_20s_ease-in-out_infinite_alternate]"
-      >
+      <div className="absolute inset-0 animate-[hero-zoom_20s_ease-in-out_infinite_alternate]">
         <img
           src={teamFinalBg}
           alt="Equipa completa ProTopo Academy"
@@ -18,26 +17,27 @@ const FinalCTA = () => {
       </div>
 
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-background/[0.55]" />
+      <div className="absolute inset-0 bg-background/60" />
 
       {/* Content */}
-      <div className="relative z-10 py-28 md:py-40 px-4">
+      <div className="relative z-10 py-32 md:py-44 px-4">
         <AnimateOnScroll>
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl mb-4 text-foreground leading-tight">
+            <h2 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl mb-6 text-foreground leading-tight">
               Forma mais do que jogadores.{" "}
               <span className="text-gradient-gold">Forma uma equipa.</span>
             </h2>
-            <p className="text-muted-foreground text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
               Treino, disciplina e evolução num ambiente profissional e motivador.
             </p>
             <a
               href={SIGNUP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-gradient-gold text-primary-foreground px-10 py-4 rounded-md font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-12 py-5 rounded-lg font-heading font-bold text-xl uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl"
             >
-              👉 Inscrever agora
+              Inscrever agora
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
         </AnimateOnScroll>

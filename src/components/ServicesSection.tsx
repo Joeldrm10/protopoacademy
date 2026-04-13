@@ -1,34 +1,105 @@
-import { Target, Users, TrendingUp, Dumbbell, Trophy } from "lucide-react";
+import { User, Users, CheckCircle, ArrowRight } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 
+const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
+
 const services = [
-  { icon: Target, title: "Treinos personalizados", desc: "Planos ajustados ao perfil e objetivos de cada atleta." },
-  { icon: Users, title: "Acompanhamento de perto", desc: "Atenção dedicada para maximizar o teu potencial." },
-  { icon: TrendingUp, title: "Evolução contínua", desc: "Metodologia focada no progresso constante." },
-  { icon: Dumbbell, title: "Desenvolvimento técnico e físico", desc: "Trabalho completo para um atleta completo." },
-  { icon: Trophy, title: "Performance em jogo", desc: "Melhoria direta no teu rendimento competitivo." },
+  {
+    icon: User,
+    title: "Treinos Individuais",
+    description: "Foco total no atleta, com treino personalizado para evolução técnica e física ao máximo nível.",
+    benefits: [
+      "Plano 100% adaptado ao atleta",
+      "Atenção exclusiva do treinador",
+      "Evolução técnica acelerada",
+      "Análise detalhada do desempenho",
+    ],
+    featured: true,
+  },
+  {
+    icon: Users,
+    title: "Treinos em Pequenos Grupos",
+    description: "Treino competitivo e dinâmico com poucos atletas, mantendo atenção individual e espírito de equipa.",
+    benefits: [
+      "Máximo 6 atletas por grupo",
+      "Competitividade saudável",
+      "Exercícios dinâmicos de grupo",
+      "Desenvolvimento do jogo coletivo",
+    ],
+    featured: false,
+  },
 ];
 
 const ServicesSection = () => {
   return (
-    <section id="servicos" className="py-24 bg-secondary">
-      <div className="container mx-auto px-4">
+    <section id="servicos" className="py-28 bg-secondary relative overflow-hidden">
+      {/* Glow */}
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
         <AnimateOnScroll className="text-center mb-16">
-          <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-            O que oferecemos
-          </p>
-          <h2 className="font-heading font-bold text-3xl md:text-5xl">
-            Serviços <span className="text-gradient-gold">ProTopo</span>
+          <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
+            Serviços
+          </span>
+          <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+            Tipos de <span className="text-gradient-gold">Treino</span>
           </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Escolhe o formato que melhor se adapta aos teus objetivos e começa a evoluir.
+          </p>
         </AnimateOnScroll>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
           {services.map((service, i) => (
-            <AnimateOnScroll key={service.title} delay={i * 100}>
-              <div className="bg-card border border-border rounded-lg p-8 hover:border-primary/40 transition-all duration-300 group h-full">
-                <service.icon className="w-10 h-10 text-primary mb-5 group-hover:scale-110 transition-transform" />
-                <h3 className="font-heading font-bold text-lg mb-3 text-foreground">{service.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{service.desc}</p>
+            <AnimateOnScroll key={service.title} delay={i * 150}>
+              <div
+                className={`relative rounded-2xl border p-8 md:p-10 h-full flex flex-col transition-all duration-300 group hover:shadow-2xl ${
+                  service.featured
+                    ? "border-primary/40 bg-card shadow-[0_0_40px_hsl(var(--gold)/0.08)]"
+                    : "border-border bg-card hover:border-primary/30"
+                }`}
+              >
+                {service.featured && (
+                  <span className="absolute -top-3 left-8 bg-gradient-gold text-primary-foreground px-4 py-1 rounded-full text-xs font-heading font-bold uppercase tracking-wider">
+                    Mais popular
+                  </span>
+                )}
+
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
+                    service.featured ? "bg-primary/20" : "bg-primary/10"
+                  }`}>
+                    <service.icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="font-heading font-bold text-2xl text-foreground">{service.title}</h3>
+                </div>
+
+                <p className="text-muted-foreground text-base leading-relaxed mb-8">
+                  {service.description}
+                </p>
+
+                <ul className="space-y-3 mb-10 flex-1">
+                  {service.benefits.map((benefit) => (
+                    <li key={benefit} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground text-sm">{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group/btn inline-flex items-center justify-center gap-2 w-full py-4 rounded-lg font-heading font-bold uppercase tracking-wider transition-all duration-300 text-base ${
+                    service.featured
+                      ? "bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-lg"
+                      : "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                  }`}
+                >
+                  Marcar treino
+                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                </a>
               </div>
             </AnimateOnScroll>
           ))}

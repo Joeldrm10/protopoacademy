@@ -1,4 +1,4 @@
-import { Instagram } from "lucide-react";
+import { Instagram, ArrowRight } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import {
   Accordion,
@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     question: "E se chover?",
-    answer: "Em caso de condições meteorológicas adversas, a situação será avaliada pela equipa da academia. Sempre que necessário, os encarregados de educação serão informados atempadamente sobre qualquer alteração, adiamento ou ajuste da atividade.",
+    answer: "Em caso de condições meteorológicas adversas, a situação será avaliada pela equipa da academia. Sempre que necessário, os encarregados de educação serão informados atempadamente sobre qualquer alteração.",
   },
   {
     question: "Os treinos são adaptados à idade dos atletas?",
@@ -42,18 +42,20 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <section id="faq" className="py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="faq" className="py-28 bg-background relative overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
         <AnimateOnScroll>
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-              ❓ FAQ
-            </p>
+            <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
+              FAQ
+            </span>
             <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
               Perguntas <span className="text-gradient-gold">Frequentes</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              Esclarecemos aqui algumas das dúvidas mais comuns dos pais sobre os treinos da ProTopo Academy.
+              Esclarecemos aqui algumas das dúvidas mais comuns dos pais sobre os treinos.
             </p>
           </div>
         </AnimateOnScroll>
@@ -65,12 +67,12 @@ const FAQSection = () => {
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
-                  className="border border-border rounded-lg bg-card px-6 overflow-hidden"
+                  className="border border-border rounded-xl bg-card px-6 overflow-hidden data-[state=open]:border-primary/30 transition-colors"
                 >
                   <AccordionTrigger className="text-left text-base md:text-lg font-heading font-semibold hover:no-underline hover:text-primary transition-colors py-5">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-base leading-relaxed">
+                  <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-5">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -82,22 +84,23 @@ const FAQSection = () => {
         <AnimateOnScroll delay={200}>
           <div className="text-center mt-16">
             <p className="text-muted-foreground text-lg mb-8">
-              Ainda tens dúvidas? Entra em contacto connosco e teremos todo o gosto em ajudar.
+              Ainda tens dúvidas? Entra em contacto connosco.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
                 href={SIGNUP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-gradient-gold text-primary-foreground px-8 py-4 rounded-md font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                👉 Inscrever agora
+                Inscrever agora
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
                 href="https://www.instagram.com/protopo_academy/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-md font-heading font-bold uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-all duration-300"
               >
                 <Instagram className="w-5 h-5" />
                 Instagram
