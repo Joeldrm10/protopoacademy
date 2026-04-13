@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { CalendarIcon, Clock, Send } from "lucide-react";
+import { CalendarIcon, Clock, Send, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { z } from "zod";
@@ -53,6 +55,7 @@ type BookingData = z.infer<typeof bookingSchema>;
 
 const BookingForm = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<BookingData>({
     resolver: zodResolver(bookingSchema),
@@ -63,24 +66,49 @@ const BookingForm = () => {
     },
   });
 
-  const onSubmit = (data: BookingData) => {
-    const tipoLabel = data.tipo === "individual" ? "Individual" : "Pequeno Grupo";
-    const dataFormatada = format(data.data, "dd/MM/yyyy", { locale: pt });
+  const onSubmit = async (data: BookingData) => {
+    setLoading(true);
+    try {
+      const dataFormatada = format(data.data, "yyyy-MM-dd");
 
-    const parts = [
-      `Olá, gostaria de marcar um treino com os seguintes dados:`,
-      ``,
-      `Nome: ${data.nome}`,
-      `Idade: ${data.idade}`,
-      `Tipo de treino: ${tipoLabel}`,
-      `Data: ${dataFormatada}`,
-      `Hora: ${data.hora}`,
-    ];
+      const { error } = await supabase.from("marcacoes").insert({
+        nome: data.nome,
+        idade: data.idade,
+        telemovel: data.telemovel,
+        tipo: data.tipo,
+        data: dataFormatada,
+        hora: data.hora,
+      });
 
-    const message = encodeURIComponent(parts.join("\n"));
+      if (error) {
+        console.error("Erro ao guardar marcação:", error);
+        toast({ title: "Erro", description: "Não foi possível guardar a marcação. Tenta novamente.", variant: "destructive" });
+        setLoading(false);
+        return;
+      }
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
-    setSubmitted(true);
+      const tipoLabel = data.tipo === "individual" ? "Individual" : "Pequeno Grupo";
+      const dataDisplay = format(data.data, "dd/MM/yyyy", { locale: pt });
+
+      const parts = [
+        `Olá, gostaria de marcar um treino com os seguintes dados:`,
+        ``,
+        `Nome: ${data.nome}`,
+        `Idade: ${data.idade}`,
+        `Tipo de treino: ${tipoLabel}`,
+        `Data: ${dataDisplay}`,
+        `Hora: ${data.hora}`,
+      ];
+
+      const message = encodeURIComponent(parts.join("\n"));
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Erro inesperado:", err);
+      toast({ title: "Erro", description: "Ocorreu um erro inesperado.", variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -288,9 +316,9 @@ const BookingForm = () => {
                   />
                 </div>
 
-                <Button type="submit" variant="hero" size="lg" className="w-full py-5 text-base">
-                  <Send className="w-5 h-5 mr-2" />
-                  Enviar por WhatsApp
+                <Button type="submit" variant="hero" size="lg" className="w-full py-5 text-base" disabled={loading}>
+                  {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
+                  {loading ? "A enviar..." : "Enviar por WhatsApp"}
                 </Button>
               </form>
             </Form>
