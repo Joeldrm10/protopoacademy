@@ -43,7 +43,7 @@ const HeroSection = () => {
               className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               style={{ animation: "pulse-gold 2s infinite" }}
             >
-              Inscreve-te já
+              Inscrever agora
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
