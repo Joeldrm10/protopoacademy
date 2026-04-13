@@ -67,16 +67,17 @@ const BookingForm = () => {
     const tipoLabel = data.tipo === "individual" ? "Individual" : "Pequeno Grupo";
     const dataFormatada = format(data.data, "dd/MM/yyyy", { locale: pt });
 
-    const message = [
-      `Olá! Quero marcar um treino:`,
+    const parts = [
+      `Olá, gostaria de marcar um treino com os seguintes dados:`,
       ``,
-      `*Nome:* ${encodeURIComponent(data.nome)}`,
-      `*Idade:* ${encodeURIComponent(data.idade)}`,
-      `*Telemóvel:* ${encodeURIComponent(data.telemovel)}`,
-      `*Tipo:* ${encodeURIComponent(tipoLabel)}`,
-      `*Data:* ${encodeURIComponent(dataFormatada)}`,
-      `*Hora:* ${encodeURIComponent(data.hora)}`,
-    ].join("%0A");
+      `Nome: ${data.nome}`,
+      `Idade: ${data.idade}`,
+      `Tipo de treino: ${tipoLabel}`,
+      `Data: ${dataFormatada}`,
+      `Hora: ${data.hora}`,
+    ];
+
+    const message = encodeURIComponent(parts.join("\n"));
 
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
     setSubmitted(true);
