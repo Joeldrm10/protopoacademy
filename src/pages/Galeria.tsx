@@ -55,7 +55,7 @@ const galleryItems: GalleryItem[] = [
 
   // Equipa
   { src: galleryCircle, alt: "Roda de equipa no campo", category: "Equipa", description: "Juntos somos mais fortes — o espírito de equipa.", span: "col-span-2" },
-  { src: galleryGroup, alt: "Foto de grupo ProTopo", category: "Equipa", description: "A equipa ProTopo Academy reunida." },
+  
   { src: galleryTeamFull, alt: "Foto de grupo completa ProTopo Academy", category: "Equipa", description: "Uma equipa unida, com o mesmo objetivo: evoluir.", span: "col-span-3" },
 ];
 
