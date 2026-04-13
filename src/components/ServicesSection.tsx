@@ -88,9 +88,7 @@ const ServicesSection = () => {
                 </ul>
 
                 <a
-                  href={SIGNUP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#marcacao"
                   className={`group/btn inline-flex items-center justify-center gap-2 w-full py-4 rounded-lg font-heading font-bold uppercase tracking-wider transition-all duration-300 text-base ${
                     service.featured
                       ? "bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-lg"
