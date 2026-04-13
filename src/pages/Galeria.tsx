@@ -13,7 +13,7 @@ import galleryCoach from "@/assets/gallery-coach-new.jpg";
 import galleryCircle from "@/assets/gallery-circle.jpg";
 import galleryGk from "@/assets/gallery-gk.jpg";
 import galleryKids from "@/assets/gallery-kids-new.jpg";
-import galleryGroup from "@/assets/gallery-group-new.jpg";
+
 
 import galleryTalk from "@/assets/gallery-talk.jpg";
 import galleryResistance from "@/assets/gallery-resistance.png";
@@ -55,7 +55,7 @@ const galleryItems: GalleryItem[] = [
 
   // Equipa
   { src: galleryCircle, alt: "Roda de equipa no campo", category: "Equipa", description: "Juntos somos mais fortes — o espírito de equipa.", span: "col-span-2" },
-  { src: galleryGroup, alt: "Foto de grupo ProTopo", category: "Equipa", description: "A equipa ProTopo Academy reunida." },
+  
   { src: galleryTeamFull, alt: "Foto de grupo completa ProTopo Academy", category: "Equipa", description: "Uma equipa unida, com o mesmo objetivo: evoluir.", span: "col-span-3" },
 ];
 
