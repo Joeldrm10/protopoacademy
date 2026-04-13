@@ -55,6 +55,7 @@ type BookingData = z.infer<typeof bookingSchema>;
 
 const BookingForm = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<BookingData>({
     resolver: zodResolver(bookingSchema),
