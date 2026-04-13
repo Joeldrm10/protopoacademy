@@ -19,6 +19,7 @@ const Index = () => {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
+      <BookingForm />
       <SignupCTA />
       <TeamSection />
       <CampSection />
