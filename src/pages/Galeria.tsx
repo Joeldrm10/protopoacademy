@@ -14,7 +14,7 @@ import galleryCircle from "@/assets/gallery-circle.jpg";
 import galleryGk from "@/assets/gallery-gk.jpg";
 import galleryKids from "@/assets/gallery-kids-new.jpg";
 import galleryGroup from "@/assets/gallery-group-new.jpg";
-import galleryFootcamp from "@/assets/gallery-footcamp.jpg";
+
 import galleryTalk from "@/assets/gallery-talk.jpg";
 import galleryResistance from "@/assets/gallery-resistance.png";
 import galleryCoachKid from "@/assets/gallery-coach-kid.png";
