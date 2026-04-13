@@ -117,7 +117,7 @@ const GallerySection = () => {
           <div className="max-w-6xl mx-auto mt-4">
             <div className="relative overflow-hidden rounded-lg">
               <img
-                src={galleryGroup}
+                src={galleryTeamFull}
                 alt="Foto de grupo ProTopo Academy"
                 loading="lazy"
                 className="w-full h-[200px] md:h-[300px] object-cover"
