@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, ArrowLeft, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
@@ -64,6 +64,10 @@ const Galeria = () => {
     if (lightbox === null) return;
     setLightbox((lightbox + dir + filtered.length) % filtered.length);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
