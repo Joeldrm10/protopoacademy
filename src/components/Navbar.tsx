@@ -17,7 +17,7 @@ const Navbar = () => {
     { label: "Sobre Nós", href: "#sobre" },
     { label: "O Que Oferecemos", href: "#servicos" },
     { label: "Quem Somos", href: "#equipa" },
-    { label: "Galeria", href: "#galeria" },
+    { label: "Galeria", href: "/galeria" },
     { label: "Equipamento", href: "#equipamento" },
     { label: "Localização", href: "#localizacao" },
     { label: "FAQ", href: "#faq" },
