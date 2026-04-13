@@ -51,10 +51,8 @@ const galleryItems: GalleryItem[] = [
   { src: galleryCoachDrill, alt: "Treinador em exercício com atletas", category: "Exercícios", description: "Trabalho próximo com os atletas em contexto de jogo." },
 
   // Equipa
-
-  // Equipa
+  { src: galleryTalk, alt: "Treinador a conversar com atletas", category: "Equipa", description: "Comunicação, liderança e transmissão de valores." },
   { src: galleryCircle, alt: "Roda de equipa no campo", category: "Equipa", description: "Juntos somos mais fortes — o espírito de equipa.", span: "col-span-2" },
-  
   { src: galleryTeamFull, alt: "Foto de grupo completa ProTopo Academy", category: "Equipa", description: "Uma equipa unida, com o mesmo objetivo: evoluir.", span: "col-span-3" },
 ];
 
