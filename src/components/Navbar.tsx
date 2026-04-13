@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
@@ -36,15 +37,25 @@ const Navbar = () => {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.href.startsWith("/") ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <a
             href={SIGNUP_URL}
             target="_blank"
@@ -70,16 +81,27 @@ const Navbar = () => {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-background/98 backdrop-blur-md border-t border-border px-4 py-6 space-y-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="block text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.href.startsWith("/") ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="block text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="block text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <a
             href={SIGNUP_URL}
             target="_blank"
