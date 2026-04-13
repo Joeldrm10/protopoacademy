@@ -50,16 +50,13 @@ const galleryItems: GalleryItem[] = [
   { src: galleryCoachKid, alt: "Treinador a orientar jovem atleta", category: "Exercícios", description: "Orientação individual para confiança e técnica." },
   { src: galleryCoachDrill, alt: "Treinador em exercício com atletas", category: "Exercícios", description: "Trabalho próximo com os atletas em contexto de jogo." },
 
-  // Momentos
-  { src: galleryTalk, alt: "Treinador a conversar com atletas", category: "Momentos", description: "Comunicação, liderança e transmissão de valores." },
-
   // Equipa
+  { src: galleryTalk, alt: "Treinador a conversar com atletas", category: "Equipa", description: "Comunicação, liderança e transmissão de valores." },
   { src: galleryCircle, alt: "Roda de equipa no campo", category: "Equipa", description: "Juntos somos mais fortes — o espírito de equipa.", span: "col-span-2" },
-  
   { src: galleryTeamFull, alt: "Foto de grupo completa ProTopo Academy", category: "Equipa", description: "Uma equipa unida, com o mesmo objetivo: evoluir.", span: "col-span-3" },
 ];
 
-const categories = ["Todos", "Treinos", "Exercícios", "Momentos", "Equipa"] as const;
+const categories = ["Todos", "Treinos", "Exercícios", "Equipa"] as const;
 
 const Galeria = () => {
   const [lightbox, setLightbox] = useState<number | null>(null);
