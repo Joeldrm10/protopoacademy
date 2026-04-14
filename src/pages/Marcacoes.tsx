@@ -150,6 +150,20 @@ const Marcacoes = () => {
               <TableBody>
                 {marcacoes.map((m) => (
                   <TableRow key={m.id}>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
+                        className={m.confirmado
+                          ? "bg-green-500/20 text-green-600 hover:bg-green-500/30 hover:text-green-700"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        }
+                      >
+                        <Check className="w-4 h-4 mr-1" />
+                        {m.confirmado ? "Confirmado" : "Pendente"}
+                      </Button>
+                    </TableCell>
                     <TableCell className="font-medium">{m.nome}</TableCell>
                     <TableCell>{m.idade}</TableCell>
                     <TableCell>{m.telemovel}</TableCell>
