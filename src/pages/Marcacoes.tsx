@@ -136,6 +136,7 @@ const Marcacoes = () => {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Estado</TableHead>
                   <TableHead><User className="w-4 h-4 inline mr-1" /> Nome</TableHead>
                   <TableHead>Idade</TableHead>
                   <TableHead><Phone className="w-4 h-4 inline mr-1" /> Telemóvel</TableHead>
@@ -144,7 +145,6 @@ const Marcacoes = () => {
                   <TableHead><Clock className="w-4 h-4 inline mr-1" /> Hora</TableHead>
                   <TableHead>Criado em</TableHead>
                   <TableHead></TableHead>
-                  <TableHead>Criado em</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
