@@ -39,6 +39,7 @@ type Marcacao = {
 const Marcacoes = () => {
   const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
@@ -53,6 +54,19 @@ const Marcacoes = () => {
       setMarcacoes(data || []);
     }
     setLoading(false);
+  };
+
+  const handleDelete = async (id: string) => {
+    setDeleting(id);
+    const { error } = await supabase.from("marcacoes").delete().eq("id", id);
+    if (error) {
+      toast.error("Erro ao eliminar marcação");
+      console.error(error);
+    } else {
+      toast.success("Marcação eliminada com sucesso");
+      setMarcacoes((prev) => prev.filter((m) => m.id !== id));
+    }
+    setDeleting(null);
   };
 
   useEffect(() => {
