@@ -34,6 +34,7 @@ type Marcacao = {
   data: string;
   hora: string;
   created_at: string;
+  confirmado: boolean;
 };
 
 const Marcacoes = () => {
