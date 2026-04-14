@@ -2,8 +2,20 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw } from "lucide-react";
+import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   Table,
   TableBody,
@@ -27,6 +39,7 @@ type Marcacao = {
 const Marcacoes = () => {
   const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
@@ -41,6 +54,19 @@ const Marcacoes = () => {
       setMarcacoes(data || []);
     }
     setLoading(false);
+  };
+
+  const handleDelete = async (id: string) => {
+    setDeleting(id);
+    const { error } = await supabase.from("marcacoes").delete().eq("id", id);
+    if (error) {
+      toast.error("Erro ao eliminar marcação");
+      console.error(error);
+    } else {
+      toast.success("Marcação eliminada com sucesso");
+      setMarcacoes((prev) => prev.filter((m) => m.id !== id));
+    }
+    setDeleting(null);
   };
 
   useEffect(() => {
@@ -102,6 +128,8 @@ const Marcacoes = () => {
                   <TableHead><CalendarIcon className="w-4 h-4 inline mr-1" /> Data</TableHead>
                   <TableHead><Clock className="w-4 h-4 inline mr-1" /> Hora</TableHead>
                   <TableHead>Criado em</TableHead>
+                  <TableHead></TableHead>
+                  <TableHead>Criado em</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -122,6 +150,29 @@ const Marcacoes = () => {
                     <TableCell>{formatDate(m.data)}</TableCell>
                     <TableCell>{m.hora}</TableCell>
                     <TableCell className="text-muted-foreground text-sm">{formatCreatedAt(m.created_at)}</TableCell>
+                    <TableCell>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10" disabled={deleting === m.id}>
+                            {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Eliminar marcação?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Tens a certeza que queres eliminar a marcação de <strong>{m.nome}</strong>? Esta ação não pode ser revertida.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleDelete(m.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                              Eliminar
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
