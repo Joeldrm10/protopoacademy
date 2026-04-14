@@ -70,6 +70,20 @@ const Marcacoes = () => {
     setDeleting(null);
   };
 
+  const handleToggleConfirmado = async (id: string, current: boolean) => {
+    const { error } = await supabase
+      .from("marcacoes")
+      .update({ confirmado: !current } as any)
+      .eq("id", id);
+    if (error) {
+      toast.error("Erro ao atualizar estado");
+    } else {
+      setMarcacoes((prev) =>
+        prev.map((m) => (m.id === id ? { ...m, confirmado: !current } : m))
+      );
+    }
+  };
+
   useEffect(() => {
     fetchMarcacoes();
   }, []);
