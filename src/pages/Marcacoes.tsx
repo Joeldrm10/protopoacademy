@@ -128,6 +128,8 @@ const Marcacoes = () => {
                   <TableHead><CalendarIcon className="w-4 h-4 inline mr-1" /> Data</TableHead>
                   <TableHead><Clock className="w-4 h-4 inline mr-1" /> Hora</TableHead>
                   <TableHead>Criado em</TableHead>
+                  <TableHead></TableHead>
+                  <TableHead>Criado em</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
