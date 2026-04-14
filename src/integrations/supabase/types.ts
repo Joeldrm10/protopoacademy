@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       marcacoes: {
         Row: {
+          confirmado: boolean
           created_at: string
           data: string
           hora: string
@@ -26,6 +27,7 @@ export type Database = {
           tipo: string
         }
         Insert: {
+          confirmado?: boolean
           created_at?: string
           data: string
           hora: string
@@ -36,6 +38,7 @@ export type Database = {
           tipo: string
         }
         Update: {
+          confirmado?: boolean
           created_at?: string
           data?: string
           hora?: string

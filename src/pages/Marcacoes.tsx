@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2 } from "lucide-react";
+import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
@@ -34,6 +34,7 @@ type Marcacao = {
   data: string;
   hora: string;
   created_at: string;
+  confirmado: boolean;
 };
 
 const Marcacoes = () => {
@@ -67,6 +68,20 @@ const Marcacoes = () => {
       setMarcacoes((prev) => prev.filter((m) => m.id !== id));
     }
     setDeleting(null);
+  };
+
+  const handleToggleConfirmado = async (id: string, current: boolean) => {
+    const { error } = await supabase
+      .from("marcacoes")
+      .update({ confirmado: !current } as any)
+      .eq("id", id);
+    if (error) {
+      toast.error("Erro ao atualizar estado");
+    } else {
+      setMarcacoes((prev) =>
+        prev.map((m) => (m.id === id ? { ...m, confirmado: !current } : m))
+      );
+    }
   };
 
   useEffect(() => {
@@ -121,6 +136,7 @@ const Marcacoes = () => {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Estado</TableHead>
                   <TableHead><User className="w-4 h-4 inline mr-1" /> Nome</TableHead>
                   <TableHead>Idade</TableHead>
                   <TableHead><Phone className="w-4 h-4 inline mr-1" /> Telemóvel</TableHead>
@@ -129,12 +145,25 @@ const Marcacoes = () => {
                   <TableHead><Clock className="w-4 h-4 inline mr-1" /> Hora</TableHead>
                   <TableHead>Criado em</TableHead>
                   <TableHead></TableHead>
-                  <TableHead>Criado em</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {marcacoes.map((m) => (
                   <TableRow key={m.id}>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
+                        className={m.confirmado
+                          ? "bg-green-500/20 text-green-600 hover:bg-green-500/30 hover:text-green-700"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        }
+                      >
+                        <Check className="w-4 h-4 mr-1" />
+                        {m.confirmado ? "Confirmado" : "Pendente"}
+                      </Button>
+                    </TableCell>
                     <TableCell className="font-medium">{m.nome}</TableCell>
                     <TableCell>{m.idade}</TableCell>
                     <TableCell>{m.telemovel}</TableCell>
