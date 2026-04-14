@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2 } from "lucide-react";
+import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
