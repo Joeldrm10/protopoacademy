@@ -130,13 +130,43 @@ const Marcacoes = () => {
               Marcações de Treino
             </h1>
             <p className="text-muted-foreground mt-1">
-              {marcacoes.length} marcação{marcacoes.length !== 1 ? "ões" : ""} registada{marcacoes.length !== 1 ? "s" : ""}
+              {filteredMarcacoes.length} de {marcacoes.length} marcação{marcacoes.length !== 1 ? "ões" : ""} registada{marcacoes.length !== 1 ? "s" : ""}
             </p>
           </div>
           <Button variant="outline" onClick={fetchMarcacoes} disabled={loading}>
             <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
             Atualizar
           </Button>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <Filter className="w-4 h-4 text-muted-foreground" />
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className={cn("w-[200px] justify-start text-left font-normal", !filterDate && "text-muted-foreground")}>
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {filterDate ? format(filterDate, "dd/MM/yyyy", { locale: pt }) : "Filtrar por data"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar mode="single" selected={filterDate} onSelect={setFilterDate} locale={pt} className={cn("p-3 pointer-events-auto")} />
+            </PopoverContent>
+          </Popover>
+          <Select value={filterTipo} onValueChange={setFilterTipo}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Tipo de treino" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="todos">Todos os tipos</SelectItem>
+              <SelectItem value="individual">Individual</SelectItem>
+              <SelectItem value="grupo">Grupo</SelectItem>
+            </SelectContent>
+          </Select>
+          {(filterDate || filterTipo !== "todos") && (
+            <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); }}>
+              <X className="w-4 h-4 mr-1" /> Limpar filtros
+            </Button>
+          )}
         </div>
 
         {loading ? (
