@@ -195,7 +195,7 @@ const Marcacoes = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {marcacoes.map((m) => (
+                {filteredMarcacoes.map((m) => (
                   <TableRow key={m.id}>
                     <TableCell>
                       <Button
