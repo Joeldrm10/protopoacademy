@@ -45,6 +45,19 @@ const Marcacoes = () => {
   const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [filterDate, setFilterDate] = useState<Date | undefined>();
+  const [filterTipo, setFilterTipo] = useState<string>("todos");
+
+  const filteredMarcacoes = useMemo(() => {
+    return marcacoes.filter((m) => {
+      if (filterTipo !== "todos" && m.tipo !== filterTipo) return false;
+      if (filterDate) {
+        const selected = format(filterDate, "yyyy-MM-dd");
+        if (m.data !== selected) return false;
+      }
+      return true;
+    });
+  }, [marcacoes, filterDate, filterTipo]);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
