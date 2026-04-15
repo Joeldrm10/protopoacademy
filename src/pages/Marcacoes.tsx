@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check } from "lucide-react";
+import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check, Filter, X } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
@@ -41,6 +45,19 @@ const Marcacoes = () => {
   const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [filterDate, setFilterDate] = useState<Date | undefined>();
+  const [filterTipo, setFilterTipo] = useState<string>("todos");
+
+  const filteredMarcacoes = useMemo(() => {
+    return marcacoes.filter((m) => {
+      if (filterTipo !== "todos" && m.tipo !== filterTipo) return false;
+      if (filterDate) {
+        const selected = format(filterDate, "yyyy-MM-dd");
+        if (m.data !== selected) return false;
+      }
+      return true;
+    });
+  }, [marcacoes, filterDate, filterTipo]);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
@@ -113,13 +130,43 @@ const Marcacoes = () => {
               Marcações de Treino
             </h1>
             <p className="text-muted-foreground mt-1">
-              {marcacoes.length} marcação{marcacoes.length !== 1 ? "ões" : ""} registada{marcacoes.length !== 1 ? "s" : ""}
+              {filteredMarcacoes.length} de {marcacoes.length} marcação{marcacoes.length !== 1 ? "ões" : ""} registada{marcacoes.length !== 1 ? "s" : ""}
             </p>
           </div>
           <Button variant="outline" onClick={fetchMarcacoes} disabled={loading}>
             <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
             Atualizar
           </Button>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <Filter className="w-4 h-4 text-muted-foreground" />
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className={cn("w-[200px] justify-start text-left font-normal", !filterDate && "text-muted-foreground")}>
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {filterDate ? format(filterDate, "dd/MM/yyyy", { locale: pt }) : "Filtrar por data"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar mode="single" selected={filterDate} onSelect={setFilterDate} locale={pt} className={cn("p-3 pointer-events-auto")} />
+            </PopoverContent>
+          </Popover>
+          <Select value={filterTipo} onValueChange={setFilterTipo}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Tipo de treino" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="todos">Todos os tipos</SelectItem>
+              <SelectItem value="individual">Individual</SelectItem>
+              <SelectItem value="grupo">Grupo</SelectItem>
+            </SelectContent>
+          </Select>
+          {(filterDate || filterTipo !== "todos") && (
+            <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); }}>
+              <X className="w-4 h-4 mr-1" /> Limpar filtros
+            </Button>
+          )}
         </div>
 
         {loading ? (
@@ -148,7 +195,7 @@ const Marcacoes = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {marcacoes.map((m) => (
+                {filteredMarcacoes.map((m) => (
                   <TableRow key={m.id}>
                     <TableCell>
                       <Button
