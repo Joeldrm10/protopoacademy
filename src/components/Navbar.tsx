@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, X, Menu } from "lucide-react";
 import logo from "@/assets/logo.png";
 
@@ -8,6 +8,8 @@ const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hI
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -29,6 +31,14 @@ const Navbar = () => {
     { label: "Localização", href: "#localizacao" },
     { label: "FAQ", href: "#faq" },
   ];
+
+  const handleAnchorClick = (e: React.MouseEvent, href: string) => {
+    setMenuOpen(false);
+    if (location.pathname !== "/") {
+      e.preventDefault();
+      navigate("/" + href);
+    }
+  };
 
   return (
     <nav
@@ -58,6 +68,7 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(e) => handleAnchorClick(e, link.href)}
                 className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
               >
                 {link.label}
@@ -105,7 +116,7 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setMenuOpen(false)}
+              onClick={(e) => handleAnchorClick(e, link.href)}
               className="text-2xl font-heading font-bold text-foreground hover:text-primary transition-colors uppercase tracking-wider"
             >
               {link.label}
