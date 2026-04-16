@@ -1,9 +1,12 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PasswordGate from "@/components/PasswordGate";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check, Filter, X, LogOut } from "lucide-react";
+import {
+  CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw,
+  Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard,
+} from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -11,23 +14,12 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader,
+  AlertDialogTitle, AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 
 type Marcacao = {
@@ -59,6 +51,9 @@ const Marcacoes = () => {
       return true;
     });
   }, [marcacoes, filterDate, filterTipo]);
+
+  const confirmados = useMemo(() => marcacoes.filter((m) => m.confirmado).length, [marcacoes]);
+  const pendentes = useMemo(() => marcacoes.filter((m) => !m.confirmado).length, [marcacoes]);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
@@ -126,150 +121,219 @@ const Marcacoes = () => {
   return (
     <PasswordGate>
       {(onLogout) => (
-    <div className="min-h-screen bg-background relative">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={onLogout}
-        className="absolute top-4 right-4 text-muted-foreground hover:text-destructive text-xs gap-1"
-      >
-        <LogOut className="w-3.5 h-3.5" />
-        Sair
-      </Button>
-      <div className="container mx-auto px-4 py-10">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="font-heading font-bold text-2xl sm:text-3xl text-foreground">
-              Marcações de Treino
-            </h1>
-            <p className="text-muted-foreground mt-1 text-sm sm:text-base">
-              {filteredMarcacoes.length} de {marcacoes.length} marcação{marcacoes.length !== 1 ? "ões" : ""} registada{marcacoes.length !== 1 ? "s" : ""}
-            </p>
-          </div>
-          <Button variant="outline" size="sm" onClick={fetchMarcacoes} disabled={loading}>
-            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-            <span className="hidden sm:inline ml-1">Atualizar</span>
-          </Button>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3 mb-6">
-          <Filter className="w-4 h-4 text-muted-foreground" />
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" className={cn("w-[200px] justify-start text-left font-normal", !filterDate && "text-muted-foreground")}>
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {filterDate ? format(filterDate, "dd/MM/yyyy", { locale: pt }) : "Filtrar por data"}
+        <div className="min-h-screen bg-gradient-dark">
+          {/* Top Bar */}
+          <div className="border-b border-border bg-card/60 backdrop-blur-sm">
+            <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
+              <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                <Shield className="w-4 h-4 text-primary" />
+                <span className="font-medium text-foreground">Área Reservada</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onLogout}
+                className="text-muted-foreground hover:text-destructive text-xs gap-1.5"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                Sair
               </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar mode="single" selected={filterDate} onSelect={setFilterDate} locale={pt} className={cn("p-3 pointer-events-auto")} />
-            </PopoverContent>
-          </Popover>
-          <Select value={filterTipo} onValueChange={setFilterTipo}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Tipo de treino" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todos os tipos</SelectItem>
-              <SelectItem value="individual">Individual</SelectItem>
-              <SelectItem value="grupo">Grupo</SelectItem>
-            </SelectContent>
-          </Select>
-          {(filterDate || filterTipo !== "todos") && (
-            <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); }}>
-              <X className="w-4 h-4 mr-1" /> Limpar filtros
-            </Button>
-          )}
-        </div>
+            </div>
+          </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+            {/* Header */}
+            <div className="mb-10">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <LayoutDashboard className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h1 className="font-heading text-3xl sm:text-4xl text-foreground tracking-wider">
+                    Painel de Marcações
+                  </h1>
+                </div>
+              </div>
+              <p className="text-muted-foreground text-sm sm:text-base ml-[52px]">
+                Consulta e gere todas as marcações dos treinos
+              </p>
+            </div>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+              <div className="bg-card border border-border rounded-xl p-4">
+                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Total</p>
+                <p className="font-heading text-2xl text-foreground">{marcacoes.length}</p>
+              </div>
+              <div className="bg-card border border-border rounded-xl p-4">
+                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Filtrados</p>
+                <p className="font-heading text-2xl text-foreground">{filteredMarcacoes.length}</p>
+              </div>
+              <div className="bg-card border border-border rounded-xl p-4">
+                <p className="text-xs uppercase tracking-wider mb-1" style={{ color: "hsl(142 71% 45%)" }}>Confirmados</p>
+                <p className="font-heading text-2xl" style={{ color: "hsl(142 71% 45%)" }}>{confirmados}</p>
+              </div>
+              <div className="bg-card border border-border rounded-xl p-4">
+                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Pendentes</p>
+                <p className="font-heading text-2xl text-primary">{pendentes}</p>
+              </div>
+            </div>
+
+            {/* Filters + Refresh */}
+            <div className="bg-card border border-border rounded-xl p-4 mb-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <Filter className="w-4 h-4 text-primary" />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-[200px] justify-start text-left font-normal border-border",
+                        !filterDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {filterDate ? format(filterDate, "dd/MM/yyyy", { locale: pt }) : "Filtrar por data"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar mode="single" selected={filterDate} onSelect={setFilterDate} locale={pt} className="p-3 pointer-events-auto" />
+                  </PopoverContent>
+                </Popover>
+                <Select value={filterTipo} onValueChange={setFilterTipo}>
+                  <SelectTrigger className="w-[180px] border-border">
+                    <SelectValue placeholder="Tipo de treino" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="todos">Todos os tipos</SelectItem>
+                    <SelectItem value="individual">Individual</SelectItem>
+                    <SelectItem value="grupo">Grupo</SelectItem>
+                  </SelectContent>
+                </Select>
+                {(filterDate || filterTipo !== "todos") && (
+                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); }} className="text-muted-foreground hover:text-foreground">
+                    <X className="w-4 h-4 mr-1" /> Limpar
+                  </Button>
+                )}
+                <div className="ml-auto">
+                  <Button variant="outline" size="sm" onClick={fetchMarcacoes} disabled={loading} className="border-border">
+                    <RefreshCw className={`w-4 h-4 mr-1.5 ${loading ? "animate-spin" : ""}`} />
+                    Atualizar
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            {loading ? (
+              <div className="flex items-center justify-center py-24">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </div>
+            ) : marcacoes.length === 0 ? (
+              <div className="text-center py-24 text-muted-foreground">
+                <CalendarIcon className="w-14 h-14 mx-auto mb-4 opacity-30" />
+                <p className="text-lg font-medium">Nenhuma marcação encontrada</p>
+                <p className="text-sm mt-1">As marcações aparecerão aqui quando forem criadas.</p>
+              </div>
+            ) : (
+              <div className="bg-card border border-border rounded-xl overflow-hidden shadow-lg shadow-black/20">
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-border hover:bg-transparent">
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">Estado</TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                          <User className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Nome
+                        </TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">Idade</TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                          <Phone className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Telemóvel
+                        </TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                          <Users className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Tipo
+                        </TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                          <CalendarIcon className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Data
+                        </TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                          <Clock className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Hora
+                        </TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">Criado em</TableHead>
+                        <TableHead></TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredMarcacoes.map((m) => (
+                        <TableRow key={m.id} className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
+                          <TableCell>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
+                              className={cn(
+                                "text-xs font-semibold rounded-full px-3 transition-all",
+                                m.confirmado
+                                  ? "bg-green-500/15 text-green-500 hover:bg-green-500/25 hover:text-green-400 border border-green-500/20"
+                                  : "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
+                              )}
+                            >
+                              <Check className="w-3.5 h-3.5 mr-1" />
+                              {m.confirmado ? "Confirmado" : "Pendente"}
+                            </Button>
+                          </TableCell>
+                          <TableCell className="font-semibold text-foreground">{m.nome}</TableCell>
+                          <TableCell className="text-muted-foreground">{m.idade}</TableCell>
+                          <TableCell className="text-muted-foreground font-mono text-sm">{m.telemovel}</TableCell>
+                          <TableCell>
+                            <span className={cn(
+                              "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider",
+                              m.tipo === "individual"
+                                ? "bg-primary/15 text-primary border border-primary/20"
+                                : "bg-secondary text-foreground border border-border"
+                            )}>
+                              {m.tipo === "individual" ? "Individual" : "Grupo"}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-foreground font-medium">{formatDate(m.data)}</TableCell>
+                          <TableCell className="text-foreground font-medium">{m.hora}</TableCell>
+                          <TableCell className="text-muted-foreground text-xs">{formatCreatedAt(m.created_at)}</TableCell>
+                          <TableCell>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full"
+                                  disabled={deleting === m.id}
+                                >
+                                  {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Eliminar marcação?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Tens a certeza que queres eliminar a marcação de <strong>{m.nome}</strong>? Esta ação não pode ser revertida.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                  <AlertDialogAction onClick={() => handleDelete(m.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                    Eliminar
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </div>
+            )}
           </div>
-        ) : marcacoes.length === 0 ? (
-          <div className="text-center py-20 text-muted-foreground">
-            <CalendarIcon className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <p className="text-lg">Nenhuma marcação encontrada.</p>
-          </div>
-        ) : (
-          <div className="bg-card border border-border rounded-xl overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Estado</TableHead>
-                  <TableHead><User className="w-4 h-4 inline mr-1" /> Nome</TableHead>
-                  <TableHead>Idade</TableHead>
-                  <TableHead><Phone className="w-4 h-4 inline mr-1" /> Telemóvel</TableHead>
-                  <TableHead><Users className="w-4 h-4 inline mr-1" /> Tipo</TableHead>
-                  <TableHead><CalendarIcon className="w-4 h-4 inline mr-1" /> Data</TableHead>
-                  <TableHead><Clock className="w-4 h-4 inline mr-1" /> Hora</TableHead>
-                  <TableHead>Criado em</TableHead>
-                  <TableHead></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredMarcacoes.map((m) => (
-                  <TableRow key={m.id}>
-                    <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
-                        className={m.confirmado
-                          ? "bg-green-500/20 text-green-600 hover:bg-green-500/30 hover:text-green-700"
-                          : "bg-muted text-muted-foreground hover:bg-muted/80"
-                        }
-                      >
-                        <Check className="w-4 h-4 mr-1" />
-                        {m.confirmado ? "Confirmado" : "Pendente"}
-                      </Button>
-                    </TableCell>
-                    <TableCell className="font-medium">{m.nome}</TableCell>
-                    <TableCell>{m.idade}</TableCell>
-                    <TableCell>{m.telemovel}</TableCell>
-                    <TableCell>
-                      <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${
-                        m.tipo === "individual"
-                          ? "bg-primary/20 text-primary"
-                          : "bg-accent/20 text-accent-foreground"
-                      }`}>
-                        {m.tipo === "individual" ? "Individual" : "Grupo"}
-                      </span>
-                    </TableCell>
-                    <TableCell>{formatDate(m.data)}</TableCell>
-                    <TableCell>{m.hora}</TableCell>
-                    <TableCell className="text-muted-foreground text-sm">{formatCreatedAt(m.created_at)}</TableCell>
-                    <TableCell>
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10" disabled={deleting === m.id}>
-                            {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Eliminar marcação?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Tens a certeza que queres eliminar a marcação de <strong>{m.nome}</strong>? Esta ação não pode ser revertida.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => handleDelete(m.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                              Eliminar
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
-    </div>
-    </div>
+        </div>
       )}
     </PasswordGate>
   );
