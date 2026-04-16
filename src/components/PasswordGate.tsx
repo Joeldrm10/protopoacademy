@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Lock } from "lucide-react";
 
-const CORRECT_PASSWORD = "treinador2025";
+const CORRECT_PASSWORD = "protopo";
 
 interface PasswordGateProps {
   children: React.ReactNode;
