@@ -3,7 +3,7 @@ import PasswordGate from "@/components/PasswordGate";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check, Filter, X } from "lucide-react";
+import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check, Filter, X, LogOut } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
