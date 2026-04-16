@@ -41,6 +41,7 @@ const Marcacoes = () => {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [filterDate, setFilterDate] = useState<Date | undefined>();
   const [filterTipo, setFilterTipo] = useState<string>("todos");
+  const [searchNome, setSearchNome] = useState("");
 
   const filteredMarcacoes = useMemo(() => {
     return marcacoes.filter((m) => {
@@ -49,9 +50,10 @@ const Marcacoes = () => {
         const selected = format(filterDate, "yyyy-MM-dd");
         if (m.data !== selected) return false;
       }
+      if (searchNome && !m.nome.toLowerCase().includes(searchNome.toLowerCase())) return false;
       return true;
     });
-  }, [marcacoes, filterDate, filterTipo]);
+  }, [marcacoes, filterDate, filterTipo, searchNome]);
 
   const confirmados = useMemo(() => marcacoes.filter((m) => m.confirmado).length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => !m.confirmado).length, [marcacoes]);
