@@ -91,7 +91,7 @@ const PoliticaPrivacidade = () => {
 
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              5. Os teus direitos
+              6. Os teus direitos
             </h2>
             <p className="mb-3 text-muted-foreground">
               A qualquer momento podes pedir-nos para:
