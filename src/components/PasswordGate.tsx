@@ -13,6 +13,7 @@ const PasswordGate = ({ children }: PasswordGateProps) => {
   const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem("marcacoes_auth") === "true");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
