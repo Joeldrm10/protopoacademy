@@ -126,9 +126,18 @@ const Marcacoes = () => {
   return (
     <PasswordGate>
       {(onLogout) => (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={onLogout}
+        className="absolute top-4 right-4 text-muted-foreground hover:text-destructive text-xs gap-1"
+      >
+        <LogOut className="w-3.5 h-3.5" />
+        Sair
+      </Button>
       <div className="container mx-auto px-4 py-10">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="font-heading font-bold text-2xl sm:text-3xl text-foreground">
               Marcações de Treino
@@ -137,16 +146,10 @@ const Marcacoes = () => {
               {filteredMarcacoes.length} de {marcacoes.length} marcação{marcacoes.length !== 1 ? "ões" : ""} registada{marcacoes.length !== 1 ? "s" : ""}
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={fetchMarcacoes} disabled={loading} className="sm:size-default">
-              <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-              <span className="hidden sm:inline ml-1">Atualizar</span>
-            </Button>
-            <Button variant="ghost" size="sm" onClick={onLogout} className="text-muted-foreground hover:text-destructive sm:size-default">
-              <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline ml-1">Sair</span>
-            </Button>
-          </div>
+          <Button variant="outline" size="sm" onClick={fetchMarcacoes} disabled={loading}>
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+            <span className="hidden sm:inline ml-1">Atualizar</span>
+          </Button>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 mb-6">
