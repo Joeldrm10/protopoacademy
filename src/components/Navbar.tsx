@@ -77,7 +77,7 @@ const Navbar = () => {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden relative z-50 p-2 text-foreground"
+          className="lg:hidden relative z-[70] p-2 text-foreground"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menu"
         >
