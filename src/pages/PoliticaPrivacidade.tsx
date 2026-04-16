@@ -108,7 +108,7 @@ const PoliticaPrivacidade = () => {
 
           <section className="rounded-2xl border border-primary/20 bg-card p-6 md:p-8">
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              6. Responsável pelo tratamento dos dados
+              7. Responsável pelo tratamento dos dados
             </h2>
             <p className="text-muted-foreground mb-5">
               O responsável pela recolha e tratamento dos teus dados pessoais é a{" "}
