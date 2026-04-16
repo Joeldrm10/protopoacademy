@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import PasswordGate from "@/components/PasswordGate";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
