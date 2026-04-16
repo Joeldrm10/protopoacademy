@@ -60,8 +60,8 @@ const Marcacoes = () => {
     const { data, error } = await supabase
       .from("marcacoes")
       .select("*")
-      .order("data", { ascending: true })
-      .order("hora", { ascending: true });
+      .order("data", { ascending: false })
+      .order("hora", { ascending: false });
 
     if (error) {
       console.error("Erro ao carregar marcações:", error);
@@ -236,30 +236,31 @@ const Marcacoes = () => {
                 <p className="text-sm mt-1">As marcações aparecerão aqui quando forem criadas.</p>
               </div>
             ) : (
-              <div className="bg-card border border-border rounded-xl overflow-hidden shadow-lg shadow-black/20">
-                <div className="overflow-x-auto">
+              <>
+                {/* Desktop Table */}
+                <div className="hidden md:block bg-card border border-border rounded-xl overflow-hidden shadow-lg shadow-black/20">
                   <Table>
                     <TableHeader>
                       <TableRow className="border-border hover:bg-transparent">
-                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">Estado</TableHead>
-                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase w-[130px]">Estado</TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase min-w-[140px]">
                           <User className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Nome
                         </TableHead>
-                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">Idade</TableHead>
-                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase w-[70px] text-center">Idade</TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase w-[130px]">
                           <Phone className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Telemóvel
                         </TableHead>
-                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase w-[120px] text-center">
                           <Users className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Tipo
                         </TableHead>
-                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase w-[110px]">
                           <CalendarIcon className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Data
                         </TableHead>
-                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase w-[70px] text-center">
                           <Clock className="w-3.5 h-3.5 inline mr-1 -mt-0.5" /> Hora
                         </TableHead>
-                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase">Criado em</TableHead>
-                        <TableHead></TableHead>
+                        <TableHead className="text-primary/80 font-heading tracking-wider text-xs uppercase w-[140px]">Criado em</TableHead>
+                        <TableHead className="w-[50px]"></TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -282,30 +283,26 @@ const Marcacoes = () => {
                             </Button>
                           </TableCell>
                           <TableCell className="font-semibold text-foreground">{m.nome}</TableCell>
-                          <TableCell className="text-muted-foreground">{m.idade}</TableCell>
+                          <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
                           <TableCell className="text-muted-foreground font-mono text-sm">{m.telemovel}</TableCell>
-                          <TableCell>
+                          <TableCell className="text-center">
                             <span className={cn(
-                              "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider",
+                              "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
                               m.tipo === "individual"
-                                ? "bg-primary/15 text-primary border border-primary/20"
-                                : "bg-secondary text-foreground border border-border"
+                                ? "bg-primary/15 text-primary border border-primary/25"
+                                : "bg-blue-500/15 text-blue-400 border border-blue-500/25"
                             )}>
+                              {m.tipo === "individual" ? <User className="w-3 h-3" /> : <Users className="w-3 h-3" />}
                               {m.tipo === "individual" ? "Individual" : "Grupo"}
                             </span>
                           </TableCell>
                           <TableCell className="text-foreground font-medium">{formatDate(m.data)}</TableCell>
-                          <TableCell className="text-foreground font-medium">{m.hora}</TableCell>
+                          <TableCell className="text-foreground font-medium text-center">{m.hora}</TableCell>
                           <TableCell className="text-muted-foreground text-xs">{formatCreatedAt(m.created_at)}</TableCell>
                           <TableCell>
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full"
-                                  disabled={deleting === m.id}
-                                >
+                                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full" disabled={deleting === m.id}>
                                   {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                                 </Button>
                               </AlertDialogTrigger>
@@ -330,7 +327,82 @@ const Marcacoes = () => {
                     </TableBody>
                   </Table>
                 </div>
-              </div>
+
+                {/* Mobile Cards */}
+                <div className="md:hidden space-y-3">
+                  {filteredMarcacoes.map((m) => (
+                    <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-foreground text-base">{m.nome}</span>
+                        <span className={cn(
+                          "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider",
+                          m.tipo === "individual"
+                            ? "bg-primary/15 text-primary border border-primary/25"
+                            : "bg-blue-500/15 text-blue-400 border border-blue-500/25"
+                        )}>
+                          {m.tipo === "individual" ? <User className="w-3 h-3" /> : <Users className="w-3 h-3" />}
+                          {m.tipo === "individual" ? "Individual" : "Grupo"}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div className="flex items-center gap-1.5 text-muted-foreground">
+                          <CalendarIcon className="w-3.5 h-3.5 text-primary/60" />
+                          <span className="text-foreground font-medium">{formatDate(m.data)}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-muted-foreground">
+                          <Clock className="w-3.5 h-3.5 text-primary/60" />
+                          <span className="text-foreground font-medium">{m.hora}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-muted-foreground">
+                          <Phone className="w-3.5 h-3.5 text-primary/60" />
+                          <span className="font-mono text-foreground">{m.telemovel}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-muted-foreground">
+                          <span className="text-xs">Idade:</span>
+                          <span className="text-foreground">{m.idade}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between pt-1 border-t border-border/50">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
+                          className={cn(
+                            "text-xs font-semibold rounded-full px-3",
+                            m.confirmado
+                              ? "bg-green-500/15 text-green-500 border border-green-500/20"
+                              : "bg-primary/10 text-primary border border-primary/20"
+                          )}
+                        >
+                          <Check className="w-3.5 h-3.5 mr-1" />
+                          {m.confirmado ? "Confirmado" : "Pendente"}
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full h-8 w-8" disabled={deleting === m.id}>
+                              {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Eliminar marcação?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Tens a certeza que queres eliminar a marcação de <strong>{m.nome}</strong>? Esta ação não pode ser revertida.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => handleDelete(m.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                Eliminar
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </div>
