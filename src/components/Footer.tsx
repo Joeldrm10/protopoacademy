@@ -87,12 +87,18 @@ const Footer = () => {
         <div className="border-t border-border" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-center">
-          <p className="text-muted-foreground text-xs">
-            © {new Date().getFullYear()} ProTopo Academy. Todos os direitos reservados. ·{" "}
-            <Link to="/politica-privacidade" className="hover:text-primary transition-colors">
+          <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-2 text-xs">
+            <p className="text-muted-foreground">
+              © {new Date().getFullYear()} ProTopo Academy. Todos os direitos reservados.
+            </p>
+            <span className="hidden sm:inline text-muted-foreground/40">·</span>
+            <Link
+              to="/politica-privacidade"
+              className="font-medium text-foreground/80 hover:text-primary transition-colors underline underline-offset-4 decoration-primary/40 hover:decoration-primary"
+            >
               Política de Privacidade
             </Link>
-          </p>
+          </div>
           <button
             onClick={scrollToTop}
             className="p-2 rounded-full border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
