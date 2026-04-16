@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import {
   CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw,
-  Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard,
+  Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard, Search,
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
