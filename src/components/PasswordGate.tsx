@@ -34,13 +34,22 @@ const PasswordGate = ({ children }: PasswordGateProps) => {
         <Lock className="w-10 h-10 mx-auto text-muted-foreground" />
         <h1 className="font-heading font-bold text-xl text-foreground">Área reservada</h1>
         <p className="text-sm text-muted-foreground">Introduz a palavra-passe para aceder às marcações.</p>
-        <Input
-          type="password"
-          placeholder="Palavra-passe"
-          value={password}
-          onChange={(e) => { setPassword(e.target.value); setError(false); }}
-          autoFocus
-        />
+        <div className="relative">
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="Palavra-passe"
+            value={password}
+            onChange={(e) => { setPassword(e.target.value); setError(false); }}
+            autoFocus
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          </button>
+        </div>
         {error && <p className="text-sm text-destructive">Palavra-passe incorreta.</p>}
         <Button type="submit" className="w-full">Entrar</Button>
       </form>
