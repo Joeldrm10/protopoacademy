@@ -45,7 +45,7 @@ const timeSlots = [
   "18:00", "19:00", "20:00",
 ];
 
-const phoneRegex = /^(\+?\d{1,3})?[\s-]?\d{6,14}$/;
+const ptPhoneRegex = /^9\d{8}$/;
 
 const bookingSchema = z.object({
   nome: z.string().trim().min(2, "Nome é obrigatório (mínimo 2 caracteres)").max(100, "Máximo 100 caracteres"),
@@ -54,9 +54,7 @@ const bookingSchema = z.object({
     "Idade deve ser entre 3 e 99"
   ),
   telemovel: z.string().trim()
-    .min(9, "Telemóvel deve ter pelo menos 9 dígitos")
-    .max(15, "Telemóvel inválido")
-    .refine((val) => phoneRegex.test(val.replace(/\s/g, "")), "Número de telemóvel inválido"),
+    .refine((val) => ptPhoneRegex.test(val.replace(/\s/g, "")), "Telemóvel inválido. Deve ter 9 dígitos e começar por 9."),
   tipo: z.enum(["individual", "grupo"], { required_error: "Seleciona o tipo de treino" }),
   data: z.date({ required_error: "Seleciona uma data" }),
   hora: z.string({ required_error: "Seleciona uma hora" }).min(1, "Seleciona uma hora"),
@@ -141,9 +139,9 @@ const BookingForm = () => {
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
                 <Send className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="font-heading font-bold text-2xl mb-3 text-foreground">Pedido enviado!</h3>
+              <h3 className="font-heading font-bold text-2xl mb-3 text-foreground">Pedido enviado com sucesso!</h3>
               <p className="text-muted-foreground mb-6">
-                A tua marcação foi enviada por WhatsApp. Entraremos em contacto brevemente.
+                Pedido de marcação enviado com sucesso. Serás contactado em breve.
               </p>
               <Button
                 variant="hero"

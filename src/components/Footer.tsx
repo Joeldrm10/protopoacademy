@@ -109,6 +109,20 @@ const Footer = () => {
             >
               Política de Privacidade
             </Link>
+            <span className="hidden sm:inline text-muted-foreground/40">·</span>
+            <Link
+              to="/termos-condicoes"
+              className="font-medium text-foreground/80 hover:text-primary transition-colors underline underline-offset-4 decoration-primary/40 hover:decoration-primary"
+            >
+              Termos e Condições
+            </Link>
+            <span className="hidden sm:inline text-muted-foreground/40">·</span>
+            <a
+              href="mailto:protopoacademy@gmail.com"
+              className="font-medium text-foreground/80 hover:text-primary transition-colors underline underline-offset-4 decoration-primary/40 hover:decoration-primary"
+            >
+              Contacto
+            </a>
           </div>
           <button
             onClick={scrollToTop}
