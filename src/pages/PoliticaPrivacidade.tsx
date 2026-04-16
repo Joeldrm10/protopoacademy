@@ -97,18 +97,39 @@ const PoliticaPrivacidade = () => {
 
           <section className="rounded-2xl border border-primary/20 bg-card p-6 md:p-8">
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              6. Pedidos de alteração ou remoção de dados
+              6. Responsável pelo tratamento dos dados
             </h2>
             <p className="text-muted-foreground mb-5">
-              Se quiseres alterar ou remover os teus dados, ou se tiveres alguma dúvida sobre esta
-              política, entra em contacto connosco:
+              O responsável pela recolha e tratamento dos teus dados pessoais é a{" "}
+              <strong className="text-foreground">ProTopo Academy</strong>. Para qualquer pedido
+              relacionado com os teus dados — acesso, alteração, remoção ou esclarecimento de dúvidas —
+              contacta-nos diretamente:
             </p>
+            <div className="space-y-2 mb-6 text-sm text-muted-foreground">
+              <p>
+                <span className="text-foreground font-medium">Entidade:</span> ProTopo Academy
+              </p>
+              <p>
+                <span className="text-foreground font-medium">Email:</span> protopoacademy@gmail.com
+              </p>
+              <p>
+                <span className="text-foreground font-medium">Instagram:</span>{" "}
+                <a
+                  href="https://www.instagram.com/protopo_academy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  @protopo_academy
+                </a>
+              </p>
+            </div>
             <a
-              href="mailto:protopoacademy@gmail.com?subject=Pedido%20de%20alteração%2Fremoção%20de%20dados"
+              href="mailto:protopoacademy@gmail.com?subject=Pedido%20relativo%20a%20dados%20pessoais"
               className="inline-flex items-center gap-2.5 bg-gradient-gold text-primary-foreground px-5 py-3 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
             >
               <Mail className="w-4 h-4" />
-              protopoacademy@gmail.com
+              Contactar responsável
             </a>
           </section>
         </div>
