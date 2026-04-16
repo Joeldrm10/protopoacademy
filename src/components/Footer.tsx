@@ -1,10 +1,13 @@
 import { Instagram, Mail, ArrowUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
 const Footer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -15,6 +18,13 @@ const Footer = () => {
     { label: "Equipa", href: "#equipa" },
     { label: "FAQ", href: "#faq" },
   ];
+
+  const handleAnchorClick = (e: React.MouseEvent, href: string) => {
+    if (location.pathname !== "/") {
+      e.preventDefault();
+      navigate("/" + href);
+    }
+  };
 
   return (
     <footer id="contactos" className="relative pt-20 pb-8 bg-card overflow-hidden">
@@ -39,6 +49,7 @@ const Footer = () => {
                 <a
                   key={link.label}
                   href={link.href}
+                  onClick={(e) => handleAnchorClick(e, link.href)}
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   {link.label}
