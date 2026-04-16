@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import PasswordGate from "@/components/PasswordGate";
+import AdminAuth from "@/components/AdminAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
