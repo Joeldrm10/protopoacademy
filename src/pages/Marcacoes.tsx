@@ -186,6 +186,15 @@ const Marcacoes = () => {
             <div className="bg-card border border-border rounded-xl p-4 mb-6">
               <div className="flex flex-wrap items-center gap-3">
                 <Filter className="w-4 h-4 text-primary" />
+                <div className="relative">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    placeholder="Pesquisar por nome..."
+                    value={searchNome}
+                    onChange={(e) => setSearchNome(e.target.value)}
+                    className="pl-9 w-[200px] border-border"
+                  />
+                </div>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -213,8 +222,8 @@ const Marcacoes = () => {
                     <SelectItem value="grupo">Grupo</SelectItem>
                   </SelectContent>
                 </Select>
-                {(filterDate || filterTipo !== "todos") && (
-                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); }} className="text-muted-foreground hover:text-foreground">
+                {(filterDate || filterTipo !== "todos" || searchNome) && (
+                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); setSearchNome(""); }} className="text-muted-foreground hover:text-foreground">
                     <X className="w-4 h-4 mr-1" /> Limpar
                   </Button>
                 )}
