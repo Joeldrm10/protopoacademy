@@ -77,7 +77,7 @@ const Navbar = () => {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden relative z-50 p-2 text-foreground"
+          className="lg:hidden relative z-[70] p-2 text-foreground"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menu"
         >
@@ -87,7 +87,7 @@ const Navbar = () => {
 
       {/* Mobile menu - full screen overlay */}
       <div
-        className={`lg:hidden fixed inset-0 bg-background/98 backdrop-blur-md z-40 flex flex-col items-center justify-center gap-6 transition-all duration-300 ${
+        className={`lg:hidden fixed inset-0 bg-background backdrop-blur-md z-[60] flex flex-col items-center justify-center gap-6 transition-all duration-300 ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
