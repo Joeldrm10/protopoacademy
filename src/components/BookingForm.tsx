@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Link } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -58,6 +60,9 @@ const bookingSchema = z.object({
   tipo: z.enum(["individual", "grupo"], { required_error: "Seleciona o tipo de treino" }),
   data: z.date({ required_error: "Seleciona uma data" }),
   hora: z.string({ required_error: "Seleciona uma hora" }).min(1, "Seleciona uma hora"),
+  consentimento: z.literal(true, {
+    errorMap: () => ({ message: "Tens de autorizar o tratamento dos dados para continuar" }),
+  }),
 });
 
 type BookingData = z.infer<typeof bookingSchema>;
@@ -73,6 +78,7 @@ const BookingForm = () => {
       nome: "",
       idade: "",
       telemovel: "",
+      consentimento: false as unknown as true,
     },
   });
   const onSubmit = async (data: BookingData) => {
@@ -330,6 +336,39 @@ const BookingForm = () => {
                     )}
                   />
                 </div>
+
+                <FormField
+                  control={form.control}
+                  name="consentimento"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start gap-3 rounded-xl border border-border p-4">
+                      <FormControl>
+                        <Checkbox
+                          checked={!!field.value}
+                          onCheckedChange={field.onChange}
+                          className="mt-0.5"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-snug">
+                        <FormLabel className="text-sm text-foreground font-normal cursor-pointer">
+                          Autorizo o tratamento dos meus dados para efeitos de contacto e marcação de treino.
+                        </FormLabel>
+                        <p className="text-xs text-muted-foreground">
+                          Consulta a nossa{" "}
+                          <Link
+                            to="/politica-privacidade"
+                            target="_blank"
+                            className="text-primary hover:underline"
+                          >
+                            Política de Privacidade
+                          </Link>
+                          .
+                        </p>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
                 <Button type="submit" variant="hero" size="lg" className="w-full py-5 text-base" disabled={loading}>
                   {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}

@@ -1,4 +1,5 @@
 import { Instagram, Mail, ArrowUp } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
@@ -87,7 +88,10 @@ const Footer = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-center">
           <p className="text-muted-foreground text-xs">
-            © {new Date().getFullYear()} ProTopo Academy. Todos os direitos reservados.
+            © {new Date().getFullYear()} ProTopo Academy. Todos os direitos reservados. ·{" "}
+            <Link to="/politica-privacidade" className="hover:text-primary transition-colors">
+              Política de Privacidade
+            </Link>
           </p>
           <button
             onClick={scrollToTop}
