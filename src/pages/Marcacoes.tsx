@@ -5,11 +5,12 @@ import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import {
   CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw,
-  Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard,
+  Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard, Search,
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -40,6 +41,7 @@ const Marcacoes = () => {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [filterDate, setFilterDate] = useState<Date | undefined>();
   const [filterTipo, setFilterTipo] = useState<string>("todos");
+  const [searchNome, setSearchNome] = useState("");
 
   const filteredMarcacoes = useMemo(() => {
     return marcacoes.filter((m) => {
@@ -48,9 +50,10 @@ const Marcacoes = () => {
         const selected = format(filterDate, "yyyy-MM-dd");
         if (m.data !== selected) return false;
       }
+      if (searchNome && !m.nome.toLowerCase().includes(searchNome.toLowerCase())) return false;
       return true;
     });
-  }, [marcacoes, filterDate, filterTipo]);
+  }, [marcacoes, filterDate, filterTipo, searchNome]);
 
   const confirmados = useMemo(() => marcacoes.filter((m) => m.confirmado).length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => !m.confirmado).length, [marcacoes]);
@@ -183,6 +186,15 @@ const Marcacoes = () => {
             <div className="bg-card border border-border rounded-xl p-4 mb-6">
               <div className="flex flex-wrap items-center gap-3">
                 <Filter className="w-4 h-4 text-primary" />
+                <div className="relative">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    placeholder="Pesquisar por nome..."
+                    value={searchNome}
+                    onChange={(e) => setSearchNome(e.target.value)}
+                    className="pl-9 w-[200px] border-border"
+                  />
+                </div>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -210,8 +222,8 @@ const Marcacoes = () => {
                     <SelectItem value="grupo">Grupo</SelectItem>
                   </SelectContent>
                 </Select>
-                {(filterDate || filterTipo !== "todos") && (
-                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); }} className="text-muted-foreground hover:text-foreground">
+                {(filterDate || filterTipo !== "todos" || searchNome) && (
+                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); setSearchNome(""); }} className="text-muted-foreground hover:text-foreground">
                     <X className="w-4 h-4 mr-1" /> Limpar
                   </Button>
                 )}
