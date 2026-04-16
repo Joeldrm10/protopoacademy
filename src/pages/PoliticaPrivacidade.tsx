@@ -143,6 +143,12 @@ const PoliticaPrivacidade = () => {
               Contactar responsável
             </a>
           </section>
+
+          <section>
+            <p className="text-sm text-muted-foreground italic border-l-2 border-primary/40 pl-4">
+              Ao submeter o formulário, o utilizador confirma que leu e aceita esta Política de Privacidade.
+            </p>
+          </section>
         </div>
       </main>
       <Footer />
