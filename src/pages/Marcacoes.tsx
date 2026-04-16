@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import PasswordGate from "@/components/PasswordGate";
+import AdminAuth from "@/components/AdminAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
@@ -36,6 +37,7 @@ type Marcacao = {
 };
 
 const Marcacoes = () => {
+  const { session, loading: authLoading, signOut } = useAuth();
   const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
@@ -121,9 +123,19 @@ const Marcacoes = () => {
     }
   };
 
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!session) {
+    return <AdminAuth onAuthenticated={() => {}} />;
+  }
+
   return (
-    <PasswordGate>
-      {(onLogout) => (
         <div className="min-h-screen bg-gradient-dark">
           {/* Top Bar */}
           <div className="border-b border-border bg-card/60 backdrop-blur-sm">
@@ -135,7 +147,7 @@ const Marcacoes = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={onLogout}
+                onClick={signOut}
                 className="text-muted-foreground hover:text-destructive text-xs gap-1.5"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -416,10 +428,8 @@ const Marcacoes = () => {
                 </div>
               </>
             )}
-          </div>
         </div>
-      )}
-    </PasswordGate>
+      </div>
   );
 };
 
