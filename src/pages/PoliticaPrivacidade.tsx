@@ -73,14 +73,25 @@ const PoliticaPrivacidade = () => {
               4. Segurança
             </h2>
             <p className="text-muted-foreground">
-              Guardamos os teus dados de forma segura e durante o tempo estritamente necessário para
-              gerir a tua marcação. Depois disso, são eliminados.
+              Os dados são tratados com medidas de segurança adequadas para proteger a informação
+              pessoal dos utilizadores e mantidos apenas durante o tempo estritamente necessário
+              para gerir a marcação. Depois disso, são eliminados.
             </p>
           </section>
 
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              5. Os teus direitos
+              5. Menores de idade
+            </h2>
+            <p className="text-muted-foreground">
+              Se o utilizador tiver menos de 18 anos, recomenda-se que o pedido seja feito com
+              autorização de um encarregado de educação.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
+              6. Os teus direitos
             </h2>
             <p className="mb-3 text-muted-foreground">
               A qualquer momento podes pedir-nos para:
@@ -97,7 +108,7 @@ const PoliticaPrivacidade = () => {
 
           <section className="rounded-2xl border border-primary/20 bg-card p-6 md:p-8">
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              6. Responsável pelo tratamento dos dados
+              7. Responsável pelo tratamento dos dados
             </h2>
             <p className="text-muted-foreground mb-5">
               O responsável pela recolha e tratamento dos teus dados pessoais é a{" "}
@@ -131,6 +142,12 @@ const PoliticaPrivacidade = () => {
               <Mail className="w-4 h-4" />
               Contactar responsável
             </a>
+          </section>
+
+          <section>
+            <p className="text-sm text-muted-foreground italic border-l-2 border-primary/40 pl-4">
+              Ao submeter o formulário, o utilizador confirma que leu e aceita esta Política de Privacidade.
+            </p>
           </section>
         </div>
       </main>
