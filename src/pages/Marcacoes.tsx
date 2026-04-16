@@ -432,6 +432,5 @@ const Marcacoes = () => {
       </div>
   );
 };
-};
 
 export default Marcacoes;
