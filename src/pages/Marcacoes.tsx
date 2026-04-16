@@ -60,8 +60,8 @@ const Marcacoes = () => {
     const { data, error } = await supabase
       .from("marcacoes")
       .select("*")
-      .order("data", { ascending: true })
-      .order("hora", { ascending: true });
+      .order("data", { ascending: false })
+      .order("hora", { ascending: false });
 
     if (error) {
       console.error("Erro ao carregar marcações:", error);
