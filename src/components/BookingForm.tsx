@@ -215,7 +215,14 @@ const BookingForm = () => {
                       <FormItem>
                         <FormLabel className="text-foreground">Telemóvel</FormLabel>
                         <FormControl>
-                          <Input type="tel" placeholder="912 345 678" {...field} />
+                          <Input
+                            type="tel"
+                            inputMode="numeric"
+                            maxLength={9}
+                            placeholder="912345678"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.value.replace(/\D/g, ""))}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
