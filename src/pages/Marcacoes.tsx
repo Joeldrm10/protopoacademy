@@ -158,7 +158,7 @@ const Marcacoes = () => {
                 </div>
               </div>
               <p className="text-muted-foreground text-sm sm:text-base ml-[52px]">
-                Consulta e gere todas as marcações dos treinos
+                Aqui pode consultar e gerir todos os pedidos de treino
               </p>
             </div>
 
