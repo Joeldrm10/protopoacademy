@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import PasswordGate from "@/components/PasswordGate";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
@@ -123,6 +124,7 @@ const Marcacoes = () => {
   };
 
   return (
+    <PasswordGate>
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-10">
         <div className="flex items-center justify-between mb-8">
@@ -258,6 +260,7 @@ const Marcacoes = () => {
         )}
       </div>
     </div>
+    </PasswordGate>
   );
 };
 
