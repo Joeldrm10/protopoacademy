@@ -73,8 +73,19 @@ const PoliticaPrivacidade = () => {
               4. Segurança
             </h2>
             <p className="text-muted-foreground">
-              Guardamos os teus dados de forma segura e durante o tempo estritamente necessário para
-              gerir a tua marcação. Depois disso, são eliminados.
+              Os dados são tratados com medidas de segurança adequadas para proteger a informação
+              pessoal dos utilizadores e mantidos apenas durante o tempo estritamente necessário
+              para gerir a marcação. Depois disso, são eliminados.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
+              5. Menores de idade
+            </h2>
+            <p className="text-muted-foreground">
+              Se o utilizador tiver menos de 18 anos, recomenda-se que o pedido seja feito com
+              autorização de um encarregado de educação.
             </p>
           </section>
 
