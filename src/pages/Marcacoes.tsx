@@ -265,8 +265,9 @@ const Marcacoes = () => {
             </Table>
           </div>
         )}
-      </div>
     </div>
+    </div>
+      )}
     </PasswordGate>
   );
 };
