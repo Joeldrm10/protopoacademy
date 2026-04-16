@@ -76,6 +76,11 @@ const BookingForm = () => {
     },
   });
   const onSubmit = async (data: BookingData) => {
+    const now = Date.now();
+    if (now - lastSubmitRef.current < COOLDOWN_MS) {
+      toast({ title: "Aguarda", description: "Espera pelo menos 1 minuto entre envios.", variant: "destructive" });
+      return;
+    }
     setLoading(true);
     try {
       const dataFormatada = format(data.data, "yyyy-MM-dd");
