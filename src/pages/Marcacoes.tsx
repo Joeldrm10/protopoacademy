@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import PasswordGate from "@/components/PasswordGate";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check, Filter, X } from "lucide-react";
+import { CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw, Trash2, Check, Filter, X, LogOut } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -125,6 +125,7 @@ const Marcacoes = () => {
 
   return (
     <PasswordGate>
+      {(onLogout) => (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-10">
         <div className="flex items-center justify-between mb-8">
@@ -136,10 +137,16 @@ const Marcacoes = () => {
               {filteredMarcacoes.length} de {marcacoes.length} marcação{marcacoes.length !== 1 ? "ões" : ""} registada{marcacoes.length !== 1 ? "s" : ""}
             </p>
           </div>
-          <Button variant="outline" onClick={fetchMarcacoes} disabled={loading}>
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
-            Atualizar
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={fetchMarcacoes} disabled={loading}>
+              <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+              Atualizar
+            </Button>
+            <Button variant="ghost" onClick={onLogout} className="text-muted-foreground hover:text-destructive">
+              <LogOut className="w-4 h-4 mr-2" />
+              Sair
+            </Button>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -258,8 +265,9 @@ const Marcacoes = () => {
             </Table>
           </div>
         )}
-      </div>
     </div>
+    </div>
+      )}
     </PasswordGate>
   );
 };

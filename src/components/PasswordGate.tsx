@@ -6,7 +6,7 @@ import { Lock, Eye, EyeOff } from "lucide-react";
 const CORRECT_PASSWORD = "protopo";
 
 interface PasswordGateProps {
-  children: React.ReactNode;
+  children: (onLogout: () => void) => React.ReactNode;
 }
 
 const PasswordGate = ({ children }: PasswordGateProps) => {
@@ -26,7 +26,12 @@ const PasswordGate = ({ children }: PasswordGateProps) => {
     }
   };
 
-  if (unlocked) return <>{children}</>;
+  const handleLogout = () => {
+    sessionStorage.removeItem("marcacoes_auth");
+    setUnlocked(false);
+  };
+
+  if (unlocked) return <>{children(handleLogout)}</>;
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
