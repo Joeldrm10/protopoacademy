@@ -6,7 +6,7 @@ import { Lock, Eye, EyeOff } from "lucide-react";
 const CORRECT_PASSWORD = "protopo";
 
 interface PasswordGateProps {
-  children: React.ReactNode;
+  children: (onLogout: () => void) => React.ReactNode;
 }
 
 const PasswordGate = ({ children }: PasswordGateProps) => {
