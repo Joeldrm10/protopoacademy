@@ -10,7 +10,7 @@ interface AdminAuthProps {
 }
 
 const AdminAuth = ({ onAuthenticated }: AdminAuthProps) => {
-  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [mode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
