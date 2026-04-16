@@ -116,6 +116,7 @@ const BookingForm = () => {
 
       const message = encodeURIComponent(parts.join("\n"));
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+      lastSubmitRef.current = Date.now();
       setSubmitted(true);
     } catch (err) {
       console.error("Erro inesperado:", err);
