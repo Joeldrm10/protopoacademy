@@ -428,11 +428,10 @@ const Marcacoes = () => {
                 </div>
               </>
             )}
-          </div>
         </div>
-      )}
-    </PasswordGate>
+      </div>
   );
+};
 };
 
 export default Marcacoes;
