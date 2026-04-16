@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { CalendarIcon, Clock, Send, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -35,6 +35,7 @@ import {
 import AnimateOnScroll from "./AnimateOnScroll";
 
 const WHATSAPP_NUMBER = "351911102405";
+const COOLDOWN_MS = 60_000; // 1 minute between submissions
 
 const timeSlots = [
   "08:00", "09:00", "10:00", "11:00",
@@ -42,10 +43,18 @@ const timeSlots = [
   "18:00", "19:00", "20:00",
 ];
 
+const phoneRegex = /^(\+?\d{1,3})?[\s-]?\d{6,14}$/;
+
 const bookingSchema = z.object({
-  nome: z.string().trim().min(2, "Nome é obrigatório").max(100, "Máximo 100 caracteres"),
-  idade: z.string().trim().min(1, "Idade é obrigatória").max(3, "Idade inválida"),
-  telemovel: z.string().trim().min(9, "Telemóvel inválido").max(15, "Telemóvel inválido"),
+  nome: z.string().trim().min(2, "Nome é obrigatório (mínimo 2 caracteres)").max(100, "Máximo 100 caracteres"),
+  idade: z.string().trim().min(1, "Idade é obrigatória").max(3, "Idade inválida").refine(
+    (val) => { const n = Number(val); return !isNaN(n) && n >= 3 && n <= 99; },
+    "Idade deve ser entre 3 e 99"
+  ),
+  telemovel: z.string().trim()
+    .min(9, "Telemóvel deve ter pelo menos 9 dígitos")
+    .max(15, "Telemóvel inválido")
+    .refine((val) => phoneRegex.test(val.replace(/\s/g, "")), "Número de telemóvel inválido"),
   tipo: z.enum(["individual", "grupo"], { required_error: "Seleciona o tipo de treino" }),
   data: z.date({ required_error: "Seleciona uma data" }),
   hora: z.string({ required_error: "Seleciona uma hora" }).min(1, "Seleciona uma hora"),
@@ -56,6 +65,7 @@ type BookingData = z.infer<typeof bookingSchema>;
 const BookingForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const lastSubmitRef = useRef<number>(0);
 
   const form = useForm<BookingData>({
     resolver: zodResolver(bookingSchema),
@@ -65,7 +75,6 @@ const BookingForm = () => {
       telemovel: "",
     },
   });
-
   const onSubmit = async (data: BookingData) => {
     setLoading(true);
     try {
