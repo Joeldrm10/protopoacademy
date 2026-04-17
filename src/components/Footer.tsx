@@ -12,12 +12,16 @@ const Footer = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const navLinks: { label: string; href: string }[] = [
+  const navLinks = [
     { label: "Início", href: "/" },
-    { label: "Serviços", href: "#servicos" },
+    { label: "Treinos", href: "#servicos" },
     { label: "Galeria", href: "/galeria" },
     { label: "Footcamp", href: "/footcamp" },
-    { label: "Marcações", href: "/marcacoes" },
+  ];
+
+  const infoLinks = [
+    { label: "FAQ", href: "#faq" },
+    { label: "Localização", href: "#localizacao" },
   ];
 
   const legalLinks = [
@@ -32,7 +36,7 @@ const Footer = () => {
     }
   };
 
-  const renderNavLink = (link: { label: string; href: string }) => {
+  const renderAnchorLink = (link: { label: string; href: string }) => {
     if (link.href.startsWith("#")) {
       return (
         <a
