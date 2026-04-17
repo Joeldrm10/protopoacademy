@@ -48,10 +48,12 @@ const Navbar = () => {
   };
 
   const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     setMenuOpen(false);
     if (location.pathname === "/") {
-      e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      navigate("/");
     }
   };
 
@@ -64,7 +66,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-4">
-        <Link to="/" onClick={handleHomeClick} className="flex items-center gap-2 relative z-50" aria-label="Ir para o início">
+        <Link to="/" onClick={handleHomeClick} className="flex items-center gap-2 relative z-50 cursor-pointer" aria-label="Ir para a página inicial">
           <img src={logo} alt="ProTopo Academy" className="h-10" />
         </Link>
 
