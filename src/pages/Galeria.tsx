@@ -277,6 +277,8 @@ const Galeria = () => {
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 };
