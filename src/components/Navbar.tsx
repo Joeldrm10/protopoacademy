@@ -66,9 +66,12 @@ const Navbar = () => {
     const baseClasses = isMobile
       ? "text-2xl font-heading font-bold uppercase tracking-wider transition-colors"
       : "text-sm font-medium uppercase tracking-wider font-heading transition-colors";
-    
+
     if (active) {
       return `${baseClasses} text-primary`;
+    }
+    if (isMobile) {
+      return `${baseClasses} text-white/90 hover:text-primary`;
     }
     return `${baseClasses} text-foreground hover:text-primary`;
   };
