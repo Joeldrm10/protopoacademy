@@ -1,4 +1,4 @@
-import { Instagram, Mail, ArrowUp, MessageCircle, ShieldCheck } from "lucide-react";
+import { Instagram, Mail, ArrowUp, MessageCircle } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
 
