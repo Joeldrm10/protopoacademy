@@ -200,25 +200,23 @@ const Galeria = () => {
             ))}
           </div>
 
-          {/* CTAs */}
+          {/* Final CTA */}
           <AnimateOnScroll delay={300}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-14">
+            <div className="text-center mt-20 max-w-2xl mx-auto">
+              <h2 className="font-heading font-bold text-3xl md:text-4xl mb-3">
+                Queres fazer <span className="text-gradient-gold">parte?</span>
+              </h2>
+              <p className="text-muted-foreground text-base md:text-lg mb-8">
+                Junta-te à ProTopo Academy e começa a evoluir hoje.
+              </p>
               <a
-                href={SIGNUP_URL}
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                👉 Quero inscrever o meu filho
-              </a>
-              <a
-                href="https://www.instagram.com/protopo_academy/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-              >
-                <Instagram className="w-5 h-5" />
-                Ver mais no Instagram
+                <MessageCircle className="w-5 h-5" />
+                Quero treinar
               </a>
             </div>
           </AnimateOnScroll>
