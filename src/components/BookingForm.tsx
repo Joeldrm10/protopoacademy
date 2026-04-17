@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { CalendarIcon, Clock, Send, Loader2 } from "lucide-react";
+import { CalendarIcon, Clock, Send, Loader2, MessageCircle, Shield, Zap } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
@@ -168,11 +168,20 @@ const BookingForm = () => {
             Marcação
           </span>
           <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-            Marca o teu <span className="text-gradient-gold">Treino</span>
+            Marca já o teu <span className="text-gradient-gold">treino</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Preenche o formulário e envia a tua marcação diretamente por WhatsApp.
+          <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-6">
+            Preenche o formulário ou fala diretamente connosco no WhatsApp. Começa a evoluir hoje.
           </p>
+          <a
+            href={WHATSAPP_DIRECT}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg text-sm"
+          >
+            <MessageCircle className="w-5 h-5" />
+            Falar no WhatsApp
+          </a>
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={150}>
@@ -380,6 +389,17 @@ const BookingForm = () => {
                   {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
                   {loading ? "A enviar..." : "Enviar por WhatsApp"}
                 </Button>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                    <Shield className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span>Dados protegidos e utilizados apenas para marcação.</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                    <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span>Resposta rápida via WhatsApp.</span>
+                  </div>
+                </div>
               </form>
             </Form>
           </div>

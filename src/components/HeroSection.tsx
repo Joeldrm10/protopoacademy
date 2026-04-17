@@ -1,7 +1,8 @@
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, MessageCircle } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
+const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
 
 const HeroSection = () => {
   return (
@@ -37,20 +38,21 @@ const HeroSection = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href={SIGNUP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#marcacao"
               className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               style={{ animation: "pulse-gold 2s infinite" }}
             >
-              Inscrever agora
+              Marca já o teu treino
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="#servicos"
-              className="inline-flex items-center gap-2 border-2 border-foreground/20 text-foreground/80 px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:border-primary hover:text-primary transition-all duration-300"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
             >
-              Saber mais
+              <MessageCircle className="w-5 h-5" />
+              Falar no WhatsApp
             </a>
           </div>
         </div>
