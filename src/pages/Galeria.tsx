@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { X, ArrowLeft, Instagram, ChevronLeft, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { X, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 import galleryCover from "@/assets/gallery-cover.jpg";
 import galleryCones from "@/assets/gallery-cones.jpg";
@@ -21,7 +22,7 @@ import galleryCoachKid from "@/assets/gallery-coach-kid.png";
 import galleryCoachDrill from "@/assets/gallery-coach-drill.png";
 import galleryTeamFull from "@/assets/gallery-team-full.png";
 
-const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
+const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20treinar%20na%20ProTopo%20Academy";
 
 type Category = "Treinos" | "Exercícios" | "Momentos" | "Equipa";
 
@@ -123,21 +124,10 @@ const Galeria = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="bg-secondary/50 backdrop-blur-sm border-b border-border sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-heading uppercase tracking-wider text-sm"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Voltar
-          </Link>
-        </div>
-      </div>
+    <div className="min-h-screen bg-background flex flex-col">
+      <Navbar />
 
-      <section className="py-16 md:py-24">
+      <section className="pt-32 pb-16 md:pt-36 md:pb-24 flex-1">
         <div className="container mx-auto px-4">
           {/* Title */}
           <AnimateOnScroll>
@@ -146,10 +136,10 @@ const Galeria = () => {
                 📸 Galeria
               </p>
               <h1 className="font-heading font-bold text-4xl md:text-6xl mb-3">
-                Momentos dos nossos <span className="text-gradient-gold">treinos</span>
+                Galeria <span className="text-gradient-gold">ProTopo</span>
               </h1>
               <p className="text-muted-foreground text-lg">
-                Evolução, intensidade e espírito de equipa.
+                Momentos reais de treino, evolução e dedicação.
               </p>
             </div>
           </AnimateOnScroll>
@@ -210,25 +200,23 @@ const Galeria = () => {
             ))}
           </div>
 
-          {/* CTAs */}
+          {/* Final CTA */}
           <AnimateOnScroll delay={300}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-14">
+            <div className="text-center mt-20 max-w-2xl mx-auto">
+              <h2 className="font-heading font-bold text-3xl md:text-4xl mb-3">
+                Queres fazer <span className="text-gradient-gold">parte?</span>
+              </h2>
+              <p className="text-muted-foreground text-base md:text-lg mb-8">
+                Junta-te à ProTopo Academy e começa a evoluir hoje.
+              </p>
               <a
-                href={SIGNUP_URL}
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                👉 Quero inscrever o meu filho
-              </a>
-              <a
-                href="https://www.instagram.com/protopo_academy/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-              >
-                <Instagram className="w-5 h-5" />
-                Ver mais no Instagram
+                <MessageCircle className="w-5 h-5" />
+                Quero treinar
               </a>
             </div>
           </AnimateOnScroll>
@@ -289,6 +277,8 @@ const Galeria = () => {
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 };
