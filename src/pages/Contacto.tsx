@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import TeamSection from "@/components/TeamSection";
-import FAQSection from "@/components/FAQSection";
+import LocationSection from "@/components/LocationSection";
+import BookingForm from "@/components/BookingForm";
 
-const Sobre = () => {
+const Contacto = () => {
   useEffect(() => {
-    document.title = "Sobre | ProTopo Academy";
+    document.title = "Contacto | ProTopo Academy";
     window.scrollTo(0, 0);
   }, []);
 
@@ -14,12 +14,12 @@ const Sobre = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <div className="pt-24">
-        <TeamSection />
-        <FAQSection />
+        <LocationSection />
+        <BookingForm />
       </div>
       <Footer />
     </div>
   );
 };
 
-export default Sobre;
+export default Contacto;
