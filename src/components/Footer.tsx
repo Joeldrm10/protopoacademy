@@ -1,8 +1,8 @@
-import { Instagram, Mail, ArrowUp } from "lucide-react";
+import { Instagram, Mail, ArrowUp, MessageCircle, ShieldCheck } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
 
-const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
+const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
 
 const Footer = () => {
   const location = useLocation();
@@ -12,11 +12,17 @@ const Footer = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const quickLinks = [
-    { label: "Sobre Nós", href: "#sobre" },
+  const navLinks: { label: string; href: string }[] = [
+    { label: "Início", href: "/" },
     { label: "Serviços", href: "#servicos" },
-    { label: "Equipa", href: "#equipa" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Galeria", href: "/galeria" },
+    { label: "Footcamp", href: "/footcamp" },
+    { label: "Marcações", href: "/marcacoes" },
+  ];
+
+  const legalLinks = [
+    { label: "Política de Privacidade", href: "/politica-privacidade" },
+    { label: "Termos e Condições", href: "/termos-condicoes" },
   ];
 
   const handleAnchorClick = (e: React.MouseEvent, href: string) => {
@@ -26,41 +32,85 @@ const Footer = () => {
     }
   };
 
+  const renderNavLink = (link: { label: string; href: string }) => {
+    if (link.href.startsWith("#")) {
+      return (
+        <a
+          key={link.label}
+          href={link.href}
+          onClick={(e) => handleAnchorClick(e, link.href)}
+          className="text-muted-foreground hover:text-primary transition-colors text-sm"
+        >
+          {link.label}
+        </a>
+      );
+    }
+    return (
+      <Link
+        key={link.label}
+        to={link.href}
+        className="text-muted-foreground hover:text-primary transition-colors text-sm"
+      >
+        {link.label}
+      </Link>
+    );
+  };
+
   return (
     <footer id="contactos" className="relative pt-20 pb-8 bg-card overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-gold" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[120px] rounded-full bg-[radial-gradient(ellipse,hsl(var(--gold)/0.08)_0%,transparent_70%)] blur-2xl pointer-events-none" />
 
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-12">
           {/* Brand */}
-          <div className="flex flex-col items-center md:items-start">
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
             <img src={logo} alt="ProTopo Academy" className="h-14 mb-4" />
-            <p className="text-muted-foreground text-sm max-w-xs leading-relaxed text-center md:text-left">
-              Academia de treinos personalizados focada no desenvolvimento individual de cada atleta.
+            <h3 className="font-heading font-bold text-foreground text-lg mb-2">
+              ProTopo Academy
+            </h3>
+            <p className="text-muted-foreground text-sm max-w-xs leading-relaxed">
+              Treinos personalizados de futebol focados na evolução real dos atletas.
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div className="flex flex-col items-center md:items-start">
-            <h4 className="font-heading font-bold text-foreground text-lg mb-4">Links Rápidos</h4>
-            <div className="flex flex-col gap-2">
-              {quickLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleAnchorClick(e, link.href)}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  {link.label}
-                </a>
-              ))}
+          {/* Navegação */}
+          <div className="flex flex-col items-center sm:items-start">
+            <h4 className="font-heading font-bold text-foreground text-lg mb-4 uppercase tracking-wider text-sm">
+              Navegação
+            </h4>
+            <div className="flex flex-col gap-2.5 items-center sm:items-start">
+              {navLinks.map(renderNavLink)}
             </div>
           </div>
 
-          {/* Contact */}
-          <div className="flex flex-col items-center md:items-start">
-            <h4 className="font-heading font-bold text-foreground text-lg mb-4">Contacto</h4>
+          {/* Legal */}
+          <div className="flex flex-col items-center sm:items-start">
+            <h4 className="font-heading font-bold text-foreground text-lg mb-4 uppercase tracking-wider text-sm">
+              Legal
+            </h4>
+            <div className="flex flex-col gap-2.5 items-center sm:items-start">
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <p className="mt-4 flex items-start gap-2 text-xs text-muted-foreground/80 max-w-[220px] text-center sm:text-left">
+              <ShieldCheck className="w-3.5 h-3.5 text-primary/70 mt-0.5 shrink-0" />
+              <span>Dados protegidos e utilizados apenas para efeitos de contacto.</span>
+            </p>
+          </div>
+
+          {/* Contacto */}
+          <div className="flex flex-col items-center sm:items-start">
+            <h4 className="font-heading font-bold text-foreground text-lg mb-4 uppercase tracking-wider text-sm">
+              Contacto
+            </h4>
             <div className="flex flex-col gap-3">
               <a
                 href="mailto:protopoacademy@gmail.com"
@@ -85,12 +135,13 @@ const Footer = () => {
             </div>
 
             <a
-              href={SIGNUP_URL}
+              href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
+              className="mt-5 inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
             >
-              Inscreve-te
+              <MessageCircle className="w-4 h-4" />
+              Falar no WhatsApp
             </a>
           </div>
         </div>
@@ -98,25 +149,9 @@ const Footer = () => {
         <div className="border-t border-border" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-center">
-          <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-2 text-xs">
-            <p className="text-muted-foreground">
-              © {new Date().getFullYear()} ProTopo Academy. Todos os direitos reservados.
-            </p>
-            <span className="hidden sm:inline text-muted-foreground/40">·</span>
-            <Link
-              to="/politica-privacidade"
-              className="font-medium text-foreground/80 hover:text-primary transition-colors underline underline-offset-4 decoration-primary/40 hover:decoration-primary"
-            >
-              Política de Privacidade
-            </Link>
-            <span className="hidden sm:inline text-muted-foreground/40">·</span>
-            <Link
-              to="/termos-condicoes"
-              className="font-medium text-foreground/80 hover:text-primary transition-colors underline underline-offset-4 decoration-primary/40 hover:decoration-primary"
-            >
-              Termos e Condições
-            </Link>
-          </div>
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} ProTopo Academy. Todos os direitos reservados.
+          </p>
           <button
             onClick={scrollToTop}
             className="p-2 rounded-full border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
