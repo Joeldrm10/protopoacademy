@@ -28,6 +28,8 @@ const Index = () => {
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
       }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     }
   }, [location]);
 
