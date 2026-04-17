@@ -40,13 +40,13 @@ const Navbar = () => {
   const getLinkClasses = (href: string, isMobile = false) => {
     const active = isLinkActive(href);
     const baseClasses = isMobile
-      ? "text-2xl font-heading font-bold uppercase tracking-wider transition-colors relative"
-      : "text-sm font-medium uppercase tracking-wider font-heading transition-colors relative";
+      ? "text-2xl font-heading font-bold uppercase tracking-wider transition-colors"
+      : "text-sm font-medium uppercase tracking-wider font-heading transition-colors";
     
     if (active) {
-      return `${baseClasses} text-primary after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-[2px] after:bg-primary after:rounded-full`;
+      return `${baseClasses} text-primary`;
     }
-    return `${baseClasses} text-muted-foreground hover:text-primary`;
+    return `${baseClasses} text-foreground hover:text-primary`;
   };
 
   const navLinks = [
