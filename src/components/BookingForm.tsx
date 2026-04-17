@@ -37,6 +37,7 @@ import {
 import AnimateOnScroll from "./AnimateOnScroll";
 
 const WHATSAPP_NUMBER = "351911102405";
+const WHATSAPP_DIRECT = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
 const COOLDOWN_MS = 60_000; // 1 minute between submissions
 
 const timeSlots = [
