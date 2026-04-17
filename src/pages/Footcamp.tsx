@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageCircle, Users, Whistle, Camera, UserCheck } from "lucide-react";
+import { ArrowLeft, MessageCircle, Users, Camera, UserCheck } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";

@@ -10,6 +10,7 @@ import SignupCTA from "@/components/SignupCTA";
 import BookingForm from "@/components/BookingForm";
 import TeamSection from "@/components/TeamSection";
 import CampSection from "@/components/CampSection";
+import FootcampHighlight from "@/components/FootcampHighlight";
 import GalleryCTA from "@/components/GalleryCTA";
 import KitSection from "@/components/KitSection";
 import LocationSection from "@/components/LocationSection";
@@ -38,6 +39,7 @@ const Index = () => {
       <ServicesSection />
       <PricingSection />
       <TestimonialsSection />
+      <FootcampHighlight />
       <BookingForm />
       <SignupCTA />
       <TeamSection />
