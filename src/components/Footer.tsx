@@ -135,7 +135,7 @@ const Footer = () => {
             </h4>
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:protopoacademy@gmail.com"
+                href="mailto:protopoacademy@gmail.com?subject=Pedido%20de%20informa%C3%A7%C3%A3o&body=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20treinos."
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
               >
                 <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
