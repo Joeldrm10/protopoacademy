@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
 
-const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
 
 const Navbar = () => {
@@ -51,12 +50,10 @@ const Navbar = () => {
 
   const navLinks = [
     { label: "Início", href: "/" },
-    { label: "Sobre Nós", href: "#sobre" },
-    { label: "Serviços", href: "#servicos" },
-    { label: "Equipa", href: "#equipa" },
+    { label: "Treinos", href: "#servicos" },
     { label: "Galeria", href: "/galeria" },
-    { label: "Localização", href: "#localizacao" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Footcamp", href: "/footcamp" },
+    { label: "Sobre", href: "/sobre" },
   ];
 
   const handleAnchorClick = (e: React.MouseEvent, href: string) => {
@@ -128,12 +125,12 @@ const Navbar = () => {
             WhatsApp
           </a>
           <a
-            href={SIGNUP_URL}
+            href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
           >
-            Inscreve-te
+            Marcar
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </a>
         </div>
@@ -186,12 +183,13 @@ const Navbar = () => {
           WhatsApp
         </a>
         <a
-          href={SIGNUP_URL}
+          href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => setMenuOpen(false)}
           className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
         >
-          Inscreve-te
+          Marcar
           <ArrowRight className="w-5 h-5" />
         </a>
       </div>
