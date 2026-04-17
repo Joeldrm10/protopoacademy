@@ -43,7 +43,7 @@ const Footer = () => {
           key={link.label}
           href={link.href}
           onClick={(e) => handleAnchorClick(e, link.href)}
-          className="text-muted-foreground hover:text-primary transition-colors text-sm"
+          className="text-muted-foreground hover:text-primary transition-colors text-sm leading-relaxed"
         >
           {link.label}
         </a>
@@ -53,7 +53,7 @@ const Footer = () => {
       <Link
         key={link.label}
         to={link.href}
-        className="text-muted-foreground hover:text-primary transition-colors text-sm"
+        className="text-muted-foreground hover:text-primary transition-colors text-sm leading-relaxed"
       >
         {link.label}
       </Link>
@@ -126,10 +126,10 @@ const Footer = () => {
                 href="mailto:protopoacademy@gmail.com"
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
               >
-                <span className="p-1.5 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
-                  <Mail className="w-3.5 h-3.5" />
+                <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
+                  <Mail className="w-4 h-4" />
                 </span>
-                <span className="text-xs">protopoacademy@gmail.com</span>
+                <span className="text-sm">protopoacademy@gmail.com</span>
               </a>
               <a
                 href="https://www.instagram.com/protopo_academy/"
@@ -137,10 +137,10 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
               >
-                <span className="p-1.5 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
-                  <Instagram className="w-3.5 h-3.5" />
+                <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
+                  <Instagram className="w-4 h-4" />
                 </span>
-                <span className="text-xs">@protopo_academy</span>
+                <span className="text-sm">@protopo_academy</span>
               </a>
             </div>
 
@@ -148,9 +148,9 @@ const Footer = () => {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-lg font-heading font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
+              className="mt-5 inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
             >
-              <MessageCircle className="w-3.5 h-3.5" />
+              <MessageCircle className="w-4 h-4" />
               Falar no WhatsApp
             </a>
           </div>
