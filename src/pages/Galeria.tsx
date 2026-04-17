@@ -63,6 +63,10 @@ const Galeria = () => {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("Todos");
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
   const filtered = activeCategory === "Todos"
     ? galleryItems
     : galleryItems.filter((item) => item.category === activeCategory);
