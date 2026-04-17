@@ -17,10 +17,25 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when menu open
+  // Lock body scroll when menu open (preserve scroll position, works on iOS/Android)
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (menuOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+      return () => {
+        const top = document.body.style.top;
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+        window.scrollTo(0, parseInt(top || "0", 10) * -1);
+      };
+    }
   }, [menuOpen]);
 
   const isLinkActive = (href: string) => {
@@ -148,9 +163,16 @@ const Navbar = () => {
 
       {/* Mobile menu - full screen overlay */}
       <div
-        className={`lg:hidden fixed inset-0 bg-background backdrop-blur-md z-[60] flex flex-col items-center justify-center gap-6 transition-all duration-300 ${
+        className={`lg:hidden fixed inset-0 w-screen bg-background backdrop-blur-md z-[60] flex flex-col items-center justify-center gap-6 overflow-y-auto transition-opacity duration-300 ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        style={{
+          height: "100dvh",
+          paddingTop: "calc(env(safe-area-inset-top) + 5rem)",
+          paddingBottom: "calc(env(safe-area-inset-bottom) + 2rem)",
+          paddingLeft: "env(safe-area-inset-left)",
+          paddingRight: "env(safe-area-inset-right)",
+        }}
       >
         {navLinks.map((link) =>
           link.href.startsWith("/") ? (
