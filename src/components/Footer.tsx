@@ -108,7 +108,7 @@ const Footer = () => {
                 <Link
                   key={link.label}
                   to={link.href}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm leading-relaxed"
                 >
                   {link.label}
                 </Link>
