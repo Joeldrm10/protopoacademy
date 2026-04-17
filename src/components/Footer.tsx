@@ -73,37 +73,37 @@ const Footer = () => {
             <h3 className="font-heading font-bold text-foreground text-base mb-2">
               ProTopo Academy
             </h3>
-            <p className="text-muted-foreground text-xs max-w-[200px] leading-relaxed">
+            <p className="text-muted-foreground text-sm max-w-[220px] leading-relaxed">
               Treinos personalizados de futebol focados na evolução real dos atletas.
             </p>
           </div>
 
           {/* Coluna 2 - Navegação */}
           <div className="flex flex-col items-center sm:items-start">
-            <h4 className="font-heading font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
+            <h4 className="font-heading font-bold text-foreground text-base mb-4 uppercase tracking-wider">
               Navegação
             </h4>
-            <div className="flex flex-col gap-2 items-center sm:items-start">
+            <div className="flex flex-col gap-3 items-center sm:items-start">
               {navLinks.map(renderAnchorLink)}
             </div>
           </div>
 
           {/* Coluna 3 - Informação */}
           <div className="flex flex-col items-center sm:items-start">
-            <h4 className="font-heading font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
+            <h4 className="font-heading font-bold text-foreground text-base mb-4 uppercase tracking-wider">
               Informação
             </h4>
-            <div className="flex flex-col gap-2 items-center sm:items-start">
+            <div className="flex flex-col gap-3 items-center sm:items-start">
               {infoLinks.map(renderAnchorLink)}
             </div>
           </div>
 
           {/* Coluna 4 - Legal */}
           <div className="flex flex-col items-center sm:items-start">
-            <h4 className="font-heading font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
+            <h4 className="font-heading font-bold text-foreground text-base mb-4 uppercase tracking-wider">
               Legal
             </h4>
-            <div className="flex flex-col gap-2 items-center sm:items-start">
+            <div className="flex flex-col gap-3 items-center sm:items-start">
               {legalLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -118,10 +118,10 @@ const Footer = () => {
 
           {/* Coluna 5 - Contacto */}
           <div className="flex flex-col items-center sm:items-start">
-            <h4 className="font-heading font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
+            <h4 className="font-heading font-bold text-foreground text-base mb-4 uppercase tracking-wider">
               Contacto
             </h4>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-3">
               <a
                 href="mailto:protopoacademy@gmail.com"
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
