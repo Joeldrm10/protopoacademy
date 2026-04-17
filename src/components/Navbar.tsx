@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
 
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
+const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1%2C%20gostaria%20de%20marcar%20um%20treino%20na%20ProTopo%20Academy.";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -50,10 +50,11 @@ const Navbar = () => {
 
   const navLinks = [
     { label: "Início", href: "/" },
-    { label: "Treinos", href: "#servicos" },
+    { label: "Serviços", href: "/servicos" },
     { label: "Galeria", href: "/galeria" },
     { label: "Footcamp", href: "/footcamp" },
     { label: "Sobre", href: "/sobre" },
+    { label: "Contacto", href: "/contacto" },
   ];
 
   const handleAnchorClick = (e: React.MouseEvent, href: string) => {

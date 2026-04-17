@@ -7,6 +7,8 @@ const services = [
   {
     icon: User,
     title: "Treino Individual",
+    price: "Desde 25€",
+    priceUnit: "/sessão",
     description: "Acompanhamento personalizado para atletas dos 6 aos 16 anos que querem evoluir de forma focada, com treinos adaptados a cada faixa etária.",
     benefits: [
       "Plano 100% adaptado ao atleta",
@@ -19,6 +21,8 @@ const services = [
   {
     icon: Users,
     title: "Treino em Grupo",
+    price: "Sob consulta",
+    priceUnit: "",
     description: "Treinos em grupo para atletas dos 6 aos 16 anos, promovendo evolução, competitividade e espírito de equipa, com exercícios ajustados a cada faixa etária.",
     benefits: [
       "Máximo 6 atletas por grupo",
@@ -78,6 +82,11 @@ const ServicesSection = () => {
                     <GraduationCap className="w-3 h-3 md:w-3.5 md:h-3.5" />
                     6–16 anos
                   </span>
+                </div>
+
+                <div className="flex items-baseline gap-1 mb-4">
+                  <span className="font-heading font-bold text-2xl text-primary">{service.price}</span>
+                  {service.priceUnit && <span className="text-muted-foreground text-sm">{service.priceUnit}</span>}
                 </div>
 
                 <p className="text-muted-foreground text-base leading-relaxed mb-8">
