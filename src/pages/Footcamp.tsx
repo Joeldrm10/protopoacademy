@@ -131,10 +131,13 @@ const Footcamp = () => {
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-6">
                 Mais do que <span className="text-gradient-gold">treinos</span>
               </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">
+              <p className="text-muted-foreground text-lg leading-relaxed mb-4">
                 Durante 4 dias, os atletas participaram em treinos intensivos, sessões técnicas e
                 acompanhamento especializado. Contámos também com profissionais experientes para
                 enriquecer a experiência.
+              </p>
+              <p className="text-foreground/90 text-base md:text-lg font-heading font-semibold">
+                O ProTopo Footcamp é destinado a atletas dos 6 aos 16 anos, com treinos adaptados a cada faixa etária.
               </p>
             </div>
           </AnimateOnScroll>
