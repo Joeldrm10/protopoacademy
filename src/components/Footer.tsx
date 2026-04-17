@@ -33,6 +33,17 @@ const Footer = () => {
     if (location.pathname !== "/") {
       e.preventDefault();
       navigate("/" + href);
+      return;
+    }
+    e.preventDefault();
+    const id = href.replace("#", "");
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -53,6 +64,7 @@ const Footer = () => {
       <Link
         key={link.label}
         to={link.href}
+        onClick={link.href === "/" ? handleHomeClick : undefined}
         className="text-muted-foreground hover:text-primary transition-colors text-sm leading-relaxed"
       >
         {link.label}
