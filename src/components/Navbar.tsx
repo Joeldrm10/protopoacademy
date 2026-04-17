@@ -25,6 +25,7 @@ const Navbar = () => {
   }, [menuOpen]);
 
   const navLinks = [
+    { label: "Início", href: "/" },
     { label: "Sobre Nós", href: "#sobre" },
     { label: "Serviços", href: "#servicos" },
     { label: "Equipa", href: "#equipa" },
@@ -38,6 +39,19 @@ const Navbar = () => {
     if (location.pathname !== "/") {
       e.preventDefault();
       navigate("/" + href);
+      return;
+    }
+    // Already on home — smooth scroll to anchor
+    e.preventDefault();
+    const id = href.replace("#", "");
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    setMenuOpen(false);
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -50,9 +64,9 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-4">
-        <a href="#" className="flex items-center gap-2 relative z-50">
+        <Link to="/" onClick={handleHomeClick} className="flex items-center gap-2 relative z-50" aria-label="Ir para o início">
           <img src={logo} alt="ProTopo Academy" className="h-10" />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-8">
