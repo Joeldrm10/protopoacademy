@@ -66,34 +66,44 @@ const Footer = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[120px] rounded-full bg-[radial-gradient(ellipse,hsl(var(--gold)/0.08)_0%,transparent_70%)] blur-2xl pointer-events-none" />
 
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-12">
-          {/* Brand */}
-          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <img src={logo} alt="ProTopo Academy" className="h-14 mb-4" />
-            <h3 className="font-heading font-bold text-foreground text-lg mb-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 mb-12">
+          {/* Coluna 1 - Marca */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left lg:col-span-1">
+            <img src={logo} alt="ProTopo Academy" className="h-12 mb-3" />
+            <h3 className="font-heading font-bold text-foreground text-base mb-2">
               ProTopo Academy
             </h3>
-            <p className="text-muted-foreground text-sm max-w-xs leading-relaxed">
+            <p className="text-muted-foreground text-xs max-w-[200px] leading-relaxed">
               Treinos personalizados de futebol focados na evolução real dos atletas.
             </p>
           </div>
 
-          {/* Navegação */}
+          {/* Coluna 2 - Navegação */}
           <div className="flex flex-col items-center sm:items-start">
-            <h4 className="font-heading font-bold text-foreground text-lg mb-4 uppercase tracking-wider text-sm">
+            <h4 className="font-heading font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
               Navegação
             </h4>
-            <div className="flex flex-col gap-2.5 items-center sm:items-start">
-              {navLinks.map(renderNavLink)}
+            <div className="flex flex-col gap-2 items-center sm:items-start">
+              {navLinks.map(renderAnchorLink)}
             </div>
           </div>
 
-          {/* Legal */}
+          {/* Coluna 3 - Informação */}
           <div className="flex flex-col items-center sm:items-start">
-            <h4 className="font-heading font-bold text-foreground text-lg mb-4 uppercase tracking-wider text-sm">
+            <h4 className="font-heading font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
+              Informação
+            </h4>
+            <div className="flex flex-col gap-2 items-center sm:items-start">
+              {infoLinks.map(renderAnchorLink)}
+            </div>
+          </div>
+
+          {/* Coluna 4 - Legal */}
+          <div className="flex flex-col items-center sm:items-start">
+            <h4 className="font-heading font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
               Legal
             </h4>
-            <div className="flex flex-col gap-2.5 items-center sm:items-start">
+            <div className="flex flex-col gap-2 items-center sm:items-start">
               {legalLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -104,37 +114,33 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-            <p className="mt-4 flex items-start gap-2 text-xs text-muted-foreground/80 max-w-[220px] text-center sm:text-left">
-              <ShieldCheck className="w-3.5 h-3.5 text-primary/70 mt-0.5 shrink-0" />
-              <span>Dados protegidos e utilizados apenas para efeitos de contacto.</span>
-            </p>
           </div>
 
-          {/* Contacto */}
+          {/* Coluna 5 - Contacto */}
           <div className="flex flex-col items-center sm:items-start">
-            <h4 className="font-heading font-bold text-foreground text-lg mb-4 uppercase tracking-wider text-sm">
+            <h4 className="font-heading font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
               Contacto
             </h4>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2.5">
               <a
                 href="mailto:protopoacademy@gmail.com"
-                className="flex items-center gap-2.5 text-muted-foreground hover:text-primary transition-colors text-sm group"
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
               >
-                <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
-                  <Mail className="w-4 h-4" />
+                <span className="p-1.5 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
+                  <Mail className="w-3.5 h-3.5" />
                 </span>
-                protopoacademy@gmail.com
+                <span className="text-xs">protopoacademy@gmail.com</span>
               </a>
               <a
                 href="https://www.instagram.com/protopo_academy/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 text-muted-foreground hover:text-primary transition-colors text-sm group"
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
               >
-                <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
-                  <Instagram className="w-4 h-4" />
+                <span className="p-1.5 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
+                  <Instagram className="w-3.5 h-3.5" />
                 </span>
-                @protopo_academy
+                <span className="text-xs">@protopo_academy</span>
               </a>
             </div>
 
@@ -142,9 +148,9 @@ const Footer = () => {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
+              className="mt-4 inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-lg font-heading font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="w-3.5 h-3.5" />
               Falar no WhatsApp
             </a>
           </div>
