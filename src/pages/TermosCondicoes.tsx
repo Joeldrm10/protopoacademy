@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const TermosCondicoes = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
