@@ -29,17 +29,17 @@ const HeroSection = () => {
           <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
             Academia de Treinos Personalizados
           </span>
-          <h1 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
+          <h1 className="text-display mb-6">
             Elevamos o teu
             <span className="block text-gradient-gold mt-1">futebol</span>
           </h1>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-4 font-body leading-relaxed">
+          <p className="text-body text-muted-foreground max-w-2xl mx-auto mb-4">
             Treinos personalizados para atletas que querem evoluir, competir e atingir o próximo nível.
           </p>
-          <p className="text-foreground/90 text-base md:text-lg max-w-2xl mx-auto mb-2 font-heading font-semibold">
+          <p className="text-title text-foreground/90 max-w-2xl mx-auto mb-2">
             Treinos para atletas dos 6 aos 16 anos
           </p>
-          <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto mb-10 italic">
+          <p className="text-body-sm text-muted-foreground max-w-2xl mx-auto mb-10 italic">
             Treinos adaptados a cada faixa etária.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

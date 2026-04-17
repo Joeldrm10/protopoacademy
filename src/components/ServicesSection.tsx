@@ -42,13 +42,13 @@ const ServicesSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <AnimateOnScroll className="text-center mb-16">
-          <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
+          <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full text-label mb-6">
             Serviços
           </span>
-          <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+          <h2 className="text-headline mb-4">
             Os nossos <span className="text-gradient-gold">treinos</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-body text-muted-foreground max-w-2xl mx-auto">
             Treinos para atletas dos 6 aos 16 anos. Escolhe o formato que melhor se adapta aos teus objetivos e começa a evoluir hoje.
           </p>
         </AnimateOnScroll>

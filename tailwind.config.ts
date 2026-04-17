@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         heading: ["Bebas Neue", "sans-serif"],
-        body: ["Raleway", "sans-serif"],
+        body: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -20,11 +20,11 @@ const PageHero = ({ title, subtitle, image, highlight }: PageHeroProps) => {
       <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background" />
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="animate-fade-in-up">
-          <h1 className="font-heading font-black text-5xl md:text-7xl leading-[0.95] mb-4">
+          <h1 className="text-headline mb-4">
             {title}
             {highlight && <span className="block text-gradient-gold mt-1">{highlight}</span>}
           </h1>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto font-body leading-relaxed">
+          <p className="text-body text-muted-foreground max-w-2xl mx-auto">
             {subtitle}
           </p>
         </div>
