@@ -127,7 +127,13 @@ const PoliticaPrivacidade = () => {
                 <span className="text-foreground font-medium">Entidade:</span> ProTopo Academy
               </p>
               <p>
-                <span className="text-foreground font-medium">Email:</span> protopoacademy@gmail.com
+                <span className="text-foreground font-medium">Email:</span>{" "}
+                <a
+                  href="mailto:protopoacademy@gmail.com?subject=Pedido%20de%20informa%C3%A7%C3%A3o&body=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20treinos."
+                  className="text-primary hover:underline"
+                >
+                  protopoacademy@gmail.com
+                </a>
               </p>
               <p>
                 <span className="text-foreground font-medium">Instagram:</span>{" "}
