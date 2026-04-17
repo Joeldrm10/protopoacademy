@@ -6,25 +6,25 @@ const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hI
 const services = [
   {
     icon: User,
-    title: "Treinos Individuais",
-    description: "Foco total no atleta, com treino personalizado para evolução técnica e física ao máximo nível.",
+    title: "Treino Individual",
+    description: "Para atletas que querem evolução rápida e personalizada. Foco técnico, físico e mental — ideal para quem quer melhorar um desempenho específico.",
     benefits: [
       "Plano 100% adaptado ao atleta",
       "Atenção exclusiva do treinador",
-      "Evolução técnica acelerada",
-      "Análise detalhada do desempenho",
+      "Foco técnico, físico e mental",
+      "Evolução rápida e mensurável",
     ],
     featured: true,
   },
   {
     icon: Users,
-    title: "Treinos em Pequenos Grupos",
-    description: "Treino competitivo e dinâmico com poucos atletas, mantendo atenção individual e espírito de equipa.",
+    title: "Treino em Grupo",
+    description: "Para atletas que querem evoluir em ambiente competitivo. Trabalhos dinâmicos e jogos reais — ideal para motivação e espírito de equipa.",
     benefits: [
       "Máximo 6 atletas por grupo",
-      "Competitividade saudável",
-      "Exercícios dinâmicos de grupo",
-      "Desenvolvimento do jogo coletivo",
+      "Trabalhos dinâmicos e jogos reais",
+      "Ambiente competitivo e motivador",
+      "Desenvolve o espírito de equipa",
     ],
     featured: false,
   },
@@ -42,10 +42,10 @@ const ServicesSection = () => {
             Serviços
           </span>
           <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-            Tipos de <span className="text-gradient-gold">Treino</span>
+            Os nossos <span className="text-gradient-gold">treinos</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Escolhe o formato que melhor se adapta aos teus objetivos e começa a evoluir.
+            Treinos para jovens dos 6 aos 18 anos. Escolhe o formato que melhor se adapta aos teus objetivos e começa a evoluir hoje.
           </p>
         </AnimateOnScroll>
 
@@ -95,7 +95,7 @@ const ServicesSection = () => {
                       : "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                   }`}
                 >
-                  Marcar treino
+                  Marca já o teu treino
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                 </a>
               </div>
