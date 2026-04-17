@@ -1,4 +1,4 @@
-import { User, Users, CheckCircle, ArrowRight, Baby } from "lucide-react";
+import { User, Users, CheckCircle, ArrowRight, GraduationCap } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
@@ -75,7 +75,7 @@ const ServicesSection = () => {
                     <h3 className="font-heading font-bold text-2xl text-foreground">{service.title}</h3>
                   </div>
                   <span className="flex-shrink-0 inline-flex items-center gap-1.5 bg-primary/10 border border-primary/30 text-primary px-3 py-1 rounded-full font-heading font-semibold uppercase tracking-wider text-[10px] md:text-xs">
-                    <Baby className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                    <GraduationCap className="w-3 h-3 md:w-3.5 md:h-3.5" />
                     6–16 anos
                   </span>
                 </div>
