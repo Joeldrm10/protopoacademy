@@ -75,6 +75,7 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 to={link.href}
+                onClick={link.href === "/" ? handleHomeClick : () => setMenuOpen(false)}
                 className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
               >
                 {link.label}
@@ -131,7 +132,7 @@ const Navbar = () => {
             <Link
               key={link.href}
               to={link.href}
-              onClick={() => setMenuOpen(false)}
+              onClick={link.href === "/" ? handleHomeClick : () => setMenuOpen(false)}
               className="text-2xl font-heading font-bold text-foreground hover:text-primary transition-colors uppercase tracking-wider"
             >
               {link.label}
