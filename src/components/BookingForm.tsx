@@ -50,9 +50,9 @@ const ptPhoneRegex = /^9\d{8}$/;
 
 const bookingSchema = z.object({
   nome: z.string().trim().min(2, "Nome é obrigatório (mínimo 2 caracteres)").max(100, "Máximo 100 caracteres"),
-  idade: z.string().trim().min(1, "Idade é obrigatória").max(3, "Idade inválida").refine(
-    (val) => { const n = Number(val); return !isNaN(n) && n >= 3 && n <= 99; },
-    "Idade deve ser entre 3 e 99"
+  idade: z.string().trim().min(1, "Idade é obrigatória").max(2, "Idade inválida").refine(
+    (val) => { const n = Number(val); return !isNaN(n) && n >= 6 && n <= 16; },
+    "Treinos disponíveis apenas para atletas dos 6 aos 16 anos"
   ),
   telemovel: z.string().trim()
     .refine((val) => ptPhoneRegex.test(val.replace(/\s/g, "")), "Telemóvel inválido. Deve ter 9 dígitos e começar por 9."),
@@ -212,7 +212,7 @@ const BookingForm = () => {
                       <FormItem>
                         <FormLabel className="text-foreground">Idade</FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="Ex: 14" {...field} />
+                          <Input type="number" min={6} max={16} placeholder="Ex: 10 (6 a 16 anos)" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

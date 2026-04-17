@@ -7,7 +7,7 @@ const services = [
   {
     icon: User,
     title: "Treino Individual",
-    description: "Para atletas que querem evolução rápida e personalizada. Foco técnico, físico e mental — ideal para quem quer melhorar um desempenho específico.",
+    description: "Acompanhamento personalizado para atletas dos 6 aos 16 anos que querem evoluir de forma focada, com treinos adaptados a cada faixa etária.",
     benefits: [
       "Plano 100% adaptado ao atleta",
       "Atenção exclusiva do treinador",
@@ -19,7 +19,7 @@ const services = [
   {
     icon: Users,
     title: "Treino em Grupo",
-    description: "Para atletas que querem evoluir em ambiente competitivo. Trabalhos dinâmicos e jogos reais — ideal para motivação e espírito de equipa.",
+    description: "Treinos em grupo para atletas dos 6 aos 16 anos, promovendo evolução, competitividade e espírito de equipa, com exercícios ajustados a cada faixa etária.",
     benefits: [
       "Máximo 6 atletas por grupo",
       "Trabalhos dinâmicos e jogos reais",
@@ -45,7 +45,7 @@ const ServicesSection = () => {
             Os nossos <span className="text-gradient-gold">treinos</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Treinos para jovens dos 6 aos 18 anos. Escolhe o formato que melhor se adapta aos teus objetivos e começa a evoluir hoje.
+            Treinos para atletas dos 6 aos 16 anos. Escolhe o formato que melhor se adapta aos teus objetivos e começa a evoluir hoje.
           </p>
         </AnimateOnScroll>
 

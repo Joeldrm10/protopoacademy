@@ -37,6 +37,7 @@ const PoliticaPrivacidade = () => {
               1. Que dados recolhemos
             </h2>
             <p className="mb-3 text-muted-foreground">
+              Os dados são recolhidos para marcações de atletas com idades compreendidas entre os 6 e os 16 anos.
               Quando preencheres o formulário de marcação, pedimos apenas o essencial:
             </p>
             <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
