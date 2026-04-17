@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import SEO from "@/components/SEO";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -47,7 +48,6 @@ const Galeria = () => {
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   useEffect(() => {
-    document.title = "Galeria | ProTopo Academy";
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
@@ -92,6 +92,14 @@ const Galeria = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <SEO
+        title="Galeria | ProTopo Academy"
+        description="Vê momentos reais dos treinos e da evolução dos nossos atletas."
+        ogTitle="Galeria ProTopo Academy"
+        ogDescription="Momentos de treino, evolução e dedicação."
+        ogImage="/og/galeria.jpg"
+        path="/galeria"
+      />
       <Navbar />
 
       <section className="pt-32 pb-20 md:pt-36 md:pb-28 flex-1">

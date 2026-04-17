@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -27,6 +28,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="ProTopo Academy | Treinos de Futebol Personalizados (6-16 anos)"
+        description="Treinos de futebol personalizados para jovens dos 6 aos 16 anos. Desenvolvimento técnico, físico e mental com acompanhamento profissional."
+        ogTitle="ProTopo Academy | Treinos Personalizados"
+        ogDescription="Evolui no futebol com treinos adaptados à tua idade e nível. Dos 6 aos 16 anos."
+        ogImage="/og/home.jpg"
+        path="/"
+      />
       <Navbar />
       <HeroSection />
       <AboutSection />
