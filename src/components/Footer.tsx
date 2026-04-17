@@ -14,7 +14,7 @@ const Footer = () => {
 
   const navLinks = [
     { label: "Início", href: "/" },
-    { label: "Treinos", href: "#servicos" },
+    { label: "Serviços", href: "#servicos" },
     { label: "Galeria", href: "/galeria" },
     { label: "Footcamp", href: "/footcamp" },
   ];
