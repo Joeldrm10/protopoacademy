@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageCircle, Users, Camera, UserCheck } from "lucide-react";
+import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
@@ -46,12 +47,19 @@ const galleryImages = [
 
 const Footcamp = () => {
   useEffect(() => {
-    document.title = "ProTopo Footcamp – Páscoa 2026 | ProTopo Academy";
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="ProTopo Footcamp | Experiência Intensiva de Futebol"
+        description="Footcamp ProTopo: dias intensivos de treino, foco e evolução. Para jovens atletas dos 6 aos 16 anos."
+        ogTitle="ProTopo Footcamp"
+        ogDescription="Treino intensivo, evolução real e experiência única."
+        ogImage="/og/footcamp.jpg"
+        path="/footcamp"
+      />
       <Navbar />
 
       {/* HERO */}
