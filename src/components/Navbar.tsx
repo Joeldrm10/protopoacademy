@@ -66,9 +66,12 @@ const Navbar = () => {
     const baseClasses = isMobile
       ? "text-2xl font-heading font-bold uppercase tracking-wider transition-colors"
       : "text-sm font-medium uppercase tracking-wider font-heading transition-colors";
-    
+
     if (active) {
       return `${baseClasses} text-primary`;
+    }
+    if (isMobile) {
+      return `${baseClasses} text-white/90 hover:text-primary`;
     }
     return `${baseClasses} text-foreground hover:text-primary`;
   };
@@ -173,11 +176,14 @@ const Navbar = () => {
 
       {/* Mobile menu - full screen overlay */}
       <div
-        className={`lg:hidden fixed inset-0 w-screen bg-background backdrop-blur-md z-[60] flex flex-col items-center justify-center gap-6 overflow-y-auto transition-opacity duration-300 ${
-          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`lg:hidden fixed inset-0 w-screen z-[60] flex flex-col items-center justify-center gap-6 overflow-y-auto transition-all duration-300 ease-out ${
+          menuOpen ? "opacity-100 pointer-events-auto backdrop-blur-xl" : "opacity-0 pointer-events-none backdrop-blur-0"
         }`}
         style={{
           height: "100dvh",
+          backgroundColor: "rgba(0, 0, 0, 0.72)",
+          WebkitBackdropFilter: menuOpen ? "blur(16px) saturate(140%)" : "blur(0px)",
+          backdropFilter: menuOpen ? "blur(16px) saturate(140%)" : "blur(0px)",
           paddingTop: "calc(env(safe-area-inset-top) + 5rem)",
           paddingBottom: "calc(env(safe-area-inset-bottom) + 2rem)",
           paddingLeft: "env(safe-area-inset-left)",
