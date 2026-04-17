@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ArrowRight, X, Menu } from "lucide-react";
+import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
+const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -76,6 +77,15 @@ const Navbar = () => {
             )
           )}
           <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
+          >
+            <MessageCircle className="w-4 h-4" />
+            WhatsApp
+          </a>
+          <a
             href={SIGNUP_URL}
             target="_blank"
             rel="noopener noreferrer"
@@ -124,10 +134,20 @@ const Navbar = () => {
           )
         )}
         <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setMenuOpen(false)}
+          className="mt-4 inline-flex items-center gap-2 bg-[#25D366] text-white px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
+        >
+          <MessageCircle className="w-5 h-5" />
+          WhatsApp
+        </a>
+        <a
           href={SIGNUP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
+          className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
         >
           Inscreve-te
           <ArrowRight className="w-5 h-5" />
