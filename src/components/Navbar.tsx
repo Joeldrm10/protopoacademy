@@ -24,6 +24,31 @@ const Navbar = () => {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
+  const isLinkActive = (href: string) => {
+    // For full pages like /galeria, /footcamp
+    if (href.startsWith("/") && href !== "/") {
+      return location.pathname === href;
+    }
+    // For home page
+    if (href === "/") {
+      return location.pathname === "/" && !location.hash;
+    }
+    // For anchor links on home page
+    return location.pathname === "/" && location.hash === href;
+  };
+
+  const getLinkClasses = (href: string, isMobile = false) => {
+    const active = isLinkActive(href);
+    const baseClasses = isMobile
+      ? "text-2xl font-heading font-bold uppercase tracking-wider transition-colors relative"
+      : "text-sm font-medium uppercase tracking-wider font-heading transition-colors relative";
+    
+    if (active) {
+      return `${baseClasses} text-primary after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-[2px] after:bg-primary after:rounded-full`;
+    }
+    return `${baseClasses} text-muted-foreground hover:text-primary`;
+  };
+
   const navLinks = [
     { label: "Início", href: "/" },
     { label: "Sobre Nós", href: "#sobre" },
@@ -78,7 +103,7 @@ const Navbar = () => {
                 key={link.href}
                 to={link.href}
                 onClick={link.href === "/" ? handleHomeClick : () => setMenuOpen(false)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
+                className={getLinkClasses(link.href)}
               >
                 {link.label}
               </Link>
@@ -87,7 +112,7 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleAnchorClick(e, link.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wider font-heading"
+                className={getLinkClasses(link.href)}
               >
                 {link.label}
               </a>
@@ -135,7 +160,7 @@ const Navbar = () => {
               key={link.href}
               to={link.href}
               onClick={link.href === "/" ? handleHomeClick : () => setMenuOpen(false)}
-              className="text-2xl font-heading font-bold text-foreground hover:text-primary transition-colors uppercase tracking-wider"
+              className={getLinkClasses(link.href, true)}
             >
               {link.label}
             </Link>
@@ -144,7 +169,7 @@ const Navbar = () => {
               key={link.href}
               href={link.href}
               onClick={(e) => handleAnchorClick(e, link.href)}
-              className="text-2xl font-heading font-bold text-foreground hover:text-primary transition-colors uppercase tracking-wider"
+              className={getLinkClasses(link.href, true)}
             >
               {link.label}
             </a>
