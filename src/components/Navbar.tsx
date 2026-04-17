@@ -148,9 +148,16 @@ const Navbar = () => {
 
       {/* Mobile menu - full screen overlay */}
       <div
-        className={`lg:hidden fixed inset-0 bg-background backdrop-blur-md z-[60] flex flex-col items-center justify-center gap-6 transition-all duration-300 ${
+        className={`lg:hidden fixed inset-0 w-screen bg-background backdrop-blur-md z-[60] flex flex-col items-center justify-center gap-6 overflow-y-auto transition-opacity duration-300 ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        style={{
+          height: "100dvh",
+          paddingTop: "calc(env(safe-area-inset-top) + 5rem)",
+          paddingBottom: "calc(env(safe-area-inset-bottom) + 2rem)",
+          paddingLeft: "env(safe-area-inset-left)",
+          paddingRight: "env(safe-area-inset-right)",
+        }}
       >
         {navLinks.map((link) =>
           link.href.startsWith("/") ? (
