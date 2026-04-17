@@ -10,11 +10,11 @@ const SignupCTA = () => {
       <div className="container mx-auto px-4 relative z-10">
         <AnimateOnScroll>
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="font-heading font-bold text-2xl md:text-4xl mb-4 text-foreground">
+            <h2 className="text-headline mb-4 text-foreground">
               Garante já a tua vaga nos{" "}
               <span className="text-gradient-gold">treinos personalizados</span>
             </h2>
-            <p className="text-muted-foreground text-base md:text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-body text-muted-foreground mb-10 max-w-xl mx-auto">
               Vagas limitadas. Inscreve-te agora e começa a tua evolução.
             </p>
             <a
