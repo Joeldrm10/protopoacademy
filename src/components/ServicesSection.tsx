@@ -65,13 +65,18 @@ const ServicesSection = () => {
                   </span>
                 )}
 
-                <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
-                    service.featured ? "bg-primary/20" : "bg-primary/10"
-                  }`}>
-                    <service.icon className="w-7 h-7 text-primary" />
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
+                      service.featured ? "bg-primary/20" : "bg-primary/10"
+                    }`}>
+                      <service.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <h3 className="font-heading font-bold text-2xl text-foreground">{service.title}</h3>
                   </div>
-                  <h3 className="font-heading font-bold text-2xl text-foreground">{service.title}</h3>
+                  <span className="flex-shrink-0 inline-block bg-primary/10 border border-primary/30 text-primary px-3 py-1 rounded-full font-heading font-semibold uppercase tracking-wider text-[10px] md:text-xs">
+                    6–16 anos
+                  </span>
                 </div>
 
                 <p className="text-muted-foreground text-base leading-relaxed mb-8">
