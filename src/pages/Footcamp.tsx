@@ -73,6 +73,8 @@ const testimonials = [
 ];
 
 const Footcamp = () => {
+  const [testemunhoOpen, setTestemunhoOpen] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
