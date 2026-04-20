@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Handshake, Zap, Target, Trophy, Medal } from "lucide-react";
+import { ArrowLeft, MessageCircle, Users, Camera, UserCheck } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
