@@ -47,7 +47,7 @@ const galleryImages = [
   { src: galleryTeamFull, alt: "Foto de grupo do Footcamp" },
 ];
 
-const INSTAGRAM_URL = "https://www.instagram.com/protopo_academy/";
+
 
 const testimonials = [
   {
