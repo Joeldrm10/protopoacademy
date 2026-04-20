@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Quote, Instagram } from "lucide-react";
+import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Quote, Star } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
+import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
 
 import footcampHero from "@/assets/footcamp-hero.jpg";
 import footcampIns from "@/assets/footcamp-ines.jpg";
