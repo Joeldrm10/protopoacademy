@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Quote, Instagram } from "lucide-react";
+import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Quote, Star } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
+import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
 
 import footcampHero from "@/assets/footcamp-hero.jpg";
 import footcampIns from "@/assets/footcamp-ines.jpg";
@@ -46,7 +47,7 @@ const galleryImages = [
   { src: galleryTeamFull, alt: "Foto de grupo do Footcamp" },
 ];
 
-const INSTAGRAM_URL = "https://www.instagram.com/protopo_academy/";
+
 
 const testimonials = [
   {
@@ -72,6 +73,8 @@ const testimonials = [
 ];
 
 const Footcamp = () => {
+  const [testemunhoOpen, setTestemunhoOpen] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -297,15 +300,14 @@ const Footcamp = () => {
               <p className="text-muted-foreground mb-6">
                 Partilha a tua experiência e ajuda outros pais e atletas.
               </p>
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
+              <button
+                type="button"
+                onClick={() => setTestemunhoOpen(true)}
+                className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
               >
-                <Instagram className="w-5 h-5" />
+                <Star className="w-5 h-5" />
                 Deixar a minha opinião
-              </a>
+              </button>
             </div>
           </AnimateOnScroll>
         </div>
@@ -341,6 +343,8 @@ const Footcamp = () => {
       </section>
 
       <Footer />
+
+      <TestemunhoFormDialog open={testemunhoOpen} onOpenChange={setTestemunhoOpen} />
     </div>
   );
 };
