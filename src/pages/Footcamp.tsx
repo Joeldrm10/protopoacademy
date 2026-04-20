@@ -343,6 +343,8 @@ const Footcamp = () => {
       </section>
 
       <Footer />
+
+      <TestemunhoFormDialog open={testemunhoOpen} onOpenChange={setTestemunhoOpen} />
     </div>
   );
 };
