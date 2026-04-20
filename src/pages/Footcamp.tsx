@@ -5,6 +5,7 @@ import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
+import CountUp from "@/components/CountUp";
 
 import footcampHero from "@/assets/footcamp-hero.jpg";
 import footcampIns from "@/assets/footcamp-ines.jpg";
@@ -22,10 +23,10 @@ import galleryCoach from "@/assets/gallery-coach-new.jpg";
 const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20participar%20no%20pr%C3%B3ximo%20ProTopo%20Footcamp";
 
 const stats = [
-  { value: "43", label: "Atletas", icon: Users },
-  { value: "4", label: "Treinadores Principais", icon: UserCheck },
-  { value: "8", label: "Treinadores Adjuntos", icon: UserCheck },
-  { value: "1", label: "Fotógrafo", icon: Camera },
+  { value: 43, label: "Atletas", icon: Users },
+  { value: 4, label: "Treinadores Principais", icon: UserCheck },
+  { value: 8, label: "Treinadores Adjuntos", icon: UserCheck },
+  { value: 1, label: "Fotógrafo", icon: Camera },
 ];
 
 const guests = [
@@ -113,14 +114,22 @@ const Footcamp = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             {stats.map((stat, i) => (
               <AnimateOnScroll key={stat.label} delay={i * 100}>
-                <div className="bg-card border border-border rounded-2xl p-6 md:p-8 text-center hover:border-primary/40 transition-colors h-full">
-                  <stat.icon className="w-8 h-8 text-primary mx-auto mb-4" />
-                  <p className="font-heading font-black text-5xl md:text-6xl text-gradient-gold mb-2">
-                    {stat.value}
-                  </p>
-                  <p className="text-muted-foreground text-sm font-heading uppercase tracking-wider">
-                    {stat.label}
-                  </p>
+                <div className="group relative bg-card border border-border rounded-2xl p-6 md:p-8 text-center hover:border-primary/60 transition-all duration-500 h-full overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.4)]">
+                  {/* Glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                  <div className="relative z-10">
+                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
+                      <stat.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <p className="font-heading font-black text-5xl md:text-6xl text-gradient-gold mb-2 tabular-nums">
+                      <CountUp end={stat.value} />
+                    </p>
+                    <p className="text-muted-foreground text-xs md:text-sm font-heading uppercase tracking-wider">
+                      {stat.label}
+                    </p>
+                  </div>
                 </div>
               </AnimateOnScroll>
             ))}
