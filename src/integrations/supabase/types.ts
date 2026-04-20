@@ -50,6 +50,36 @@ export type Database = {
         }
         Relationships: []
       }
+      testemunhos: {
+        Row: {
+          aprovado: boolean
+          avaliacao: number
+          created_at: string
+          experiencia: string
+          id: string
+          idade: string | null
+          nome: string
+        }
+        Insert: {
+          aprovado?: boolean
+          avaliacao: number
+          created_at?: string
+          experiencia: string
+          id?: string
+          idade?: string | null
+          nome: string
+        }
+        Update: {
+          aprovado?: boolean
+          avaliacao?: number
+          created_at?: string
+          experiencia?: string
+          id?: string
+          idade?: string | null
+          nome?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
