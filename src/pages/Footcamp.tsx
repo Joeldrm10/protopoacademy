@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageCircle, Users, Camera, UserCheck } from "lucide-react";
+import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Handshake, Zap, Target, Trophy, Medal } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -33,6 +33,39 @@ const guests = [
   { name: "Inês Conceição", role: "Psicóloga", image: footcampIns },
   { name: "Filipe Batista", role: "Árbitro", image: footcampFilipe },
   { name: "João Pereira", role: "Ex Jogador Profissional", image: footcampJoao },
+];
+
+const timeline = [
+  {
+    day: "Dia 1",
+    title: "Integração e fundamentos",
+    description: "Adaptação ao grupo, exercícios técnicos e primeiros desafios.",
+    icon: Handshake,
+  },
+  {
+    day: "Dia 2",
+    title: "Drible e velocidade",
+    description: "Trabalho individual com bola e desenvolvimento da rapidez.",
+    icon: Zap,
+  },
+  {
+    day: "Dia 3",
+    title: "Finalização e jogo",
+    description: "Treino de remate e aplicação em situações reais.",
+    icon: Target,
+  },
+  {
+    day: "Dia 4",
+    title: "Competição e desafios",
+    description: "Jogos e desafios para estimular competitividade.",
+    icon: Trophy,
+  },
+  {
+    day: "Dia 5",
+    title: "Torneio final e prémios",
+    description: "Competição final com entrega de prémios e reconhecimento.",
+    icon: Medal,
+  },
 ];
 
 const galleryImages = [
@@ -184,8 +217,70 @@ const Footcamp = () => {
         </div>
       </section>
 
-      {/* GALERIA */}
+
+      {/* CRONOGRAMA / TIMELINE */}
       <section className="py-24 bg-secondary">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="text-center mb-16 max-w-3xl mx-auto">
+              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
+                ⚽ Cronograma
+              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                Como funciona o <span className="text-gradient-gold">Footcamp</span>
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Uma experiência organizada para evolução diária.
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="relative max-w-4xl mx-auto">
+            {/* Linha vertical */}
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/40 to-transparent md:-translate-x-1/2" aria-hidden="true" />
+
+            <div className="space-y-8 md:space-y-12">
+              {timeline.map((item, i) => {
+                const isLeft = i % 2 === 0;
+                return (
+                  <AnimateOnScroll key={item.day} delay={i * 100}>
+                    <div className={`relative flex items-start gap-6 md:gap-0 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"}`}>
+                      {/* Ponto central com ícone */}
+                      <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-10 flex items-center justify-center w-12 h-12 rounded-full bg-background border-2 border-primary shadow-[0_0_20px_hsl(var(--primary)/0.4)]">
+                        <item.icon className="w-5 h-5 text-primary" />
+                      </div>
+
+                      {/* Espaço lateral mobile */}
+                      <div className="w-12 shrink-0 md:hidden" />
+
+                      {/* Card */}
+                      <div className={`flex-1 md:max-w-[calc(50%-2rem)] ${isLeft ? "md:pr-12 md:text-right" : "md:pl-12 md:text-left"}`}>
+                        <div className="group bg-card border border-border rounded-2xl p-6 hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
+                          <p className="text-primary font-heading font-bold uppercase tracking-[0.2em] text-xs mb-2">
+                            {item.day}
+                          </p>
+                          <h3 className="font-heading font-bold text-xl md:text-2xl mb-2 text-foreground">
+                            {item.title}
+                          </h3>
+                          <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Spacer do outro lado em desktop */}
+                      <div className="hidden md:block md:flex-1 md:max-w-[calc(50%-2rem)]" />
+                    </div>
+                  </AnimateOnScroll>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* GALERIA */}
+      <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <AnimateOnScroll>
             <div className="text-center mb-16 max-w-3xl mx-auto">
