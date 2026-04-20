@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Quote } from "lucide-react";
+import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Quote, Instagram } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -46,26 +46,28 @@ const galleryImages = [
   { src: galleryTeamFull, alt: "Foto de grupo do Footcamp" },
 ];
 
+const INSTAGRAM_URL = "https://www.instagram.com/protopo_academy/";
+
 const testimonials = [
   {
-    quote: "O meu filho voltou do Footcamp completamente transformado. Mais confiante, mais focado e cheio de vontade de treinar. Uma experiência que recomendo a todos os pais.",
-    name: "Sandra Almeida",
-    role: "Mãe do Tomás, 11 anos",
+    quote: "O meu filho adorou a experiência. Evoluiu bastante e ficou com ainda mais motivação para o futebol.",
+    name: "Pai de atleta",
+    role: "Encarregado de educação",
   },
   {
-    quote: "Foram os melhores 4 dias da minha vida. Aprendi imenso, fiz amigos novos e os treinadores são super exigentes mas divertidos. Já estou à espera da próxima edição!",
-    name: "Diogo Ferreira",
-    role: "Atleta, 13 anos",
+    quote: "Treinos bem organizados, ambiente incrível e muito profissionalismo.",
+    name: "Mãe de atleta",
+    role: "Encarregada de educação",
   },
   {
-    quote: "A organização é impecável. Profissionalismo do início ao fim, com atenção a cada detalhe. Nota-se que toda a equipa está focada na evolução real dos miúdos.",
-    name: "Ricardo Sousa",
-    role: "Pai da Beatriz, 9 anos",
+    quote: "Aprendi muito durante a semana e diverti-me ao mesmo tempo.",
+    name: "Atleta",
+    role: "Participante",
   },
   {
-    quote: "Adorei tudo. Os exercícios, os jogos, o torneio final. Voltei para casa com vontade de treinar mais e melhor todos os dias.",
-    name: "Martim Costa",
-    role: "Atleta, 10 anos",
+    quote: "A organização é impecável e nota-se que toda a equipa está focada na evolução real dos miúdos.",
+    name: "Pai de atleta",
+    role: "Encarregado de educação",
   },
 ];
 
@@ -267,7 +269,7 @@ const Footcamp = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {testimonials.map((t, i) => (
-              <AnimateOnScroll key={t.name} delay={i * 100}>
+              <AnimateOnScroll key={t.name + i} delay={i * 100}>
                 <div className="group relative h-full bg-card border border-border rounded-2xl p-8 hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
                   <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/15 group-hover:text-primary/30 transition-colors" />
                   <p className="text-foreground/90 text-base md:text-lg leading-relaxed mb-6 font-body italic">
@@ -286,6 +288,26 @@ const Footcamp = () => {
               </AnimateOnScroll>
             ))}
           </div>
+
+          <AnimateOnScroll delay={200}>
+            <div className="mt-14 max-w-2xl mx-auto bg-card/60 border border-border rounded-2xl p-8 md:p-10 text-center backdrop-blur-sm">
+              <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-3">
+                Já participaste no Footcamp?
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                Partilha a tua experiência e ajuda outros pais e atletas.
+              </p>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
+              >
+                <Instagram className="w-5 h-5" />
+                Deixar a minha opinião
+              </a>
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
