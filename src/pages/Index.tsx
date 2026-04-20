@@ -29,10 +29,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="ProTopo Academy | Treinos de Futebol Personalizados (6-16 anos)"
-        description="Treinos de futebol personalizados para jovens dos 6 aos 16 anos. Desenvolvimento técnico, físico e mental com acompanhamento profissional."
-        ogTitle="ProTopo Academy | Treinos Personalizados"
-        ogDescription="Evolui no futebol com treinos adaptados à tua idade e nível. Dos 6 aos 16 anos."
+        title="ProTopo Academy | Treinos de Futebol em Ourém (6-16 anos)"
+        description="Treinos de futebol para jovens dos 6 aos 16 anos. Evolui com treinos adaptados a cada faixa etária na ProTopo Academy. Marca já pelo WhatsApp."
+        ogTitle="ProTopo Academy | Treinos em Ourém"
+        ogDescription="Treinos de futebol personalizados para jovens dos 6 aos 16 anos. Evolui com treinos adaptados a cada faixa etária."
         ogImage="/og/home.jpg"
         path="/"
       />
