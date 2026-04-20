@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageCircle, Users, Camera, UserCheck } from "lucide-react";
+import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Quote } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -44,6 +44,29 @@ const galleryImages = [
   { src: galleryTalk, alt: "Treinador a conversar com atletas" },
   { src: galleryCoach, alt: "Acompanhamento individual" },
   { src: galleryTeamFull, alt: "Foto de grupo do Footcamp" },
+];
+
+const testimonials = [
+  {
+    quote: "O meu filho voltou do Footcamp completamente transformado. Mais confiante, mais focado e cheio de vontade de treinar. Uma experiência que recomendo a todos os pais.",
+    name: "Sandra Almeida",
+    role: "Mãe do Tomás, 11 anos",
+  },
+  {
+    quote: "Foram os melhores 4 dias da minha vida. Aprendi imenso, fiz amigos novos e os treinadores são super exigentes mas divertidos. Já estou à espera da próxima edição!",
+    name: "Diogo Ferreira",
+    role: "Atleta, 13 anos",
+  },
+  {
+    quote: "A organização é impecável. Profissionalismo do início ao fim, com atenção a cada detalhe. Nota-se que toda a equipa está focada na evolução real dos miúdos.",
+    name: "Ricardo Sousa",
+    role: "Pai da Beatriz, 9 anos",
+  },
+  {
+    quote: "Adorei tudo. Os exercícios, os jogos, o torneio final. Voltei para casa com vontade de treinar mais e melhor todos os dias.",
+    name: "Martim Costa",
+    role: "Atleta, 10 anos",
+  },
 ];
 
 const Footcamp = () => {
@@ -222,6 +245,47 @@ const Footcamp = () => {
               <span className="block text-gradient-gold mt-1">desta edição.</span>
             </p>
           </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* TESTEMUNHOS */}
+      <section className="py-24 bg-secondary">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="text-center mb-16 max-w-3xl mx-auto">
+              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
+                💬 Testemunhos
+              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                O que dizem <span className="text-gradient-gold">pais e atletas</span>
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Histórias reais de quem já viveu o Footcamp.
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {testimonials.map((t, i) => (
+              <AnimateOnScroll key={t.name} delay={i * 100}>
+                <div className="group relative h-full bg-card border border-border rounded-2xl p-8 hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
+                  <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/15 group-hover:text-primary/30 transition-colors" />
+                  <p className="text-foreground/90 text-base md:text-lg leading-relaxed mb-6 font-body italic">
+                    "{t.quote}"
+                  </p>
+                  <div className="flex items-center gap-4 pt-4 border-t border-border">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-gold text-primary-foreground font-heading font-bold text-lg shrink-0">
+                      {t.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-heading font-bold text-foreground">{t.name}</p>
+                      <p className="text-muted-foreground text-sm">{t.role}</p>
+                    </div>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
         </div>
       </section>
 
