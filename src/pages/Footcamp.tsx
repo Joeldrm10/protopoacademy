@@ -300,15 +300,14 @@ const Footcamp = () => {
               <p className="text-muted-foreground mb-6">
                 Partilha a tua experiência e ajuda outros pais e atletas.
               </p>
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
+              <button
+                type="button"
+                onClick={() => setTestemunhoOpen(true)}
+                className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
               >
-                <Instagram className="w-5 h-5" />
+                <Star className="w-5 h-5" />
                 Deixar a minha opinião
-              </a>
+              </button>
             </div>
           </AnimateOnScroll>
         </div>
