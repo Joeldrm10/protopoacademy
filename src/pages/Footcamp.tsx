@@ -35,39 +35,6 @@ const guests = [
   { name: "João Pereira", role: "Ex Jogador Profissional", image: footcampJoao },
 ];
 
-const timeline = [
-  {
-    day: "Dia 1",
-    title: "Integração e fundamentos",
-    description: "Adaptação ao grupo, exercícios técnicos e primeiros desafios.",
-    icon: Handshake,
-  },
-  {
-    day: "Dia 2",
-    title: "Drible e velocidade",
-    description: "Trabalho individual com bola e desenvolvimento da rapidez.",
-    icon: Zap,
-  },
-  {
-    day: "Dia 3",
-    title: "Finalização e jogo",
-    description: "Treino de remate e aplicação em situações reais.",
-    icon: Target,
-  },
-  {
-    day: "Dia 4",
-    title: "Competição e desafios",
-    description: "Jogos e desafios para estimular competitividade.",
-    icon: Trophy,
-  },
-  {
-    day: "Dia 5",
-    title: "Torneio final e prémios",
-    description: "Competição final com entrega de prémios e reconhecimento.",
-    icon: Medal,
-  },
-];
-
 const galleryImages = [
   { src: galleryFootcamp, alt: "Reunião da equipa no campo" },
   { src: gallerySprint, alt: "Atleta em sprint durante o treino" },
