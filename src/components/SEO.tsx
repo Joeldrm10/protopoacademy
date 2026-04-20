@@ -24,6 +24,7 @@ const SEO = ({ title, description, ogTitle, ogDescription, ogImage, path = "" }:
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
+      <meta property="og:site_name" content="ProTopo Academy" />
       <meta property="og:title" content={ogTitle || title} />
       <meta property="og:description" content={ogDescription || description} />
       <meta property="og:image" content={image} />
