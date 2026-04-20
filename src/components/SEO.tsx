@@ -9,7 +9,7 @@ interface SEOProps {
   path?: string;
 }
 
-const SITE_URL = "https://protopoacademy.lovable.app";
+const SITE_URL = "https://protopoacademy.pt";
 const DEFAULT_IMAGE = "/og-image.jpg";
 
 const SEO = ({ title, description, ogTitle, ogDescription, ogImage, path = "" }: SEOProps) => {
