@@ -144,9 +144,6 @@ const Footcamp = () => {
                 acompanhamento especializado. Contámos também com profissionais experientes para
                 enriquecer a experiência.
               </p>
-              <p className="text-foreground/90 text-base md:text-lg font-heading font-semibold">
-                O ProTopo Footcamp é destinado a atletas dos 6 aos 16 anos, com treinos adaptados a cada faixa etária.
-              </p>
             </div>
           </AnimateOnScroll>
 
