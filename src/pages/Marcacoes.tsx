@@ -23,6 +23,8 @@ import {
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import TestemunhosPanel from "@/components/admin/TestemunhosPanel";
 
 type Marcacao = {
   id: string;
