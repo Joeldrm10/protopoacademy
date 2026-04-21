@@ -39,12 +39,12 @@ const FinalCTA = () => {
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
-                href="https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino"
+                href="https://wa.me/351911102405?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20ProTopo%20Academy%20e%20gostava%20de%20saber%20mais%20sobre%20os%20treinos."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#25D366] text-white px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl"
               >
-                Fala connosco no WhatsApp
+                Tirar dúvidas no WhatsApp
               </a>
             </div>
           </div>
