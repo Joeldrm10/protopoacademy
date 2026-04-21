@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
+import { supabase } from "@/integrations/supabase/client";
 
 import footcampHero from "@/assets/footcamp-hero.jpg";
 import footcampIns from "@/assets/footcamp-ines.jpg";
@@ -72,12 +73,41 @@ const testimonials = [
   },
 ];
 
+type DisplayTestemunho = {
+  quote: string;
+  name: string;
+  role: string;
+};
+
 const Footcamp = () => {
   const [testemunhoOpen, setTestemunhoOpen] = useState(false);
+  const [approved, setApproved] = useState<DisplayTestemunho[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    supabase
+      .from("testemunhos")
+      .select("nome, idade, experiencia")
+      .eq("aprovado", true)
+      .order("created_at", { ascending: false })
+      .limit(8)
+      .then(({ data }) => {
+        if (data) {
+          setApproved(
+            data.map((t) => ({
+              quote: t.experiencia,
+              name: t.nome,
+              role: t.idade ? `${t.idade}` : "Testemunho real",
+            }))
+          );
+        }
+      });
   }, []);
+
+  const displayed: DisplayTestemunho[] = [
+    ...approved,
+    ...testimonials.slice(0, Math.max(0, 4 - approved.length)),
+  ].slice(0, 6);
 
   return (
     <div className="min-h-screen bg-background">
@@ -271,7 +301,7 @@ const Footcamp = () => {
           </AnimateOnScroll>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {testimonials.map((t, i) => (
+            {displayed.map((t, i) => (
               <AnimateOnScroll key={t.name + i} delay={i * 100}>
                 <div className="group relative h-full bg-card border border-border rounded-2xl p-8 hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
                   <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/15 group-hover:text-primary/30 transition-colors" />
