@@ -2,7 +2,7 @@ import { ArrowRight, ChevronDown, MessageCircle } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
+const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20ProTopo%20Academy%20e%20gostava%20de%20saber%20mais%20sobre%20os%20treinos.";
 
 const HeroSection = () => {
   return (
