@@ -281,27 +281,62 @@ const Footcamp = () => {
             </div>
           </AnimateOnScroll>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {displayed.map((t, i) => (
-              <AnimateOnScroll key={t.name + i} delay={i * 100}>
-                <div className="group relative h-full bg-card border border-border rounded-2xl p-8 hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
-                  <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/15 group-hover:text-primary/30 transition-colors" />
-                  <p className="text-foreground/90 text-base md:text-lg leading-relaxed mb-6 font-body italic">
-                    "{t.quote}"
-                  </p>
-                  <div className="flex items-center gap-4 pt-4 border-t border-border">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-gold text-primary-foreground font-heading font-bold text-lg shrink-0">
-                      {t.name.charAt(0)}
+          {loadingTestemunhos ? null : displayed.length === 0 ? (
+            <AnimateOnScroll>
+              <div className="max-w-2xl mx-auto text-center py-10 px-6 bg-card/40 border border-dashed border-border rounded-2xl">
+                <Quote className="w-10 h-10 text-primary/30 mx-auto mb-4" />
+                <p className="text-muted-foreground text-lg italic">
+                  Ainda não existem testemunhos aprovados.
+                  <br />
+                  Sê o primeiro a partilhar a tua experiência.
+                </p>
+              </div>
+            </AnimateOnScroll>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {displayed.map((t, i) => (
+                <AnimateOnScroll key={t.id} delay={i * 100}>
+                  <div className="group relative h-full bg-card border border-border rounded-2xl p-8 hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
+                    <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/15 group-hover:text-primary/30 transition-colors" />
+                    <div className="flex gap-1 mb-4">
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <Star
+                          key={n}
+                          className={
+                            n <= t.rating
+                              ? "w-4 h-4 fill-primary text-primary"
+                              : "w-4 h-4 text-muted-foreground/30"
+                          }
+                        />
+                      ))}
                     </div>
-                    <div>
-                      <p className="font-heading font-bold text-foreground">{t.name}</p>
-                      <p className="text-muted-foreground text-sm">{t.role}</p>
+                    <p className="text-foreground/90 text-base md:text-lg leading-relaxed mb-6 font-body italic">
+                      "{t.quote}"
+                    </p>
+                    <div className="flex items-center gap-4 pt-4 border-t border-border">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-gold text-primary-foreground font-heading font-bold text-lg shrink-0">
+                        {t.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-heading font-bold text-foreground truncate">{t.name}</p>
+                        <p className="text-muted-foreground text-sm">
+                          {t.role}
+                          <span className="text-muted-foreground/60">
+                            {" · "}
+                            {new Date(t.createdAt).toLocaleDateString("pt-PT", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </span>
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
+                </AnimateOnScroll>
+              ))}
+            </div>
+          )}
 
           <AnimateOnScroll delay={200}>
             <div className="mt-14 max-w-2xl mx-auto bg-card/60 border border-border rounded-2xl p-8 md:p-10 text-center backdrop-blur-sm">
