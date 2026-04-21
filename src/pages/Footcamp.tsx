@@ -73,12 +73,41 @@ const testimonials = [
   },
 ];
 
+type DisplayTestemunho = {
+  quote: string;
+  name: string;
+  role: string;
+};
+
 const Footcamp = () => {
   const [testemunhoOpen, setTestemunhoOpen] = useState(false);
+  const [approved, setApproved] = useState<DisplayTestemunho[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    supabase
+      .from("testemunhos")
+      .select("nome, idade, experiencia")
+      .eq("aprovado", true)
+      .order("created_at", { ascending: false })
+      .limit(8)
+      .then(({ data }) => {
+        if (data) {
+          setApproved(
+            data.map((t) => ({
+              quote: t.experiencia,
+              name: t.nome,
+              role: t.idade ? `${t.idade}` : "Testemunho real",
+            }))
+          );
+        }
+      });
   }, []);
+
+  const displayed: DisplayTestemunho[] = [
+    ...approved,
+    ...testimonials.slice(0, Math.max(0, 4 - approved.length)),
+  ].slice(0, 6);
 
   return (
     <div className="min-h-screen bg-background">
