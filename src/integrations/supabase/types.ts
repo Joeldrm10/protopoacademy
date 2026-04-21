@@ -55,6 +55,7 @@ export type Database = {
           aprovado: boolean
           avaliacao: number
           created_at: string
+          estado: string
           experiencia: string
           id: string
           idade: string | null
@@ -64,6 +65,7 @@ export type Database = {
           aprovado?: boolean
           avaliacao: number
           created_at?: string
+          estado?: string
           experiencia: string
           id?: string
           idade?: string | null
@@ -73,6 +75,7 @@ export type Database = {
           aprovado?: boolean
           avaliacao?: number
           created_at?: string
+          estado?: string
           experiencia?: string
           id?: string
           idade?: string | null
