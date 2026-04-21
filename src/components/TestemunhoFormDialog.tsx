@@ -96,7 +96,7 @@ const TestemunhoFormDialog = ({ open, onOpenChange }: TestemunhoFormDialogProps)
     }
 
     setSuccess(true);
-    toast.success("Obrigado pelo seu testemunho!");
+    toast.success("O teu testemunho foi enviado e será publicado após aprovação.");
   };
 
   return (
@@ -111,7 +111,7 @@ const TestemunhoFormDialog = ({ open, onOpenChange }: TestemunhoFormDialogProps)
               Obrigado pelo seu testemunho!
             </h3>
             <p className="text-muted-foreground mb-6">
-              Vamos rever a tua mensagem em breve.
+              O teu testemunho foi enviado e será publicado após aprovação.
             </p>
             <Button
               onClick={() => handleClose(false)}
