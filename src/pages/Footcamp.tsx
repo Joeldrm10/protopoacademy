@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
+import { supabase } from "@/integrations/supabase/client";
 
 import footcampHero from "@/assets/footcamp-hero.jpg";
 import footcampIns from "@/assets/footcamp-ines.jpg";
