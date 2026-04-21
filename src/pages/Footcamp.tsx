@@ -50,64 +50,45 @@ const galleryImages = [
 
 
 
-const testimonials = [
-  {
-    quote: "O meu filho adorou a experiência. Evoluiu bastante e ficou com ainda mais motivação para o futebol.",
-    name: "Pai de atleta",
-    role: "Encarregado de educação",
-  },
-  {
-    quote: "Treinos bem organizados, ambiente incrível e muito profissionalismo.",
-    name: "Mãe de atleta",
-    role: "Encarregada de educação",
-  },
-  {
-    quote: "Aprendi muito durante a semana e diverti-me ao mesmo tempo.",
-    name: "Atleta",
-    role: "Participante",
-  },
-  {
-    quote: "A organização é impecável e nota-se que toda a equipa está focada na evolução real dos miúdos.",
-    name: "Pai de atleta",
-    role: "Encarregado de educação",
-  },
-];
-
 type DisplayTestemunho = {
+  id: string;
   quote: string;
   name: string;
   role: string;
+  rating: number;
+  createdAt: string;
 };
 
 const Footcamp = () => {
   const [testemunhoOpen, setTestemunhoOpen] = useState(false);
   const [approved, setApproved] = useState<DisplayTestemunho[]>([]);
+  const [loadingTestemunhos, setLoadingTestemunhos] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     supabase
       .from("testemunhos")
-      .select("nome, idade, experiencia")
+      .select("id, nome, idade, experiencia, avaliacao, created_at")
       .eq("aprovado", true)
       .order("created_at", { ascending: false })
-      .limit(8)
       .then(({ data }) => {
         if (data) {
           setApproved(
             data.map((t) => ({
+              id: t.id,
               quote: t.experiencia,
               name: t.nome,
-              role: t.idade ? `${t.idade}` : "Testemunho real",
+              role: t.idade ? `${t.idade}` : "Testemunho",
+              rating: t.avaliacao,
+              createdAt: t.created_at,
             }))
           );
         }
+        setLoadingTestemunhos(false);
       });
   }, []);
 
-  const displayed: DisplayTestemunho[] = [
-    ...approved,
-    ...testimonials.slice(0, Math.max(0, 4 - approved.length)),
-  ].slice(0, 6);
+  const displayed = approved;
 
   return (
     <div className="min-h-screen bg-background">
