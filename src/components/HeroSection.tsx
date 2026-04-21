@@ -58,7 +58,7 @@ const HeroSection = () => {
               className="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
             >
               <MessageCircle className="w-5 h-5" />
-              Falar no WhatsApp
+              Tirar dúvidas no WhatsApp
             </a>
           </div>
         </div>
