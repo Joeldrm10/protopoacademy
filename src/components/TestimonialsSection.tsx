@@ -1,47 +1,34 @@
-import { Quote, Star, Instagram } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Quote, Star, ArrowRight } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
+import { supabase } from "@/integrations/supabase/client";
 
-const INSTAGRAM_URL = "https://www.instagram.com/protopo_academy/";
-
-const testimonials = [
-  {
-    text: "O meu filho",
-    highlight: "evoluiu bastante em poucas semanas",
-    rest: ". Nota-se mais confiança e qualidade no jogo. Excelente acompanhamento.",
-    author: "Pai de atleta",
-    age: "13 anos",
-  },
-  {
-    text: "Treinos muito bem organizados e ",
-    highlight: "ambiente top",
-    rest: ". O meu filho adora e está sempre motivado.",
-    author: "Mãe de atleta",
-    age: "11 anos",
-  },
-  {
-    text: "",
-    highlight: "Diferença enorme desde que começou",
-    rest: ". Mais técnica, mais intensidade e mais confiança em campo.",
-    author: "Pai de atleta",
-    age: "14 anos",
-  },
-  {
-    text: "Equipa muito profissional e atenta aos atletas. ",
-    highlight: "Recomendo a qualquer jovem que queira evoluir",
-    rest: ".",
-    author: "Mãe de atleta",
-    age: "12 anos",
-  },
-  {
-    text: "Treinos exigentes mas muito positivos. ",
-    highlight: "Nota-se evolução real",
-    rest: ".",
-    author: "Atleta",
-    age: "15 anos",
-  },
-];
+type Testemunho = {
+  id: string;
+  nome: string;
+  idade: string | null;
+  experiencia: string;
+  avaliacao: number;
+};
 
 const TestimonialsSection = () => {
+  const [items, setItems] = useState<Testemunho[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from("testemunhos")
+      .select("id, nome, idade, experiencia, avaliacao")
+      .eq("aprovado", true)
+      .order("created_at", { ascending: false })
+      .limit(3)
+      .then(({ data }) => {
+        setItems((data as Testemunho[]) || []);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <section id="testemunhos" className="py-28 bg-gradient-dark relative overflow-hidden">
       <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
@@ -60,36 +47,63 @@ const TestimonialsSection = () => {
           </p>
         </AnimateOnScroll>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16">
-          {testimonials.map((t, i) => (
-            <AnimateOnScroll key={i} delay={i * 100}>
-              <div className="relative h-full bg-card border border-border rounded-2xl p-7 hover:border-primary/40 hover:shadow-[0_10px_40px_hsl(var(--gold)/0.1)] transition-all duration-300 flex flex-col">
-                <Quote className="absolute top-5 right-5 w-8 h-8 text-primary/20" />
+        {loading ? null : items.length === 0 ? (
+          <AnimateOnScroll>
+            <p className="text-center text-muted-foreground italic max-w-xl mx-auto mb-16">
+              Os primeiros testemunhos estarão disponíveis em breve.
+            </p>
+          </AnimateOnScroll>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
+              {items.map((t, i) => (
+                <AnimateOnScroll key={t.id} delay={i * 100}>
+                  <div className="relative h-full bg-card border border-border rounded-2xl p-7 hover:border-primary/40 hover:shadow-[0_10px_40px_hsl(var(--gold)/0.1)] transition-all duration-300 flex flex-col">
+                    <Quote className="absolute top-5 right-5 w-8 h-8 text-primary/20" />
 
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, idx) => (
-                    <Star key={idx} className="w-4 h-4 fill-primary text-primary" />
-                  ))}
-                </div>
+                    <div className="flex gap-1 mb-4">
+                      {[...Array(5)].map((_, idx) => (
+                        <Star
+                          key={idx}
+                          className={
+                            idx < t.avaliacao
+                              ? "w-4 h-4 fill-primary text-primary"
+                              : "w-4 h-4 text-muted-foreground/30"
+                          }
+                        />
+                      ))}
+                    </div>
 
-                <p className="text-foreground/90 text-base leading-relaxed mb-6 flex-1">
-                  "{t.text}
-                  <span className="text-primary font-semibold">{t.highlight}</span>
-                  {t.rest}"
-                </p>
+                    <p className="text-foreground/90 text-base leading-relaxed mb-6 flex-1 line-clamp-3">
+                      "{t.experiencia}"
+                    </p>
 
-                <div className="pt-4 border-t border-border">
-                  <p className="font-heading font-bold text-foreground text-sm uppercase tracking-wider">
-                    {t.author}
-                  </p>
-                  <p className="text-muted-foreground text-xs mt-1">{t.age}</p>
-                </div>
-              </div>
+                    <div className="pt-4 border-t border-border">
+                      <p className="font-heading font-bold text-foreground text-sm uppercase tracking-wider">
+                        {t.nome}
+                      </p>
+                      {t.idade && (
+                        <p className="text-muted-foreground text-xs mt-1">{t.idade}</p>
+                      )}
+                    </div>
+                  </div>
+                </AnimateOnScroll>
+              ))}
+            </div>
+
+            <AnimateOnScroll delay={150} className="text-center mb-16">
+              <Link
+                to="/footcamp#testemunhos"
+                className="inline-flex items-center gap-2 border border-primary/30 text-primary hover:bg-primary/10 px-6 py-3 rounded-lg font-heading font-bold uppercase tracking-wider transition-all"
+              >
+                Ver todos os testemunhos
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </AnimateOnScroll>
-          ))}
-        </div>
+          </>
+        )}
 
-        <AnimateOnScroll delay={200} className="text-center mb-20">
+        <AnimateOnScroll delay={200} className="text-center">
           <p className="font-heading font-semibold text-xl md:text-2xl text-foreground mb-6">
             Junta-te aos atletas que já estão a evoluir connosco.
           </p>
@@ -99,26 +113,6 @@ const TestimonialsSection = () => {
           >
             Quero começar
           </a>
-        </AnimateOnScroll>
-
-        <AnimateOnScroll delay={100}>
-          <div className="max-w-2xl mx-auto bg-card/50 border border-border rounded-2xl p-8 md:p-10 text-center backdrop-blur-sm">
-            <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-3">
-              Já treinaste connosco?
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Deixa a tua opinião ou testemunho.
-            </p>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
-            >
-              <Instagram className="w-5 h-5" />
-              Deixar opinião
-            </a>
-          </div>
         </AnimateOnScroll>
       </div>
     </section>
