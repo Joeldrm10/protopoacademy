@@ -439,6 +439,12 @@ const Marcacoes = () => {
                 </div>
               </>
             )}
+            </TabsContent>
+
+            <TabsContent value="testemunhos" className="mt-0">
+              <TestemunhosPanel />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
   );
