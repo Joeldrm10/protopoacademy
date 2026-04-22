@@ -14,7 +14,7 @@ const FootcampHighlight = () => {
               src={footcampHero}
               alt="ProTopo Footcamp - Edição Páscoa 2026"
               loading="lazy"
-              className="w-full h-full object-cover object-[30%_center] md:object-center"
+              className="w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/20" />
           </div>
