@@ -24,7 +24,7 @@ const FootcampHighlight = () => {
           <div className="relative z-10 px-6 py-20 md:px-16 md:py-32 max-w-2xl">
             <AnimateOnScroll>
               <span className="inline-block bg-primary/10 border border-primary/30 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-                ⚡ Prova Social
+                Edição Anterior
               </span>
               <h2 className="font-heading font-black text-4xl md:text-6xl leading-[0.95] mb-4">
                 ProTopo
