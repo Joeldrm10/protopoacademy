@@ -14,6 +14,7 @@ const HeroSection = () => {
           alt="ProTopo Academy - Treino de futebol"
           className="w-full h-full object-cover"
           style={{
+            objectPosition: "center top",
             transform: "scale(1.05)",
             animation: "hero-zoom 8s ease-out infinite",
           }}
