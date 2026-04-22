@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -13,14 +12,6 @@ const PoliticaPrivacidade = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container mx-auto px-4 pt-32 pb-20 max-w-3xl">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 text-sm"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Voltar ao início
-        </Link>
-
         <h1 className="font-heading font-bold text-4xl md:text-5xl mb-4">
           Política de <span className="text-gradient-gold">Privacidade</span>
         </h1>

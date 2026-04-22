@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageCircle, Users, Camera, UserCheck, Quote, Star } from "lucide-react";
+import { MessageCircle, Users, Camera, UserCheck, Quote, Star } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -115,13 +115,6 @@ const Footcamp = () => {
 
         <div className="relative z-10 container mx-auto px-4 text-center pt-20">
           <div className="animate-fade-in-up">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm mb-6"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Voltar à página inicial
-            </Link>
             <span className="block text-primary font-heading font-semibold uppercase tracking-[0.3em] text-sm mb-4">
               Edição Páscoa 2026
             </span>
