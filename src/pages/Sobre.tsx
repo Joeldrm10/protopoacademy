@@ -28,6 +28,8 @@ const Sobre = () => {
         highlight="ProTopo Academy"
         subtitle="Conhece a equipa e a missão que move cada treino: ajudar atletas a chegar mais longe."
         image={heroImg}
+        objectPositionMobile="object-[50%_25%]"
+        objectPositionDesktop="md:object-center"
       />
       <TeamSection />
       <FAQSection />
