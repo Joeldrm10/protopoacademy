@@ -142,15 +142,26 @@ const BookingForm = () => {
               </div>
               <h3 className="font-heading font-bold text-2xl mb-3 text-foreground">Pedido enviado com sucesso!</h3>
               <p className="text-muted-foreground mb-6">
-                Pedido de marcação enviado com sucesso. Serás contactado em breve.
+                Serás contactado em breve. Se preferires, podes falar connosco diretamente no WhatsApp.
               </p>
-              <Button
-                variant="hero"
-                size="lg"
-                onClick={() => { setSubmitted(false); form.reset(); }}
-              >
-                Nova marcação
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href={WHATSAPP_DIRECT}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg text-sm"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Falar no WhatsApp
+                </a>
+                <Button
+                  variant="hero"
+                  size="lg"
+                  onClick={() => { setSubmitted(false); form.reset(); }}
+                >
+                  Nova marcação
+                </Button>
+              </div>
             </div>
           </AnimateOnScroll>
         </div>
@@ -170,18 +181,9 @@ const BookingForm = () => {
           <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
             Marca já o teu <span className="text-gradient-gold">treino</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-6">
-            Preenche o formulário ou fala diretamente connosco no WhatsApp. Começa a evoluir hoje.
+          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+            Preenche o formulário abaixo e começa a evoluir hoje.
           </p>
-          <a
-            href={WHATSAPP_DIRECT}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg text-sm"
-          >
-            <MessageCircle className="w-5 h-5" />
-            Falar no WhatsApp
-          </a>
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={150}>
