@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { MessageCircle, Users, Camera, UserCheck, Quote, Star } from "lucide-react";
+import { Users, Camera, UserCheck, Quote, Star } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,8 +21,6 @@ import galleryCones from "@/assets/gallery-cones.jpg";
 import galleryTalk from "@/assets/gallery-talk.jpg";
 import galleryTeamFull from "@/assets/gallery-team-full.png";
 import galleryCoach from "@/assets/gallery-coach-new.jpg";
-
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20participar%20no%20pr%C3%B3ximo%20ProTopo%20Footcamp";
 
 const stats = [
   { value: 43, label: "Atletas", icon: Users },
@@ -365,18 +363,9 @@ const Footcamp = () => {
               Nova edição <span className="text-gradient-gold">em breve.</span>
               <span className="block text-foreground mt-2">Fica atento!</span>
             </h2>
-            <p className="text-muted-foreground text-lg mb-10 max-w-xl mx-auto">
-              Garante já o teu lugar na próxima edição do ProTopo Footcamp.
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              Em breve partilharemos mais informações sobre a próxima edição do ProTopo Footcamp.
             </p>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              <MessageCircle className="w-5 h-5" />
-              Quero Participar
-            </a>
           </AnimateOnScroll>
         </div>
       </section>
