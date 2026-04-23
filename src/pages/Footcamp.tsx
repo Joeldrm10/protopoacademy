@@ -106,9 +106,9 @@ const Footcamp = () => {
           <img
             src={footcampHero}
             alt="ProTopo Footcamp - Edição Páscoa 2026"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-[60%_top] md:object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/50 to-background" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center pt-20">
