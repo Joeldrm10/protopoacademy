@@ -142,15 +142,26 @@ const BookingForm = () => {
               </div>
               <h3 className="font-heading font-bold text-2xl mb-3 text-foreground">Pedido enviado com sucesso!</h3>
               <p className="text-muted-foreground mb-6">
-                Pedido de marcação enviado com sucesso. Serás contactado em breve.
+                Serás contactado em breve. Se preferires, podes falar connosco diretamente no WhatsApp.
               </p>
-              <Button
-                variant="hero"
-                size="lg"
-                onClick={() => { setSubmitted(false); form.reset(); }}
-              >
-                Nova marcação
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href={WHATSAPP_DIRECT}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg text-sm"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Falar no WhatsApp
+                </a>
+                <Button
+                  variant="hero"
+                  size="lg"
+                  onClick={() => { setSubmitted(false); form.reset(); }}
+                >
+                  Nova marcação
+                </Button>
+              </div>
             </div>
           </AnimateOnScroll>
         </div>
