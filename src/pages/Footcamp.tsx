@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { MessageCircle, Users, Camera, UserCheck, Quote, Star } from "lucide-react";
+import { Users, Camera, UserCheck, Quote, Star } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,8 +21,6 @@ import galleryCones from "@/assets/gallery-cones.jpg";
 import galleryTalk from "@/assets/gallery-talk.jpg";
 import galleryTeamFull from "@/assets/gallery-team-full.png";
 import galleryCoach from "@/assets/gallery-coach-new.jpg";
-
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20participar%20no%20pr%C3%B3ximo%20ProTopo%20Footcamp";
 
 const stats = [
   { value: 43, label: "Atletas", icon: Users },
