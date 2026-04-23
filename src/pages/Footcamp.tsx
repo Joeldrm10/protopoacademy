@@ -101,32 +101,30 @@ const Footcamp = () => {
       <Navbar />
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-background pt-28 pb-12 md:pt-36 md:pb-20">
-        <div className="container mx-auto px-4">
-          <div className="grid items-center gap-8 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:gap-12 lg:gap-16">
-            <div className="relative z-10 animate-fade-in-up text-left">
-              <span className="block text-primary font-heading font-semibold uppercase tracking-[0.3em] text-sm mb-4">
-                Edição Páscoa 2026
-              </span>
-              <h1 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
-                ProTopo
-                <span className="block text-gradient-gold mt-1">Footcamp</span>
-              </h1>
-              <p className="text-foreground/90 text-xl md:text-2xl max-w-2xl font-body leading-relaxed">
-                4 dias de trabalho, foco e evolução.
-              </p>
-            </div>
-
-            <div className="relative animate-fade-in">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-border/60 bg-secondary md:aspect-[16/11] lg:aspect-[5/4]">
-                <img
-                  src={footcampHero}
-                  alt="ProTopo Footcamp - Edição Páscoa 2026"
-                  className="absolute inset-0 h-full w-full object-cover object-[56%_22%] md:object-[52%_32%]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/12 via-background/0 to-background/8 md:bg-gradient-to-r md:from-background/6 md:via-transparent md:to-background/10" />
-              </div>
-            </div>
+      <section className="relative h-[60vh] min-h-[440px] md:h-[65vh] md:min-h-[520px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={footcampHero}
+            alt="ProTopo Footcamp - Edição Páscoa 2026"
+            className="w-full h-full object-cover object-[60%_25%] md:object-[50%_35%]"
+            width={1920}
+            height={1024}
+            fetchPriority="high"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/40 to-background/90" />
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <div className="animate-fade-in-up">
+            <span className="block text-primary font-heading font-semibold uppercase tracking-[0.3em] text-sm mb-4">
+              Edição Páscoa 2026
+            </span>
+            <h1 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
+              ProTopo
+              <span className="block text-gradient-gold mt-1">Footcamp</span>
+            </h1>
+            <p className="text-foreground/90 text-xl md:text-2xl max-w-2xl mx-auto font-body leading-relaxed">
+              4 dias de trabalho, foco e evolução.
+            </p>
           </div>
         </div>
       </section>
