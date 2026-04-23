@@ -28,9 +28,8 @@ const Contacto = () => {
         highlight="connosco"
         subtitle="Marca o teu treino, tira dúvidas ou descobre onde estamos. Estamos prontos para te receber."
         image={heroImg}
-        layout="split"
-        objectPositionMobile="object-[38%_20%]"
-        objectPositionDesktop="md:object-[24%_18%]"
+        objectPositionMobile="object-[30%_30%]"
+        objectPositionDesktop="md:object-[20%_40%]"
       />
       <LocationSection />
       <BookingForm />
