@@ -153,15 +153,14 @@ const Navbar = () => {
             <MessageCircle className="w-4 h-4" />
             WhatsApp
           </a>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/marcar"
+            onClick={() => setMenuOpen(false)}
             className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
           >
             Marcar
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </a>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -221,16 +220,14 @@ const Navbar = () => {
           <MessageCircle className="w-5 h-5" />
           WhatsApp
         </a>
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          to="/marcar"
           onClick={() => setMenuOpen(false)}
           className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
         >
           Marcar
           <ArrowRight className="w-5 h-5" />
-        </a>
+        </Link>
       </div>
     </nav>
   );

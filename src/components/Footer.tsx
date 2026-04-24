@@ -20,11 +20,6 @@ const Footer = () => {
     { label: "Contacto", href: "/contacto" },
   ];
 
-  const trainingLinks = [
-    { label: "Treinos individuais", href: "/servicos" },
-    { label: "Treinos de grupo", href: "/servicos" },
-    { label: "Footcamp", href: "/footcamp" },
-  ];
 
   const handleHomeClick = (e: React.MouseEvent) => {
     if (location.pathname === "/") {
@@ -52,7 +47,7 @@ const Footer = () => {
               </p>
             </div>
             <Link
-              to="/marcacoes"
+              to="/marcar"
               className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
             >
               Marcar treino
@@ -61,7 +56,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 mb-12">
           {/* Coluna 1 - Marca */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
             <img src={logo} alt="ProTopo Academy" className="h-12 mb-3" />
@@ -84,24 +79,6 @@ const Footer = () => {
                   key={link.label}
                   to={link.href}
                   onClick={link.href === "/" ? handleHomeClick : undefined}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm leading-relaxed"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Coluna 3 - Treinos */}
-          <div className="flex flex-col items-center sm:items-start">
-            <h4 className="font-heading font-bold text-foreground text-base mb-4 uppercase tracking-wider">
-              Treinos
-            </h4>
-            <div className="flex flex-col gap-3 items-center sm:items-start">
-              {trainingLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  to={link.href}
                   className="text-muted-foreground hover:text-primary transition-colors text-sm leading-relaxed"
                 >
                   {link.label}

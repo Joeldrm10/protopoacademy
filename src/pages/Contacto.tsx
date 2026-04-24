@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import LocationSection from "@/components/LocationSection";
-import BookingForm from "@/components/BookingForm";
 import heroImg from "@/assets/hero-contacto.jpg";
 
 const Contacto = () => {
@@ -32,7 +31,6 @@ const Contacto = () => {
         objectPositionDesktop="md:object-[20%_40%]"
       />
       <LocationSection />
-      <BookingForm />
       <Footer />
     </div>
   );
