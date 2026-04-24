@@ -1,3 +1,4 @@
+import type React from "react";
 import { Instagram, ArrowRight } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import {
