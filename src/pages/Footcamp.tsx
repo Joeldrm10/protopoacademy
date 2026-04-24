@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Users, Camera, UserCheck, Quote, Star } from "lucide-react";
+import { Users, Camera, UserCheck, Quote, Star, ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -36,15 +36,15 @@ const guests = [
   { name: "João Pereira", role: "Ex Jogador Profissional", image: footcampJoao },
 ];
 
+// Galeria do Footcamp — apenas momentos de ação, intensidade e grupo
+// Layout dinâmico: imagens com tamanhos variados (large = col-span-2 row-span-2)
 const galleryImages = [
-  { src: galleryFootcamp, alt: "Reunião da equipa no campo" },
-  { src: gallerySprint, alt: "Atleta em sprint durante o treino" },
-  { src: galleryCones, alt: "Exercício técnico com cones" },
-  { src: galleryGroup, alt: "Grupo de atletas no Footcamp" },
-  { src: galleryCircle, alt: "Roda de equipa no campo" },
-  { src: galleryTalk, alt: "Treinador a conversar com atletas" },
-  { src: galleryCoach, alt: "Acompanhamento individual" },
-  { src: galleryTeamFull, alt: "Foto de grupo do Footcamp" },
+  { src: galleryTeamFull, alt: "Foto de grupo do Footcamp", size: "large" },
+  { src: gallerySprint, alt: "Atleta em sprint durante o treino", size: "small" },
+  { src: galleryCircle, alt: "Roda de equipa no campo", size: "small" },
+  { src: galleryFootcamp, alt: "Reunião da equipa no campo", size: "wide" },
+  { src: galleryGroup, alt: "Grupo de atletas no Footcamp", size: "small" },
+  { src: galleryTalk, alt: "Treinador a conversar com atletas", size: "small" },
 ];
 
 
@@ -225,31 +225,54 @@ const Footcamp = () => {
                 📸 Momentos
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-                Galeria do <span className="text-gradient-gold">Footcamp</span>
+                A intensidade do <span className="text-gradient-gold">Footcamp</span>
               </h2>
               <p className="text-muted-foreground text-lg">
-                Treinos, equipa, ação e bastidores.
+                Quatro dias. Uma equipa. Memórias que ficam para sempre.
               </p>
             </div>
           </AnimateOnScroll>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto">
-            {galleryImages.map((img, i) => (
-              <AnimateOnScroll key={i} delay={i * 60}>
-                <div className="group relative overflow-hidden rounded-lg aspect-square">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-              </AnimateOnScroll>
-            ))}
+          {/* Layout dinâmico — mosaic */}
+          <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[140px] md:auto-rows-[180px] gap-3 md:gap-4 max-w-6xl mx-auto">
+            {galleryImages.map((img, i) => {
+              const sizeClass =
+                img.size === "large"
+                  ? "col-span-2 row-span-2"
+                  : img.size === "wide"
+                  ? "col-span-2 row-span-1"
+                  : "col-span-1 row-span-1";
+              return (
+                <AnimateOnScroll key={i} delay={i * 60}>
+                  <div className={`group relative overflow-hidden rounded-xl h-full w-full ${sizeClass}`}>
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </AnimateOnScroll>
+              );
+            })}
           </div>
 
-          {/* Frase emocional */}
+          {/* CTA Ver mais momentos */}
           <AnimateOnScroll delay={200}>
+            <div className="text-center mt-14">
+              <Link
+                to="/galeria"
+                className="group inline-flex items-center gap-3 border-2 border-primary/40 text-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all"
+              >
+                Ver mais momentos
+                <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </AnimateOnScroll>
+
+          {/* Frase emocional */}
+          <AnimateOnScroll delay={300}>
             <p className="text-center text-2xl md:text-3xl font-heading font-bold mt-16 max-w-3xl mx-auto leading-relaxed">
               Obrigado a todos os atletas que fizeram parte
               <span className="block text-gradient-gold mt-1">desta edição.</span>

@@ -12,22 +12,22 @@ import galleryHurdles from "@/assets/gallery-hurdles-new.jpg";
 import gallerySprint from "@/assets/gallery-sprint.jpg";
 import galleryField from "@/assets/gallery-field.jpg";
 import galleryCoach from "@/assets/gallery-coach-new.jpg";
-import galleryCircle from "@/assets/gallery-circle.jpg";
 import galleryGk from "@/assets/gallery-gk.jpg";
 import galleryKids from "@/assets/gallery-kids-new.jpg";
 import galleryTalk from "@/assets/gallery-talk.jpg";
 import galleryResistance from "@/assets/gallery-resistance.png";
 import galleryCoachKid from "@/assets/gallery-coach-kid.png";
 import galleryCoachDrill from "@/assets/gallery-coach-drill.png";
-import galleryTeamFull from "@/assets/gallery-team-full.png";
 
 interface GalleryItem {
   src: string;
   alt: string;
 }
 
+// Galeria institucional — dia a dia da academia: treinos normais, sessões individuais, ambiente, bastidores.
+// Imagens exclusivas do Footcamp (foto de grupo, roda de equipa) ficam apenas na página /footcamp.
 const galleryItems: GalleryItem[] = [
-  { src: galleryCover, alt: "ProTopo Footcamp — início do treino" },
+  { src: galleryCover, alt: "Início do treino na academia" },
   { src: gallerySprint, alt: "Sprint explosivo" },
   { src: galleryResistance, alt: "Treino de resistência" },
   { src: galleryField, alt: "Jogo em campo inteiro" },
@@ -36,12 +36,10 @@ const galleryItems: GalleryItem[] = [
   { src: gallery1v1, alt: "Exercício técnico individual" },
   { src: galleryHurdles, alt: "Saltos com barreiras" },
   { src: galleryKids, alt: "Exercício técnico com bola" },
-  { src: galleryCoach, alt: "Treino individual com treinador" },
+  { src: galleryCoach, alt: "Sessão individual com treinador" },
   { src: galleryCoachKid, alt: "Treinador a orientar jovem atleta" },
   { src: galleryCoachDrill, alt: "Treinador em exercício com atletas" },
-  { src: galleryTalk, alt: "Treinador a conversar com atletas" },
-  { src: galleryCircle, alt: "Roda de equipa no campo" },
-  { src: galleryTeamFull, alt: "Foto de grupo completa ProTopo Academy" },
+  { src: galleryTalk, alt: "Bastidores — conversa entre treinos" },
 ];
 
 const Galeria = () => {
