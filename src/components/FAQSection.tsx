@@ -9,7 +9,9 @@ import {
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
-const faqs = [
+export type FAQItem = { question: string; answer: string };
+
+const defaultFaqs: FAQItem[] = [
   {
     question: "É preciso ter experiência para participar?",
     answer: "Não. Os treinos da ProTopo Academy podem ser frequentados por atletas com diferentes níveis de experiência. O mais importante é a vontade de aprender, evoluir e treinar com dedicação.",
@@ -40,7 +42,24 @@ const faqs = [
   },
 ];
 
-const FAQSection = () => {
+interface FAQSectionProps {
+  title?: React.ReactNode;
+  subtitle?: string;
+  badge?: string;
+  faqs?: FAQItem[];
+}
+
+const FAQSection = ({
+  title,
+  subtitle = "Esclarecemos aqui algumas das dúvidas mais comuns dos pais sobre os treinos.",
+  badge = "FAQ",
+  faqs = defaultFaqs,
+}: FAQSectionProps) => {
+  const heading = title ?? (
+    <>
+      Perguntas <span className="text-gradient-gold">Frequentes</span>
+    </>
+  );
   return (
     <section id="faq" className="py-28 bg-background relative overflow-hidden">
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
