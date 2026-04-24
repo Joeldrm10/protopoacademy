@@ -69,13 +69,13 @@ const FAQSection = ({
         <AnimateOnScroll>
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-              FAQ
+              {badge}
             </span>
             <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-              Perguntas <span className="text-gradient-gold">Frequentes</span>
+              {heading}
             </h2>
             <p className="text-muted-foreground text-lg">
-              Esclarecemos aqui algumas das dúvidas mais comuns dos pais sobre os treinos.
+              {subtitle}
             </p>
           </div>
         </AnimateOnScroll>
