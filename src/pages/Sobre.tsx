@@ -32,7 +32,6 @@ const Sobre = () => {
         objectPositionDesktop="md:object-center"
       />
       <TeamSection />
-      <FAQSection />
       <Footer />
     </div>
   );
