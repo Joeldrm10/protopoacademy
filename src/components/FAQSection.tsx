@@ -1,3 +1,4 @@
+import type React from "react";
 import { Instagram, ArrowRight } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import {
@@ -9,7 +10,9 @@ import {
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
-const faqs = [
+export type FAQItem = { question: string; answer: string };
+
+const defaultFaqs: FAQItem[] = [
   {
     question: "É preciso ter experiência para participar?",
     answer: "Não. Os treinos da ProTopo Academy podem ser frequentados por atletas com diferentes níveis de experiência. O mais importante é a vontade de aprender, evoluir e treinar com dedicação.",
@@ -40,7 +43,24 @@ const faqs = [
   },
 ];
 
-const FAQSection = () => {
+interface FAQSectionProps {
+  title?: React.ReactNode;
+  subtitle?: string;
+  badge?: string;
+  faqs?: FAQItem[];
+}
+
+const FAQSection = ({
+  title,
+  subtitle = "Esclarecemos aqui algumas das dúvidas mais comuns dos pais sobre os treinos.",
+  badge = "FAQ",
+  faqs = defaultFaqs,
+}: FAQSectionProps) => {
+  const heading = title ?? (
+    <>
+      Perguntas <span className="text-gradient-gold">Frequentes</span>
+    </>
+  );
   return (
     <section id="faq" className="py-28 bg-background relative overflow-hidden">
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
@@ -49,13 +69,13 @@ const FAQSection = () => {
         <AnimateOnScroll>
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-              FAQ
+              {badge}
             </span>
             <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-              Perguntas <span className="text-gradient-gold">Frequentes</span>
+              {heading}
             </h2>
             <p className="text-muted-foreground text-lg">
-              Esclarecemos aqui algumas das dúvidas mais comuns dos pais sobre os treinos.
+              {subtitle}
             </p>
           </div>
         </AnimateOnScroll>

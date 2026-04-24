@@ -5,6 +5,7 @@ import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
+import FAQSection from "@/components/FAQSection";
 import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
 import { supabase } from "@/integrations/supabase/client";
@@ -371,6 +372,20 @@ const Footcamp = () => {
           </AnimateOnScroll>
         </div>
       </section>
+
+      <FAQSection
+        title={<>Dúvidas sobre o <span className="text-gradient-gold">Footcamp</span></>}
+        subtitle="Tudo o que pais e atletas precisam de saber sobre a experiência Footcamp."
+        faqs={[
+          { question: "Para que idades é o Footcamp?", answer: "O Footcamp é destinado a jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
+          { question: "O que está incluído?", answer: "A experiência inclui treinos intensivos, sessões técnicas, atividades com profissionais convidados (psicóloga, árbitro, ex-jogador profissional), acompanhamento próximo e cobertura fotográfica." },
+          { question: "O que os atletas precisam levar?", answer: "Equipamento desportivo, chuteiras, sapatilhas, garrafa de água e muita vontade de evoluir. Indicações específicas serão partilhadas antes da edição começar." },
+          { question: "Qual é a duração?", answer: "O Footcamp tem a duração de 4 dias intensivos, com programa diário pensado para maximizar a evolução técnica, física e mental dos atletas." },
+          { question: "Onde se realiza?", answer: "O Footcamp realiza-se no Campo da Caridade, em Ourém, o mesmo local dos nossos treinos regulares." },
+          { question: "Como funciona a inscrição?", answer: "As inscrições para a próxima edição serão abertas em breve. Acompanha o nosso Instagram ou fala connosco para receberes informação assim que abrirmos as vagas." },
+          { question: "Há acompanhamento profissional?", answer: "Sim. Contamos com 4 treinadores principais, 8 treinadores adjuntos e profissionais convidados, garantindo um rácio que permite acompanhamento individualizado." },
+        ]}
+      />
 
       <Footer />
 
