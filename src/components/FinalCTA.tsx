@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import AnimateOnScroll from "./AnimateOnScroll";
 import teamFinalBg from "@/assets/team-final-cta.png";
 
@@ -31,13 +32,13 @@ const FinalCTA = () => {
               Treino, disciplina e evolução num ambiente profissional e motivador. Começa a evoluir hoje.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
-                href="#marcacao"
+              <Link
+                to="/marcar"
                 className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-12 py-5 rounded-lg font-heading font-bold text-xl uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl"
               >
                 Marca já o teu treino
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </Link>
               <a
                 href="https://wa.me/351911102405?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20ProTopo%20Academy%20e%20gostava%20de%20saber%20mais%20sobre%20os%20treinos."
                 target="_blank"
