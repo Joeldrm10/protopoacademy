@@ -2,6 +2,8 @@ interface PageHeroProps {
   title: string;
   subtitle: string;
   image: string;
+  /** Optional separate image for mobile (<md). Falls back to `image` if not provided. */
+  imageMobile?: string;
   highlight?: string;
   layout?: "overlay" | "split";
   /** Tailwind object-position class for desktop (md+). Ex: "md:object-center" */
@@ -14,12 +16,14 @@ const PageHero = ({
   title,
   subtitle,
   image,
+  imageMobile,
   highlight,
   layout = "overlay",
   objectPositionDesktop = "md:object-center",
   objectPositionMobile = "object-center",
 }: PageHeroProps) => {
   const imageAlt = highlight ? `${title} ${highlight}` : title;
+  const mobileSrc = imageMobile ?? image;
 
   if (layout === "split") {
     return (
@@ -36,14 +40,17 @@ const PageHero = ({
 
             <div className="relative animate-fade-in">
               <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-border/60 bg-secondary md:aspect-[16/11] lg:aspect-[5/4]">
-                <img
-                  src={image}
-                  alt={imageAlt}
-                  className={`absolute inset-0 h-full w-full object-cover ${objectPositionMobile} ${objectPositionDesktop}`}
-                  width={1920}
-                  height={1280}
-                  fetchPriority="high"
-                />
+                <picture>
+                  <source media="(min-width: 768px)" srcSet={image} />
+                  <img
+                    src={mobileSrc}
+                    alt={imageAlt}
+                    className={`absolute inset-0 h-full w-full object-cover ${objectPositionMobile} ${objectPositionDesktop}`}
+                    width={1920}
+                    height={1280}
+                    fetchPriority="high"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/12 via-background/0 to-background/8 md:bg-gradient-to-r md:from-background/6 md:via-transparent md:to-background/10" />
               </div>
             </div>
@@ -56,16 +63,19 @@ const PageHero = ({
   return (
     <section className="relative h-[60vh] min-h-[440px] md:h-[65vh] md:min-h-[520px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
-        <img
-          src={image}
-          alt={imageAlt}
-          className={`w-full h-full object-cover ${objectPositionMobile} ${objectPositionDesktop}`}
-          width={1920}
-          height={1024}
-          fetchPriority="high"
-        />
+        <picture>
+          <source media="(min-width: 768px)" srcSet={image} />
+          <img
+            src={mobileSrc}
+            alt={imageAlt}
+            className={`w-full h-full object-cover ${objectPositionMobile} ${objectPositionDesktop}`}
+            width={1920}
+            height={1024}
+            fetchPriority="high"
+          />
+        </picture>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/38 to-background/88" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/35 to-background/85" />
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="animate-fade-in-up">
           <h1 className="text-headline mb-4">
