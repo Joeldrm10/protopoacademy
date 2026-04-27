@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { X, ChevronLeft, ChevronRight, ZoomIn, ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import Navbar from "@/components/Navbar";
@@ -107,6 +108,9 @@ const Galeria = () => {
               <h1 className="font-heading font-bold text-4xl md:text-6xl mb-3">
                 Galeria <span className="text-gradient-gold">ProTopo</span>
               </h1>
+              <p className="text-muted-foreground text-base md:text-lg">
+                Momentos reais dos nossos treinos, atletas e evolução.
+              </p>
             </div>
           </AnimateOnScroll>
 
@@ -121,12 +125,36 @@ const Galeria = () => {
                     src={item.src}
                     alt={item.alt}
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-background/0 group-hover:bg-background/50 transition-colors duration-300 flex items-center justify-center">
+                    <div className="flex items-center gap-2 text-foreground opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                      <ZoomIn className="w-5 h-5 md:w-6 md:h-6" />
+                      <span className="font-heading font-semibold uppercase tracking-wider text-sm">Ver</span>
+                    </div>
+                  </div>
                 </div>
               </AnimateOnScroll>
             ))}
           </div>
+
+          <AnimateOnScroll>
+            <div className="mt-20 max-w-2xl mx-auto text-center bg-card/50 border border-border rounded-2xl p-8 md:p-12">
+              <h2 className="font-heading font-bold text-3xl md:text-4xl mb-3">
+                Queres fazer <span className="text-gradient-gold">parte</span>?
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                Junta-te aos nossos atletas e começa a tua evolução hoje.
+              </p>
+              <Link
+                to="/marcar"
+                className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
+              >
+                Marcar treino
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
