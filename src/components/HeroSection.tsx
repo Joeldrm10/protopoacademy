@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronDown, MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
@@ -65,13 +65,6 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-fade-in" style={{ animationDelay: "1.5s" }}>
-        <a href="#sobre" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-          <span className="text-xs font-heading uppercase tracking-widest">Scroll</span>
-          <ChevronDown className="w-5 h-5" style={{ animation: "scroll-bounce 2s infinite" }} />
-        </a>
-      </div>
     </section>
   );
 };
