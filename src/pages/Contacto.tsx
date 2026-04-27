@@ -4,7 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import LocationSection from "@/components/LocationSection";
-import heroImg from "@/assets/hero-contacto.jpg";
+import heroImg from "@/assets/hero-contacto-desktop.jpg";
+import heroImgMobile from "@/assets/hero-contacto-mobile.jpg";
 
 const Contacto = () => {
   useEffect(() => {
@@ -27,8 +28,9 @@ const Contacto = () => {
         highlight="connosco"
         subtitle="Marca o teu treino, tira dúvidas ou descobre onde estamos. Estamos prontos para te receber."
         image={heroImg}
-        objectPositionMobile="object-[30%_30%]"
-        objectPositionDesktop="md:object-[20%_40%]"
+        imageMobile={heroImgMobile}
+        objectPositionMobile="object-center"
+        objectPositionDesktop="md:object-center"
       />
       <LocationSection />
       <Footer />

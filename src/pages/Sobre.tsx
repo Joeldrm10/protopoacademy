@@ -5,7 +5,8 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import TeamSection from "@/components/TeamSection";
 
-import heroImg from "@/assets/hero-sobre.jpg";
+import heroImg from "@/assets/hero-sobre-desktop.jpg";
+import heroImgMobile from "@/assets/hero-sobre-mobile.jpg";
 
 const Sobre = () => {
   useEffect(() => {
@@ -28,7 +29,8 @@ const Sobre = () => {
         highlight="ProTopo Academy"
         subtitle="Conhece a equipa e a missão que move cada treino: ajudar atletas a chegar mais longe."
         image={heroImg}
-        objectPositionMobile="object-[50%_25%]"
+        imageMobile={heroImgMobile}
+        objectPositionMobile="object-center"
         objectPositionDesktop="md:object-center"
       />
       <TeamSection />
