@@ -8,7 +8,8 @@ import PricingSection from "@/components/PricingSection";
 import KitSection from "@/components/KitSection";
 import GalleryCTA from "@/components/GalleryCTA";
 import FAQSection from "@/components/FAQSection";
-import heroImg from "@/assets/hero-servicos.jpg";
+import heroImg from "@/assets/hero-servicos-desktop.jpg";
+import heroImgMobile from "@/assets/hero-servicos-mobile.jpg";
 
 const Servicos = () => {
   useEffect(() => {
@@ -31,8 +32,9 @@ const Servicos = () => {
         highlight="treinos"
         subtitle="Treinos personalizados para evoluíres ao teu ritmo, com planos adaptados a cada atleta."
         image={heroImg}
-        objectPositionMobile="object-[55%_30%]"
-        objectPositionDesktop="md:object-[40%_35%]"
+        imageMobile={heroImgMobile}
+        objectPositionMobile="object-center"
+        objectPositionDesktop="md:object-center"
       />
       <ServicesSection />
       <PricingSection />

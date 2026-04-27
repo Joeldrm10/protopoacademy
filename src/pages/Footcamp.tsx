@@ -10,7 +10,8 @@ import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
 import { supabase } from "@/integrations/supabase/client";
 
-import footcampHero from "@/assets/footcamp-hero.jpg";
+import footcampHero from "@/assets/hero-footcamp-desktop.jpg";
+import footcampHeroMobile from "@/assets/hero-footcamp-mobile.jpg";
 import footcampIns from "@/assets/footcamp-ines.jpg";
 import footcampFilipe from "@/assets/footcamp-filipe.jpg";
 import footcampJoao from "@/assets/footcamp-joao.jpg";
@@ -104,16 +105,19 @@ const Footcamp = () => {
       {/* HERO */}
       <section className="relative h-[60vh] min-h-[440px] md:h-[65vh] md:min-h-[520px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={footcampHero}
-            alt="ProTopo Footcamp - Edição Páscoa 2026"
-            className="w-full h-full object-cover object-[60%_25%] md:object-[50%_35%]"
-            width={1920}
-            height={1024}
-            fetchPriority="high"
-          />
+          <picture>
+            <source media="(min-width: 768px)" srcSet={footcampHero} />
+            <img
+              src={footcampHeroMobile}
+              alt="ProTopo Footcamp - Edição Páscoa 2026"
+              className="w-full h-full object-cover object-center"
+              width={1920}
+              height={1024}
+              fetchPriority="high"
+            />
+          </picture>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/40 to-background/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/35 to-background/85" />
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="animate-fade-in-up">
             <span className="block text-primary font-heading font-semibold uppercase tracking-[0.3em] text-sm mb-4">
