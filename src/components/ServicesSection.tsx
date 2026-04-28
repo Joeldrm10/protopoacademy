@@ -1,4 +1,5 @@
 import { User, Users, CheckCircle, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import AnimateOnScroll from "./AnimateOnScroll";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
@@ -102,8 +103,8 @@ const ServicesSection = () => {
                   ))}
                 </ul>
 
-                <a
-                  href="#marcacao"
+                <Link
+                  to="/marcar"
                   className={`group/btn inline-flex items-center justify-center gap-2 w-full py-4 rounded-lg font-heading font-bold uppercase tracking-wider transition-all duration-300 text-base ${
                     service.featured
                       ? "bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-lg"
@@ -112,7 +113,7 @@ const ServicesSection = () => {
                 >
                   Marca já o teu treino
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </div>
             </AnimateOnScroll>
           ))}
