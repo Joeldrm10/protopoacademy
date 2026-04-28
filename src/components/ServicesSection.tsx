@@ -106,7 +106,7 @@ const ServicesSection = () => {
                 </ul>
 
                 <Link
-                  to="/marcar"
+                  to={`/marcar?tipo=${service.tipo}`}
                   className={`group/btn inline-flex items-center justify-center gap-2 w-full py-4 rounded-lg font-heading font-bold uppercase tracking-wider transition-all duration-300 text-base ${
                     service.featured
                       ? "bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-lg"
