@@ -43,7 +43,7 @@ const Index = () => {
       <TestimonialsSection />
       <FootcampHighlight />
       <GalleryCTA />
-      <BookingCTA />
+      
       <FinalCTA />
       <Footer />
     </div>
