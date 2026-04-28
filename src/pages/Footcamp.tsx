@@ -66,19 +66,33 @@ const Footcamp = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace("#", "");
-      const tryScroll = (attempt = 0) => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        } else if (attempt < 20) {
-          setTimeout(() => tryScroll(attempt + 1), 100);
-        }
-      };
-      tryScroll();
-    }
-  }, [location, loadingTestemunhos]);
+    if (!location.hash) return;
+    const id = location.hash.replace("#", "");
+    let attempts = 0;
+    let cancelled = false;
+
+    const tryScroll = () => {
+      if (cancelled) return;
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        // re-align after late content (images/testimonials) shifts layout
+        setTimeout(() => {
+          if (cancelled) return;
+          const el2 = document.getElementById(id);
+          if (el2) el2.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 600);
+      } else if (attempts < 40) {
+        attempts++;
+        setTimeout(tryScroll, 100);
+      }
+    };
+
+    tryScroll();
+    return () => {
+      cancelled = true;
+    };
+  }, [location.hash, location.key, loadingTestemunhos]);
 
   useEffect(() => {
     if (!location.hash) window.scrollTo(0, 0);
