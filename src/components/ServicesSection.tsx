@@ -8,6 +8,7 @@ const services = [
   {
     icon: User,
     title: "Treino Individual",
+    tipo: "individual",
     price: "Desde 25€",
     priceUnit: "/sessão",
     description: "Acompanhamento personalizado para atletas dos 6 aos 16 anos que querem evoluir de forma focada, com treinos adaptados a cada faixa etária.",
@@ -22,6 +23,7 @@ const services = [
   {
     icon: Users,
     title: "Treino em Grupo",
+    tipo: "grupo",
     price: "Sob consulta",
     priceUnit: "",
     description: "Treinos em grupo para atletas dos 6 aos 16 anos, promovendo evolução, competitividade e espírito de equipa, com exercícios ajustados a cada faixa etária.",
