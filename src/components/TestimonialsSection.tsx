@@ -107,12 +107,12 @@ const TestimonialsSection = () => {
           <p className="font-heading font-semibold text-xl md:text-2xl text-foreground mb-6">
             Junta-te aos atletas que já estão a evoluir connosco.
           </p>
-          <a
-            href="#marcacao"
+          <Link
+            to="/marcar"
             className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg hover:shadow-xl"
           >
             Quero começar
-          </a>
+          </Link>
         </AnimateOnScroll>
       </div>
     </section>
