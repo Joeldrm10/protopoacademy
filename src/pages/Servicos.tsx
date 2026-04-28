@@ -6,7 +6,7 @@ import PageHero from "@/components/PageHero";
 import ServicesSection from "@/components/ServicesSection";
 import PricingSection from "@/components/PricingSection";
 import KitSection from "@/components/KitSection";
-import GalleryCTA from "@/components/GalleryCTA";
+
 import FAQSection from "@/components/FAQSection";
 import heroImg from "@/assets/hero-servicos-desktop.jpg";
 import heroImgMobile from "@/assets/hero-servicos-mobile.jpg";
@@ -39,7 +39,7 @@ const Servicos = () => {
       <ServicesSection />
       <PricingSection />
       <KitSection />
-      <GalleryCTA />
+      
       <FAQSection
         title={<>Dúvidas sobre os <span className="text-gradient-gold">treinos</span></>}
         subtitle="Tudo o que precisas de saber antes de marcares o teu treino regular."
