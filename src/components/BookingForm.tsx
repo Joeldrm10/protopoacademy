@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -70,6 +70,9 @@ const BookingForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const lastSubmitRef = useRef<number>(0);
+  const [searchParams] = useSearchParams();
+  const tipoParam = searchParams.get("tipo");
+  const initialTipo = tipoParam === "individual" || tipoParam === "grupo" ? tipoParam : undefined;
 
   const form = useForm<BookingData>({
     resolver: zodResolver(bookingSchema),
@@ -77,6 +80,7 @@ const BookingForm = () => {
       nome: "",
       idade: "",
       telemovel: "",
+      tipo: initialTipo,
       consentimento: false as unknown as true,
     },
   });
