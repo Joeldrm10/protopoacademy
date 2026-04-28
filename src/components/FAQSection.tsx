@@ -1,5 +1,5 @@
 import type React from "react";
-import { Instagram, ArrowRight } from "lucide-react";
+import { Instagram, MessageCircle } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import {
   Accordion,
@@ -8,7 +8,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
+const WHATSAPP_URL = "https://wa.me/351911102405?text=" + encodeURIComponent("Olá, gostaria de tirar algumas dúvidas sobre os treinos da ProTopo Academy.");
+const INSTAGRAM_URL = "https://www.instagram.com/protopo_academy/";
 
 export type FAQItem = { question: string; answer: string };
 
@@ -108,19 +109,23 @@ const FAQSection = ({
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
-                href={SIGNUP_URL}
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                Inscrever agora
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <MessageCircle className="w-5 h-5" />
+                Tirar dúvidas no WhatsApp
               </a>
               <a
-                href="https://www.instagram.com/protopo_academy/"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                className="inline-flex items-center gap-2 text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90"
+                style={{
+                  background:
+                    "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
+                }}
               >
                 <Instagram className="w-5 h-5" />
                 Instagram
