@@ -81,7 +81,7 @@ const Footcamp = () => {
   }, [location, loadingTestemunhos]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!location.hash) window.scrollTo(0, 0);
     supabase
       .from("testemunhos")
       .select("id, nome, idade, experiencia, avaliacao, created_at")
