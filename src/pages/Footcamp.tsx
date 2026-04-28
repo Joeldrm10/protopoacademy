@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Users, Camera, UserCheck, Quote, Star, ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
@@ -63,6 +63,22 @@ const Footcamp = () => {
   const [testemunhoOpen, setTestemunhoOpen] = useState(false);
   const [approved, setApproved] = useState<DisplayTestemunho[]>([]);
   const [loadingTestemunhos, setLoadingTestemunhos] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const tryScroll = (attempt = 0) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (attempt < 20) {
+          setTimeout(() => tryScroll(attempt + 1), 100);
+        }
+      };
+      tryScroll();
+    }
+  }, [location, loadingTestemunhos]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
