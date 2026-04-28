@@ -286,7 +286,7 @@ const Footcamp = () => {
       </section>
 
       {/* TESTEMUNHOS */}
-      <section className="py-24 bg-secondary">
+      <section id="testemunhos" className="py-24 bg-secondary">
         <div className="container mx-auto px-4">
           <AnimateOnScroll>
             <div className="text-center mb-16 max-w-3xl mx-auto">
