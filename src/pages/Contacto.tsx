@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import LocationSection from "@/components/LocationSection";
+import DirectContactSection from "@/components/DirectContactSection";
+import ContactFinalCTA from "@/components/ContactFinalCTA";
 import heroImg from "@/assets/hero-contacto-desktop.jpg";
 import heroImgMobile from "@/assets/hero-contacto-mobile.jpg";
 
@@ -32,7 +34,9 @@ const Contacto = () => {
         objectPositionMobile="object-center"
         objectPositionDesktop="md:object-center"
       />
+      <DirectContactSection />
       <LocationSection />
+      <ContactFinalCTA />
       <Footer />
     </div>
   );
