@@ -25,7 +25,7 @@ const Marcar = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-lg mx-auto text-center mb-10 animate-fade-in-up">
+          <div className="max-w-lg mx-auto text-center mb-6 animate-fade-in-up">
             <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
               Marcação
             </span>
@@ -38,9 +38,9 @@ const Marcar = () => {
           </div>
         </div>
 
-        {/* Reaproveita BookingForm — já tem o formulário completo */}
-        <div className="-mt-6">
-          <BookingForm />
+        {/* Reaproveita BookingForm — sem header duplicado */}
+        <div className="-mt-16 md:-mt-20">
+          <BookingForm showHeader={false} />
         </div>
       </main>
 
