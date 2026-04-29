@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import TeamSection from "@/components/TeamSection";
+import StorySection from "@/components/StorySection";
 
 import heroImg from "@/assets/hero-sobre-desktop.jpg";
 import heroImgMobile from "@/assets/hero-sobre-mobile.jpg";
@@ -34,6 +35,7 @@ const Sobre = () => {
         objectPositionDesktop="md:object-center"
       />
       <TeamSection />
+      <StorySection />
       <Footer />
     </div>
   );
