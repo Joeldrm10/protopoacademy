@@ -66,7 +66,11 @@ const bookingSchema = z.object({
 
 type BookingData = z.infer<typeof bookingSchema>;
 
-const BookingForm = () => {
+interface BookingFormProps {
+  showHeader?: boolean;
+}
+
+const BookingForm = ({ showHeader = true }: BookingFormProps) => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const lastSubmitRef = useRef<number>(0);
@@ -178,17 +182,19 @@ const BookingForm = () => {
       <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <AnimateOnScroll className="text-center mb-12">
-          <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-            Marcação
-          </span>
-          <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-            Marca já o teu <span className="text-gradient-gold">treino</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Preenche o formulário abaixo e começa a evoluir hoje.
-          </p>
-        </AnimateOnScroll>
+        {showHeader && (
+          <AnimateOnScroll className="text-center mb-12">
+            <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
+              Marcação
+            </span>
+            <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+              Marca já o teu <span className="text-gradient-gold">treino</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              Preenche o formulário abaixo e começa a evoluir hoje.
+            </p>
+          </AnimateOnScroll>
+        )}
 
         <AnimateOnScroll delay={150}>
           <div className="max-w-lg mx-auto bg-card border border-border rounded-2xl p-6 md:p-10 shadow-xl">
