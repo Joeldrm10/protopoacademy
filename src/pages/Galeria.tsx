@@ -15,7 +15,6 @@ import galleryField from "@/assets/gallery-field.jpg";
 import galleryCoach from "@/assets/gallery-coach-new.jpg";
 import galleryGk from "@/assets/gallery-gk.jpg";
 import galleryKids from "@/assets/gallery-kids-new.jpg";
-import galleryTalk from "@/assets/gallery-talk.jpg";
 import galleryResistance from "@/assets/gallery-resistance.png";
 import galleryCoachKid from "@/assets/gallery-coach-kid.png";
 import galleryCoachDrill from "@/assets/gallery-coach-drill.png";
@@ -40,7 +39,6 @@ const galleryItems: GalleryItem[] = [
   { src: galleryCoach, alt: "Sessão individual com treinador" },
   { src: galleryCoachKid, alt: "Treinador a orientar jovem atleta" },
   { src: galleryCoachDrill, alt: "Treinador em exercício com atletas" },
-  { src: galleryTalk, alt: "Bastidores — conversa entre treinos" },
 ];
 
 const Galeria = () => {
