@@ -83,6 +83,7 @@ const MemberCard = ({ member, delay, featured = false }: { member: TeamMember; d
           width={512}
           height={640}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          style={{ objectPosition: member.name === "João Alves" ? "center 20%" : "center" }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
