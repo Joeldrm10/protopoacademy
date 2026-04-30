@@ -30,8 +30,7 @@ const Contacto = () => {
         subtitle="Marca o teu treino, tira dúvidas ou descobre onde estamos. Estamos prontos para te receber."
         image={heroImg}
         imageMobile={heroImgMobile}
-        objectPositionMobile="object-[center_35%]"
-        objectPositionDesktop="md:object-[72%_center]"
+        objectPositionStyle="65% center"
       />
       <DirectContactSection />
       <LocationSection />
