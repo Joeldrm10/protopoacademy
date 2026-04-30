@@ -10,6 +10,8 @@ interface PageHeroProps {
   objectPositionDesktop?: string;
   /** Tailwind object-position class for mobile (default). Ex: "object-top" */
   objectPositionMobile?: string;
+  /** Inline CSS object-position (highest priority, applies on all sizes). Ex: "70% center" */
+  objectPositionStyle?: string;
 }
 
 const PageHero = ({
@@ -21,9 +23,11 @@ const PageHero = ({
   layout = "overlay",
   objectPositionDesktop = "md:object-center",
   objectPositionMobile = "object-center",
+  objectPositionStyle,
 }: PageHeroProps) => {
   const imageAlt = highlight ? `${title} ${highlight}` : title;
   const mobileSrc = imageMobile ?? image;
+  const imgStyle = objectPositionStyle ? { objectPosition: objectPositionStyle } : undefined;
 
   if (layout === "split") {
     return (
@@ -46,6 +50,7 @@ const PageHero = ({
                     src={mobileSrc}
                     alt={imageAlt}
                     className={`absolute inset-0 h-full w-full object-cover ${objectPositionMobile} ${objectPositionDesktop}`}
+                    style={imgStyle}
                     width={1920}
                     height={1280}
                     fetchPriority="high"
@@ -69,6 +74,7 @@ const PageHero = ({
             src={mobileSrc}
             alt={imageAlt}
             className={`w-full h-full object-cover ${objectPositionMobile} ${objectPositionDesktop}`}
+            style={imgStyle}
             width={1920}
             height={1024}
             fetchPriority="high"
