@@ -15,14 +15,12 @@ import footcampHeroMobile from "@/assets/hero-footcamp-mobile.jpg";
 import footcampIns from "@/assets/footcamp-ines.jpg";
 import footcampFilipe from "@/assets/footcamp-filipe.jpg";
 import footcampJoao from "@/assets/footcamp-joao.jpg";
-import galleryFootcamp from "@/assets/gallery-footcamp.jpg";
-import galleryGroup from "@/assets/gallery-group-new.jpg";
 import galleryCircle from "@/assets/gallery-circle.jpg";
 import gallerySprint from "@/assets/gallery-sprint.jpg";
 import galleryCones from "@/assets/gallery-cones.jpg";
-import galleryTalk from "@/assets/gallery-talk.jpg";
 import galleryTeamFull from "@/assets/gallery-team-full.png";
-import galleryCoach from "@/assets/gallery-coach-new.jpg";
+import galleryCoachDrill from "@/assets/gallery-coach-drill.png";
+import galleryResistance from "@/assets/gallery-resistance.png";
 
 const stats = [
   { value: 43, label: "Atletas", icon: Users },
@@ -42,10 +40,10 @@ const guests = [
 const galleryImages = [
   { src: galleryTeamFull, alt: "Foto de grupo do Footcamp", size: "large" },
   { src: gallerySprint, alt: "Atleta em sprint durante o treino", size: "small" },
-  { src: galleryCircle, alt: "Roda de equipa no campo", size: "small" },
-  { src: galleryFootcamp, alt: "Reunião da equipa no campo", size: "wide" },
-  { src: galleryGroup, alt: "Grupo de atletas no Footcamp", size: "small" },
-  { src: galleryTalk, alt: "Treinador a conversar com atletas", size: "small" },
+  { src: galleryCoachDrill, alt: "Treinador a acompanhar atleta em exercício", size: "small" },
+  { src: galleryResistance, alt: "Treino de resistência com elástico", size: "wide" },
+  { src: galleryCones, alt: "Atleta em exercício de agilidade com cones", size: "small" },
+  { src: galleryCircle, alt: "Equipa e treinador no campo", size: "small" },
 ];
 
 
