@@ -139,7 +139,7 @@ const Footcamp = () => {
               src={footcampHeroMobile}
               alt="ProTopo Footcamp - Edição Páscoa 2026"
               className="w-full h-full object-cover"
-              style={{ objectPosition: "center center" }}
+              style={{ objectPosition: "50% 50%" }}
               width={1920}
               height={1024}
               fetchPriority="high"
