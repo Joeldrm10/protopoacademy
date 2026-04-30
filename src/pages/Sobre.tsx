@@ -31,8 +31,8 @@ const Sobre = () => {
         subtitle="Conhece a equipa e a missão que move cada treino: ajudar atletas a chegar mais longe."
         image={heroImg}
         imageMobile={heroImgMobile}
-        objectPositionMobile="object-center"
-        objectPositionDesktop="md:object-center"
+        objectPositionMobile="object-[center_top]"
+        objectPositionDesktop="md:object-[65%_center]"
       />
       <TeamSection />
       <StorySection />
