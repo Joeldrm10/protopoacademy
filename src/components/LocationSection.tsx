@@ -20,7 +20,7 @@ const LocationSection = () => {
         <AnimateOnScroll delay={200} className="max-w-4xl mx-auto">
           <div className="bg-card border border-border rounded-2xl overflow-hidden">
             <iframe
-              src="https://www.google.com/maps?q=R.+do+Campo+de+Futebol+37,+2490+Our%C3%A9m&output=embed&z=17"
+              src="https://www.google.com/maps?q=Campo+da+Caridade+Adelino+Dos+Santos+J%C3%BAnior,+Our%C3%A9m&output=embed&z=18"
               width="100%"
               height="400"
               style={{ border: 0 }}
