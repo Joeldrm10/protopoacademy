@@ -8,6 +8,7 @@ import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FootcampHighlight from "@/components/FootcampHighlight";
 import GalleryCTA from "@/components/GalleryCTA";
+import DidYouKnowSection from "@/components/DidYouKnowSection";
 
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
@@ -43,7 +44,7 @@ const Index = () => {
       <TestimonialsSection />
       <FootcampHighlight />
       <GalleryCTA />
-      
+      <DidYouKnowSection />
       <FinalCTA />
       <Footer />
     </div>
