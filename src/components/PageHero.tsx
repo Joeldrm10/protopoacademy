@@ -10,6 +10,8 @@ interface PageHeroProps {
   objectPositionDesktop?: string;
   /** Tailwind object-position class for mobile (default). Ex: "object-top" */
   objectPositionMobile?: string;
+  /** Inline CSS object-position (highest priority, applies on all sizes). Ex: "70% center" */
+  objectPositionStyle?: string;
 }
 
 const PageHero = ({
