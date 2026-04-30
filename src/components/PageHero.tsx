@@ -23,9 +23,11 @@ const PageHero = ({
   layout = "overlay",
   objectPositionDesktop = "md:object-center",
   objectPositionMobile = "object-center",
+  objectPositionStyle,
 }: PageHeroProps) => {
   const imageAlt = highlight ? `${title} ${highlight}` : title;
   const mobileSrc = imageMobile ?? image;
+  const imgStyle = objectPositionStyle ? { objectPosition: objectPositionStyle } : undefined;
 
   if (layout === "split") {
     return (
