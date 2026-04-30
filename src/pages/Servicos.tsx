@@ -33,8 +33,8 @@ const Servicos = () => {
         subtitle="Treinos personalizados para evoluíres ao teu ritmo, com planos adaptados a cada atleta."
         image={heroImg}
         imageMobile={heroImgMobile}
-        objectPositionMobile="object-center"
-        objectPositionDesktop="md:object-center"
+        objectPositionMobile="object-[center_30%]"
+        objectPositionDesktop="md:object-[70%_center]"
       />
       <ServicesSection />
       <PricingSection />
