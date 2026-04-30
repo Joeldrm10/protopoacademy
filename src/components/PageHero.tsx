@@ -74,6 +74,7 @@ const PageHero = ({
             src={mobileSrc}
             alt={imageAlt}
             className={`w-full h-full object-cover ${objectPositionMobile} ${objectPositionDesktop}`}
+            style={imgStyle}
             width={1920}
             height={1024}
             fetchPriority="high"
