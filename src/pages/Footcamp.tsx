@@ -10,7 +10,7 @@ import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
 import { supabase } from "@/integrations/supabase/client";
 
-import footcampHero from "@/assets/hero-footcamp-desktop.jpg";
+import footcampHero from "@/assets/hero-footcamp-desktop-wide.jpg";
 import footcampHeroMobile from "@/assets/hero-footcamp-mobile.jpg";
 import footcampIns from "@/assets/footcamp-ines.jpg";
 import footcampFilipe from "@/assets/footcamp-filipe.jpg";

@@ -6,7 +6,7 @@ import PageHero from "@/components/PageHero";
 import TeamSection from "@/components/TeamSection";
 import StorySection from "@/components/StorySection";
 
-import heroImg from "@/assets/hero-sobre-desktop.jpg";
+import heroImg from "@/assets/hero-sobre-desktop-wide.jpg";
 import heroImgMobile from "@/assets/hero-sobre-mobile.jpg";
 
 const Sobre = () => {
@@ -31,7 +31,7 @@ const Sobre = () => {
         subtitle="Conhece a equipa e a missão que move cada treino: ajudar atletas a chegar mais longe."
         image={heroImg}
         imageMobile={heroImgMobile}
-        objectPositionStyle="25% 50%"
+        objectPositionStyle="50% 50%"
       />
       <TeamSection />
       <StorySection />

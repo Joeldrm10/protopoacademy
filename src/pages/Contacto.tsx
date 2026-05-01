@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import LocationSection from "@/components/LocationSection";
 import DirectContactSection from "@/components/DirectContactSection";
-import heroImg from "@/assets/hero-contacto-desktop.jpg";
+import heroImg from "@/assets/hero-contacto-desktop-wide.jpg";
 import heroImgMobile from "@/assets/hero-contacto-mobile.jpg";
 
 const Contacto = () => {
@@ -30,7 +30,7 @@ const Contacto = () => {
         subtitle="Marca o teu treino, tira dúvidas ou descobre onde estamos. Estamos prontos para te receber."
         image={heroImg}
         imageMobile={heroImgMobile}
-        objectPositionStyle="80% 50%"
+        objectPositionStyle="50% 50%"
       />
       <DirectContactSection />
       <LocationSection />
