@@ -109,8 +109,8 @@ const TermosCondicoes = () => {
           <section>
             <p className="text-sm text-muted-foreground italic border-l-2 border-primary/40 pl-4">
               Para qualquer dúvida, contacta-nos através de{" "}
-              <a href="mailto:protopoacademy@gmail.com?subject=Pedido%20de%20informa%C3%A7%C3%A3o&body=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20treinos." className="text-primary hover:underline">
-                protopoacademy@gmail.com
+              <a href={EMAIL_URL_GERAL} className="text-primary hover:underline">
+                {EMAIL}
               </a>
               .
             </p>
