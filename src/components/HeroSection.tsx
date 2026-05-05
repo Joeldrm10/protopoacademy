@@ -1,9 +1,9 @@
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
+import { WHATSAPP_URL_GERAL as WHATSAPP_URL } from "@/lib/constants";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20ProTopo%20Academy%20e%20gostava%20de%20saber%20mais%20sobre%20os%20treinos.";
 
 const HeroSection = () => {
   return (
