@@ -144,7 +144,7 @@ const GallerySection = () => {
               👉 Quero inscrever o meu filho
             </a>
             <a
-              href="https://www.instagram.com/protopo_academy/"
+              href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-md font-heading font-bold uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-all duration-300"
