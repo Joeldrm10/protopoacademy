@@ -53,7 +53,7 @@ const DirectContactSection = () => {
               <h3 className="font-heading font-bold text-lg uppercase tracking-wider mb-1">
                 Ver Instagram
               </h3>
-              <p className="text-white/85 text-sm">@protopoacademy</p>
+              <p className="text-white/85 text-sm">@{INSTAGRAM_HANDLE}</p>
             </a>
 
             {/* Email */}
