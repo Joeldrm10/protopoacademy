@@ -8,8 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const WHATSAPP_URL = "https://wa.me/351911102405?text=" + encodeURIComponent("Olá, gostaria de tirar algumas dúvidas sobre os treinos da ProTopo Academy.");
-const INSTAGRAM_URL = "https://www.instagram.com/protopo_academy/";
+import { WHATSAPP_URL_DUVIDAS as WHATSAPP_URL, INSTAGRAM_URL } from "@/lib/constants";
 
 export type FAQItem = { question: string; answer: string };
 
