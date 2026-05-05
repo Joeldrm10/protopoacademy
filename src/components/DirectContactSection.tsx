@@ -1,11 +1,6 @@
 import { MessageCircle, Instagram, Mail } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
-
-const WHATSAPP_URL =
-  "https://wa.me/351911102405?text=" +
-  encodeURIComponent("Olá, queria tirar algumas dúvidas sobre os treinos.");
-const INSTAGRAM_URL = "https://www.instagram.com/protopoacademy/";
-const EMAIL = "protopoacademy@gmail.com";
+import { WHATSAPP_URL_DUVIDAS as WHATSAPP_URL, INSTAGRAM_URL, INSTAGRAM_HANDLE, EMAIL } from "@/lib/constants";
 
 const DirectContactSection = () => {
   return (
