@@ -104,19 +104,30 @@ const Footer = () => {
                 <span className="text-sm">WhatsApp</span>
               </a>
               <a
-                href="mailto:protopoacademy@gmail.com"
+                href={`mailto:${EMAIL}`}
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
               >
                 <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
                   <Mail className="w-4 h-4" />
                 </span>
-                <span className="text-sm">protopoacademy@gmail.com</span>
+                <span className="text-sm">{EMAIL}</span>
+              </a>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
+              >
+                <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
+                  <Instagram className="w-4 h-4" />
+                </span>
+                <span className="text-sm">@{INSTAGRAM_HANDLE}</span>
               </a>
               <div className="flex items-center gap-2 text-muted-foreground text-sm">
                 <span className="p-2 rounded-full bg-muted">
                   <MapPin className="w-4 h-4" />
                 </span>
-                <span className="text-sm">Campo da Caridade, Ourém</span>
+                <span className="text-sm">{LOCATION}</span>
               </div>
             </div>
           </div>
