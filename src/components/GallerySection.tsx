@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Instagram } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
+import { INSTAGRAM_URL } from "@/lib/constants";
 
 import galleryCover from "@/assets/gallery-cover.jpg";
 import galleryCones from "@/assets/gallery-cones.jpg";
