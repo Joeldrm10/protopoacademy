@@ -2,6 +2,7 @@ import { Mail } from "lucide-react";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { EMAIL, EMAIL_URL_GERAL, EMAIL_URL_DADOS, INSTAGRAM_URL, INSTAGRAM_HANDLE } from "@/lib/constants";
 
 const PoliticaPrivacidade = () => {
   useEffect(() => {
