@@ -39,7 +39,7 @@ const defaultFaqs: FAQItem[] = [
   },
   {
     question: "Como posso obter mais informações?",
-    answer: "Os pais podem entrar em contacto com a ProTopo Academy através do Instagram ou do nosso email.",
+    answer: "Os pais podem entrar em contacto connosco através do WhatsApp (911 102 405), por email em protopoacademy@gmail.com ou pelo Instagram @protopo_academy. Respondemos com a maior brevidade possível.",
   },
 ];
 
