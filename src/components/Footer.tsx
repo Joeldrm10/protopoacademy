@@ -1,8 +1,7 @@
-import { MapPin, Mail, ArrowUp, MessageCircle, ArrowRight } from "lucide-react";
+import { MapPin, Mail, ArrowUp, MessageCircle, ArrowRight, Instagram } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
-
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
+import { WHATSAPP_URL_DIRETO as WHATSAPP_URL, EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, LOCATION } from "@/lib/constants";
 
 const Footer = () => {
   const location = useLocation();
