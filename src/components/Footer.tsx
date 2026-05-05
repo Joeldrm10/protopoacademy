@@ -146,6 +146,12 @@ const Footer = () => {
             >
               Política de Privacidade
             </Link>
+            <Link
+              to="/termos-condicoes"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              Termos e Condições
+            </Link>
             <button
               onClick={scrollToTop}
               className="p-2 rounded-full border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
