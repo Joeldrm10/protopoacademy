@@ -2,6 +2,7 @@ import { Mail } from "lucide-react";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { EMAIL, EMAIL_URL_GERAL, EMAIL_URL_DADOS, INSTAGRAM_URL, INSTAGRAM_HANDLE } from "@/lib/constants";
 
 const PoliticaPrivacidade = () => {
   useEffect(() => {
@@ -120,26 +121,26 @@ const PoliticaPrivacidade = () => {
               <p>
                 <span className="text-foreground font-medium">Email:</span>{" "}
                 <a
-                  href="mailto:protopoacademy@gmail.com?subject=Pedido%20de%20informa%C3%A7%C3%A3o&body=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20treinos."
+                  href={EMAIL_URL_GERAL}
                   className="text-primary hover:underline"
                 >
-                  protopoacademy@gmail.com
+                  {EMAIL}
                 </a>
               </p>
               <p>
                 <span className="text-foreground font-medium">Instagram:</span>{" "}
                 <a
-                  href="https://www.instagram.com/protopo_academy/"
+                  href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary hover:underline"
                 >
-                  @protopo_academy
+                  @{INSTAGRAM_HANDLE}
                 </a>
               </p>
             </div>
             <a
-              href="mailto:protopoacademy@gmail.com?subject=Pedido%20relativo%20a%20dados%20pessoais"
+              href={EMAIL_URL_DADOS}
               className="inline-flex items-center gap-2.5 bg-gradient-gold text-primary-foreground px-5 py-3 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md"
             >
               <Mail className="w-4 h-4" />

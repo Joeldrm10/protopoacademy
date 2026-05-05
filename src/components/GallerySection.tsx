@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Instagram } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
+import { INSTAGRAM_URL } from "@/lib/constants";
 
 import galleryCover from "@/assets/gallery-cover.jpg";
 import galleryCones from "@/assets/gallery-cones.jpg";
@@ -143,7 +144,7 @@ const GallerySection = () => {
               👉 Quero inscrever o meu filho
             </a>
             <a
-              href="https://www.instagram.com/protopo_academy/"
+              href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-md font-heading font-bold uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-all duration-300"

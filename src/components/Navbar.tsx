@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
-
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1%2C%20gostaria%20de%20marcar%20um%20treino%20na%20ProTopo%20Academy.";
+import { WHATSAPP_URL_MARCAR as WHATSAPP_URL } from "@/lib/constants";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);

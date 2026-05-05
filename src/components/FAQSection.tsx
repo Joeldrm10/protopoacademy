@@ -8,8 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const WHATSAPP_URL = "https://wa.me/351911102405?text=" + encodeURIComponent("Olá, gostaria de tirar algumas dúvidas sobre os treinos da ProTopo Academy.");
-const INSTAGRAM_URL = "https://www.instagram.com/protopo_academy/";
+import { WHATSAPP_URL_DUVIDAS as WHATSAPP_URL, INSTAGRAM_URL } from "@/lib/constants";
 
 export type FAQItem = { question: string; answer: string };
 
@@ -40,7 +39,7 @@ const defaultFaqs: FAQItem[] = [
   },
   {
     question: "Como posso obter mais informações?",
-    answer: "Os pais podem entrar em contacto com a ProTopo Academy através do Instagram ou do nosso email.",
+    answer: "Os pais podem entrar em contacto connosco através do WhatsApp (911 102 405), por email em protopoacademy@gmail.com ou pelo Instagram @protopo_academy. Respondemos com a maior brevidade possível.",
   },
 ];
 

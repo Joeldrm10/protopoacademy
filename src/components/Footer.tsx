@@ -1,8 +1,7 @@
-import { MapPin, Mail, ArrowUp, MessageCircle, ArrowRight } from "lucide-react";
+import { MapPin, Mail, ArrowUp, MessageCircle, ArrowRight, Instagram } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
-
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20marcar%20um%20treino";
+import { WHATSAPP_URL_DIRETO as WHATSAPP_URL, EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, LOCATION } from "@/lib/constants";
 
 const Footer = () => {
   const location = useLocation();
@@ -105,19 +104,30 @@ const Footer = () => {
                 <span className="text-sm">WhatsApp</span>
               </a>
               <a
-                href="mailto:protopoacademy@gmail.com"
+                href={`mailto:${EMAIL}`}
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
               >
                 <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
                   <Mail className="w-4 h-4" />
                 </span>
-                <span className="text-sm">protopoacademy@gmail.com</span>
+                <span className="text-sm">{EMAIL}</span>
+              </a>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm group"
+              >
+                <span className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
+                  <Instagram className="w-4 h-4" />
+                </span>
+                <span className="text-sm">@{INSTAGRAM_HANDLE}</span>
               </a>
               <div className="flex items-center gap-2 text-muted-foreground text-sm">
                 <span className="p-2 rounded-full bg-muted">
                   <MapPin className="w-4 h-4" />
                 </span>
-                <span className="text-sm">Campo da Caridade, Ourém</span>
+                <span className="text-sm">{LOCATION}</span>
               </div>
             </div>
           </div>
@@ -135,6 +145,12 @@ const Footer = () => {
               className="text-xs text-muted-foreground hover:text-primary transition-colors"
             >
               Política de Privacidade
+            </Link>
+            <Link
+              to="/termos-condicoes"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              Termos e Condições
             </Link>
             <button
               onClick={scrollToTop}

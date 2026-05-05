@@ -1,7 +1,6 @@
 import { Check, MessageCircle } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
-
-const WHATSAPP_URL = "https://wa.me/351911102405?text=Ol%C3%A1,%20quero%20saber%20mais%20sobre%20os%20planos%20da%20ProTopo%20Academy";
+import { WHATSAPP_URL_PLANOS as WHATSAPP_URL } from "@/lib/constants";
 
 const plans = [
   {
