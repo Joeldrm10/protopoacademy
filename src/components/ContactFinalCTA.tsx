@@ -1,10 +1,7 @@
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimateOnScroll from "./AnimateOnScroll";
-
-const WHATSAPP_URL =
-  "https://wa.me/351911102405?text=" +
-  encodeURIComponent("Olá, queria tirar algumas dúvidas sobre os treinos.");
+import { WHATSAPP_URL_DUVIDAS as WHATSAPP_URL } from "@/lib/constants";
 
 const ContactFinalCTA = () => {
   return (
