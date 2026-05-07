@@ -57,15 +57,15 @@
   }
 
   h1 {
-    @apply text-5xl md:text-6xl lg:text-7xl font-bold;
+    @apply text-4xl md:text-6xl lg:text-7xl font-bold;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+    @apply text-2xl md:text-4xl lg:text-5xl font-bold;
   }
 
   h3 {
-    @apply text-2xl md:text-3xl font-semibold;
+    @apply text-xl md:text-3xl font-semibold;
   }
 
   h4 {
@@ -93,11 +93,11 @@
 
   /* Premium typography utilities */
   .text-display {
-    @apply font-heading text-6xl md:text-7xl lg:text-8xl font-bold uppercase tracking-[0.1em] leading-none;
+    @apply font-heading text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-[0.1em] leading-none;
   }
 
   .text-headline {
-    @apply font-heading text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-[0.08em] leading-tight;
+    @apply font-heading text-2xl md:text-4xl lg:text-5xl font-bold uppercase tracking-[0.08em] leading-tight;
   }
 
   .text-title {
