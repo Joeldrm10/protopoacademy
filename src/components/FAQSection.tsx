@@ -89,7 +89,7 @@ const FAQSection = ({
                   value={`faq-${i}`}
                   className="border border-border rounded-xl bg-card px-6 overflow-hidden data-[state=open]:border-primary/30 transition-colors"
                 >
-                  <AccordionTrigger className="text-left text-base md:text-lg font-heading font-semibold hover:no-underline hover:text-primary transition-colors py-5">
+                  <AccordionTrigger className="text-left text-base md:text-lg font-heading font-semibold hover:no-underline hover:text-primary transition-colors py-5 pr-4">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-5">
@@ -111,7 +111,7 @@ const FAQSection = ({
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 <MessageCircle className="w-5 h-5" />
                 Tirar dúvidas no WhatsApp
@@ -120,7 +120,7 @@ const FAQSection = ({
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90"
+                className="inline-flex items-center justify-center gap-2 text-white w-full sm:w-auto px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90"
                 style={{
                   background:
                     "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",

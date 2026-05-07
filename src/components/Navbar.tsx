@@ -63,7 +63,7 @@ const Navbar = () => {
   const getLinkClasses = (href: string, isMobile = false) => {
     const active = isLinkActive(href);
     const baseClasses = isMobile
-      ? "text-2xl font-heading font-bold uppercase tracking-wider transition-colors"
+      ? "text-xl font-heading font-bold uppercase tracking-wider transition-colors"
       : "text-sm font-medium uppercase tracking-wider font-heading transition-colors";
 
     if (active) {
@@ -174,7 +174,7 @@ const Navbar = () => {
 
       {/* Mobile menu - full screen overlay */}
       <div
-        className={`lg:hidden fixed inset-0 w-screen z-[60] flex flex-col items-center justify-center gap-6 overflow-y-auto transition-all duration-300 ease-out ${
+        className={`lg:hidden fixed inset-0 w-screen z-[60] flex flex-col items-center justify-center gap-4 overflow-y-auto transition-all duration-300 ease-out ${
           menuOpen ? "opacity-100 pointer-events-auto backdrop-blur-xl" : "opacity-0 pointer-events-none backdrop-blur-0"
         }`}
         style={{
@@ -214,7 +214,7 @@ const Navbar = () => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => setMenuOpen(false)}
-          className="mt-4 inline-flex items-center gap-2 bg-[#25D366] text-white px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
+          className="mt-4 inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full max-w-xs px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
         >
           <MessageCircle className="w-5 h-5" />
           WhatsApp
@@ -222,7 +222,7 @@ const Navbar = () => {
         <Link
           to="/marcar"
           onClick={() => setMenuOpen(false)}
-          className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
+          className="inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full max-w-xs px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
         >
           Marcar
           <ArrowRight className="w-5 h-5" />

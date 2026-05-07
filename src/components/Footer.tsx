@@ -55,7 +55,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 mb-12">
           {/* Coluna 1 - Marca */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
             <img src={logo} alt="ProTopo Academy" className="h-12 mb-3" />
@@ -139,7 +139,7 @@ const Footer = () => {
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} ProTopo Academy. Todos os direitos reservados.
           </p>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link
               to="/politica-privacidade"
               className="text-xs text-muted-foreground hover:text-primary transition-colors"

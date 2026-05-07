@@ -60,7 +60,7 @@ const ServicesSection = () => {
           {services.map((service, i) => (
             <AnimateOnScroll key={service.title} delay={i * 150}>
               <div
-                className={`relative rounded-2xl border p-8 md:p-10 h-full flex flex-col transition-all duration-300 group hover:shadow-2xl ${
+                className={`relative rounded-2xl border p-6 md:p-10 h-full flex flex-col transition-all duration-300 group hover:shadow-2xl ${
                   service.featured
                     ? "border-primary/40 bg-card shadow-[0_0_40px_hsl(var(--gold)/0.08)]"
                     : "border-border bg-card hover:border-primary/30"
@@ -72,7 +72,7 @@ const ServicesSection = () => {
                   </span>
                 )}
 
-                <div className="flex items-center justify-between gap-4 mb-6">
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
                   <div className="flex items-center gap-4">
                     <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
                       service.featured ? "bg-primary/20" : "bg-primary/10"

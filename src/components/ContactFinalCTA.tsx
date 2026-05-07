@@ -19,7 +19,7 @@ const ContactFinalCTA = () => {
             <div className="relative flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/marcar"
-                className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
+                className="group inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
               >
                 Marcar treino
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -28,7 +28,7 @@ const ContactFinalCTA = () => {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] text-white px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
+                className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
               >
                 <MessageCircle className="w-4 h-4" />
                 Falar no WhatsApp
