@@ -35,7 +35,7 @@ const FinalCTA = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 to="/marcar"
-                className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-12 py-5 rounded-lg font-heading font-bold text-xl uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-12 py-5 rounded-lg font-heading font-bold text-xl uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl"
               >
                 Marca já o teu treino
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
@@ -44,7 +44,7 @@ const FinalCTA = () => {
                 href={WHATSAPP_URL_GERAL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] text-white px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl"
+                className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl"
               >
                 Tirar dúvidas no WhatsApp
               </a>

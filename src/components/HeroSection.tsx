@@ -7,7 +7,7 @@ const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hI
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-16 md:pb-0">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
@@ -31,7 +31,7 @@ const HeroSection = () => {
           <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
             Academia de Treinos Personalizados
           </span>
-          <h1 className="text-display mb-6">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold uppercase tracking-[0.1em] leading-none mb-6">
             Elevamos o teu
             <span className="block text-gradient-gold mt-1">futebol</span>
           </h1>
@@ -47,7 +47,7 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               to="/marcar"
-              className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               style={{ animation: "pulse-gold 2s infinite" }}
             >
               Marca já o teu treino
@@ -57,7 +57,7 @@ const HeroSection = () => {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
+              className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-8 py-5 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
             >
               <MessageCircle className="w-5 h-5" />
               Tirar dúvidas no WhatsApp
