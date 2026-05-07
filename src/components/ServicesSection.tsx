@@ -60,7 +60,18 @@ const ServicesSection = () => {
           {services.map((service, i) => (
             <AnimateOnScroll key={service.title} delay={i * 150}>
               <div
-                className={`relative rounded-2xl border p-6 md:p-10 h-full flex flex-col transition-all duration-300 group hover:shadow-2xl ${
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = (e.clientX - rect.left) / rect.width - 0.5;
+                  const y = (e.clientY - rect.top) / rect.height - 0.5;
+                  e.currentTarget.style.transform = `perspective(800px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateZ(8px)`;
+                  e.currentTarget.style.transition = "transform 0.1s ease";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg) translateZ(0px)";
+                  e.currentTarget.style.transition = "transform 0.4s ease";
+                }}
+                className={`relative rounded-2xl border p-6 md:p-10 h-full flex flex-col transition-all duration-300 group hover:shadow-2xl will-change-transform ${
                   service.featured
                     ? "border-primary/40 bg-card shadow-[0_0_40px_hsl(var(--gold)/0.08)]"
                     : "border-border bg-card hover:border-primary/30"

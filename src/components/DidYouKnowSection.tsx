@@ -1,6 +1,31 @@
+import { useEffect, useRef } from "react";
 import { Moon, Zap, Brain, ShieldAlert, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimateOnScroll from "./AnimateOnScroll";
+
+const FlipCard = ({ delay, children }: { delay: number; children: React.ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("is-visible");
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="card-flip-init h-full" style={{ animationDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
+};
 
 const stats = [
   {
@@ -74,7 +99,7 @@ const DidYouKnowSection = () => {
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
-              <AnimateOnScroll key={idx} delay={150 + idx * 80}>
+              <FlipCard key={idx} delay={idx * 120}>
                 <div className="group h-full bg-card/60 border border-border rounded-xl p-6 hover:border-primary/40 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-start gap-4">
                     <div className="shrink-0 w-11 h-11 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -85,7 +110,7 @@ const DidYouKnowSection = () => {
                     </p>
                   </div>
                 </div>
-              </AnimateOnScroll>
+              </FlipCard>
             );
           })}
         </div>

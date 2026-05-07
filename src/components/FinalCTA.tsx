@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimateOnScroll from "./AnimateOnScroll";
+import CountUp from "./CountUp";
 import teamFinalBg from "@/assets/team-final-cta.png";
 import { WHATSAPP_URL_GERAL } from "@/lib/constants";
 
@@ -25,6 +26,18 @@ const FinalCTA = () => {
       <div className="relative z-10 py-32 md:py-44 px-4">
         <AnimateOnScroll>
           <div className="max-w-3xl mx-auto text-center">
+            <div className="flex flex-wrap gap-8 sm:gap-12 justify-center mb-10">
+              {[
+                { end: 43, suffix: "", label: "Atletas no Footcamp" },
+                { end: 50, suffix: "+", label: "Atletas Ativos" },
+                { end: 100, suffix: "%", label: "Foco na Evolução" },
+              ].map((item) => (
+                <div key={item.label} className="text-center">
+                  <CountUp end={item.end} suffix={item.suffix} className="font-heading text-4xl md:text-5xl text-gradient-gold" />
+                  <p className="text-xs text-muted-foreground uppercase tracking-widest mt-1">{item.label}</p>
+                </div>
+              ))}
+            </div>
             <h2 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl mb-6 text-foreground leading-tight">
               Forma mais do que jogadores.{" "}
               <span className="text-gradient-gold">Forma uma equipa.</span>
