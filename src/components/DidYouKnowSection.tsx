@@ -1,6 +1,31 @@
+import { useEffect, useRef } from "react";
 import { Moon, Zap, Brain, ShieldAlert, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimateOnScroll from "./AnimateOnScroll";
+
+const FlipCard = ({ delay, children }: { delay: number; children: React.ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("is-visible");
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="card-flip-init h-full" style={{ animationDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
+};
 
 const stats = [
   {
