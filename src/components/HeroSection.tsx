@@ -23,7 +23,29 @@ const HeroSection = () => {
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background">
+        {/* Floating gold particles */}
+        {[
+          { top: "12%", left: "8%", size: "w-1 h-1", dur: "6s", delay: "0s" },
+          { top: "22%", left: "82%", size: "w-2 h-2", dur: "8s", delay: "1s" },
+          { top: "35%", left: "18%", size: "w-1.5 h-1.5", dur: "7s", delay: "2s" },
+          { top: "48%", left: "72%", size: "w-1 h-1", dur: "5s", delay: "0.5s" },
+          { top: "58%", left: "30%", size: "w-2 h-2", dur: "9s", delay: "3s" },
+          { top: "65%", left: "88%", size: "w-1 h-1", dur: "4s", delay: "1.5s" },
+          { top: "78%", left: "12%", size: "w-1.5 h-1.5", dur: "7s", delay: "2.5s" },
+          { top: "85%", left: "60%", size: "w-1 h-1", dur: "6s", delay: "4s" },
+          { top: "15%", left: "45%", size: "w-1 h-1", dur: "8s", delay: "3.5s" },
+          { top: "40%", left: "55%", size: "w-2 h-2", dur: "9s", delay: "0s" },
+          { top: "70%", left: "48%", size: "w-1 h-1", dur: "5s", delay: "5s" },
+          { top: "28%", left: "92%", size: "w-1.5 h-1.5", dur: "6s", delay: "2s" },
+        ].map((p, i) => (
+          <span
+            key={i}
+            className={`absolute rounded-full pointer-events-none bg-primary/40 ${p.size}`}
+            style={{ top: p.top, left: p.left, animation: `float-particle ${p.dur} ease-in-out infinite`, animationDelay: p.delay }}
+          />
+        ))}
+      </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center pt-20">
