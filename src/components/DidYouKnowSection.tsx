@@ -110,7 +110,7 @@ const DidYouKnowSection = () => {
                     </p>
                   </div>
                 </div>
-              </AnimateOnScroll>
+              </FlipCard>
             );
           })}
         </div>
