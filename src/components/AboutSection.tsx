@@ -8,6 +8,21 @@ const stats = [
   { icon: Shield, value: "6-16", label: "Anos de idade" },
 ];
 
+const handleTilt = (mult: number) => (e: React.MouseEvent<HTMLDivElement>) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  e.currentTarget.style.transform = `perspective(800px) rotateY(${x * mult}deg) rotateX(${-y * mult}deg) translateZ(${mult === 12 ? 12 : 8}px)`;
+  e.currentTarget.style.transition = "transform 0.1s ease";
+  e.currentTarget.style.boxShadow = "0 20px 40px hsla(43, 100%, 50%, 0.18)";
+};
+
+const handleTiltLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  e.currentTarget.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg) translateZ(0px)";
+  e.currentTarget.style.transition = "transform 0.4s ease";
+  e.currentTarget.style.boxShadow = "";
+};
+
 const AboutSection = () => {
   return (
     <section id="sobre" className="py-28 bg-background relative overflow-hidden">
@@ -33,10 +48,14 @@ const AboutSection = () => {
         </AnimateOnScroll>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto" style={{ perspective: "1000px" }}>
           {stats.map((stat, i) => (
             <AnimateOnScroll key={stat.label} delay={i * 100}>
-              <div className="text-center p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 group">
+              <div
+                onMouseMove={handleTilt(12)}
+                onMouseLeave={handleTiltLeave}
+                className="text-center p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 group will-change-transform"
+              >
                 <stat.icon className="w-8 h-8 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
                 <p className="font-heading font-bold text-3xl md:text-4xl text-foreground mb-1">{stat.value}</p>
                 <p className="text-muted-foreground text-sm font-medium">{stat.label}</p>
