@@ -99,7 +99,7 @@ const DidYouKnowSection = () => {
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
-              <AnimateOnScroll key={idx} delay={150 + idx * 80}>
+              <FlipCard key={idx} delay={idx * 120}>
                 <div className="group h-full bg-card/60 border border-border rounded-xl p-6 hover:border-primary/40 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-start gap-4">
                     <div className="shrink-0 w-11 h-11 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
