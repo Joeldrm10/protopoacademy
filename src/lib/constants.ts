@@ -15,3 +15,4 @@ export const WHATSAPP_URL_PLANOS = wa("Olá, quero saber mais sobre os planos da
 export const WHATSAPP_URL_DIRETO = wa("Olá, quero marcar um treino");
 export const EMAIL_URL_GERAL = `mailto:${EMAIL}?subject=Pedido%20de%20informa%C3%A7%C3%A3o&body=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20treinos.`;
 export const EMAIL_URL_DADOS = `mailto:${EMAIL}?subject=Pedido%20relativo%20a%20dados%20pessoais`;
+export const WHATSAPP_URL_FOOTCAMP_INFO = wa("Olá! Gostava de saber mais informações sobre a ProTopo Footcamp — Edição Verão 2026.");
