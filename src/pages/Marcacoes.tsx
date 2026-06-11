@@ -418,7 +418,7 @@ const Marcacoes = () => {
                                 </TableCell>
                               </TableRow>
                             )}
-                          </>
+                          </Fragment>
                         );
                       })}
                     </TableBody>
