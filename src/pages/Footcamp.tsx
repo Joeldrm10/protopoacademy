@@ -11,6 +11,8 @@ import AnimateOnScroll from "@/components/AnimateOnScroll";
 import FAQSection from "@/components/FAQSection";
 import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
+import MarqueeBanner from "@/components/MarqueeBanner";
+import FootcampCountdown from "@/components/FootcampCountdown";
 import { supabase } from "@/integrations/supabase/client";
 import { WHATSAPP_URL_FOOTCAMP_INFO } from "@/lib/constants";
 
@@ -134,9 +136,10 @@ const Footcamp = () => {
         path="/footcamp"
       />
       <Navbar />
+      <MarqueeBanner />
 
       {/* HERO */}
-      <section className="relative h-[70vh] min-h-[520px] md:h-[80vh] md:min-h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[640px] md:min-h-[680px] flex items-center justify-center overflow-hidden pt-[calc(env(safe-area-inset-top)+80px)] md:pt-24 pb-16">
         <div className="absolute inset-0">
           <picture>
             <source media="(min-width: 768px)" srcSet={footcampHero} />
@@ -151,7 +154,7 @@ const Footcamp = () => {
             />
           </picture>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/45 to-background/95" />
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="animate-fade-in-up">
             <span className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full font-heading font-bold uppercase tracking-[0.2em] text-xs mb-5 shadow-lg">
@@ -163,17 +166,16 @@ const Footcamp = () => {
               <span className="block text-gradient-gold mt-1">Footcamp</span>
             </h1>
             <p className="text-foreground/90 text-lg md:text-2xl max-w-2xl mx-auto font-body leading-relaxed mb-6">
-              Uma experiência de treino diferenciada para jovens atletas dos 6 aos 16 anos, com foco na evolução técnica, física e mental.
+              Evolui este verão com treinos intensivos, competição e experiências únicas para atletas dos 6 aos 16 anos.
             </p>
 
             {/* Quick highlights */}
-            <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-3xl mx-auto mb-8">
+            <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-3xl mx-auto mb-4">
               {[
                 "📅 Julho 2026",
                 "🗓️ 4 semanas disponíveis",
                 "👕 Kit de treino incluído",
                 "⏰ Quinta-feira: dia completo",
-                "⚡ Vagas limitadas",
               ].map((t) => (
                 <span
                   key={t}
@@ -184,10 +186,21 @@ const Footcamp = () => {
               ))}
             </div>
 
+            {/* Urgency badges */}
+            <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-3xl mx-auto mb-8">
+              <span className="inline-flex items-center gap-1.5 bg-primary/15 border border-primary/50 text-primary px-3 py-1.5 rounded-full font-heading font-bold text-xs md:text-sm uppercase tracking-wider animate-pulse">
+                🔥 Inscrições Abertas
+              </span>
+              <span className="inline-flex items-center gap-1.5 bg-destructive/15 border border-destructive/50 text-destructive px-3 py-1.5 rounded-full font-heading font-bold text-xs md:text-sm uppercase tracking-wider animate-pulse">
+                ⚠️ Vagas Limitadas
+              </span>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <Link
                 to="/marcar?tipo=footcamp"
-                className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
+                className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+                style={{ animation: "pulse-gold 2.4s ease-in-out infinite" }}
               >
                 Garantir vaga
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -205,6 +218,8 @@ const Footcamp = () => {
           </div>
         </div>
       </section>
+
+      <FootcampCountdown />
 
       {/* O QUE É O FOOTCAMP */}
       <section className="py-24 bg-background">
