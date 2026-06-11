@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Users, Camera, UserCheck, Quote, Star, ArrowRight } from "lucide-react";
+import {
+  Users, Camera, UserCheck, Quote, Star, ArrowRight,
+  Calendar, Clock, MapPin, Shirt, Apple, Droplet, Sparkles,
+  ShowerHead, Flame, Cookie, MessageCircle,
+} from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,6 +13,7 @@ import FAQSection from "@/components/FAQSection";
 import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
 import { supabase } from "@/integrations/supabase/client";
+import { WHATSAPP_URL_FOOTCAMP, FOOTCAMP_SIGNUP_URL } from "@/lib/constants";
 
 import footcampHero from "@/assets/hero-footcamp-desktop-wide.jpg";
 import footcampHeroMobile from "@/assets/hero-footcamp-mobile.jpg";
@@ -121,23 +126,23 @@ const Footcamp = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="ProTopo Footcamp | Experiência Intensiva de Futebol"
-        description="Footcamp ProTopo: dias intensivos de treino, foco e evolução. Para jovens atletas dos 6 aos 16 anos."
-        ogTitle="ProTopo Footcamp"
-        ogDescription="Treino intensivo, evolução real e experiência única."
+        title="ProTopo Footcamp Verão 2026 | Inscrições Abertas"
+        description="Footcamp ProTopo — Edição Verão 2026. 4 semanas em julho, para atletas dos 6 aos 16 anos. Treinos intensivos, equipamento incluído. Inscreve-te já."
+        ogTitle="ProTopo Footcamp — Edição Verão 2026"
+        ogDescription="4 semanas em julho. Treinos intensivos para jovens atletas dos 6 aos 16 anos. Inscrições abertas."
         ogImage="/og/footcamp.jpg"
         path="/footcamp"
       />
       <Navbar />
 
       {/* HERO */}
-      <section className="relative h-[60vh] min-h-[440px] md:h-[65vh] md:min-h-[520px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[70vh] min-h-[520px] md:h-[80vh] md:min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <picture>
             <source media="(min-width: 768px)" srcSet={footcampHero} />
             <img
               src={footcampHeroMobile}
-              alt="ProTopo Footcamp - Edição Páscoa 2026"
+              alt="ProTopo Footcamp - Edição Verão 2026"
               className="w-full h-full object-cover"
               style={{ objectPosition: "50% 50%" }}
               width={1920}
@@ -146,38 +151,294 @@ const Footcamp = () => {
             />
           </picture>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/35 to-background/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/90" />
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="animate-fade-in-up">
-            <span className="block text-primary font-heading font-semibold uppercase tracking-[0.3em] text-sm mb-4">
-              Edição Páscoa 2026
+            <span className="inline-block bg-primary/10 border border-primary/30 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.25em] text-xs mb-6">
+              Inscrições abertas
             </span>
-            <h1 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
-              ProTopo
-              <span className="block text-gradient-gold mt-1">Footcamp</span>
+            <h1 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-4">
+              PROTOPO
+              <span className="block text-gradient-gold mt-1">FOOTCAMP</span>
             </h1>
-            <p className="text-foreground/90 text-xl md:text-2xl max-w-2xl mx-auto font-body leading-relaxed">
-              4 dias de trabalho, foco e evolução.
+            <p className="text-primary font-heading font-semibold uppercase tracking-[0.3em] text-sm md:text-base mb-6">
+              Edição Verão 2026
             </p>
+            <p className="text-foreground/90 text-lg md:text-xl max-w-2xl mx-auto font-body leading-relaxed mb-8">
+              Treinos intensivos para jovens atletas dos 6 aos 16 anos, durante o mês de julho, com foco na evolução técnica, física e mental.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <a
+                href={FOOTCAMP_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg w-full sm:w-auto justify-center"
+              >
+                Inscrever no Footcamp
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href={WHATSAPP_URL_FOOTCAMP}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border-2 border-primary/50 text-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all w-full sm:w-auto justify-center"
+              >
+                <MessageCircle className="w-5 h-5 text-primary" />
+                Tirar dúvidas
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* RESULTADOS */}
+      {/* O QUE É O FOOTCAMP */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="max-w-3xl mx-auto text-center">
+              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
+                O que é
+              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-8">
+                O <span className="text-gradient-gold">ProTopo Footcamp</span>
+              </h2>
+              <div className="space-y-5 text-muted-foreground text-base md:text-lg leading-relaxed text-left md:text-center">
+                <p>
+                  A ProTopo Footcamp foi criada para proporcionar uma experiência de treino diferenciada e de excelência para jovens atletas dos <span className="text-foreground font-semibold">6 aos 16 anos</span>.
+                </p>
+                <p>
+                  Procuramos criar dias inesquecíveis, mas ao mesmo tempo focados no desenvolvimento do atleta, através de treinos específicos, intensidade competitiva e acompanhamento especializado.
+                </p>
+                <p>
+                  A metodologia combina desenvolvimento técnico, físico e mental, inteligência de jogo e intensidade competitiva, sempre num ambiente seguro, organizado e profissional.
+                </p>
+              </div>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* SEMANAS DISPONÍVEIS */}
       <section className="py-24 bg-secondary">
         <div className="container mx-auto px-4">
           <AnimateOnScroll>
-            <div className="text-center mb-16 max-w-3xl mx-auto">
+            <div className="text-center mb-14 max-w-3xl mx-auto">
               <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-                📊 Em números
+                Calendário
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-                Resultados do <span className="text-gradient-gold">Footcamp</span>
+                Semanas <span className="text-gradient-gold">disponíveis</span>
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Escolhe uma ou várias semanas. Quanto mais semanas, mais evolução.
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto mb-12">
+            {[
+              { n: "1ª", dates: "6 a 10 de julho" },
+              { n: "2ª", dates: "13 a 17 de julho" },
+              { n: "3ª", dates: "20 a 24 de julho" },
+              { n: "4ª", dates: "27 a 31 de julho" },
+            ].map((s, i) => (
+              <AnimateOnScroll key={s.n} delay={i * 100}>
+                <div className="group relative h-full bg-card border border-border rounded-2xl p-6 text-center hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 mb-4">
+                    <Calendar className="w-6 h-6 text-primary" />
+                  </div>
+                  <p className="font-heading font-black text-3xl text-gradient-gold mb-2">{s.n} semana</p>
+                  <p className="text-foreground font-body">{s.dates}</p>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
+
+          <AnimateOnScroll delay={200}>
+            <div className="max-w-3xl mx-auto bg-card border border-border rounded-2xl p-6 md:p-8 space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Local</p>
+                  <p className="font-heading font-semibold text-foreground">Campo da Caridade — Adelino dos Santos Júnior, Ourém</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Horário · Duração</p>
+                  <p className="font-heading font-semibold text-foreground">09:00 às 12:30 · 3h30 por dia</p>
+                  <p className="text-muted-foreground text-sm mt-1 italic">
+                    Existe flexibilidade de horários mediante necessidade do atleta.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* INCLUÍDO NA INSCRIÇÃO */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="text-center mb-14 max-w-3xl mx-auto">
+              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
+                Tudo incluído
+              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                Incluído na <span className="text-gradient-gold">inscrição</span>
               </h2>
             </div>
           </AnimateOnScroll>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+            {[
+              { icon: Shirt, label: "T-shirt ProTopo" },
+              { icon: Shirt, label: "Calções de treino ProTopo" },
+              { icon: Sparkles, label: "Par de meias" },
+              { icon: Cookie, label: "Lanche diário" },
+              { icon: Flame, label: "Barras energéticas" },
+              { icon: Droplet, label: "Água" },
+              { icon: Apple, label: "Fruta" },
+              { icon: ShowerHead, label: "Balneários disponíveis" },
+              { icon: ShowerHead, label: "Banho de água quente" },
+              { icon: Sparkles, label: "Atividades diferenciadas" },
+            ].map((item, i) => (
+              <AnimateOnScroll key={item.label} delay={i * 50}>
+                <div className="group h-full bg-card border border-border rounded-xl p-5 flex flex-col items-center text-center gap-3 hover:border-primary/60 hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <item.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <p className="text-foreground text-sm font-heading font-semibold leading-tight">{item.label}</p>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PREÇOS */}
+      <section id="precos" className="py-24 bg-secondary relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="container mx-auto px-4 relative z-10">
+          <AnimateOnScroll>
+            <div className="text-center mb-14 max-w-3xl mx-auto">
+              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
+                Investimento
+              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                <span className="text-gradient-gold">Preços</span>
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Quanto mais semanas, melhor o valor por semana.
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 max-w-5xl mx-auto mb-10">
+            {[
+              { weeks: "1 semana", price: "95€" },
+              { weeks: "2 semanas", price: "180€" },
+              { weeks: "3 semanas", price: "260€" },
+              { weeks: "4 semanas", price: "340€", featured: true },
+            ].map((p, i) => (
+              <AnimateOnScroll key={p.weeks} delay={i * 100}>
+                <div
+                  className={`relative h-full rounded-2xl border p-6 text-center transition-all duration-500 hover:-translate-y-1 ${
+                    p.featured
+                      ? "border-primary/60 bg-card shadow-[0_0_40px_hsl(var(--gold)/0.15)]"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  {p.featured && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-gold text-primary-foreground px-3 py-1 rounded-full text-[10px] font-heading font-bold uppercase tracking-wider whitespace-nowrap">
+                      Melhor valor
+                    </span>
+                  )}
+                  <p className="text-muted-foreground text-sm font-heading uppercase tracking-wider mb-3">{p.weeks}</p>
+                  <p className="font-heading font-black text-4xl md:text-5xl text-gradient-gold">{p.price}</p>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
+
+          <AnimateOnScroll delay={200}>
+            <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+              <div className="bg-card border border-border rounded-xl p-5 flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-heading font-bold text-foreground">Seguro · 20€</p>
+                  <p className="text-muted-foreground text-sm">Válido por um ano.</p>
+                </div>
+              </div>
+              <div className="bg-card border border-border rounded-xl p-5 flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Users className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-heading font-bold text-foreground">Desconto irmãos · 10%</p>
+                  <p className="text-muted-foreground text-sm">Inscrição de dois irmãos, 10% no valor final.</p>
+                </div>
+              </div>
+            </div>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll delay={300}>
+            <div className="text-center">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-4">
+                <a
+                  href={FOOTCAMP_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg w-full sm:w-auto justify-center"
+                >
+                  Inscrever no Footcamp
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a
+                  href={WHATSAPP_URL_FOOTCAMP}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border-2 border-primary/50 text-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all w-full sm:w-auto justify-center"
+                >
+                  <MessageCircle className="w-5 h-5 text-primary" />
+                  Tirar dúvidas no WhatsApp
+                </a>
+              </div>
+              <p className="text-muted-foreground/80 text-xs mt-6 italic">
+                Após a inscrição, serão enviadas as informações de pagamento por WhatsApp.
+              </p>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* EDIÇÃO ANTERIOR — RESULTADOS */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="text-center max-w-3xl mx-auto">
+              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
+                Edição anterior
+              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                Resultados da <span className="text-gradient-gold">última edição</span>
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                O que já foi feito, em números.
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto mt-12">
+
             {stats.map((stat, i) => (
               <AnimateOnScroll key={stat.label} delay={i * 100}>
                 <div className="group relative bg-card border border-border rounded-2xl p-6 md:p-8 text-center hover:border-primary/60 transition-all duration-500 h-full overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.4)]">
@@ -416,32 +677,54 @@ const Footcamp = () => {
         <div className="relative z-10 container mx-auto px-4 text-center">
           <AnimateOnScroll>
             <span className="inline-block bg-primary/10 border border-primary/30 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-              🔥 Próxima Edição
+              Inscrições abertas
             </span>
             <h2 className="font-heading font-black text-4xl md:text-6xl mb-6 max-w-3xl mx-auto leading-tight">
-              Nova edição <span className="text-gradient-gold">em breve.</span>
-              <span className="block text-foreground mt-2">Fica atento!</span>
+              Garante o teu lugar na
+              <span className="block text-gradient-gold mt-2">Edição Verão 2026.</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Em breve partilharemos mais informações sobre a próxima edição do ProTopo Footcamp.
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
+              4 semanas em julho. Vagas limitadas por semana — inscreve-te já.
             </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <a
+                href={FOOTCAMP_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg w-full sm:w-auto justify-center"
+              >
+                Inscrever no Footcamp
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href={WHATSAPP_URL_FOOTCAMP}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border-2 border-primary/50 text-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all w-full sm:w-auto justify-center"
+              >
+                <MessageCircle className="w-5 h-5 text-primary" />
+                Tirar dúvidas no WhatsApp
+              </a>
+            </div>
           </AnimateOnScroll>
         </div>
       </section>
 
       <FAQSection
         title={<>Dúvidas sobre o <span className="text-gradient-gold">Footcamp</span></>}
-        subtitle="Tudo o que pais e atletas precisam de saber sobre a experiência Footcamp."
+        subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Verão 2026."
         faqs={[
-          { question: "Para que idades é o Footcamp?", answer: "O Footcamp é destinado a jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
-          { question: "O que está incluído?", answer: "A experiência inclui treinos intensivos, sessões técnicas, atividades com profissionais convidados (psicóloga, árbitro, ex-jogador profissional), acompanhamento próximo e cobertura fotográfica." },
-          { question: "O que os atletas precisam levar?", answer: "Equipamento desportivo, chuteiras, sapatilhas, garrafa de água e muita vontade de evoluir. Indicações específicas serão partilhadas antes da edição começar." },
-          { question: "Qual é a duração?", answer: "O Footcamp tem a duração de 4 dias intensivos, com programa diário pensado para maximizar a evolução técnica, física e mental dos atletas." },
-          { question: "Onde se realiza?", answer: "O Footcamp realiza-se no Campo da Caridade, em Ourém, o mesmo local dos nossos treinos regulares." },
-          { question: "Como funciona a inscrição?", answer: "As inscrições para a próxima edição serão abertas em breve. Acompanha o nosso Instagram ou fala connosco para receberes informação assim que abrirmos as vagas." },
-          { question: "Há acompanhamento profissional?", answer: "Sim. Contamos com 4 treinadores principais, 8 treinadores adjuntos e profissionais convidados, garantindo um rácio que permite acompanhamento individualizado." },
+          { question: "Quando é o Footcamp Verão 2026?", answer: "Durante o mês de julho, em 4 semanas: 6-10, 13-17, 20-24 e 27-31. Podes inscrever-te em uma ou várias semanas." },
+          { question: "Para que idades é o Footcamp?", answer: "Para jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
+          { question: "Qual é o horário?", answer: "Das 09:00 às 12:30 (3h30 por dia). Existe flexibilidade de horários mediante necessidade do atleta." },
+          { question: "Onde se realiza?", answer: "No Campo da Caridade — Adelino dos Santos Júnior, em Ourém." },
+          { question: "O que está incluído na inscrição?", answer: "T-shirt e calções ProTopo, par de meias, lanche diário, barras energéticas, água, fruta, balneários com banho de água quente e atividades diferenciadas durante a semana." },
+          { question: "Quais são os preços?", answer: "1 semana — 95€ · 2 semanas — 180€ · 3 semanas — 260€ · 4 semanas — 340€. Seguro: 20€ (válido por um ano). Desconto de 10% no valor final na inscrição de dois irmãos." },
+          { question: "Como funciona o pagamento?", answer: "Após a inscrição, serão enviadas as informações de pagamento por WhatsApp." },
+          { question: "Como faço a inscrição?", answer: "Carrega no botão \"Inscrever no Footcamp\" para preencher o formulário. Para dúvidas, fala connosco pelo WhatsApp." },
         ]}
       />
+
 
       <Footer />
 
