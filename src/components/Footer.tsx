@@ -14,7 +14,8 @@ const Footer = () => {
 
   const navLinks = [
     { label: "Início", href: "/" },
-    { label: "Serviços", href: "/servicos" },
+    // "Serviços" temporariamente removido — reativar com SHOW_INDIVIDUAL_GROUP_TRAININGS
+    ...(SHOW_INDIVIDUAL_GROUP_TRAININGS ? [{ label: "Serviços", href: "/servicos" }] : []),
     { label: "Footcamp", href: "/footcamp" },
     { label: "Sobre", href: "/sobre" },
     { label: "Contacto", href: "/contacto" },
