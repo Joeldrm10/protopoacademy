@@ -12,7 +12,7 @@ const FootcampHighlight = () => {
           <div className="absolute inset-0">
             <img
               src={footcampHero}
-              alt="ProTopo Footcamp - Edição Páscoa 2026"
+              alt="ProTopo Footcamp - Edição Verão 2026"
               loading="lazy"
               className="w-full h-full object-cover object-top md:object-center"
               style={{ objectPosition: "50% 25%" }}
