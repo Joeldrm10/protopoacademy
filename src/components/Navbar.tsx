@@ -140,13 +140,7 @@ const Navbar = () => {
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
     <MarqueeBanner />
-    <nav
-      className={`relative w-full transition-all duration-300 ${
-        scrolled
-          ? "bg-background/95 backdrop-blur-md shadow-lg py-2"
-          : "bg-background/80 backdrop-blur-sm py-3"
-      }`}
-    >
+    <nav className="relative w-full transition-all duration-300 bg-black/75 backdrop-blur py-3 shadow-lg">
       <div className="container mx-auto flex items-center justify-between px-4">
         <Link to="/" onClick={handleHomeClick} className="flex items-center gap-2 relative z-50 cursor-pointer" aria-label="Ir para a página inicial">
           <img src={logo} alt="ProTopo Academy" className="h-10" />
