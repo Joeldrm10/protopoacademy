@@ -40,6 +40,7 @@ const Index = () => {
       />
       <Navbar />
       <HeroSection />
+      <MarqueeBanner />
       <AboutSection />
       {/* Treinos individuais e de grupo temporariamente ocultos — reativar via SHOW_INDIVIDUAL_GROUP_TRAININGS */}
       {SHOW_INDIVIDUAL_GROUP_TRAININGS && <ServicesSection />}
