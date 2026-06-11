@@ -4,6 +4,7 @@ import AnimateOnScroll from "./AnimateOnScroll";
 import CountUp from "./CountUp";
 import teamFinalBg from "@/assets/team-final-cta.png";
 import { WHATSAPP_URL_GERAL } from "@/lib/constants";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
