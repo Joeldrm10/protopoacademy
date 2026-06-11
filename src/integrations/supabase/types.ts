@@ -18,33 +18,51 @@ export type Database = {
         Row: {
           confirmado: boolean
           created_at: string
-          data: string
-          hora: string
+          data: string | null
+          desconto_irmaos: boolean | null
+          encarregado: string | null
+          estado: string
+          hora: string | null
           id: string
           idade: string
           nome: string
+          observacoes: string | null
+          seguro_anual: boolean | null
+          semanas: string[] | null
           telemovel: string
           tipo: string
         }
         Insert: {
           confirmado?: boolean
           created_at?: string
-          data: string
-          hora: string
+          data?: string | null
+          desconto_irmaos?: boolean | null
+          encarregado?: string | null
+          estado?: string
+          hora?: string | null
           id?: string
           idade: string
           nome: string
+          observacoes?: string | null
+          seguro_anual?: boolean | null
+          semanas?: string[] | null
           telemovel: string
           tipo: string
         }
         Update: {
           confirmado?: boolean
           created_at?: string
-          data?: string
-          hora?: string
+          data?: string | null
+          desconto_irmaos?: boolean | null
+          encarregado?: string | null
+          estado?: string
+          hora?: string | null
           id?: string
           idade?: string
           nome?: string
+          observacoes?: string | null
+          seguro_anual?: boolean | null
+          semanas?: string[] | null
           telemovel?: string
           tipo?: string
         }

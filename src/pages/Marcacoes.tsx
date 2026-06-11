@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Fragment } from "react";
 import AdminAuth from "@/components/AdminAuth";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,6 +7,7 @@ import { pt } from "date-fns/locale";
 import {
   CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw,
   Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard, Search,
+  ChevronDown, ChevronUp, Trophy, FileText,
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -32,10 +33,24 @@ type Marcacao = {
   idade: string;
   telemovel: string;
   tipo: string;
-  data: string;
-  hora: string;
+  data: string | null;
+  hora: string | null;
   created_at: string;
   confirmado: boolean;
+  estado: string;
+  semanas: string[] | null;
+  seguro_anual: boolean | null;
+  desconto_irmaos: boolean | null;
+  observacoes: string | null;
+  encarregado: string | null;
+};
+
+const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
+const estadoStyles: Record<string, string> = {
+  pendente: "bg-primary/10 text-primary border-primary/20",
+  contactado: "bg-blue-500/15 text-blue-400 border-blue-500/25",
+  confirmado: "bg-green-500/15 text-green-500 border-green-500/20",
+  cancelado: "bg-destructive/15 text-destructive border-destructive/25",
 };
 
 const Marcacoes = () => {
@@ -46,6 +61,7 @@ const Marcacoes = () => {
   const [filterDate, setFilterDate] = useState<Date | undefined>();
   const [filterTipo, setFilterTipo] = useState<string>("todos");
   const [searchNome, setSearchNome] = useState("");
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const filteredMarcacoes = useMemo(() => {
     return marcacoes.filter((m) => {
@@ -59,8 +75,8 @@ const Marcacoes = () => {
     });
   }, [marcacoes, filterDate, filterTipo, searchNome]);
 
-  const confirmados = useMemo(() => marcacoes.filter((m) => m.confirmado).length, [marcacoes]);
-  const pendentes = useMemo(() => marcacoes.filter((m) => !m.confirmado).length, [marcacoes]);
+  const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
+  const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
@@ -73,7 +89,7 @@ const Marcacoes = () => {
     if (error) {
       console.error("Erro ao carregar marcações:", error);
     } else {
-      setMarcacoes(data || []);
+      setMarcacoes((data || []) as unknown as Marcacao[]);
     }
     setLoading(false);
   };
@@ -91,16 +107,16 @@ const Marcacoes = () => {
     setDeleting(null);
   };
 
-  const handleToggleConfirmado = async (id: string, current: boolean) => {
+  const handleEstadoChange = async (id: string, novoEstado: string) => {
     const { error } = await supabase
       .from("marcacoes")
-      .update({ confirmado: !current } as any)
+      .update({ estado: novoEstado, confirmado: novoEstado === "confirmado" } as any)
       .eq("id", id);
     if (error) {
       toast.error("Erro ao atualizar estado");
     } else {
       setMarcacoes((prev) =>
-        prev.map((m) => (m.id === id ? { ...m, confirmado: !current } : m))
+        prev.map((m) => (m.id === id ? { ...m, estado: novoEstado, confirmado: novoEstado === "confirmado" } : m))
       );
     }
   };
@@ -241,8 +257,9 @@ const Marcacoes = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="todos">Todos os tipos</SelectItem>
-                    <SelectItem value="individual">Individual</SelectItem>
-                    <SelectItem value="grupo">Grupo</SelectItem>
+                    <SelectItem value="individual">Treino Individual</SelectItem>
+                    <SelectItem value="grupo">Treino de Grupo</SelectItem>
+                    <SelectItem value="footcamp">Footcamp</SelectItem>
                   </SelectContent>
                 </Select>
                 {(filterDate || filterTipo !== "todos" || searchNome) && (
@@ -299,95 +316,148 @@ const Marcacoes = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredMarcacoes.map((m) => (
-                        <TableRow key={m.id} className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
-                          <TableCell>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
-                              className={cn(
-                                "text-xs font-semibold rounded-full px-3 transition-all",
-                                m.confirmado
-                                  ? "bg-green-500/15 text-green-500 hover:bg-green-500/25 hover:text-green-400 border border-green-500/20"
-                                  : "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
-                              )}
-                            >
-                              <Check className="w-3.5 h-3.5 mr-1" />
-                              {m.confirmado ? "Confirmado" : "Pendente"}
-                            </Button>
-                          </TableCell>
-                          <TableCell className="font-semibold text-foreground">{m.nome}</TableCell>
-                          <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
-                          <TableCell className="text-muted-foreground font-mono text-sm">{m.telemovel}</TableCell>
-                          <TableCell className="text-center">
-                            <span className={cn(
-                              "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
-                              m.tipo === "individual"
-                                ? "bg-primary/15 text-primary border border-primary/25"
-                                : "bg-blue-500/15 text-blue-400 border border-blue-500/25"
-                            )}>
-                              {m.tipo === "individual" ? <User className="w-3 h-3" /> : <Users className="w-3 h-3" />}
-                              {m.tipo === "individual" ? "Individual" : "Grupo"}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-foreground font-medium">{formatDate(m.data)}</TableCell>
-                          <TableCell className="text-foreground font-medium text-center">{m.hora}</TableCell>
-                          <TableCell className="text-muted-foreground text-xs">{formatCreatedAt(m.created_at)}</TableCell>
-                          <TableCell>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full" disabled={deleting === m.id}>
-                                  {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>Eliminar marcação?</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    Tens a certeza que queres eliminar a marcação de <strong>{m.nome}</strong>? Esta ação não pode ser revertida.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                  <AlertDialogAction onClick={() => handleDelete(m.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                                    Eliminar
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                      {filteredMarcacoes.map((m) => {
+                        const isFootcamp = m.tipo === "footcamp";
+                        const expanded = expandedRow === m.id;
+                        return (
+                          <Fragment key={m.id}>
+                            <TableRow className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
+                              <TableCell>
+                                <Select value={m.estado} onValueChange={(v) => handleEstadoChange(m.id, v)}>
+                                  <SelectTrigger className={cn("h-8 text-xs font-semibold rounded-full px-3 border", estadoStyles[m.estado] || estadoStyles.pendente)}>
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {ESTADOS.map((e) => (
+                                      <SelectItem key={e} value={e} className="capitalize">{e}</SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </TableCell>
+                              <TableCell className="font-semibold text-foreground">
+                                <div className="flex items-center gap-2">
+                                  {m.nome}
+                                  {isFootcamp && (
+                                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setExpandedRow(expanded ? null : m.id)}>
+                                      {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                                    </Button>
+                                  )}
+                                </div>
+                              </TableCell>
+                              <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
+                              <TableCell className="text-muted-foreground font-mono text-sm">{m.telemovel}</TableCell>
+                              <TableCell className="text-center">
+                                <span className={cn(
+                                  "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
+                                  m.tipo === "individual"
+                                    ? "bg-primary/15 text-primary border border-primary/25"
+                                    : m.tipo === "grupo"
+                                    ? "bg-blue-500/15 text-blue-400 border border-blue-500/25"
+                                    : "bg-amber-500/15 text-amber-400 border border-amber-500/25"
+                                )}>
+                                  {m.tipo === "individual" ? <User className="w-3 h-3" /> : m.tipo === "grupo" ? <Users className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
+                                  {m.tipo === "individual" ? "Individual" : m.tipo === "grupo" ? "Grupo" : "Footcamp"}
+                                </span>
+                              </TableCell>
+                              <TableCell className="text-foreground font-medium">{m.data ? formatDate(m.data) : <span className="text-muted-foreground">—</span>}</TableCell>
+                              <TableCell className="text-foreground font-medium text-center">{m.hora || <span className="text-muted-foreground">—</span>}</TableCell>
+                              <TableCell className="text-muted-foreground text-xs">{formatCreatedAt(m.created_at)}</TableCell>
+                              <TableCell>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full" disabled={deleting === m.id}>
+                                      {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>Eliminar marcação?</AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        Tens a certeza que queres eliminar a marcação de <strong>{m.nome}</strong>? Esta ação não pode ser revertida.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                      <AlertDialogAction onClick={() => handleDelete(m.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                        Eliminar
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </TableCell>
+                            </TableRow>
+                            {isFootcamp && expanded && (
+                              <TableRow key={m.id + "-details"} className="border-border/50 bg-surface-elevated/30">
+                                <TableCell colSpan={9} className="py-4">
+                                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                    <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Encarregado</p>
+                                      <p className="text-foreground">{m.encarregado || "—"}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro anual</p>
+                                      <p className="text-foreground">{m.seguro_anual ? "Sim" : "Não"}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
+                                      <p className="text-foreground">{m.desconto_irmaos ? "Sim" : "Não"}</p>
+                                    </div>
+                                    <div className="col-span-2 md:col-span-1">
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
+                                      <ul className="text-foreground space-y-0.5">
+                                        {(m.semanas || []).map((s, i) => <li key={i}>• {s}</li>)}
+                                      </ul>
+                                    </div>
+                                    {m.observacoes && (
+                                      <div className="col-span-2 md:col-span-4">
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações</p>
+                                        <p className="text-foreground whitespace-pre-wrap">{m.observacoes}</p>
+                                      </div>
+                                    )}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            )}
+                          </Fragment>
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 </div>
 
                 {/* Mobile Cards */}
                 <div className="md:hidden space-y-3">
-                  {filteredMarcacoes.map((m) => (
+                  {filteredMarcacoes.map((m) => {
+                    const isFootcamp = m.tipo === "footcamp";
+                    return (
                     <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-2">
                         <span className="font-semibold text-foreground text-base">{m.nome}</span>
                         <span className={cn(
                           "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider",
                           m.tipo === "individual"
                             ? "bg-primary/15 text-primary border border-primary/25"
-                            : "bg-blue-500/15 text-blue-400 border border-blue-500/25"
+                            : m.tipo === "grupo"
+                            ? "bg-blue-500/15 text-blue-400 border border-blue-500/25"
+                            : "bg-amber-500/15 text-amber-400 border border-amber-500/25"
                         )}>
-                          {m.tipo === "individual" ? <User className="w-3 h-3" /> : <Users className="w-3 h-3" />}
-                          {m.tipo === "individual" ? "Individual" : "Grupo"}
+                          {m.tipo === "individual" ? <User className="w-3 h-3" /> : m.tipo === "grupo" ? <Users className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
+                          {m.tipo === "individual" ? "Individual" : m.tipo === "grupo" ? "Grupo" : "Footcamp"}
                         </span>
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="flex items-center gap-1.5 text-muted-foreground">
-                          <CalendarIcon className="w-3.5 h-3.5 text-primary/60" />
-                          <span className="text-foreground font-medium">{formatDate(m.data)}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-muted-foreground">
-                          <Clock className="w-3.5 h-3.5 text-primary/60" />
-                          <span className="text-foreground font-medium">{m.hora}</span>
-                        </div>
+                        {m.data && (
+                          <div className="flex items-center gap-1.5 text-muted-foreground">
+                            <CalendarIcon className="w-3.5 h-3.5 text-primary/60" />
+                            <span className="text-foreground font-medium">{formatDate(m.data)}</span>
+                          </div>
+                        )}
+                        {m.hora && (
+                          <div className="flex items-center gap-1.5 text-muted-foreground">
+                            <Clock className="w-3.5 h-3.5 text-primary/60" />
+                            <span className="text-foreground font-medium">{m.hora}</span>
+                          </div>
+                        )}
                         <div className="flex items-center gap-1.5 text-muted-foreground">
                           <Phone className="w-3.5 h-3.5 text-primary/60" />
                           <span className="font-mono text-foreground">{m.telemovel}</span>
@@ -397,21 +467,40 @@ const Marcacoes = () => {
                           <span className="text-foreground">{m.idade}</span>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between pt-1 border-t border-border/50">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
-                          className={cn(
-                            "text-xs font-semibold rounded-full px-3",
-                            m.confirmado
-                              ? "bg-green-500/15 text-green-500 border border-green-500/20"
-                              : "bg-primary/10 text-primary border border-primary/20"
+                      {isFootcamp && (
+                        <div className="space-y-2 rounded-lg bg-surface-elevated/40 p-3 text-xs">
+                          {m.encarregado && <div><span className="text-muted-foreground">Encarregado: </span><span className="text-foreground">{m.encarregado}</span></div>}
+                          {m.semanas && m.semanas.length > 0 && (
+                            <div>
+                              <p className="text-muted-foreground mb-1">Semanas:</p>
+                              <ul className="text-foreground space-y-0.5">
+                                {m.semanas.map((s, i) => <li key={i}>• {s}</li>)}
+                              </ul>
+                            </div>
                           )}
-                        >
-                          <Check className="w-3.5 h-3.5 mr-1" />
-                          {m.confirmado ? "Confirmado" : "Pendente"}
-                        </Button>
+                          <div className="flex gap-4">
+                            <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Sim" : "Não"}</span></span>
+                            <span><span className="text-muted-foreground">Irmãos: </span><span className="text-foreground">{m.desconto_irmaos ? "Sim" : "Não"}</span></span>
+                          </div>
+                          {m.observacoes && (
+                            <div>
+                              <p className="text-muted-foreground mb-0.5 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações:</p>
+                              <p className="text-foreground whitespace-pre-wrap">{m.observacoes}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between pt-1 border-t border-border/50 gap-2">
+                        <Select value={m.estado} onValueChange={(v) => handleEstadoChange(m.id, v)}>
+                          <SelectTrigger className={cn("h-8 text-xs font-semibold rounded-full px-3 border w-auto", estadoStyles[m.estado] || estadoStyles.pendente)}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {ESTADOS.map((e) => (
+                              <SelectItem key={e} value={e} className="capitalize">{e}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full h-8 w-8" disabled={deleting === m.id}>
@@ -435,7 +524,8 @@ const Marcacoes = () => {
                         </AlertDialog>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </>
             )}

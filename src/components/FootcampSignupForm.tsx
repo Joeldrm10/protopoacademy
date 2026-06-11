@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Send, Loader2, MessageCircle, Shield, Zap } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -91,7 +92,29 @@ const FootcampSignupForm = () => {
     try {
       const semanasLabels = data.semanas
         .map((id) => semanasOptions.find((s) => s.id === id)?.label)
-        .filter(Boolean);
+        .filter(Boolean) as string[];
+
+      const { error: dbError } = await supabase.from("marcacoes").insert({
+        nome: data.nome,
+        idade: data.idade,
+        telemovel: data.telemovel,
+        tipo: "footcamp",
+        data: null,
+        hora: null,
+        encarregado: data.encarregado,
+        semanas: semanasLabels,
+        seguro_anual: seguroOferta,
+        desconto_irmaos: !!data.irmaos,
+        observacoes: data.observacoes || null,
+        estado: "pendente",
+      } as any);
+
+      if (dbError) {
+        console.error("Erro ao guardar inscrição:", dbError);
+        toast({ title: "Erro", description: "Não foi possível guardar a inscrição. Tenta novamente.", variant: "destructive" });
+        setLoading(false);
+        return;
+      }
 
       const parts = [
         `Olá! Quero inscrever-me na ProTopo Footcamp — Edição Verão 2026.`,
