@@ -154,22 +154,42 @@ const Footcamp = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/90" />
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="animate-fade-in-up">
-            <span className="block text-primary font-heading font-semibold uppercase tracking-[0.3em] text-sm mb-4">
-              Edição Verão 2026 · Inscrições Abertas
+            <span className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full font-heading font-bold uppercase tracking-[0.2em] text-xs mb-5 shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
+              Inscrições Abertas · Edição Verão 2026
             </span>
             <h1 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
               ProTopo
               <span className="block text-gradient-gold mt-1">Footcamp</span>
             </h1>
-            <p className="text-foreground/90 text-lg md:text-2xl max-w-2xl mx-auto font-body leading-relaxed mb-8">
+            <p className="text-foreground/90 text-lg md:text-2xl max-w-2xl mx-auto font-body leading-relaxed mb-6">
               Uma experiência de treino diferenciada para jovens atletas dos 6 aos 16 anos, com foco na evolução técnica, física e mental.
             </p>
+
+            {/* Quick highlights */}
+            <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-3xl mx-auto mb-8">
+              {[
+                "📅 Julho 2026",
+                "🗓️ 4 semanas disponíveis",
+                "👕 Kit de treino incluído",
+                "⏰ Quinta-feira: dia completo",
+                "⚡ Vagas limitadas",
+              ].map((t) => (
+                <span
+                  key={t}
+                  className="bg-background/50 backdrop-blur-sm border border-primary/30 text-foreground px-3 py-1.5 rounded-full font-heading font-semibold text-xs md:text-sm"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <Link
                 to="/marcar?tipo=footcamp"
                 className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
               >
-                Inscrever no Footcamp
+                Garantir vaga
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a

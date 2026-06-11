@@ -155,7 +155,7 @@ const Navbar = () => {
             WhatsApp
           </a>
           <Link
-            to="/marcar"
+            to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
             onClick={() => setMenuOpen(false)}
             className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
           >
@@ -222,7 +222,7 @@ const Navbar = () => {
           WhatsApp
         </a>
         <Link
-          to="/marcar"
+          to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
           onClick={() => setMenuOpen(false)}
           className="inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full max-w-xs px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
         >
