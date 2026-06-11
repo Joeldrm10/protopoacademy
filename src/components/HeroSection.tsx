@@ -76,6 +76,14 @@ const HeroSection = () => {
               {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marca já o teu treino" : "Inscrever no Footcamp"}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
+            {!SHOW_INDIVIDUAL_GROUP_TRAININGS && (
+              <Link
+                to="/footcamp"
+                className="inline-flex items-center justify-center gap-2 border border-primary/40 text-foreground w-full sm:w-auto px-8 py-5 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all duration-300"
+              >
+                Ver detalhes
+              </Link>
+            )}
             <a
               href={WHATSAPP_URL}
               target="_blank"
