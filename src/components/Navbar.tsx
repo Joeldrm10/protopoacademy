@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
@@ -11,12 +11,35 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Globally offset page content by the fixed header height (marquee + nav + safe-area).
+  // Sets a CSS var --header-offset on <html> and applies it as body padding-top.
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const apply = () => {
+      const h = el.getBoundingClientRect().height;
+      document.documentElement.style.setProperty("--header-offset", `${h}px`);
+      document.body.style.paddingTop = `${h}px`;
+    };
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(el);
+    window.addEventListener("resize", apply);
+    window.addEventListener("orientationchange", apply);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", apply);
+      window.removeEventListener("orientationchange", apply);
+    };
+  }, [scrolled]);
 
   // Lock body scroll when menu open (preserve scroll position, works on iOS/Android)
   useEffect(() => {
@@ -112,6 +135,7 @@ const Navbar = () => {
 
   return (
     <div
+      ref={headerRef}
       className="fixed top-0 left-0 right-0 z-50 flex flex-col"
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
