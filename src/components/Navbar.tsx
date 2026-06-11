@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { WHATSAPP_URL_MARCAR as WHATSAPP_URL } from "@/lib/constants";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
