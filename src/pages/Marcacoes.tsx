@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Fragment } from "react";
 import AdminAuth from "@/components/AdminAuth";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -320,8 +320,8 @@ const Marcacoes = () => {
                         const isFootcamp = m.tipo === "footcamp";
                         const expanded = expandedRow === m.id;
                         return (
-                          <>
-                            <TableRow key={m.id} className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
+                          <Fragment key={m.id}>
+                            <TableRow className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
                               <TableCell>
                                 <Select value={m.estado} onValueChange={(v) => handleEstadoChange(m.id, v)}>
                                   <SelectTrigger className={cn("h-8 text-xs font-semibold rounded-full px-3 border", estadoStyles[m.estado] || estadoStyles.pendente)}>
