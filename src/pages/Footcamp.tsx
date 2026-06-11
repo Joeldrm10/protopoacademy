@@ -436,11 +436,9 @@ const Footcamp = () => {
               </p>
             </div>
           </AnimateOnScroll>
-        </div>
-      </section>
 
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto mt-12">
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             {stats.map((stat, i) => (
               <AnimateOnScroll key={stat.label} delay={i * 100}>
                 <div className="group relative bg-card border border-border rounded-2xl p-6 md:p-8 text-center hover:border-primary/60 transition-all duration-500 h-full overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.4)]">
