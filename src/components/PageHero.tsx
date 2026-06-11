@@ -31,7 +31,7 @@ const PageHero = ({
 
   if (layout === "split") {
     return (
-      <section className="relative overflow-hidden bg-background pt-28 pb-12 md:pt-36 md:pb-20">
+      <section className="relative overflow-hidden bg-background pt-8 pb-12 md:pt-14 md:pb-20">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-8 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:gap-12 lg:gap-16">
             <div className="relative z-10 max-w-2xl animate-fade-in-up text-left">
