@@ -139,7 +139,7 @@ const Footcamp = () => {
       
 
       {/* HERO */}
-      <section className="relative min-h-[640px] md:min-h-[680px] flex items-center justify-center overflow-hidden pt-[calc(env(safe-area-inset-top)+80px)] md:pt-24 pb-16">
+      <section className="relative min-h-[640px] md:min-h-[680px] flex items-center justify-center overflow-hidden py-16">
         <div className="absolute inset-0">
           <picture>
             <source media="(min-width: 768px)" srcSet={footcampHero} />
