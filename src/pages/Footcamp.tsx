@@ -677,32 +677,54 @@ const Footcamp = () => {
         <div className="relative z-10 container mx-auto px-4 text-center">
           <AnimateOnScroll>
             <span className="inline-block bg-primary/10 border border-primary/30 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-              🔥 Próxima Edição
+              Inscrições abertas
             </span>
             <h2 className="font-heading font-black text-4xl md:text-6xl mb-6 max-w-3xl mx-auto leading-tight">
-              Nova edição <span className="text-gradient-gold">em breve.</span>
-              <span className="block text-foreground mt-2">Fica atento!</span>
+              Garante o teu lugar na
+              <span className="block text-gradient-gold mt-2">Edição Verão 2026.</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Em breve partilharemos mais informações sobre a próxima edição do ProTopo Footcamp.
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
+              4 semanas em julho. Vagas limitadas por semana — inscreve-te já.
             </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <a
+                href={FOOTCAMP_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg w-full sm:w-auto justify-center"
+              >
+                Inscrever no Footcamp
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href={WHATSAPP_URL_FOOTCAMP}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border-2 border-primary/50 text-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all w-full sm:w-auto justify-center"
+              >
+                <MessageCircle className="w-5 h-5 text-primary" />
+                Tirar dúvidas no WhatsApp
+              </a>
+            </div>
           </AnimateOnScroll>
         </div>
       </section>
 
       <FAQSection
         title={<>Dúvidas sobre o <span className="text-gradient-gold">Footcamp</span></>}
-        subtitle="Tudo o que pais e atletas precisam de saber sobre a experiência Footcamp."
+        subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Verão 2026."
         faqs={[
-          { question: "Para que idades é o Footcamp?", answer: "O Footcamp é destinado a jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
-          { question: "O que está incluído?", answer: "A experiência inclui treinos intensivos, sessões técnicas, atividades com profissionais convidados (psicóloga, árbitro, ex-jogador profissional), acompanhamento próximo e cobertura fotográfica." },
-          { question: "O que os atletas precisam levar?", answer: "Equipamento desportivo, chuteiras, sapatilhas, garrafa de água e muita vontade de evoluir. Indicações específicas serão partilhadas antes da edição começar." },
-          { question: "Qual é a duração?", answer: "O Footcamp tem a duração de 4 dias intensivos, com programa diário pensado para maximizar a evolução técnica, física e mental dos atletas." },
-          { question: "Onde se realiza?", answer: "O Footcamp realiza-se no Campo da Caridade, em Ourém, o mesmo local dos nossos treinos regulares." },
-          { question: "Como funciona a inscrição?", answer: "As inscrições para a próxima edição serão abertas em breve. Acompanha o nosso Instagram ou fala connosco para receberes informação assim que abrirmos as vagas." },
-          { question: "Há acompanhamento profissional?", answer: "Sim. Contamos com 4 treinadores principais, 8 treinadores adjuntos e profissionais convidados, garantindo um rácio que permite acompanhamento individualizado." },
+          { question: "Quando é o Footcamp Verão 2026?", answer: "Durante o mês de julho, em 4 semanas: 6-10, 13-17, 20-24 e 27-31. Podes inscrever-te em uma ou várias semanas." },
+          { question: "Para que idades é o Footcamp?", answer: "Para jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
+          { question: "Qual é o horário?", answer: "Das 09:00 às 12:30 (3h30 por dia). Existe flexibilidade de horários mediante necessidade do atleta." },
+          { question: "Onde se realiza?", answer: "No Campo da Caridade — Adelino dos Santos Júnior, em Ourém." },
+          { question: "O que está incluído na inscrição?", answer: "T-shirt e calções ProTopo, par de meias, lanche diário, barras energéticas, água, fruta, balneários com banho de água quente e atividades diferenciadas durante a semana." },
+          { question: "Quais são os preços?", answer: "1 semana — 95€ · 2 semanas — 180€ · 3 semanas — 260€ · 4 semanas — 340€. Seguro: 20€ (válido por um ano). Desconto de 10% no valor final na inscrição de dois irmãos." },
+          { question: "Como funciona o pagamento?", answer: "Após a inscrição, serão enviadas as informações de pagamento por WhatsApp." },
+          { question: "Como faço a inscrição?", answer: "Carrega no botão \"Inscrever no Footcamp\" para preencher o formulário. Para dúvidas, fala connosco pelo WhatsApp." },
         ]}
       />
+
 
       <Footer />
 
