@@ -41,17 +41,23 @@ const Footer = () => {
           <div className="relative flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
             <div>
               <h3 className="font-heading font-bold text-2xl md:text-3xl text-foreground mb-2">
-                Marca já o teu <span className="text-gradient-gold">treino</span>
+                {SHOW_INDIVIDUAL_GROUP_TRAININGS ? (
+                  <>Marca já o teu <span className="text-gradient-gold">treino</span></>
+                ) : (
+                  <>Inscreve-te no <span className="text-gradient-gold">Footcamp</span></>
+                )}
               </h3>
               <p className="text-muted-foreground text-sm md:text-base max-w-md">
-                Dá o próximo passo na tua evolução. Reserva o teu lugar hoje.
+                {SHOW_INDIVIDUAL_GROUP_TRAININGS
+                  ? "Dá o próximo passo na tua evolução. Reserva o teu lugar hoje."
+                  : "Edição Verão 2026. Garante já o lugar do teu atleta."}
               </p>
             </div>
             <Link
-              to="/marcar"
+              to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
               className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
             >
-              Marcar treino
+              {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marcar treino" : "Inscrever Footcamp"}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
