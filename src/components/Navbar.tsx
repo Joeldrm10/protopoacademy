@@ -111,13 +111,16 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50">
+    <div
+      className="fixed top-0 left-0 right-0 z-50 flex flex-col"
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
+    >
     <MarqueeBanner />
     <nav
-      className={`relative transition-all duration-300 ${
+      className={`relative w-full transition-all duration-300 ${
         scrolled
           ? "bg-background/95 backdrop-blur-md shadow-lg py-2"
-          : "bg-transparent py-4"
+          : "bg-background/80 backdrop-blur-sm py-3"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-4">
