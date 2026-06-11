@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { WHATSAPP_URL_MARCAR as WHATSAPP_URL } from "@/lib/constants";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -77,7 +78,8 @@ const Navbar = () => {
 
   const navLinks = [
     { label: "Início", href: "/" },
-    { label: "Serviços", href: "/servicos" },
+    // "Serviços" temporariamente removido — reativar quando SHOW_INDIVIDUAL_GROUP_TRAININGS = true
+    ...(SHOW_INDIVIDUAL_GROUP_TRAININGS ? [{ label: "Serviços", href: "/servicos" }] : []),
     { label: "Galeria", href: "/galeria" },
     { label: "Footcamp", href: "/footcamp" },
     { label: "Sobre", href: "/sobre" },
@@ -157,7 +159,7 @@ const Navbar = () => {
             onClick={() => setMenuOpen(false)}
             className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
           >
-            Marcar
+            {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marcar" : "Inscrever Footcamp"}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
@@ -224,7 +226,7 @@ const Navbar = () => {
           onClick={() => setMenuOpen(false)}
           className="inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full max-w-xs px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
         >
-          Marcar
+          {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marcar" : "Inscrever Footcamp"}
           <ArrowRight className="w-5 h-5" />
         </Link>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,11 +11,18 @@ import KitSection from "@/components/KitSection";
 import FAQSection from "@/components/FAQSection";
 import heroImg from "@/assets/hero-servicos-desktop-wide.jpg";
 import heroImgMobile from "@/assets/hero-servicos-mobile.jpg";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
 
 const Servicos = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Treinos individuais e de grupo ocultos — redireciona para Footcamp
+  if (!SHOW_INDIVIDUAL_GROUP_TRAININGS) {
+    return <Navigate to="/footcamp" replace />;
+  }
+
 
   return (
     <div className="min-h-screen bg-background">

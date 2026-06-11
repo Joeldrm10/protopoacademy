@@ -12,6 +12,7 @@ import DidYouKnowSection from "@/components/DidYouKnowSection";
 
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
 
 const Index = () => {
   const location = useLocation();
@@ -40,7 +41,8 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <AboutSection />
-      <ServicesSection />
+      {/* Treinos individuais e de grupo temporariamente ocultos — reativar via SHOW_INDIVIDUAL_GROUP_TRAININGS */}
+      {SHOW_INDIVIDUAL_GROUP_TRAININGS && <ServicesSection />}
       <TestimonialsSection />
       <FootcampHighlight />
       <GalleryCTA />
