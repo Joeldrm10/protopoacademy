@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Users, Camera, UserCheck, Quote, Star, ArrowRight } from "lucide-react";
+import {
+  Users, Camera, UserCheck, Quote, Star, ArrowRight,
+  Calendar, MapPin, Clock, Shirt, Apple, ShowerHead, Sparkles, Gift, MessageCircle,
+} from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,6 +12,7 @@ import FAQSection from "@/components/FAQSection";
 import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
 import { supabase } from "@/integrations/supabase/client";
+import { WHATSAPP_URL_FOOTCAMP_INFO } from "@/lib/constants";
 
 import footcampHero from "@/assets/hero-footcamp-desktop-wide.jpg";
 import footcampHeroMobile from "@/assets/hero-footcamp-mobile.jpg";
@@ -21,6 +25,7 @@ import galleryCones from "@/assets/gallery-cones.jpg";
 import galleryTeamFull from "@/assets/gallery-team-full.png";
 import galleryCoachDrill from "@/assets/gallery-coach-drill.png";
 import galleryResistance from "@/assets/gallery-resistance.png";
+
 
 const stats = [
   { value: 43, label: "Atletas", icon: Users },
