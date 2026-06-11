@@ -11,7 +11,7 @@ import AnimateOnScroll from "@/components/AnimateOnScroll";
 import FAQSection from "@/components/FAQSection";
 import CountUp from "@/components/CountUp";
 import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
-import MarqueeBanner from "@/components/MarqueeBanner";
+
 import FootcampCountdown from "@/components/FootcampCountdown";
 import { supabase } from "@/integrations/supabase/client";
 import { WHATSAPP_URL_FOOTCAMP_INFO } from "@/lib/constants";
@@ -136,7 +136,7 @@ const Footcamp = () => {
         path="/footcamp"
       />
       <Navbar />
-      <MarqueeBanner />
+      
 
       {/* HERO */}
       <section className="relative min-h-[640px] md:min-h-[680px] flex items-center justify-center overflow-hidden pt-[calc(env(safe-area-inset-top)+80px)] md:pt-24 pb-16">
