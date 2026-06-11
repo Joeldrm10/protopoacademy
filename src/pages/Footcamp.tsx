@@ -718,39 +718,21 @@ const Footcamp = () => {
         </div>
       </section>
 
-      {/* CONVERSÃO FINAL */}
-      <section className="relative py-28 overflow-hidden bg-background">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,hsl(var(--gold)/0.15)_0%,transparent_70%)] blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <AnimateOnScroll>
-            <span className="inline-block bg-primary/10 border border-primary/30 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-              🔥 Próxima Edição
-            </span>
-            <h2 className="font-heading font-black text-4xl md:text-6xl mb-6 max-w-3xl mx-auto leading-tight">
-              Nova edição <span className="text-gradient-gold">em breve.</span>
-              <span className="block text-foreground mt-2">Fica atento!</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Em breve partilharemos mais informações sobre a próxima edição do ProTopo Footcamp.
-            </p>
-          </AnimateOnScroll>
-        </div>
-      </section>
-
       <FAQSection
         title={<>Dúvidas sobre o <span className="text-gradient-gold">Footcamp</span></>}
-        subtitle="Tudo o que pais e atletas precisam de saber sobre a experiência Footcamp."
+        subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Verão 2026."
         faqs={[
           { question: "Para que idades é o Footcamp?", answer: "O Footcamp é destinado a jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
-          { question: "O que está incluído?", answer: "A experiência inclui treinos intensivos, sessões técnicas, atividades com profissionais convidados (psicóloga, árbitro, ex-jogador profissional), acompanhamento próximo e cobertura fotográfica." },
-          { question: "O que os atletas precisam levar?", answer: "Equipamento desportivo, chuteiras, sapatilhas, garrafa de água e muita vontade de evoluir. Indicações específicas serão partilhadas antes da edição começar." },
-          { question: "Qual é a duração?", answer: "O Footcamp tem a duração de 4 dias intensivos, com programa diário pensado para maximizar a evolução técnica, física e mental dos atletas." },
-          { question: "Onde se realiza?", answer: "O Footcamp realiza-se no Campo da Caridade, em Ourém, o mesmo local dos nossos treinos regulares." },
-          { question: "Como funciona a inscrição?", answer: "As inscrições para a próxima edição serão abertas em breve. Acompanha o nosso Instagram ou fala connosco para receberes informação assim que abrirmos as vagas." },
-          { question: "Há acompanhamento profissional?", answer: "Sim. Contamos com 4 treinadores principais, 8 treinadores adjuntos e profissionais convidados, garantindo um rácio que permite acompanhamento individualizado." },
+          { question: "Quais são as semanas disponíveis?", answer: "Edição Verão 2026 — 1ª semana: 6 a 10 de julho · 2ª semana: 13 a 17 de julho · 3ª semana: 20 a 24 de julho · 4ª semana: 27 a 31 de julho. Podes inscrever-te em uma ou mais semanas." },
+          { question: "Qual é o horário?", answer: "Horário normal das 09:00 às 12:30 (3h30 por dia). Na quinta-feira de cada semana há dia completo, das 09:00 às 17:30. Existe flexibilidade de horários mediante necessidade de cada atleta." },
+          { question: "Quanto custa?", answer: "1 semana — 95€ · 2 semanas — 180€ · 3 semanas — 260€ · 4 semanas — 340€. Seguro anual de 20€ (oferecido na inscrição das 4 semanas). 10% de desconto para irmãos." },
+          { question: "O que está incluído?", answer: "Kit de treino ProTopo (t-shirt, calções e meias), lanche diário, barras energéticas, águas e fruta. Nos dias completos: almoço e lanches incluídos. Balneários com banho de água quente após o treino." },
+          { question: "Onde se realiza?", answer: "No Campo da Caridade — Adelino dos Santos Júnior, em Ourém." },
+          { question: "Como funciona a inscrição e o pagamento?", answer: "Preenches o formulário de inscrição. Depois, a equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga e enviar os dados de pagamento." },
+          { question: "Há acompanhamento profissional?", answer: "Sim. A equipa técnica inclui treinadores principais e adjuntos, garantindo um rácio que permite acompanhamento individualizado e atenção ao detalhe." },
         ]}
       />
+
 
       <Footer />
 
