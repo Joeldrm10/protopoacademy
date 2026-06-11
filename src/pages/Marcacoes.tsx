@@ -316,66 +316,111 @@ const Marcacoes = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredMarcacoes.map((m) => (
-                        <TableRow key={m.id} className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
-                          <TableCell>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
-                              className={cn(
-                                "text-xs font-semibold rounded-full px-3 transition-all",
-                                m.confirmado
-                                  ? "bg-green-500/15 text-green-500 hover:bg-green-500/25 hover:text-green-400 border border-green-500/20"
-                                  : "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
-                              )}
-                            >
-                              <Check className="w-3.5 h-3.5 mr-1" />
-                              {m.confirmado ? "Confirmado" : "Pendente"}
-                            </Button>
-                          </TableCell>
-                          <TableCell className="font-semibold text-foreground">{m.nome}</TableCell>
-                          <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
-                          <TableCell className="text-muted-foreground font-mono text-sm">{m.telemovel}</TableCell>
-                          <TableCell className="text-center">
-                            <span className={cn(
-                              "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
-                              m.tipo === "individual"
-                                ? "bg-primary/15 text-primary border border-primary/25"
-                                : "bg-blue-500/15 text-blue-400 border border-blue-500/25"
-                            )}>
-                              {m.tipo === "individual" ? <User className="w-3 h-3" /> : <Users className="w-3 h-3" />}
-                              {m.tipo === "individual" ? "Individual" : "Grupo"}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-foreground font-medium">{formatDate(m.data)}</TableCell>
-                          <TableCell className="text-foreground font-medium text-center">{m.hora}</TableCell>
-                          <TableCell className="text-muted-foreground text-xs">{formatCreatedAt(m.created_at)}</TableCell>
-                          <TableCell>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full" disabled={deleting === m.id}>
-                                  {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>Eliminar marcação?</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    Tens a certeza que queres eliminar a marcação de <strong>{m.nome}</strong>? Esta ação não pode ser revertida.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                  <AlertDialogAction onClick={() => handleDelete(m.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                                    Eliminar
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                      {filteredMarcacoes.map((m) => {
+                        const isFootcamp = m.tipo === "footcamp";
+                        const expanded = expandedRow === m.id;
+                        return (
+                          <>
+                            <TableRow key={m.id} className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
+                              <TableCell>
+                                <Select value={m.estado} onValueChange={(v) => handleEstadoChange(m.id, v)}>
+                                  <SelectTrigger className={cn("h-8 text-xs font-semibold rounded-full px-3 border", estadoStyles[m.estado] || estadoStyles.pendente)}>
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {ESTADOS.map((e) => (
+                                      <SelectItem key={e} value={e} className="capitalize">{e}</SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </TableCell>
+                              <TableCell className="font-semibold text-foreground">
+                                <div className="flex items-center gap-2">
+                                  {m.nome}
+                                  {isFootcamp && (
+                                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setExpandedRow(expanded ? null : m.id)}>
+                                      {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                                    </Button>
+                                  )}
+                                </div>
+                              </TableCell>
+                              <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
+                              <TableCell className="text-muted-foreground font-mono text-sm">{m.telemovel}</TableCell>
+                              <TableCell className="text-center">
+                                <span className={cn(
+                                  "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
+                                  m.tipo === "individual"
+                                    ? "bg-primary/15 text-primary border border-primary/25"
+                                    : m.tipo === "grupo"
+                                    ? "bg-blue-500/15 text-blue-400 border border-blue-500/25"
+                                    : "bg-amber-500/15 text-amber-400 border border-amber-500/25"
+                                )}>
+                                  {m.tipo === "individual" ? <User className="w-3 h-3" /> : m.tipo === "grupo" ? <Users className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
+                                  {m.tipo === "individual" ? "Individual" : m.tipo === "grupo" ? "Grupo" : "Footcamp"}
+                                </span>
+                              </TableCell>
+                              <TableCell className="text-foreground font-medium">{m.data ? formatDate(m.data) : <span className="text-muted-foreground">—</span>}</TableCell>
+                              <TableCell className="text-foreground font-medium text-center">{m.hora || <span className="text-muted-foreground">—</span>}</TableCell>
+                              <TableCell className="text-muted-foreground text-xs">{formatCreatedAt(m.created_at)}</TableCell>
+                              <TableCell>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full" disabled={deleting === m.id}>
+                                      {deleting === m.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>Eliminar marcação?</AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        Tens a certeza que queres eliminar a marcação de <strong>{m.nome}</strong>? Esta ação não pode ser revertida.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                      <AlertDialogAction onClick={() => handleDelete(m.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                        Eliminar
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </TableCell>
+                            </TableRow>
+                            {isFootcamp && expanded && (
+                              <TableRow key={m.id + "-details"} className="border-border/50 bg-surface-elevated/30">
+                                <TableCell colSpan={9} className="py-4">
+                                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                    <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Encarregado</p>
+                                      <p className="text-foreground">{m.encarregado || "—"}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro anual</p>
+                                      <p className="text-foreground">{m.seguro_anual ? "Sim" : "Não"}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
+                                      <p className="text-foreground">{m.desconto_irmaos ? "Sim" : "Não"}</p>
+                                    </div>
+                                    <div className="col-span-2 md:col-span-1">
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
+                                      <ul className="text-foreground space-y-0.5">
+                                        {(m.semanas || []).map((s, i) => <li key={i}>• {s}</li>)}
+                                      </ul>
+                                    </div>
+                                    {m.observacoes && (
+                                      <div className="col-span-2 md:col-span-4">
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações</p>
+                                        <p className="text-foreground whitespace-pre-wrap">{m.observacoes}</p>
+                                      </div>
+                                    )}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            )}
+                          </>
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 </div>
