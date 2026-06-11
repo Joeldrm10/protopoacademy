@@ -89,7 +89,7 @@ const Marcacoes = () => {
     if (error) {
       console.error("Erro ao carregar marcações:", error);
     } else {
-      setMarcacoes(data || []);
+      setMarcacoes((data || []) as unknown as Marcacao[]);
     }
     setLoading(false);
   };
