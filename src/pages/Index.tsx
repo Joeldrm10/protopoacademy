@@ -41,7 +41,8 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <AboutSection />
-      <ServicesSection />
+      {/* Treinos individuais e de grupo temporariamente ocultos — reativar via SHOW_INDIVIDUAL_GROUP_TRAININGS */}
+      {SHOW_INDIVIDUAL_GROUP_TRAININGS && <ServicesSection />}
       <TestimonialsSection />
       <FootcampHighlight />
       <GalleryCTA />
