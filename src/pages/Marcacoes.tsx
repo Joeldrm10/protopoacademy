@@ -427,29 +427,37 @@ const Marcacoes = () => {
 
                 {/* Mobile Cards */}
                 <div className="md:hidden space-y-3">
-                  {filteredMarcacoes.map((m) => (
+                  {filteredMarcacoes.map((m) => {
+                    const isFootcamp = m.tipo === "footcamp";
+                    return (
                     <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-2">
                         <span className="font-semibold text-foreground text-base">{m.nome}</span>
                         <span className={cn(
                           "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider",
                           m.tipo === "individual"
                             ? "bg-primary/15 text-primary border border-primary/25"
-                            : "bg-blue-500/15 text-blue-400 border border-blue-500/25"
+                            : m.tipo === "grupo"
+                            ? "bg-blue-500/15 text-blue-400 border border-blue-500/25"
+                            : "bg-amber-500/15 text-amber-400 border border-amber-500/25"
                         )}>
-                          {m.tipo === "individual" ? <User className="w-3 h-3" /> : <Users className="w-3 h-3" />}
-                          {m.tipo === "individual" ? "Individual" : "Grupo"}
+                          {m.tipo === "individual" ? <User className="w-3 h-3" /> : m.tipo === "grupo" ? <Users className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
+                          {m.tipo === "individual" ? "Individual" : m.tipo === "grupo" ? "Grupo" : "Footcamp"}
                         </span>
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="flex items-center gap-1.5 text-muted-foreground">
-                          <CalendarIcon className="w-3.5 h-3.5 text-primary/60" />
-                          <span className="text-foreground font-medium">{formatDate(m.data)}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-muted-foreground">
-                          <Clock className="w-3.5 h-3.5 text-primary/60" />
-                          <span className="text-foreground font-medium">{m.hora}</span>
-                        </div>
+                        {m.data && (
+                          <div className="flex items-center gap-1.5 text-muted-foreground">
+                            <CalendarIcon className="w-3.5 h-3.5 text-primary/60" />
+                            <span className="text-foreground font-medium">{formatDate(m.data)}</span>
+                          </div>
+                        )}
+                        {m.hora && (
+                          <div className="flex items-center gap-1.5 text-muted-foreground">
+                            <Clock className="w-3.5 h-3.5 text-primary/60" />
+                            <span className="text-foreground font-medium">{m.hora}</span>
+                          </div>
+                        )}
                         <div className="flex items-center gap-1.5 text-muted-foreground">
                           <Phone className="w-3.5 h-3.5 text-primary/60" />
                           <span className="font-mono text-foreground">{m.telemovel}</span>
@@ -459,21 +467,40 @@ const Marcacoes = () => {
                           <span className="text-foreground">{m.idade}</span>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between pt-1 border-t border-border/50">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleToggleConfirmado(m.id, m.confirmado)}
-                          className={cn(
-                            "text-xs font-semibold rounded-full px-3",
-                            m.confirmado
-                              ? "bg-green-500/15 text-green-500 border border-green-500/20"
-                              : "bg-primary/10 text-primary border border-primary/20"
+                      {isFootcamp && (
+                        <div className="space-y-2 rounded-lg bg-surface-elevated/40 p-3 text-xs">
+                          {m.encarregado && <div><span className="text-muted-foreground">Encarregado: </span><span className="text-foreground">{m.encarregado}</span></div>}
+                          {m.semanas && m.semanas.length > 0 && (
+                            <div>
+                              <p className="text-muted-foreground mb-1">Semanas:</p>
+                              <ul className="text-foreground space-y-0.5">
+                                {m.semanas.map((s, i) => <li key={i}>• {s}</li>)}
+                              </ul>
+                            </div>
                           )}
-                        >
-                          <Check className="w-3.5 h-3.5 mr-1" />
-                          {m.confirmado ? "Confirmado" : "Pendente"}
-                        </Button>
+                          <div className="flex gap-4">
+                            <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Sim" : "Não"}</span></span>
+                            <span><span className="text-muted-foreground">Irmãos: </span><span className="text-foreground">{m.desconto_irmaos ? "Sim" : "Não"}</span></span>
+                          </div>
+                          {m.observacoes && (
+                            <div>
+                              <p className="text-muted-foreground mb-0.5 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações:</p>
+                              <p className="text-foreground whitespace-pre-wrap">{m.observacoes}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between pt-1 border-t border-border/50 gap-2">
+                        <Select value={m.estado} onValueChange={(v) => handleEstadoChange(m.id, v)}>
+                          <SelectTrigger className={cn("h-8 text-xs font-semibold rounded-full px-3 border w-auto", estadoStyles[m.estado] || estadoStyles.pendente)}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {ESTADOS.map((e) => (
+                              <SelectItem key={e} value={e} className="capitalize">{e}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full h-8 w-8" disabled={deleting === m.id}>
@@ -497,7 +524,8 @@ const Marcacoes = () => {
                         </AlertDialog>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </>
             )}
