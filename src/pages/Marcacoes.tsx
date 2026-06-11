@@ -7,6 +7,7 @@ import { pt } from "date-fns/locale";
 import {
   CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw,
   Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard, Search,
+  ChevronDown, ChevronUp, Trophy, FileText,
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -32,10 +33,24 @@ type Marcacao = {
   idade: string;
   telemovel: string;
   tipo: string;
-  data: string;
-  hora: string;
+  data: string | null;
+  hora: string | null;
   created_at: string;
   confirmado: boolean;
+  estado: string;
+  semanas: string[] | null;
+  seguro_anual: boolean | null;
+  desconto_irmaos: boolean | null;
+  observacoes: string | null;
+  encarregado: string | null;
+};
+
+const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
+const estadoStyles: Record<string, string> = {
+  pendente: "bg-primary/10 text-primary border-primary/20",
+  contactado: "bg-blue-500/15 text-blue-400 border-blue-500/25",
+  confirmado: "bg-green-500/15 text-green-500 border-green-500/20",
+  cancelado: "bg-destructive/15 text-destructive border-destructive/25",
 };
 
 const Marcacoes = () => {
@@ -91,16 +106,16 @@ const Marcacoes = () => {
     setDeleting(null);
   };
 
-  const handleToggleConfirmado = async (id: string, current: boolean) => {
+  const handleEstadoChange = async (id: string, novoEstado: string) => {
     const { error } = await supabase
       .from("marcacoes")
-      .update({ confirmado: !current } as any)
+      .update({ estado: novoEstado, confirmado: novoEstado === "confirmado" } as any)
       .eq("id", id);
     if (error) {
       toast.error("Erro ao atualizar estado");
     } else {
       setMarcacoes((prev) =>
-        prev.map((m) => (m.id === id ? { ...m, confirmado: !current } : m))
+        prev.map((m) => (m.id === id ? { ...m, estado: novoEstado, confirmado: novoEstado === "confirmado" } : m))
       );
     }
   };
