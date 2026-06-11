@@ -5,10 +5,13 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookingForm from "@/components/BookingForm";
 import FootcampSignupForm from "@/components/FootcampSignupForm";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
 
 const Marcar = () => {
   const [searchParams] = useSearchParams();
-  const isFootcamp = searchParams.get("tipo") === "footcamp";
+  // Treinos individuais/grupo ocultos — força sempre o formulário Footcamp.
+  // Para reativar: SHOW_INDIVIDUAL_GROUP_TRAININGS = true.
+  const isFootcamp = !SHOW_INDIVIDUAL_GROUP_TRAININGS || searchParams.get("tipo") === "footcamp";
 
   useEffect(() => {
     window.scrollTo(0, 0);
