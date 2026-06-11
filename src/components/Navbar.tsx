@@ -4,6 +4,7 @@ import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { WHATSAPP_URL_MARCAR as WHATSAPP_URL } from "@/lib/constants";
 import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
+import MarqueeBanner from "@/components/MarqueeBanner";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -110,8 +111,10 @@ const Navbar = () => {
   };
 
   return (
+    <div className="fixed top-0 left-0 right-0 z-50">
+    <MarqueeBanner />
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`relative transition-all duration-300 ${
         scrolled
           ? "bg-background/95 backdrop-blur-md shadow-lg py-2"
           : "bg-transparent py-4"
@@ -231,6 +234,7 @@ const Navbar = () => {
         </Link>
       </div>
     </nav>
+    </div>
   );
 };
 

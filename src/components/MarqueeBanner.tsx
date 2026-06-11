@@ -1,31 +1,30 @@
 import { Link } from "react-router-dom";
 
 const ITEMS = [
-  "⚡ Inscrições abertas",
-  "ProTopo Footcamp Verão 2026",
-  "Julho",
-  "Atletas dos 6 aos 16 anos",
-  "Vagas limitadas",
+  "🔥 INSCRIÇÕES ABERTAS",
+  "FOOTCAMP VERÃO 2026",
+  "⚠️ VAGAS LIMITADAS",
+  "📅 JULHO 2026",
 ];
 
 const MarqueeBanner = () => {
   // Repeat enough times for seamless loop
-  const loop = Array.from({ length: 4 }).flatMap(() => ITEMS);
+  const loop = Array.from({ length: 6 }).flatMap(() => ITEMS);
 
   return (
     <Link
-      to="/marcar?tipo=footcamp"
+      to="/footcamp"
       aria-label="Inscrições abertas — ProTopo Footcamp Verão 2026"
-      className="block relative overflow-hidden bg-gradient-to-r from-black via-[#1a1407] to-black border-y border-primary/30 group"
+      className="block relative overflow-hidden bg-black border-b border-primary/30 group cursor-pointer"
     >
-      <div className="flex whitespace-nowrap py-2.5 animate-marquee group-hover:[animation-play-state:paused]">
+      <div className="flex whitespace-nowrap py-1.5 md:py-2 animate-marquee group-hover:[animation-play-state:paused]">
         {loop.map((item, i) => (
           <span
             key={i}
-            className="mx-6 font-heading uppercase tracking-[0.18em] text-xs md:text-sm text-primary/90 flex items-center gap-6"
+            className="mx-4 md:mx-6 font-heading uppercase tracking-[0.15em] md:tracking-[0.18em] text-[11px] md:text-sm text-primary flex items-center gap-4 md:gap-6"
           >
             {item}
-            <span className="text-primary/40">·</span>
+            <span className="text-primary/40">•</span>
           </span>
         ))}
       </div>
