@@ -61,6 +61,7 @@ const Marcacoes = () => {
   const [filterDate, setFilterDate] = useState<Date | undefined>();
   const [filterTipo, setFilterTipo] = useState<string>("todos");
   const [searchNome, setSearchNome] = useState("");
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const filteredMarcacoes = useMemo(() => {
     return marcacoes.filter((m) => {
@@ -74,8 +75,8 @@ const Marcacoes = () => {
     });
   }, [marcacoes, filterDate, filterTipo, searchNome]);
 
-  const confirmados = useMemo(() => marcacoes.filter((m) => m.confirmado).length, [marcacoes]);
-  const pendentes = useMemo(() => marcacoes.filter((m) => !m.confirmado).length, [marcacoes]);
+  const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
+  const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
@@ -256,8 +257,9 @@ const Marcacoes = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="todos">Todos os tipos</SelectItem>
-                    <SelectItem value="individual">Individual</SelectItem>
-                    <SelectItem value="grupo">Grupo</SelectItem>
+                    <SelectItem value="individual">Treino Individual</SelectItem>
+                    <SelectItem value="grupo">Treino de Grupo</SelectItem>
+                    <SelectItem value="footcamp">Footcamp</SelectItem>
                   </SelectContent>
                 </Select>
                 {(filterDate || filterTipo !== "todos" || searchNome) && (
