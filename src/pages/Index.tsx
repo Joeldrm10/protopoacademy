@@ -12,6 +12,7 @@ import DidYouKnowSection from "@/components/DidYouKnowSection";
 
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
 
 const Index = () => {
   const location = useLocation();
