@@ -23,21 +23,22 @@ const FootcampHighlight = () => {
           {/* Content */}
           <div className="relative z-10 px-6 py-20 md:px-16 md:py-32 max-w-2xl">
             <AnimateOnScroll>
-              <span className="inline-block bg-primary/10 border border-primary/30 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-                Edição Anterior
+              <span className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full font-heading font-bold uppercase tracking-[0.2em] text-xs mb-6 shadow-lg">
+                <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
+                Edição Verão 2026 · Inscrições Abertas
               </span>
               <h2 className="font-heading font-black text-4xl md:text-6xl leading-[0.95] mb-4">
                 ProTopo
                 <span className="block text-gradient-gold">Footcamp</span>
               </h2>
               <p className="text-foreground/90 text-lg md:text-xl mb-8 font-body leading-relaxed">
-                <span className="text-primary font-bold">43 atletas.</span> 4 dias de trabalho, foco e evolução.
+                <span className="text-primary font-bold">Julho 2026</span> · 4 semanas de treino, evolução e novas experiências para atletas dos 6 aos 16 anos.
               </p>
               <Link
                 to="/footcamp"
                 className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                Ver Footcamp
+                Ver Footcamp Verão
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </AnimateOnScroll>
