@@ -48,10 +48,10 @@ const FinalCTA = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                to="/marcar"
+                to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
                 className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-12 py-5 rounded-lg font-heading font-bold text-xl uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl"
               >
-                Marca já o teu treino
+                {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marca já o teu treino" : "Inscrever no Footcamp"}
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
