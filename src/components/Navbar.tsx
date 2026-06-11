@@ -226,7 +226,7 @@ const Navbar = () => {
           onClick={() => setMenuOpen(false)}
           className="inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full max-w-xs px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
         >
-          Marcar
+          {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marcar" : "Inscrever Footcamp"}
           <ArrowRight className="w-5 h-5" />
         </Link>
       </div>
