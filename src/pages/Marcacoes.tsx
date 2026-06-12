@@ -409,6 +409,9 @@ const Marcacoes = () => {
                                     <div>
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
                                       <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
+                                      {m.desconto_irmaos && m.nome_irmaos && (
+                                        <p className="text-xs text-muted-foreground mt-1">Irmãos: <span className="text-foreground">{m.nome_irmaos}</span></p>
+                                      )}
                                     </div>
                                     <div>
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
