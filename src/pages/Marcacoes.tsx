@@ -57,34 +57,30 @@ const estadoStyles: Record<string, string> = {
 };
 
 type FamilyBadgeProps = {
+  self: Marcacao;
   related: Marcacao[];
-  confirmed: boolean;
 };
-const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
+const FamilyBadge = ({ self, related }: FamilyBadgeProps) => {
   if (related.length === 0) return null;
-  const total = related.length + 1;
+  const all = [self, ...related];
+  const total = all.length;
   return (
     <Popover>
       <PopoverTrigger asChild>
         <button
           type="button"
-          className={cn(
-            "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors",
-            confirmed
-              ? "bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
-              : "bg-amber-500/15 text-amber-400 border-amber-500/25 hover:bg-amber-500/25"
-          )}
+          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
           title="Clica para ver inscrições relacionadas"
         >
-          {confirmed ? `🟢 Família identificada (${total} atletas)` : `👨‍👦 Possível irmãos (${total})`}
+          🟢 Família identificada ({total} atletas)
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-64 p-3">
         <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1">
-          <UserCheck className="w-3 h-3" /> Inscrições relacionadas
+          <UserCheck className="w-3 h-3" /> Família identificada ({total} atletas)
         </p>
         <ul className="space-y-1.5">
-          {related.map((r) => (
+          {all.map((r) => (
             <li key={r.id} className="text-sm">
               <p className="font-semibold text-foreground">{r.nome}</p>
               <p className="text-xs text-muted-foreground">
@@ -137,14 +133,39 @@ const Marcacoes = () => {
     (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
   const normalizePhone = (s: string | null | undefined) => (s || "").replace(/\D/g, "");
 
+  const splitSiblings = (s: string | null | undefined) =>
+    (s || "")
+      .split(/[,;\n/]|\s+e\s+|\s+&\s+/i)
+      .map((n) => normalize(n))
+      .filter(Boolean);
+
   const familyMap = useMemo(() => {
     const map = new Map<string, Marcacao[]>();
     marcacoes.forEach((m) => {
-      const related = marcacoes.filter((other) => {
-        if (other.id === m.id) return false;
-        const sameEnc = m.encarregado && other.encarregado && normalize(m.encarregado) === normalize(other.encarregado);
-        const samePhone = normalizePhone(m.telemovel) && normalizePhone(m.telemovel) === normalizePhone(other.telemovel);
-        return sameEnc || samePhone;
+      const mPhone = normalizePhone(m.telemovel);
+      const mEnc = normalize(m.encarregado);
+      const mName = normalize(m.nome);
+      const mSiblings = splitSiblings(m.nome_irmaos);
+
+      const related: Marcacao[] = [];
+      const seenNames = new Set<string>([mName]);
+      marcacoes.forEach((other) => {
+        if (other.id === m.id) return;
+        const otherName = normalize(other.nome);
+        if (!otherName || seenNames.has(otherName)) return; // dedupe same athlete
+        const otherPhone = normalizePhone(other.telemovel);
+        const otherEnc = normalize(other.encarregado);
+        const otherSiblings = splitSiblings(other.nome_irmaos);
+
+        const samePhone = !!mPhone && mPhone === otherPhone;
+        const sameEnc = !!mEnc && mEnc === otherEnc;
+        const nameInOtherSiblings = !!mName && otherSiblings.includes(mName);
+        const otherInMySiblings = mSiblings.includes(otherName);
+
+        if (samePhone || sameEnc || nameInOtherSiblings || otherInMySiblings) {
+          related.push(other);
+          seenNames.add(otherName);
+        }
       });
       map.set(m.id, related);
     });
@@ -468,7 +489,6 @@ const Marcacoes = () => {
                         const isFootcamp = m.tipo === "footcamp";
                         const expanded = expandedRow === m.id;
                         const related = familyMap.get(m.id) || [];
-                        const familyConfirmed = !!m.desconto_irmaos && related.length > 0;
                         return (
                           <Fragment key={m.id}>
                             <TableRow className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
@@ -492,7 +512,7 @@ const Marcacoes = () => {
                                       {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                     </Button>
                                   )}
-                                  <FamilyBadge related={related} confirmed={familyConfirmed} />
+                                  <FamilyBadge self={m} related={related} />
                                 </div>
                                 {isFootcamp && m.encarregado && (
                                   <p className="text-xs text-muted-foreground font-normal mt-0.5">
@@ -617,13 +637,12 @@ const Marcacoes = () => {
                   {filteredMarcacoes.map((m) => {
                     const isFootcamp = m.tipo === "footcamp";
                     const related = familyMap.get(m.id) || [];
-                    const familyConfirmed = !!m.desconto_irmaos && related.length > 0;
                     return (
                     <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-bold text-foreground text-lg leading-tight">{m.nome}</span>
-                          <FamilyBadge related={related} confirmed={familyConfirmed} />
+                          <FamilyBadge self={m} related={related} />
                         </div>
                         <span className={cn(
                           "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0",
