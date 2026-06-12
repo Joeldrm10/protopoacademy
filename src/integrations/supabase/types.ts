@@ -26,6 +26,7 @@ export type Database = {
           id: string
           idade: string
           nome: string
+          nome_irmaos: string | null
           observacoes: string | null
           seguro_anual: boolean | null
           semanas: string[] | null
@@ -44,6 +45,7 @@ export type Database = {
           id?: string
           idade: string
           nome: string
+          nome_irmaos?: string | null
           observacoes?: string | null
           seguro_anual?: boolean | null
           semanas?: string[] | null
@@ -62,6 +64,7 @@ export type Database = {
           id?: string
           idade?: string
           nome?: string
+          nome_irmaos?: string | null
           observacoes?: string | null
           seguro_anual?: boolean | null
           semanas?: string[] | null

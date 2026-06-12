@@ -49,10 +49,14 @@ const schema = z.object({
   ),
   semanas: z.array(z.string()).min(1, "Seleciona pelo menos uma semana"),
   irmaos: z.boolean().optional(),
+  nome_irmaos: z.string().trim().max(200).optional(),
   observacoes: z.string().max(500).optional(),
   consentimento: z.literal(true, {
     errorMap: () => ({ message: "Tens de autorizar o tratamento dos dados" }),
   }),
+}).refine((d) => !d.irmaos || (d.nome_irmaos && d.nome_irmaos.trim().length >= 2), {
+  message: "Indica o nome do(s) irmão(s) inscrito(s)",
+  path: ["nome_irmaos"],
 });
 
 type FormData = z.infer<typeof schema>;
@@ -71,6 +75,7 @@ const FootcampSignupForm = () => {
       telemovel: "",
       semanas: [],
       irmaos: false,
+      nome_irmaos: "",
       observacoes: "",
       consentimento: false as unknown as true,
     },
@@ -108,6 +113,7 @@ const FootcampSignupForm = () => {
         semanas: semanasLabels,
         seguro_anual: seguroOferta,
         desconto_irmaos: !!data.irmaos,
+        nome_irmaos: data.irmaos ? (data.nome_irmaos?.trim() || null) : null,
         observacoes: data.observacoes || null,
         valor_total: precoFinal,
         estado: "pendente",
@@ -131,7 +137,7 @@ const FootcampSignupForm = () => {
         `Semanas pretendidas:`,
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
-        `Desconto irmãos: ${data.irmaos ? "Sim" : "Não"}`,
+        `Desconto irmãos: ${data.irmaos ? `Sim (${data.nome_irmaos})` : "Não"}`,
         precoBase > 0 ? `Valor estimado: ${precoFinal}€ (inclui ${seguroOferta ? "seguro anual oferecido" : `seguro anual ${SEGURO_ANUAL}€`}${data.irmaos ? ", com 10% desconto irmãos" : ""})` : "",
         data.observacoes ? `\nObservações: ${data.observacoes}` : "",
       ].filter(Boolean);
@@ -307,6 +313,22 @@ const FootcampSignupForm = () => {
                     </FormItem>
                   )}
                 />
+
+                {irmaos && (
+                  <FormField
+                    control={form.control}
+                    name="nome_irmaos"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Nome completo do(s) irmão(s) inscrito(s)</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Ex.: João Rodrigues, Pedro Rodrigues" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
 
                 {numSemanas > 0 && (
                   <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-2">
