@@ -80,8 +80,10 @@ const FootcampSignupForm = () => {
   const irmaos = form.watch("irmaos");
   const numSemanas = semanasSelecionadas.length;
   const precoBase = precosTabela[numSemanas] ?? 0;
-  const precoComIrmaos = irmaos ? +(precoBase * 0.9).toFixed(2) : precoBase;
   const seguroOferta = numSemanas === 4;
+  const seguroCusto = seguroOferta ? 0 : (numSemanas > 0 ? SEGURO_ANUAL : 0);
+  const subtotal = precoBase + seguroCusto;
+  const precoFinal = irmaos ? +(subtotal * 0.9).toFixed(2) : subtotal;
 
   const onSubmit = async (data: FormData) => {
     const now = Date.now();
