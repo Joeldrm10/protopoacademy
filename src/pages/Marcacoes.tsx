@@ -382,6 +382,8 @@ const Marcacoes = () => {
                       {filteredMarcacoes.map((m) => {
                         const isFootcamp = m.tipo === "footcamp";
                         const expanded = expandedRow === m.id;
+                        const related = familyMap.get(m.id) || [];
+                        const familyConfirmed = !!m.desconto_irmaos && related.length > 0;
                         return (
                           <Fragment key={m.id}>
                             <TableRow className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
