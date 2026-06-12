@@ -501,7 +501,25 @@ const Marcacoes = () => {
                                 )}
                               </TableCell>
                               <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
-                              <TableCell className="text-foreground font-mono text-sm font-semibold">{m.telemovel}</TableCell>
+                              <TableCell className="text-foreground font-mono text-sm font-semibold">
+                                <div className="flex items-center gap-2">
+                                  <span>{m.telemovel}</span>
+                                  <a
+                                    href={waUrl(m.telemovel, m.nome)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title="Abrir WhatsApp"
+                                    className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500/15 text-green-500 hover:bg-green-500/25 transition-colors"
+                                  >
+                                    <MessageCircle className="w-3.5 h-3.5" />
+                                  </a>
+                                </div>
+                                {isFootcamp && m.valor_total != null && (
+                                  <p className="text-xs font-sans font-bold text-primary mt-1 flex items-center gap-0.5">
+                                    <Euro className="w-3 h-3" />{m.valor_total}
+                                  </p>
+                                )}
+                              </TableCell>
                               <TableCell className="text-center">
                                 <span className={cn(
                                   "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
