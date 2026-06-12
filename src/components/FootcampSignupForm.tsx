@@ -49,10 +49,14 @@ const schema = z.object({
   ),
   semanas: z.array(z.string()).min(1, "Seleciona pelo menos uma semana"),
   irmaos: z.boolean().optional(),
+  nome_irmaos: z.string().trim().max(200).optional(),
   observacoes: z.string().max(500).optional(),
   consentimento: z.literal(true, {
     errorMap: () => ({ message: "Tens de autorizar o tratamento dos dados" }),
   }),
+}).refine((d) => !d.irmaos || (d.nome_irmaos && d.nome_irmaos.trim().length >= 2), {
+  message: "Indica o nome do(s) irmão(s) inscrito(s)",
+  path: ["nome_irmaos"],
 });
 
 type FormData = z.infer<typeof schema>;
