@@ -411,7 +411,8 @@ const Marcacoes = () => {
                                     </div>
                                     <div>
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
-                                      <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"screenshot
+                                      <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
+                                    </div>
                                     <div className="col-span-2 md:col-span-1">
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
                                       <ul className="text-foreground space-y-0.5">
