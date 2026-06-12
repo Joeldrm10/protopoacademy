@@ -622,7 +622,7 @@ const Marcacoes = () => {
                     <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-semibold text-foreground text-base">{m.nome}</span>
+                          <span className="font-bold text-foreground text-lg leading-tight">{m.nome}</span>
                           <FamilyBadge related={related} confirmed={familyConfirmed} />
                         </div>
                         <span className={cn(
@@ -637,19 +637,38 @@ const Marcacoes = () => {
                           {m.tipo === "individual" ? "Individual" : m.tipo === "grupo" ? "Grupo" : "Footcamp"}
                         </span>
                       </div>
-                      {/* Destaque: Encarregado + Telemóvel */}
-                      <div className="rounded-lg bg-surface-elevated/40 border border-border/40 p-2.5 space-y-1.5 text-sm">
+                      {/* Destaque: Encarregado + Telemóvel + Valor */}
+                      <div className="rounded-lg bg-surface-elevated/60 border border-primary/20 p-3 space-y-2 text-sm">
                         {m.encarregado && (
                           <div className="flex items-center gap-1.5">
-                            <UserCheck className="w-3.5 h-3.5 text-primary" />
+                            <UserCheck className="w-4 h-4 text-primary" />
                             <span className="text-muted-foreground text-xs">Encarregado:</span>
-                            <span className="text-foreground font-medium">{m.encarregado}</span>
+                            <span className="text-foreground font-semibold">{m.encarregado}</span>
                           </div>
                         )}
-                        <div className="flex items-center gap-1.5">
-                          <Phone className="w-3.5 h-3.5 text-primary" />
-                          <a href={`tel:${m.telemovel}`} className="font-mono text-foreground font-semibold">{m.telemovel}</a>
+                        <div className="flex items-center justify-between gap-2">
+                          <a href={`tel:${m.telemovel}`} className="flex items-center gap-1.5 font-mono text-foreground font-bold">
+                            <Phone className="w-4 h-4 text-primary" />
+                            {m.telemovel}
+                          </a>
+                          <a
+                            href={waUrl(m.telemovel, m.nome)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/15 text-green-500 border border-green-500/30 text-xs font-bold uppercase tracking-wider hover:bg-green-500/25 transition-colors"
+                          >
+                            <MessageCircle className="w-3.5 h-3.5" />
+                            WhatsApp
+                          </a>
                         </div>
+                        {isFootcamp && m.valor_total != null && (
+                          <div className="flex items-center justify-between pt-2 border-t border-border/40">
+                            <span className="text-muted-foreground text-xs uppercase tracking-wider">Valor final</span>
+                            <span className="font-heading text-lg text-primary flex items-center gap-0.5">
+                              <Euro className="w-4 h-4" />{m.valor_total}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         {m.data && (
