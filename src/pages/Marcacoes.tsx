@@ -397,16 +397,21 @@ const Marcacoes = () => {
                                     </div>
                                     <div>
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro anual</p>
-                                      <p className="text-foreground">{m.seguro_anual ? "Sim" : "Não"}</p>
+                                      <p className="text-foreground">
+                                        {m.seguro_anual ? (
+                                          <span>Oferecido 🎁</span>
+                                        ) : (
+                                          <span>Incluído (+20€)</span>
+                                        )}
+                                      </p>
                                     </div>
                                     <div>
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
-                                      <p className="text-foreground">{m.desconto_irmaos ? "Sim" : "Não"}</p>
+                                      <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
                                     </div>
                                     <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor total</p>
-                                      <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
-                                    </div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
+                                      <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"screenshot
                                     <div className="col-span-2 md:col-span-1">
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
                                       <ul className="text-foreground space-y-0.5">
