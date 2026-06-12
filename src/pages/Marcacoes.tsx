@@ -307,7 +307,7 @@ const Marcacoes = () => {
 
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-6">
               <div className="bg-card border border-border rounded-xl p-4">
                 <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Total</p>
                 <p className="font-heading text-2xl text-foreground">{marcacoes.length}</p>
@@ -324,7 +324,37 @@ const Marcacoes = () => {
                 <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Pendentes</p>
                 <p className="font-heading text-2xl text-primary">{pendentes}</p>
               </div>
+              <div className="bg-card border border-border rounded-xl p-4 col-span-2 sm:col-span-1">
+                <p className="text-xs uppercase tracking-wider mb-1 text-destructive">🔴 Cancelados</p>
+                <p className="font-heading text-2xl text-destructive">{cancelados}</p>
+              </div>
             </div>
+
+            {/* Footcamp Stats */}
+            {footcampStats.total > 0 && (
+              <div className="bg-gradient-to-br from-amber-500/10 via-card to-card border border-amber-500/30 rounded-xl p-4 sm:p-5 mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Trophy className="w-4 h-4 text-amber-400" />
+                  <h2 className="font-heading text-sm uppercase tracking-wider text-amber-400">Estatísticas Footcamp</h2>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 text-sm">
+                  <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                    <p className="text-xs text-muted-foreground">👥 Atletas</p>
+                    <p className="font-heading text-xl text-foreground">{footcampStats.total}</p>
+                  </div>
+                  {footcampStats.weeks.map((c, i) => (
+                    <div key={i} className="bg-surface-elevated/40 rounded-lg p-2.5">
+                      <p className="text-xs text-muted-foreground">⚽ Semana {i + 1}</p>
+                      <p className="font-heading text-xl text-foreground">{c}</p>
+                    </div>
+                  ))}
+                  <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                    <p className="text-xs text-muted-foreground">👨‍👦 Famílias</p>
+                    <p className="font-heading text-xl text-foreground">{footcampStats.families}</p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Filters + Refresh */}
             <div className="bg-card border border-border rounded-xl p-4 mb-6">
@@ -367,8 +397,20 @@ const Marcacoes = () => {
                     <SelectItem value="footcamp">Footcamp</SelectItem>
                   </SelectContent>
                 </Select>
-                {(filterDate || filterTipo !== "todos" || searchNome) && (
-                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); setSearchNome(""); }} className="text-muted-foreground hover:text-foreground">
+                <Select value={filterEstado} onValueChange={setFilterEstado}>
+                  <SelectTrigger className="w-[170px] border-border">
+                    <SelectValue placeholder="Estado" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="todos">Todos os estados</SelectItem>
+                    <SelectItem value="pendente">Pendente</SelectItem>
+                    <SelectItem value="contactado">Contactado</SelectItem>
+                    <SelectItem value="confirmado">Confirmado</SelectItem>
+                    <SelectItem value="cancelado">Cancelado</SelectItem>
+                  </SelectContent>
+                </Select>
+                {(filterDate || filterTipo !== "todos" || filterEstado !== "todos" || searchNome) && (
+                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); setFilterEstado("todos"); setSearchNome(""); }} className="text-muted-foreground hover:text-foreground">
                     <X className="w-4 h-4 mr-1" /> Limpar
                   </Button>
                 )}
@@ -380,6 +422,7 @@ const Marcacoes = () => {
                 </div>
               </div>
             </div>
+
 
             {/* Content */}
             {loading ? (
