@@ -62,6 +62,7 @@ type FamilyBadgeProps = {
 };
 const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
   if (related.length === 0) return null;
+  const total = related.length + 1;
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -75,7 +76,7 @@ const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
           )}
           title="Clica para ver inscrições relacionadas"
         >
-          {confirmed ? "🟢 Família identificada" : "👨‍👦 Possível irmãos"}
+          {confirmed ? `🟢 Família identificada (${total} atletas)` : `👨‍👦 Possível irmãos (${total})`}
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-64 p-3">
@@ -95,6 +96,15 @@ const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
       </PopoverContent>
     </Popover>
   );
+};
+
+// Build WhatsApp URL from a Portuguese phone number
+const waUrl = (phone: string | null | undefined, nome?: string) => {
+  const digits = (phone || "").replace(/\D/g, "");
+  if (!digits) return "#";
+  const intl = digits.startsWith("351") ? digits : `351${digits}`;
+  const msg = `Olá${nome ? ` ${nome.split(" ")[0]}` : ""}! Contacto da ProTopo Academy sobre a tua inscrição.`;
+  return `https://wa.me/${intl}?text=${encodeURIComponent(msg)}`;
 };
 
 
