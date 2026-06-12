@@ -309,13 +309,31 @@ const FootcampSignupForm = () => {
                 />
 
                 {numSemanas > 0 && (
-                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
-                    <p className="text-sm text-muted-foreground">Valor estimado</p>
-                    <p className="font-heading font-bold text-2xl text-gradient-gold">
-                      {precoComIrmaos}€
-                    </p>
+                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-2">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-sm text-muted-foreground">Semanas ({numSemanas})</span>
+                      <span className="text-sm text-foreground font-medium">{precoBase}€</span>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-sm text-muted-foreground">Seguro anual</span>
+                      <span className="text-sm text-foreground font-medium">
+                        {seguroOferta ? <span className="text-primary">Oferta 🎁</span> : `${SEGURO_ANUAL}€`}
+                      </span>
+                    </div>
+                    {irmaos && (
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="text-sm text-muted-foreground">Desconto irmãos (-10%)</span>
+                        <span className="text-sm text-foreground font-medium">-{(subtotal * 0.1).toFixed(2)}€</span>
+                      </div>
+                    )}
+                    <div className="border-t border-primary/20 pt-2 flex items-baseline justify-between gap-3">
+                      <span className="text-sm text-foreground font-semibold">Valor total</span>
+                      <span className="font-heading font-bold text-2xl text-gradient-gold">{precoFinal}€</span>
+                    </div>
                     {seguroOferta && (
-                      <p className="text-xs text-primary mt-1">+ Seguro anual oferecido</p>
+                      <div className="mt-2 rounded-lg bg-primary/10 border border-primary/30 px-3 py-2">
+                        <p className="text-xs text-primary font-medium">🎁 Oferta especial: Seguro anual oferecido na inscrição das 4 semanas.</p>
+                      </div>
                     )}
                   </div>
                 )}
