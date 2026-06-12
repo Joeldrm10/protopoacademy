@@ -77,6 +77,25 @@ const Marcacoes = () => {
     });
   }, [marcacoes, filterDate, filterTipo, searchNome]);
 
+  // Family detection: index marcações by normalized encarregado and telemóvel
+  const normalize = (s: string | null | undefined) =>
+    (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
+  const normalizePhone = (s: string | null | undefined) => (s || "").replace(/\D/g, "");
+
+  const familyMap = useMemo(() => {
+    const map = new Map<string, Marcacao[]>();
+    marcacoes.forEach((m) => {
+      const related = marcacoes.filter((other) => {
+        if (other.id === m.id) return false;
+        const sameEnc = m.encarregado && other.encarregado && normalize(m.encarregado) === normalize(other.encarregado);
+        const samePhone = normalizePhone(m.telemovel) && normalizePhone(m.telemovel) === normalizePhone(other.telemovel);
+        return sameEnc || samePhone;
+      });
+      map.set(m.id, related);
+    });
+    return map;
+  }, [marcacoes]);
+
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
 
