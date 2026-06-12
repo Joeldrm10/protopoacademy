@@ -7,7 +7,7 @@ import { pt } from "date-fns/locale";
 import {
   CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw,
   Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard, Search,
-  ChevronDown, ChevronUp, Trophy, FileText,
+  ChevronDown, ChevronUp, Trophy, FileText, UserCheck,
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -55,6 +55,48 @@ const estadoStyles: Record<string, string> = {
   cancelado: "bg-destructive/15 text-destructive border-destructive/25",
 };
 
+type FamilyBadgeProps = {
+  related: Marcacao[];
+  confirmed: boolean;
+};
+const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
+  if (related.length === 0) return null;
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          className={cn(
+            "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors",
+            confirmed
+              ? "bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
+              : "bg-amber-500/15 text-amber-400 border-amber-500/25 hover:bg-amber-500/25"
+          )}
+          title="Clica para ver inscrições relacionadas"
+        >
+          {confirmed ? "🟢 Família identificada" : "👨‍👦 Possível irmãos"}
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="w-64 p-3">
+        <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1">
+          <UserCheck className="w-3 h-3" /> Inscrições relacionadas
+        </p>
+        <ul className="space-y-1.5">
+          {related.map((r) => (
+            <li key={r.id} className="text-sm">
+              <p className="font-semibold text-foreground">{r.nome}</p>
+              <p className="text-xs text-muted-foreground">
+                {r.encarregado || "—"} · <span className="font-mono">{r.telemovel}</span>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+
 const Marcacoes = () => {
   const { session, loading: authLoading, signOut } = useAuth();
   const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
@@ -76,6 +118,25 @@ const Marcacoes = () => {
       return true;
     });
   }, [marcacoes, filterDate, filterTipo, searchNome]);
+
+  // Family detection: index marcações by normalized encarregado and telemóvel
+  const normalize = (s: string | null | undefined) =>
+    (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
+  const normalizePhone = (s: string | null | undefined) => (s || "").replace(/\D/g, "");
+
+  const familyMap = useMemo(() => {
+    const map = new Map<string, Marcacao[]>();
+    marcacoes.forEach((m) => {
+      const related = marcacoes.filter((other) => {
+        if (other.id === m.id) return false;
+        const sameEnc = m.encarregado && other.encarregado && normalize(m.encarregado) === normalize(other.encarregado);
+        const samePhone = normalizePhone(m.telemovel) && normalizePhone(m.telemovel) === normalizePhone(other.telemovel);
+        return sameEnc || samePhone;
+      });
+      map.set(m.id, related);
+    });
+    return map;
+  }, [marcacoes]);
 
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
@@ -321,6 +382,8 @@ const Marcacoes = () => {
                       {filteredMarcacoes.map((m) => {
                         const isFootcamp = m.tipo === "footcamp";
                         const expanded = expandedRow === m.id;
+                        const related = familyMap.get(m.id) || [];
+                        const familyConfirmed = !!m.desconto_irmaos && related.length > 0;
                         return (
                           <Fragment key={m.id}>
                             <TableRow className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
@@ -337,17 +400,23 @@ const Marcacoes = () => {
                                 </Select>
                               </TableCell>
                               <TableCell className="font-semibold text-foreground">
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 flex-wrap">
                                   {m.nome}
                                   {isFootcamp && (
                                     <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setExpandedRow(expanded ? null : m.id)}>
                                       {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                     </Button>
                                   )}
+                                  <FamilyBadge related={related} confirmed={familyConfirmed} />
                                 </div>
+                                {isFootcamp && m.encarregado && (
+                                  <p className="text-xs text-muted-foreground font-normal mt-0.5">
+                                    Enc: <span className="text-foreground">{m.encarregado}</span>
+                                  </p>
+                                )}
                               </TableCell>
                               <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
-                              <TableCell className="text-muted-foreground font-mono text-sm">{m.telemovel}</TableCell>
+                              <TableCell className="text-foreground font-mono text-sm font-semibold">{m.telemovel}</TableCell>
                               <TableCell className="text-center">
                                 <span className={cn(
                                   "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
@@ -444,12 +513,17 @@ const Marcacoes = () => {
                 <div className="md:hidden space-y-3">
                   {filteredMarcacoes.map((m) => {
                     const isFootcamp = m.tipo === "footcamp";
+                    const related = familyMap.get(m.id) || [];
+                    const familyConfirmed = !!m.desconto_irmaos && related.length > 0;
                     return (
                     <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="font-semibold text-foreground text-base">{m.nome}</span>
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-semibold text-foreground text-base">{m.nome}</span>
+                          <FamilyBadge related={related} confirmed={familyConfirmed} />
+                        </div>
                         <span className={cn(
-                          "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider",
+                          "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0",
                           m.tipo === "individual"
                             ? "bg-primary/15 text-primary border border-primary/25"
                             : m.tipo === "grupo"
@@ -459,6 +533,20 @@ const Marcacoes = () => {
                           {m.tipo === "individual" ? <User className="w-3 h-3" /> : m.tipo === "grupo" ? <Users className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
                           {m.tipo === "individual" ? "Individual" : m.tipo === "grupo" ? "Grupo" : "Footcamp"}
                         </span>
+                      </div>
+                      {/* Destaque: Encarregado + Telemóvel */}
+                      <div className="rounded-lg bg-surface-elevated/40 border border-border/40 p-2.5 space-y-1.5 text-sm">
+                        {m.encarregado && (
+                          <div className="flex items-center gap-1.5">
+                            <UserCheck className="w-3.5 h-3.5 text-primary" />
+                            <span className="text-muted-foreground text-xs">Encarregado:</span>
+                            <span className="text-foreground font-medium">{m.encarregado}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1.5">
+                          <Phone className="w-3.5 h-3.5 text-primary" />
+                          <a href={`tel:${m.telemovel}`} className="font-mono text-foreground font-semibold">{m.telemovel}</a>
+                        </div>
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         {m.data && (
@@ -474,17 +562,12 @@ const Marcacoes = () => {
                           </div>
                         )}
                         <div className="flex items-center gap-1.5 text-muted-foreground">
-                          <Phone className="w-3.5 h-3.5 text-primary/60" />
-                          <span className="font-mono text-foreground">{m.telemovel}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-muted-foreground">
                           <span className="text-xs">Idade:</span>
                           <span className="text-foreground">{m.idade}</span>
                         </div>
                       </div>
                       {isFootcamp && (
                         <div className="space-y-2 rounded-lg bg-surface-elevated/40 p-3 text-xs">
-                          {m.encarregado && <div><span className="text-muted-foreground">Encarregado: </span><span className="text-foreground">{m.encarregado}</span></div>}
                           {m.semanas && m.semanas.length > 0 && (
                             <div>
                               <p className="text-muted-foreground mb-1">Semanas:</p>
