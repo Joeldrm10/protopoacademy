@@ -113,6 +113,7 @@ const FootcampSignupForm = () => {
         semanas: semanasLabels,
         seguro_anual: seguroOferta,
         desconto_irmaos: !!data.irmaos,
+        nome_irmaos: data.irmaos ? (data.nome_irmaos?.trim() || null) : null,
         observacoes: data.observacoes || null,
         valor_total: precoFinal,
         estado: "pendente",
