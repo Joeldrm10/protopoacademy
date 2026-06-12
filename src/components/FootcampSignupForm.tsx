@@ -320,10 +320,13 @@ const FootcampSignupForm = () => {
                     name="nome_irmaos"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-foreground">Nome completo do(s) irmão(s) inscrito(s)</FormLabel>
+                        <FormLabel className="text-foreground">Nome do(s) outro(s) irmão(s) inscrito(s)</FormLabel>
                         <FormControl>
                           <Input placeholder="Ex.: João Rodrigues, Pedro Rodrigues" {...field} />
                         </FormControl>
+                        <p className="text-xs text-muted-foreground">
+                          Indica apenas o nome do(s) outro(s) irmão(s) inscrito(s) no Footcamp. Cada atleta deve ter a sua própria inscrição.
+                        </p>
                         <FormMessage />
                       </FormItem>
                     )}

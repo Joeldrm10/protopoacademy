@@ -410,7 +410,7 @@ const Marcacoes = () => {
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
                                       <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
                                       {m.desconto_irmaos && m.nome_irmaos && (
-                                        <p className="text-xs text-muted-foreground mt-1">Irmãos: <span className="text-foreground">{m.nome_irmaos}</span></p>
+                                        <p className="text-xs text-muted-foreground mt-1">Outro(s) irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
                                       )}
                                     </div>
                                     <div>
@@ -499,7 +499,7 @@ const Marcacoes = () => {
                             {m.valor_total != null && <span><span className="text-muted-foreground">Valor final: </span><span className="text-primary font-semibold">{m.valor_total}€</span></span>}
                           </div>
                           {m.desconto_irmaos && m.nome_irmaos && (
-                            <div><span className="text-muted-foreground">Irmãos indicados: </span><span className="text-foreground">{m.nome_irmaos}</span></div>
+                            <div><span className="text-muted-foreground">Outro(s) irmão(s): </span><span className="text-foreground">{m.nome_irmaos}</span></div>
                           )}
                           {m.observacoes && (
                             <div>
