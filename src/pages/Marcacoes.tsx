@@ -512,7 +512,7 @@ const Marcacoes = () => {
                                       {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                     </Button>
                                   )}
-                                  <FamilyBadge related={related} confirmed={familyConfirmed} />
+                                  <FamilyBadge self={m} related={related} />
                                 </div>
                                 {isFootcamp && m.encarregado && (
                                   <p className="text-xs text-muted-foreground font-normal mt-0.5">
