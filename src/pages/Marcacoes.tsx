@@ -57,34 +57,30 @@ const estadoStyles: Record<string, string> = {
 };
 
 type FamilyBadgeProps = {
+  self: Marcacao;
   related: Marcacao[];
-  confirmed: boolean;
 };
-const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
+const FamilyBadge = ({ self, related }: FamilyBadgeProps) => {
   if (related.length === 0) return null;
-  const total = related.length + 1;
+  const all = [self, ...related];
+  const total = all.length;
   return (
     <Popover>
       <PopoverTrigger asChild>
         <button
           type="button"
-          className={cn(
-            "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors",
-            confirmed
-              ? "bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
-              : "bg-amber-500/15 text-amber-400 border-amber-500/25 hover:bg-amber-500/25"
-          )}
+          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
           title="Clica para ver inscrições relacionadas"
         >
-          {confirmed ? `🟢 Família identificada (${total} atletas)` : `👨‍👦 Possível irmãos (${total})`}
+          🟢 Família identificada ({total} atletas)
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-64 p-3">
         <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1">
-          <UserCheck className="w-3 h-3" /> Inscrições relacionadas
+          <UserCheck className="w-3 h-3" /> Família identificada ({total} atletas)
         </p>
         <ul className="space-y-1.5">
-          {related.map((r) => (
+          {all.map((r) => (
             <li key={r.id} className="text-sm">
               <p className="font-semibold text-foreground">{r.nome}</p>
               <p className="text-xs text-muted-foreground">
