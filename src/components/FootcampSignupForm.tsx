@@ -75,6 +75,7 @@ const FootcampSignupForm = () => {
       telemovel: "",
       semanas: [],
       irmaos: false,
+      nome_irmaos: "",
       observacoes: "",
       consentimento: false as unknown as true,
     },
