@@ -132,7 +132,7 @@ const FootcampSignupForm = () => {
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
         `Desconto irmãos: ${data.irmaos ? "Sim" : "Não"}`,
-        precoBase > 0 ? `Valor estimado: ${precoComIrmaos}€${seguroOferta ? " (seguro anual oferecido)" : ""}` : "",
+        precoBase > 0 ? `Valor estimado: ${precoFinal}€ (inclui ${seguroOferta ? "seguro anual oferecido" : `seguro anual ${SEGURO_ANUAL}€`}${data.irmaos ? ", com 10% desconto irmãos" : ""})` : "",
         data.observacoes ? `\nObservações: ${data.observacoes}` : "",
       ].filter(Boolean);
 
