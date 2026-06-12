@@ -490,9 +490,9 @@ const Marcacoes = () => {
                             </div>
                           )}
                           <div className="flex gap-4 flex-wrap">
-                            <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Sim" : "Não"}</span></span>
-                            <span><span className="text-muted-foreground">Irmãos: </span><span className="text-foreground">{m.desconto_irmaos ? "Sim" : "Não"}</span></span>
-                            {m.valor_total != null && <span><span className="text-muted-foreground">Total: </span><span className="text-primary font-semibold">{m.valor_total}€</span></span>}
+                            <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Oferecido 🎁" : "Incluído (+20€)"}</span></span>
+                            <span><span className="text-muted-foreground">Irmãos: </span><span className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</span></span>
+                            {m.valor_total != null && <span><span className="text-muted-foreground">Valor final: </span><span className="text-primary font-semibold">{m.valor_total}€</span></span>}
                           </div>
                           {m.observacoes && (
                             <div>
