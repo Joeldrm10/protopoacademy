@@ -400,17 +400,23 @@ const Marcacoes = () => {
                                 </Select>
                               </TableCell>
                               <TableCell className="font-semibold text-foreground">
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 flex-wrap">
                                   {m.nome}
                                   {isFootcamp && (
                                     <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setExpandedRow(expanded ? null : m.id)}>
                                       {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                     </Button>
                                   )}
+                                  <FamilyBadge related={related} confirmed={familyConfirmed} />
                                 </div>
+                                {isFootcamp && m.encarregado && (
+                                  <p className="text-xs text-muted-foreground font-normal mt-0.5">
+                                    Enc: <span className="text-foreground">{m.encarregado}</span>
+                                  </p>
+                                )}
                               </TableCell>
                               <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
-                              <TableCell className="text-muted-foreground font-mono text-sm">{m.telemovel}</TableCell>
+                              <TableCell className="text-foreground font-mono text-sm font-semibold">{m.telemovel}</TableCell>
                               <TableCell className="text-center">
                                 <span className={cn(
                                   "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
