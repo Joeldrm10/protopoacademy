@@ -44,6 +44,7 @@ type Marcacao = {
   observacoes: string | null;
   encarregado: string | null;
   valor_total: number | null;
+  nome_irmaos: string | null;
 };
 
 const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
