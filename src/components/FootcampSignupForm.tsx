@@ -109,6 +109,7 @@ const FootcampSignupForm = () => {
         seguro_anual: seguroOferta,
         desconto_irmaos: !!data.irmaos,
         observacoes: data.observacoes || null,
+        valor_total: precoFinal,
         estado: "pendente",
       } as any);
 
