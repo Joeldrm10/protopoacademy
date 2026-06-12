@@ -32,6 +32,7 @@ const semanasOptions = [
 ];
 
 const precosTabela: Record<number, number> = { 1: 95, 2: 180, 3: 260, 4: 340 };
+const SEGURO_ANUAL = 20;
 
 const ptPhoneRegex = /^9\d{8}$/;
 
@@ -79,8 +80,10 @@ const FootcampSignupForm = () => {
   const irmaos = form.watch("irmaos");
   const numSemanas = semanasSelecionadas.length;
   const precoBase = precosTabela[numSemanas] ?? 0;
-  const precoComIrmaos = irmaos ? +(precoBase * 0.9).toFixed(2) : precoBase;
   const seguroOferta = numSemanas === 4;
+  const seguroCusto = seguroOferta ? 0 : (numSemanas > 0 ? SEGURO_ANUAL : 0);
+  const subtotal = precoBase + seguroCusto;
+  const precoFinal = irmaos ? +(subtotal * 0.9).toFixed(2) : subtotal;
 
   const onSubmit = async (data: FormData) => {
     const now = Date.now();
@@ -106,6 +109,7 @@ const FootcampSignupForm = () => {
         seguro_anual: seguroOferta,
         desconto_irmaos: !!data.irmaos,
         observacoes: data.observacoes || null,
+        valor_total: precoFinal,
         estado: "pendente",
       } as any);
 
@@ -128,7 +132,7 @@ const FootcampSignupForm = () => {
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
         `Desconto irmãos: ${data.irmaos ? "Sim" : "Não"}`,
-        precoBase > 0 ? `Valor estimado: ${precoComIrmaos}€${seguroOferta ? " (seguro anual oferecido)" : ""}` : "",
+        precoBase > 0 ? `Valor estimado: ${precoFinal}€ (inclui ${seguroOferta ? "seguro anual oferecido" : `seguro anual ${SEGURO_ANUAL}€`}${data.irmaos ? ", com 10% desconto irmãos" : ""})` : "",
         data.observacoes ? `\nObservações: ${data.observacoes}` : "",
       ].filter(Boolean);
 
@@ -305,13 +309,31 @@ const FootcampSignupForm = () => {
                 />
 
                 {numSemanas > 0 && (
-                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
-                    <p className="text-sm text-muted-foreground">Valor estimado</p>
-                    <p className="font-heading font-bold text-2xl text-gradient-gold">
-                      {precoComIrmaos}€
-                    </p>
+                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-2">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-sm text-muted-foreground">Semanas ({numSemanas})</span>
+                      <span className="text-sm text-foreground font-medium">{precoBase}€</span>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-sm text-muted-foreground">Seguro anual</span>
+                      <span className="text-sm text-foreground font-medium">
+                        {seguroOferta ? <span className="text-primary">Oferta 🎁</span> : `${SEGURO_ANUAL}€`}
+                      </span>
+                    </div>
+                    {irmaos && (
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="text-sm text-muted-foreground">Desconto irmãos (-10%)</span>
+                        <span className="text-sm text-foreground font-medium">-{(subtotal * 0.1).toFixed(2)}€</span>
+                      </div>
+                    )}
+                    <div className="border-t border-primary/20 pt-2 flex items-baseline justify-between gap-3">
+                      <span className="text-sm text-foreground font-semibold">Valor total</span>
+                      <span className="font-heading font-bold text-2xl text-gradient-gold">{precoFinal}€</span>
+                    </div>
                     {seguroOferta && (
-                      <p className="text-xs text-primary mt-1">+ Seguro anual oferecido</p>
+                      <div className="mt-2 rounded-lg bg-primary/10 border border-primary/30 px-3 py-2">
+                        <p className="text-xs text-primary font-medium">🎁 Oferta especial: Seguro anual oferecido na inscrição das 4 semanas.</p>
+                      </div>
                     )}
                   </div>
                 )}

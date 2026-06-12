@@ -43,6 +43,7 @@ type Marcacao = {
   desconto_irmaos: boolean | null;
   observacoes: string | null;
   encarregado: string | null;
+  valor_total: number | null;
 };
 
 const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
@@ -402,6 +403,10 @@ const Marcacoes = () => {
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
                                       <p className="text-foreground">{m.desconto_irmaos ? "Sim" : "Não"}</p>
                                     </div>
+                                    <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor total</p>
+                                      <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
+                                    </div>
                                     <div className="col-span-2 md:col-span-1">
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
                                       <ul className="text-foreground space-y-0.5">
@@ -478,9 +483,10 @@ const Marcacoes = () => {
                               </ul>
                             </div>
                           )}
-                          <div className="flex gap-4">
+                          <div className="flex gap-4 flex-wrap">
                             <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Sim" : "Não"}</span></span>
                             <span><span className="text-muted-foreground">Irmãos: </span><span className="text-foreground">{m.desconto_irmaos ? "Sim" : "Não"}</span></span>
+                            {m.valor_total != null && <span><span className="text-muted-foreground">Total: </span><span className="text-primary font-semibold">{m.valor_total}€</span></span>}
                           </div>
                           {m.observacoes && (
                             <div>
