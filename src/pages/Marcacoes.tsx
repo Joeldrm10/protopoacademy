@@ -513,12 +513,17 @@ const Marcacoes = () => {
                 <div className="md:hidden space-y-3">
                   {filteredMarcacoes.map((m) => {
                     const isFootcamp = m.tipo === "footcamp";
+                    const related = familyMap.get(m.id) || [];
+                    const familyConfirmed = !!m.desconto_irmaos && related.length > 0;
                     return (
                     <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="font-semibold text-foreground text-base">{m.nome}</span>
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-semibold text-foreground text-base">{m.nome}</span>
+                          <FamilyBadge related={related} confirmed={familyConfirmed} />
+                        </div>
                         <span className={cn(
-                          "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider",
+                          "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0",
                           m.tipo === "individual"
                             ? "bg-primary/15 text-primary border border-primary/25"
                             : m.tipo === "grupo"
@@ -528,6 +533,20 @@ const Marcacoes = () => {
                           {m.tipo === "individual" ? <User className="w-3 h-3" /> : m.tipo === "grupo" ? <Users className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
                           {m.tipo === "individual" ? "Individual" : m.tipo === "grupo" ? "Grupo" : "Footcamp"}
                         </span>
+                      </div>
+                      {/* Destaque: Encarregado + Telemóvel */}
+                      <div className="rounded-lg bg-surface-elevated/40 border border-border/40 p-2.5 space-y-1.5 text-sm">
+                        {m.encarregado && (
+                          <div className="flex items-center gap-1.5">
+                            <UserCheck className="w-3.5 h-3.5 text-primary" />
+                            <span className="text-muted-foreground text-xs">Encarregado:</span>
+                            <span className="text-foreground font-medium">{m.encarregado}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1.5">
+                          <Phone className="w-3.5 h-3.5 text-primary" />
+                          <a href={`tel:${m.telemovel}`} className="font-mono text-foreground font-semibold">{m.telemovel}</a>
+                        </div>
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         {m.data && (
@@ -542,10 +561,6 @@ const Marcacoes = () => {
                             <span className="text-foreground font-medium">{m.hora}</span>
                           </div>
                         )}
-                        <div className="flex items-center gap-1.5 text-muted-foreground">
-                          <Phone className="w-3.5 h-3.5 text-primary/60" />
-                          <span className="font-mono text-foreground">{m.telemovel}</span>
-                        </div>
                         <div className="flex items-center gap-1.5 text-muted-foreground">
                           <span className="text-xs">Idade:</span>
                           <span className="text-foreground">{m.idade}</span>
