@@ -568,7 +568,6 @@ const Marcacoes = () => {
                       </div>
                       {isFootcamp && (
                         <div className="space-y-2 rounded-lg bg-surface-elevated/40 p-3 text-xs">
-                          {m.encarregado && <div><span className="text-muted-foreground">Encarregado: </span><span className="text-foreground">{m.encarregado}</span></div>}
                           {m.semanas && m.semanas.length > 0 && (
                             <div>
                               <p className="text-muted-foreground mb-1">Semanas:</p>
