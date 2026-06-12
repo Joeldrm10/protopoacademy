@@ -7,7 +7,8 @@ import { pt } from "date-fns/locale";
 import {
   CalendarIcon, Phone, User, Clock, Users, Loader2, RefreshCw,
   Trash2, Check, Filter, X, LogOut, Shield, LayoutDashboard, Search,
-  ChevronDown, ChevronUp, Trophy, FileText, UserCheck,
+  ChevronDown, ChevronUp, Trophy, FileText, UserCheck, MessageCircle,
+  XCircle, Euro,
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -61,6 +62,7 @@ type FamilyBadgeProps = {
 };
 const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
   if (related.length === 0) return null;
+  const total = related.length + 1;
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -74,7 +76,7 @@ const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
           )}
           title="Clica para ver inscrições relacionadas"
         >
-          {confirmed ? "🟢 Família identificada" : "👨‍👦 Possível irmãos"}
+          {confirmed ? `🟢 Família identificada (${total} atletas)` : `👨‍👦 Possível irmãos (${total})`}
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-64 p-3">
@@ -96,6 +98,15 @@ const FamilyBadge = ({ related, confirmed }: FamilyBadgeProps) => {
   );
 };
 
+// Build WhatsApp URL from a Portuguese phone number
+const waUrl = (phone: string | null | undefined, nome?: string) => {
+  const digits = (phone || "").replace(/\D/g, "");
+  if (!digits) return "#";
+  const intl = digits.startsWith("351") ? digits : `351${digits}`;
+  const msg = `Olá${nome ? ` ${nome.split(" ")[0]}` : ""}! Contacto da ProTopo Academy sobre a tua inscrição.`;
+  return `https://wa.me/${intl}?text=${encodeURIComponent(msg)}`;
+};
+
 
 const Marcacoes = () => {
   const { session, loading: authLoading, signOut } = useAuth();
@@ -104,12 +115,14 @@ const Marcacoes = () => {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [filterDate, setFilterDate] = useState<Date | undefined>();
   const [filterTipo, setFilterTipo] = useState<string>("todos");
+  const [filterEstado, setFilterEstado] = useState<string>("todos");
   const [searchNome, setSearchNome] = useState("");
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const filteredMarcacoes = useMemo(() => {
     return marcacoes.filter((m) => {
       if (filterTipo !== "todos" && m.tipo !== filterTipo) return false;
+      if (filterEstado !== "todos" && m.estado !== filterEstado) return false;
       if (filterDate) {
         const selected = format(filterDate, "yyyy-MM-dd");
         if (m.data !== selected) return false;
@@ -117,7 +130,7 @@ const Marcacoes = () => {
       if (searchNome && !m.nome.toLowerCase().includes(searchNome.toLowerCase())) return false;
       return true;
     });
-  }, [marcacoes, filterDate, filterTipo, searchNome]);
+  }, [marcacoes, filterDate, filterTipo, filterEstado, searchNome]);
 
   // Family detection: index marcações by normalized encarregado and telemóvel
   const normalize = (s: string | null | undefined) =>
@@ -140,6 +153,35 @@ const Marcacoes = () => {
 
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
+  const cancelados = useMemo(() => marcacoes.filter((m) => m.estado === "cancelado").length, [marcacoes]);
+
+  // Footcamp stats
+  const footcampStats = useMemo(() => {
+    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado !== "cancelado");
+    const weekCounts = [0, 0, 0, 0];
+    fc.forEach((m) => {
+      (m.semanas || []).forEach((s) => {
+        const match = s.match(/(\d)/);
+        if (match) {
+          const idx = parseInt(match[1], 10) - 1;
+          if (idx >= 0 && idx < 4) weekCounts[idx]++;
+        }
+      });
+    });
+    // Families: groups of 2+ that share encarregado/telemóvel
+    const seen = new Set<string>();
+    let familiesCount = 0;
+    fc.forEach((m) => {
+      if (seen.has(m.id)) return;
+      const rel = (familyMap.get(m.id) || []).filter((r) => r.tipo === "footcamp" && r.estado !== "cancelado");
+      if (rel.length > 0) {
+        familiesCount++;
+        seen.add(m.id);
+        rel.forEach((r) => seen.add(r.id));
+      }
+    });
+    return { total: fc.length, weeks: weekCounts, families: familiesCount };
+  }, [marcacoes, familyMap]);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
@@ -265,7 +307,7 @@ const Marcacoes = () => {
 
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-6">
               <div className="bg-card border border-border rounded-xl p-4">
                 <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Total</p>
                 <p className="font-heading text-2xl text-foreground">{marcacoes.length}</p>
@@ -282,7 +324,37 @@ const Marcacoes = () => {
                 <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Pendentes</p>
                 <p className="font-heading text-2xl text-primary">{pendentes}</p>
               </div>
+              <div className="bg-card border border-border rounded-xl p-4 col-span-2 sm:col-span-1">
+                <p className="text-xs uppercase tracking-wider mb-1 text-destructive">🔴 Cancelados</p>
+                <p className="font-heading text-2xl text-destructive">{cancelados}</p>
+              </div>
             </div>
+
+            {/* Footcamp Stats */}
+            {footcampStats.total > 0 && (
+              <div className="bg-gradient-to-br from-amber-500/10 via-card to-card border border-amber-500/30 rounded-xl p-4 sm:p-5 mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Trophy className="w-4 h-4 text-amber-400" />
+                  <h2 className="font-heading text-sm uppercase tracking-wider text-amber-400">Estatísticas Footcamp</h2>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 text-sm">
+                  <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                    <p className="text-xs text-muted-foreground">👥 Atletas</p>
+                    <p className="font-heading text-xl text-foreground">{footcampStats.total}</p>
+                  </div>
+                  {footcampStats.weeks.map((c, i) => (
+                    <div key={i} className="bg-surface-elevated/40 rounded-lg p-2.5">
+                      <p className="text-xs text-muted-foreground">⚽ Semana {i + 1}</p>
+                      <p className="font-heading text-xl text-foreground">{c}</p>
+                    </div>
+                  ))}
+                  <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                    <p className="text-xs text-muted-foreground">👨‍👦 Famílias</p>
+                    <p className="font-heading text-xl text-foreground">{footcampStats.families}</p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Filters + Refresh */}
             <div className="bg-card border border-border rounded-xl p-4 mb-6">
@@ -325,8 +397,20 @@ const Marcacoes = () => {
                     <SelectItem value="footcamp">Footcamp</SelectItem>
                   </SelectContent>
                 </Select>
-                {(filterDate || filterTipo !== "todos" || searchNome) && (
-                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); setSearchNome(""); }} className="text-muted-foreground hover:text-foreground">
+                <Select value={filterEstado} onValueChange={setFilterEstado}>
+                  <SelectTrigger className="w-[170px] border-border">
+                    <SelectValue placeholder="Estado" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="todos">Todos os estados</SelectItem>
+                    <SelectItem value="pendente">Pendente</SelectItem>
+                    <SelectItem value="contactado">Contactado</SelectItem>
+                    <SelectItem value="confirmado">Confirmado</SelectItem>
+                    <SelectItem value="cancelado">Cancelado</SelectItem>
+                  </SelectContent>
+                </Select>
+                {(filterDate || filterTipo !== "todos" || filterEstado !== "todos" || searchNome) && (
+                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); setFilterEstado("todos"); setSearchNome(""); }} className="text-muted-foreground hover:text-foreground">
                     <X className="w-4 h-4 mr-1" /> Limpar
                   </Button>
                 )}
@@ -338,6 +422,7 @@ const Marcacoes = () => {
                 </div>
               </div>
             </div>
+
 
             {/* Content */}
             {loading ? (
@@ -416,7 +501,25 @@ const Marcacoes = () => {
                                 )}
                               </TableCell>
                               <TableCell className="text-muted-foreground text-center">{m.idade}</TableCell>
-                              <TableCell className="text-foreground font-mono text-sm font-semibold">{m.telemovel}</TableCell>
+                              <TableCell className="text-foreground font-mono text-sm font-semibold">
+                                <div className="flex items-center gap-2">
+                                  <span>{m.telemovel}</span>
+                                  <a
+                                    href={waUrl(m.telemovel, m.nome)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title="Abrir WhatsApp"
+                                    className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500/15 text-green-500 hover:bg-green-500/25 transition-colors"
+                                  >
+                                    <MessageCircle className="w-3.5 h-3.5" />
+                                  </a>
+                                </div>
+                                {isFootcamp && m.valor_total != null && (
+                                  <p className="text-xs font-sans font-bold text-primary mt-1 flex items-center gap-0.5">
+                                    <Euro className="w-3 h-3" />{m.valor_total}
+                                  </p>
+                                )}
+                              </TableCell>
                               <TableCell className="text-center">
                                 <span className={cn(
                                   "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
@@ -519,7 +622,7 @@ const Marcacoes = () => {
                     <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-semibold text-foreground text-base">{m.nome}</span>
+                          <span className="font-bold text-foreground text-lg leading-tight">{m.nome}</span>
                           <FamilyBadge related={related} confirmed={familyConfirmed} />
                         </div>
                         <span className={cn(
@@ -534,19 +637,38 @@ const Marcacoes = () => {
                           {m.tipo === "individual" ? "Individual" : m.tipo === "grupo" ? "Grupo" : "Footcamp"}
                         </span>
                       </div>
-                      {/* Destaque: Encarregado + Telemóvel */}
-                      <div className="rounded-lg bg-surface-elevated/40 border border-border/40 p-2.5 space-y-1.5 text-sm">
+                      {/* Destaque: Encarregado + Telemóvel + Valor */}
+                      <div className="rounded-lg bg-surface-elevated/60 border border-primary/20 p-3 space-y-2 text-sm">
                         {m.encarregado && (
                           <div className="flex items-center gap-1.5">
-                            <UserCheck className="w-3.5 h-3.5 text-primary" />
+                            <UserCheck className="w-4 h-4 text-primary" />
                             <span className="text-muted-foreground text-xs">Encarregado:</span>
-                            <span className="text-foreground font-medium">{m.encarregado}</span>
+                            <span className="text-foreground font-semibold">{m.encarregado}</span>
                           </div>
                         )}
-                        <div className="flex items-center gap-1.5">
-                          <Phone className="w-3.5 h-3.5 text-primary" />
-                          <a href={`tel:${m.telemovel}`} className="font-mono text-foreground font-semibold">{m.telemovel}</a>
+                        <div className="flex items-center justify-between gap-2">
+                          <a href={`tel:${m.telemovel}`} className="flex items-center gap-1.5 font-mono text-foreground font-bold">
+                            <Phone className="w-4 h-4 text-primary" />
+                            {m.telemovel}
+                          </a>
+                          <a
+                            href={waUrl(m.telemovel, m.nome)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/15 text-green-500 border border-green-500/30 text-xs font-bold uppercase tracking-wider hover:bg-green-500/25 transition-colors"
+                          >
+                            <MessageCircle className="w-3.5 h-3.5" />
+                            WhatsApp
+                          </a>
                         </div>
+                        {isFootcamp && m.valor_total != null && (
+                          <div className="flex items-center justify-between pt-2 border-t border-border/40">
+                            <span className="text-muted-foreground text-xs uppercase tracking-wider">Valor final</span>
+                            <span className="font-heading text-lg text-primary flex items-center gap-0.5">
+                              <Euro className="w-4 h-4" />{m.valor_total}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         {m.data && (
