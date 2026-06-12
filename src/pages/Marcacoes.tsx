@@ -115,12 +115,14 @@ const Marcacoes = () => {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [filterDate, setFilterDate] = useState<Date | undefined>();
   const [filterTipo, setFilterTipo] = useState<string>("todos");
+  const [filterEstado, setFilterEstado] = useState<string>("todos");
   const [searchNome, setSearchNome] = useState("");
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const filteredMarcacoes = useMemo(() => {
     return marcacoes.filter((m) => {
       if (filterTipo !== "todos" && m.tipo !== filterTipo) return false;
+      if (filterEstado !== "todos" && m.estado !== filterEstado) return false;
       if (filterDate) {
         const selected = format(filterDate, "yyyy-MM-dd");
         if (m.data !== selected) return false;
@@ -128,7 +130,7 @@ const Marcacoes = () => {
       if (searchNome && !m.nome.toLowerCase().includes(searchNome.toLowerCase())) return false;
       return true;
     });
-  }, [marcacoes, filterDate, filterTipo, searchNome]);
+  }, [marcacoes, filterDate, filterTipo, filterEstado, searchNome]);
 
   // Family detection: index marcações by normalized encarregado and telemóvel
   const normalize = (s: string | null | undefined) =>
@@ -151,6 +153,35 @@ const Marcacoes = () => {
 
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
+  const cancelados = useMemo(() => marcacoes.filter((m) => m.estado === "cancelado").length, [marcacoes]);
+
+  // Footcamp stats
+  const footcampStats = useMemo(() => {
+    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado !== "cancelado");
+    const weekCounts = [0, 0, 0, 0];
+    fc.forEach((m) => {
+      (m.semanas || []).forEach((s) => {
+        const match = s.match(/(\d)/);
+        if (match) {
+          const idx = parseInt(match[1], 10) - 1;
+          if (idx >= 0 && idx < 4) weekCounts[idx]++;
+        }
+      });
+    });
+    // Families: groups of 2+ that share encarregado/telemóvel
+    const seen = new Set<string>();
+    let familiesCount = 0;
+    fc.forEach((m) => {
+      if (seen.has(m.id)) return;
+      const rel = (familyMap.get(m.id) || []).filter((r) => r.tipo === "footcamp" && r.estado !== "cancelado");
+      if (rel.length > 0) {
+        familiesCount++;
+        seen.add(m.id);
+        rel.forEach((r) => seen.add(r.id));
+      }
+    });
+    return { total: fc.length, weeks: weekCounts, families: familiesCount };
+  }, [marcacoes, familyMap]);
 
   const fetchMarcacoes = async () => {
     setLoading(true);
