@@ -133,14 +133,39 @@ const Marcacoes = () => {
     (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
   const normalizePhone = (s: string | null | undefined) => (s || "").replace(/\D/g, "");
 
+  const splitSiblings = (s: string | null | undefined) =>
+    (s || "")
+      .split(/[,;\n/]|\s+e\s+|\s+&\s+/i)
+      .map((n) => normalize(n))
+      .filter(Boolean);
+
   const familyMap = useMemo(() => {
     const map = new Map<string, Marcacao[]>();
     marcacoes.forEach((m) => {
-      const related = marcacoes.filter((other) => {
-        if (other.id === m.id) return false;
-        const sameEnc = m.encarregado && other.encarregado && normalize(m.encarregado) === normalize(other.encarregado);
-        const samePhone = normalizePhone(m.telemovel) && normalizePhone(m.telemovel) === normalizePhone(other.telemovel);
-        return sameEnc || samePhone;
+      const mPhone = normalizePhone(m.telemovel);
+      const mEnc = normalize(m.encarregado);
+      const mName = normalize(m.nome);
+      const mSiblings = splitSiblings(m.nome_irmaos);
+
+      const related: Marcacao[] = [];
+      const seenNames = new Set<string>([mName]);
+      marcacoes.forEach((other) => {
+        if (other.id === m.id) return;
+        const otherName = normalize(other.nome);
+        if (!otherName || seenNames.has(otherName)) return; // dedupe same athlete
+        const otherPhone = normalizePhone(other.telemovel);
+        const otherEnc = normalize(other.encarregado);
+        const otherSiblings = splitSiblings(other.nome_irmaos);
+
+        const samePhone = !!mPhone && mPhone === otherPhone;
+        const sameEnc = !!mEnc && mEnc === otherEnc;
+        const nameInOtherSiblings = !!mName && otherSiblings.includes(mName);
+        const otherInMySiblings = mSiblings.includes(otherName);
+
+        if (samePhone || sameEnc || nameInOtherSiblings || otherInMySiblings) {
+          related.push(other);
+          seenNames.add(otherName);
+        }
       });
       map.set(m.id, related);
     });
