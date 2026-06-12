@@ -498,6 +498,9 @@ const Marcacoes = () => {
                             <span><span className="text-muted-foreground">Irmãos: </span><span className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</span></span>
                             {m.valor_total != null && <span><span className="text-muted-foreground">Valor final: </span><span className="text-primary font-semibold">{m.valor_total}€</span></span>}
                           </div>
+                          {m.desconto_irmaos && m.nome_irmaos && (
+                            <div><span className="text-muted-foreground">Irmãos indicados: </span><span className="text-foreground">{m.nome_irmaos}</span></div>
+                          )}
                           {m.observacoes && (
                             <div>
                               <p className="text-muted-foreground mb-0.5 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações:</p>
