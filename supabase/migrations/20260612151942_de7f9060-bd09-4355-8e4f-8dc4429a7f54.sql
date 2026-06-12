@@ -1,0 +1,1 @@
+ALTER TABLE public.marcacoes ADD COLUMN IF NOT EXISTS nome_irmaos text;
