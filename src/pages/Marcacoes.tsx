@@ -637,13 +637,12 @@ const Marcacoes = () => {
                   {filteredMarcacoes.map((m) => {
                     const isFootcamp = m.tipo === "footcamp";
                     const related = familyMap.get(m.id) || [];
-                    const familyConfirmed = !!m.desconto_irmaos && related.length > 0;
                     return (
                     <div key={m.id} className="bg-card border border-border rounded-xl p-4 space-y-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-bold text-foreground text-lg leading-tight">{m.nome}</span>
-                          <FamilyBadge related={related} confirmed={familyConfirmed} />
+                          <FamilyBadge self={m} related={related} />
                         </div>
                         <span className={cn(
                           "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0",
