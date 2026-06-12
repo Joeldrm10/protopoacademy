@@ -1,0 +1,1 @@
+ALTER TABLE public.marcacoes ADD COLUMN IF NOT EXISTS valor_total numeric(10,2);

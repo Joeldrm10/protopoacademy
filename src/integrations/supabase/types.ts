@@ -31,6 +31,7 @@ export type Database = {
           semanas: string[] | null
           telemovel: string
           tipo: string
+          valor_total: number | null
         }
         Insert: {
           confirmado?: boolean
@@ -48,6 +49,7 @@ export type Database = {
           semanas?: string[] | null
           telemovel: string
           tipo: string
+          valor_total?: number | null
         }
         Update: {
           confirmado?: boolean
@@ -65,6 +67,7 @@ export type Database = {
           semanas?: string[] | null
           telemovel?: string
           tipo?: string
+          valor_total?: number | null
         }
         Relationships: []
       }
