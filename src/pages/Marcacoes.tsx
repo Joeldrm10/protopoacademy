@@ -43,6 +43,7 @@ type Marcacao = {
   desconto_irmaos: boolean | null;
   observacoes: string | null;
   encarregado: string | null;
+  valor_total: number | null;
 };
 
 const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
