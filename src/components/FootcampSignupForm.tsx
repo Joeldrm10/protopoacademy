@@ -32,6 +32,7 @@ const semanasOptions = [
 ];
 
 const precosTabela: Record<number, number> = { 1: 95, 2: 180, 3: 260, 4: 340 };
+const SEGURO_ANUAL = 20;
 
 const ptPhoneRegex = /^9\d{8}$/;
 
