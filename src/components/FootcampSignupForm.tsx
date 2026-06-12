@@ -314,6 +314,22 @@ const FootcampSignupForm = () => {
                   )}
                 />
 
+                {irmaos && (
+                  <FormField
+                    control={form.control}
+                    name="nome_irmaos"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Nome completo do(s) irmão(s) inscrito(s)</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Ex.: João Rodrigues, Pedro Rodrigues" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
                 {numSemanas > 0 && (
                   <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-2">
                     <div className="flex items-baseline justify-between gap-3">
