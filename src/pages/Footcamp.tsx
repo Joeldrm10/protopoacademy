@@ -759,17 +759,17 @@ const Footcamp = () => {
       </section>
 
       <FAQSection
-        title={<>Dúvidas sobre o <span className="text-gradient-gold">Footcamp</span></>}
+        title={<>Perguntas <span className="text-gradient-gold">Frequentes</span></>}
         subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Verão 2026."
         faqs={[
+          { question: "O seguro é obrigatório?", answer: "Sim. O seguro anual tem validade de 1 ano e cobre a participação nas atividades da ProTopo. Custa 20€ e é oferecido na inscrição das 4 semanas." },
+          { question: "O que está incluído na inscrição?", answer: "Kit de treino ProTopo (t-shirt, calções e meias), seguro anual, lanches diários, acompanhamento técnico especializado e acesso a todas as atividades selecionadas. Nos dias completos, almoço e lanches estão incluídos." },
+          { question: "Há balneários?", answer: "Sim. Os atletas podem equipar-se e tomar banho de água quente após os treinos." },
+          { question: "O almoço está incluído?", answer: "Nos dias completos (quinta-feira) o almoço e os lanches estão incluídos. Nos restantes dias, são fornecidos lanches, água e fruta." },
+          { question: "Posso inscrever apenas uma semana?", answer: "Sim. Cada família pode escolher as semanas pretendidas. Quanto mais semanas, melhor o valor por semana." },
+          { question: "Existe desconto para irmãos?", answer: "Sim. Existe um desconto de 10% sobre o valor total para famílias com mais do que um atleta inscrito." },
           { question: "Para que idades é o Footcamp?", answer: "O Footcamp é destinado a jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
-          { question: "Quais são as semanas disponíveis?", answer: "Edição Verão 2026 — 1ª semana: 6 a 10 de julho · 2ª semana: 13 a 17 de julho · 3ª semana: 20 a 24 de julho · 4ª semana: 27 a 31 de julho. Podes inscrever-te em uma ou mais semanas." },
-          { question: "Qual é o horário?", answer: "Horário normal das 09:00 às 12:30 (3h30 por dia). Na quinta-feira de cada semana há dia completo, das 09:00 às 17:30. Existe flexibilidade de horários mediante necessidade de cada atleta." },
-          { question: "Quanto custa?", answer: "1 semana — 95€ · 2 semanas — 180€ · 3 semanas — 260€ · 4 semanas — 340€. Seguro anual de 20€ (oferecido na inscrição das 4 semanas). 10% de desconto para irmãos." },
-          { question: "O que está incluído?", answer: "Kit de treino ProTopo (t-shirt, calções e meias), lanche diário, barras energéticas, águas e fruta. Nos dias completos: almoço e lanches incluídos. Balneários com banho de água quente após o treino." },
-          { question: "Onde se realiza?", answer: "No Campo da Caridade — Adelino dos Santos Júnior, em Ourém." },
-          { question: "Como funciona a inscrição e o pagamento?", answer: "Preenches o formulário de inscrição. Depois, a equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga e enviar os dados de pagamento." },
-          { question: "Há acompanhamento profissional?", answer: "Sim. A equipa técnica inclui treinadores principais e adjuntos, garantindo um rácio que permite acompanhamento individualizado e atenção ao detalhe." },
+          { question: "Como funciona a inscrição e o pagamento?", answer: "Preenches o formulário de inscrição. Depois, a equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga, esclarecer dúvidas e enviar os dados de pagamento." },
         ]}
       />
 
