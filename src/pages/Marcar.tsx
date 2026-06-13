@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookingForm from "@/components/BookingForm";
 import FootcampSignupForm from "@/components/FootcampSignupForm";
+import FootcampInfoSection from "@/components/FootcampInfoSection";
 import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
 
 const Marcar = () => {
