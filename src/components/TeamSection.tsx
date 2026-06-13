@@ -5,6 +5,7 @@ import nunoTecnico from "@/assets/nuno-tecnico.jpg.asset.json";
 import teamJoao from "@/assets/team-joao.jpg";
 import teamLucas from "@/assets/team-lucas.jpg";
 import teamJeremy from "@/assets/team-jeremy.jpg";
+import luisLopes from "@/assets/luis-lopes.jpg.asset.json";
 
 interface TeamMember {
   name: string;
