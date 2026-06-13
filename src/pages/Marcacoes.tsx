@@ -49,6 +49,8 @@ type Marcacao = {
   autorizacao_imagem: boolean | null;
   restricao_alimentar: boolean | null;
   restricao_alimentar_desc: string | null;
+  tamanho_tshirt: string | null;
+  tamanho_calcas: string | null;
 };
 
 const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
