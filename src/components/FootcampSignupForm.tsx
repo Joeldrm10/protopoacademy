@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Send, Loader2, MessageCircle, Shield, Zap } from "lucide-react";
+import { Send, Loader2, MessageCircle, Shield, Zap, Phone } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
@@ -575,6 +575,13 @@ const FootcampSignupForm = () => {
                     </FormItem>
                   )}
                 />
+
+                <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 flex items-start gap-3">
+                  <Phone className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-foreground">
+                    Após a inscrição, a equipa ProTopo entrará em contacto por WhatsApp para confirmar a vaga, esclarecer dúvidas e validar o pagamento.
+                  </p>
+                </div>
 
                 <Button type="submit" variant="hero" size="lg" className="w-full py-5 text-base" disabled={loading}>
                   {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
