@@ -617,7 +617,7 @@ const Marcacoes = () => {
                                 <div className="flex items-center gap-2">
                                   <span>{m.telemovel}</span>
                                   <a
-                                    href={waUrl(m.telemovel, m.nome)}
+                                    href={waUrl(m.telemovel, m.nome, m.tipo)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     title="Abrir WhatsApp"
