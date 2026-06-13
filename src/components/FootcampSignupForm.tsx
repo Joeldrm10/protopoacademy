@@ -11,6 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import {
   Form,
@@ -37,6 +44,8 @@ const SEGURO_ANUAL = 20;
 
 const ptPhoneRegex = /^9\d{8}$/;
 
+const tamanhos = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
+
 const schema = z.object({
   nome: z.string().trim().min(2, "Nome é obrigatório").max(100),
   idade: z.string().trim().min(1, "Idade é obrigatória").refine(
@@ -51,6 +60,8 @@ const schema = z.object({
   semanas: z.array(z.string()).min(1, "Seleciona pelo menos uma semana"),
   irmaos: z.boolean().optional(),
   nome_irmaos: z.string().trim().max(200).optional(),
+  tamanho_tshirt: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
+  tamanho_calcas: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
   autorizacao_imagem: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
   restricao_alimentar: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
   restricao_alimentar_desc: z.string().trim().max(300).optional(),
@@ -83,6 +94,8 @@ const FootcampSignupForm = () => {
       semanas: [],
       irmaos: false,
       nome_irmaos: "",
+      tamanho_tshirt: undefined as unknown as "M",
+      tamanho_calcas: undefined as unknown as "M",
       autorizacao_imagem: undefined as unknown as "sim",
       restricao_alimentar: undefined as unknown as "nao",
       restricao_alimentar_desc: "",
@@ -129,6 +142,8 @@ const FootcampSignupForm = () => {
         seguro_anual: seguroOferta,
         desconto_irmaos: !!data.irmaos,
         nome_irmaos: data.irmaos ? (data.nome_irmaos?.trim() || null) : null,
+        tamanho_tshirt: data.tamanho_tshirt,
+        tamanho_calcas: data.tamanho_calcas,
         autorizacao_imagem: autorizaImagem,
         restricao_alimentar: restricaoSim,
         restricao_alimentar_desc: restricaoDesc,
@@ -154,6 +169,9 @@ const FootcampSignupForm = () => {
         ``,
         `Semanas pretendidas:`,
         ...semanasLabels.map((l) => `- ${l}`),
+        ``,
+        `👕 T-shirt: ${data.tamanho_tshirt}`,
+        `🩳 Calções: ${data.tamanho_calcas}`,
         ``,
         `Desconto irmãos: ${data.irmaos ? `Sim (${data.nome_irmaos})` : "Não"}`,
         `Autorização de imagem: ${autorizaImagem ? "Sim" : "Não"}`,
@@ -318,6 +336,53 @@ const FootcampSignupForm = () => {
                     </FormItem>
                   )}
                 />
+
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="tamanho_tshirt"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Tamanho da T-shirt</FormLabel>
+                        <FormControl>
+                          <Select value={field.value} onValueChange={field.onChange}>
+                            <SelectTrigger className="border-border">
+                              <SelectValue placeholder="Selecionar" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {tamanhos.map((t) => (
+                                <SelectItem key={t} value={t}>{t}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="tamanho_calcas"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Tamanho dos Calções</FormLabel>
+                        <FormControl>
+                          <Select value={field.value} onValueChange={field.onChange}>
+                            <SelectTrigger className="border-border">
+                              <SelectValue placeholder="Selecionar" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {tamanhos.map((t) => (
+                                <SelectItem key={t} value={t}>{t}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <FormField
                   control={form.control}
