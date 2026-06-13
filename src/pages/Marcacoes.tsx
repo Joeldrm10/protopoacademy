@@ -51,7 +51,21 @@ type Marcacao = {
   restricao_alimentar_desc: string | null;
   tamanho_tshirt: string | null;
   tamanho_calcas: string | null;
+  data_nascimento: string | null;
+  clube_atual: string | null;
+  posicao: string | null;
+  escalao: string | null;
+  email_encarregado: string | null;
+  emergencia_nome: string | null;
+  emergencia_parentesco: string | null;
+  emergencia_telemovel: string | null;
+  tem_alergias: boolean | null;
+  alergias_descricao: string | null;
+  toma_medicacao: boolean | null;
+  medicacao_descricao: string | null;
+  informacao_medica: string | null;
 };
+
 
 const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
 const estadoStyles: Record<string, string> = {
