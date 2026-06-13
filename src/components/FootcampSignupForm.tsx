@@ -386,7 +386,7 @@ const FootcampSignupForm = () => {
                       <FormItem>
                         <FormLabel className="text-foreground">Data de nascimento</FormLabel>
                         <FormControl>
-                          <Input type="date" {...field} />
+                          <Input type="date" max={new Date().toISOString().split("T")[0]} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -397,9 +397,9 @@ const FootcampSignupForm = () => {
                     name="idade"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-foreground">Idade</FormLabel>
+                        <FormLabel className="text-foreground">Idade (auto)</FormLabel>
                         <FormControl>
-                          <Input type="number" min={6} max={16} placeholder="6 a 16" {...field} />
+                          <Input type="number" readOnly tabIndex={-1} placeholder="—" className="bg-muted/40 cursor-not-allowed" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
