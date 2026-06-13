@@ -60,6 +60,8 @@ const Marcar = () => {
           </div>
         </div>
 
+        {isFootcamp && <FootcampInfoSection />}
+
         <div className="-mt-4">
           {isFootcamp ? <FootcampSignupForm /> : <BookingForm showHeader={false} />}
         </div>
