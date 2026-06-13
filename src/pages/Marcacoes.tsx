@@ -412,6 +412,63 @@ const Marcacoes = () => {
               </div>
             )}
 
+            {/* Receita Prevista */}
+            <div className="bg-gradient-to-br from-primary/10 via-card to-card border border-primary/30 rounded-xl p-4 sm:p-5 mb-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Euro className="w-4 h-4 text-primary" />
+                <h2 className="font-heading text-sm uppercase tracking-wider text-primary">💰 Receita Prevista</h2>
+              </div>
+              <div className="grid grid-cols-3 gap-3 text-sm">
+                <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                  <p className="text-xs text-muted-foreground">Total previsto</p>
+                  <p className="font-heading text-xl text-foreground">{receita.total}€</p>
+                </div>
+                <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                  <p className="text-xs" style={{ color: "hsl(142 71% 45%)" }}>Confirmado</p>
+                  <p className="font-heading text-xl" style={{ color: "hsl(142 71% 45%)" }}>{receita.confirmado}€</p>
+                </div>
+                <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                  <p className="text-xs text-primary">Pendente</p>
+                  <p className="font-heading text-xl text-primary">{receita.pendente}€</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Equipamento */}
+            {footcampStats.total > 0 && (
+              <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <h2 className="font-heading text-sm uppercase tracking-wider text-foreground">👕 Equipamento</h2>
+                </div>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">T-shirts</p>
+                    <div className="grid grid-cols-3 sm:grid-cols-9 gap-2 text-xs">
+                      {TAMANHOS.map((t) => (
+                        <div key={t} className="bg-surface-elevated/40 rounded-md p-2 text-center">
+                          <p className="text-muted-foreground">{t}</p>
+                          <p className="font-heading text-base text-foreground">{equipamentoStats.tshirts[t]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">Calções</p>
+                    <div className="grid grid-cols-3 sm:grid-cols-9 gap-2 text-xs">
+                      {TAMANHOS.map((t) => (
+                        <div key={t} className="bg-surface-elevated/40 rounded-md p-2 text-center">
+                          <p className="text-muted-foreground">{t}</p>
+                          <p className="font-heading text-base text-foreground">{equipamentoStats.calcas[t]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+
+
             {/* Filters + Refresh */}
             <div className="bg-card border border-border rounded-xl p-4 mb-6">
               <div className="flex flex-wrap items-center gap-3">
