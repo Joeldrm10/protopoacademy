@@ -33,6 +33,8 @@ export type Database = {
           restricao_alimentar_desc: string | null
           seguro_anual: boolean | null
           semanas: string[] | null
+          tamanho_calcas: string | null
+          tamanho_tshirt: string | null
           telemovel: string
           tipo: string
           valor_total: number | null
@@ -55,6 +57,8 @@ export type Database = {
           restricao_alimentar_desc?: string | null
           seguro_anual?: boolean | null
           semanas?: string[] | null
+          tamanho_calcas?: string | null
+          tamanho_tshirt?: string | null
           telemovel: string
           tipo: string
           valor_total?: number | null
@@ -77,6 +81,8 @@ export type Database = {
           restricao_alimentar_desc?: string | null
           seguro_anual?: boolean | null
           semanas?: string[] | null
+          tamanho_calcas?: string | null
+          tamanho_tshirt?: string | null
           telemovel?: string
           tipo?: string
           valor_total?: number | null
