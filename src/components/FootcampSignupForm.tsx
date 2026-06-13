@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, MessageCircle, Shield, Zap, Phone, Siren, Stethoscope, User as UserIcon } from "lucide-react";
+import { Send, Loader2, MessageCircle, Phone, Siren, Stethoscope, User as UserIcon } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
@@ -882,34 +882,33 @@ const FootcampSignupForm = () => {
                   )}
                 />
 
-                <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-foreground">
-                    Após a inscrição, a equipa ProTopo entrará em contacto por WhatsApp para confirmar a vaga, esclarecer dúvidas e validar o pagamento.
-                  </p>
+                <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                    <h4 className="font-heading text-sm uppercase tracking-wider text-foreground">📞 O que acontece após a inscrição?</h4>
+                  </div>
+                  <ol className="space-y-1.5 text-sm text-foreground">
+                    <li><span className="text-primary font-semibold">1.</span> Recebemos a tua inscrição.</li>
+                    <li><span className="text-primary font-semibold">2.</span> Confirmamos a disponibilidade das semanas escolhidas.</li>
+                    <li><span className="text-primary font-semibold">3.</span> Entramos em contacto por WhatsApp.</li>
+                    <li><span className="text-primary font-semibold">4.</span> Enviamos os dados de pagamento.</li>
+                    <li><span className="text-primary font-semibold">5.</span> A vaga fica reservada após validação do pagamento.</li>
+                  </ol>
                 </div>
 
-                <ul className="space-y-1.5 text-sm text-foreground">
-                  <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Inscrição sujeita a confirmação de vaga</span></li>
-                  <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Resposta por WhatsApp</span></li>
+                <ul className="space-y-1 text-sm text-foreground">
+                  <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Inscrição sujeita à confirmação de vaga</span></li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Resposta em até 24h úteis</span></li>
                   <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Dados utilizados apenas para gestão da inscrição</span></li>
                 </ul>
 
-                <Button type="submit" variant="hero" size="lg" className="w-full py-5 text-base" disabled={loading}>
-                  {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
-                  {loading ? "A enviar..." : "Enviar inscrição por WhatsApp"}
-                </Button>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div className="flex items-start gap-2 text-xs text-muted-foreground">
-                    <Shield className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>A equipa confirma a vaga e envia os dados de pagamento por WhatsApp.</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-xs text-muted-foreground">
-                    <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Resposta rápida via WhatsApp.</span>
-                  </div>
+                <div className="pt-1">
+                  <Button type="submit" variant="hero" size="lg" className="w-full py-6 text-base shadow-lg shadow-primary/20" disabled={loading}>
+                    {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
+                    {loading ? "A enviar..." : "ENVIAR INSCRIÇÃO POR WHATSAPP"}
+                  </Button>
                 </div>
+
               </form>
             </Form>
           </div>
