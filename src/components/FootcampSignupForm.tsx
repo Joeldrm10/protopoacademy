@@ -112,6 +112,10 @@ const FootcampSignupForm = () => {
         .map((id) => semanasOptions.find((s) => s.id === id)?.label)
         .filter(Boolean) as string[];
 
+      const restricaoSim = data.restricao_alimentar === "sim";
+      const restricaoDesc = restricaoSim ? (data.restricao_alimentar_desc?.trim() || null) : null;
+      const autorizaImagem = data.autorizacao_imagem === "sim";
+
       const { error: dbError } = await supabase.from("marcacoes").insert({
         nome: data.nome,
         idade: data.idade,
@@ -124,6 +128,9 @@ const FootcampSignupForm = () => {
         seguro_anual: seguroOferta,
         desconto_irmaos: !!data.irmaos,
         nome_irmaos: data.irmaos ? (data.nome_irmaos?.trim() || null) : null,
+        autorizacao_imagem: autorizaImagem,
+        restricao_alimentar: restricaoSim,
+        restricao_alimentar_desc: restricaoDesc,
         observacoes: data.observacoes || null,
         valor_total: precoFinal,
         estado: "pendente",
@@ -148,6 +155,8 @@ const FootcampSignupForm = () => {
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
         `Desconto irmãos: ${data.irmaos ? `Sim (${data.nome_irmaos})` : "Não"}`,
+        `Autorização de imagem: ${autorizaImagem ? "Sim" : "Não"}`,
+        `Restrição alimentar: ${restricaoSim ? `Sim — ${restricaoDesc}` : "Não"}`,
         precoBase > 0 ? `Valor estimado: ${precoFinal}€ (inclui ${seguroOferta ? "seguro anual oferecido" : `seguro anual ${SEGURO_ANUAL}€`}${data.irmaos ? ", com 10% desconto irmãos" : ""})` : "",
         data.observacoes ? `\nObservações: ${data.observacoes}` : "",
       ].filter(Boolean);
