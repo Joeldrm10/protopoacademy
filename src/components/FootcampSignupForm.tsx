@@ -50,11 +50,23 @@ const escaloes = ["Petiz", "Traquina", "Benjamim", "Infantil", "Iniciado", "Juve
 
 const schema = z.object({
   nome: z.string().trim().min(2, "Nome é obrigatório").max(100),
-  data_nascimento: z.string().trim().min(1, "Data de nascimento é obrigatória"),
-  idade: z.string().trim().min(1, "Idade é obrigatória").refine(
-    (v) => { const n = Number(v); return !isNaN(n) && n >= 6 && n <= 16; },
-    "Idades dos 6 aos 16 anos"
-  ),
+  data_nascimento: z.string().trim().min(1, "Data de nascimento é obrigatória").superRefine((v, ctx) => {
+    const d = new Date(v);
+    if (isNaN(d.getTime())) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Data inválida" });
+      return;
+    }
+    const today = new Date();
+    let age = today.getFullYear() - d.getFullYear();
+    const m = today.getMonth() - d.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
+    if (age < 6) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Este Footcamp destina-se apenas a atletas com idade mínima de 6 anos." });
+    } else if (age > 16) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Este Footcamp destina-se apenas a atletas até aos 16 anos." });
+    }
+  }),
+  idade: z.string().trim().min(1, "Idade é obrigatória"),
   clube_atual: z.string().trim().min(2, "Clube é obrigatório").max(100),
   posicao: z.enum(posicoes, { errorMap: () => ({ message: "Seleciona uma posição" }) }),
   escalao: z.enum(escaloes, { errorMap: () => ({ message: "Seleciona um escalão" }) }),
@@ -374,7 +386,7 @@ const FootcampSignupForm = () => {
                       <FormItem>
                         <FormLabel className="text-foreground">Data de nascimento</FormLabel>
                         <FormControl>
-                          <Input type="date" {...field} />
+                          <Input type="date" max={new Date().toISOString().split("T")[0]} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -385,9 +397,9 @@ const FootcampSignupForm = () => {
                     name="idade"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-foreground">Idade</FormLabel>
+                        <FormLabel className="text-foreground">Idade (auto)</FormLabel>
                         <FormControl>
-                          <Input type="number" min={6} max={16} placeholder="6 a 16" {...field} />
+                          <Input type="number" readOnly tabIndex={-1} placeholder="—" className="bg-muted/40 cursor-not-allowed" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
