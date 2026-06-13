@@ -609,6 +609,16 @@ const Marcacoes = () => {
                                       )}
                                     </div>
                                     <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Imagem autorizada</p>
+                                      <p className="text-foreground">{m.autorizacao_imagem == null ? "—" : m.autorizacao_imagem ? "Sim" : "Não"}</p>
+                                    </div>
+                                    <div className="col-span-2">
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Restrição alimentar</p>
+                                      <p className="text-foreground">
+                                        {m.restricao_alimentar == null ? "—" : m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}
+                                      </p>
+                                    </div>
+                                    <div>
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
                                       <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
                                     </div>
