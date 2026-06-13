@@ -718,62 +718,88 @@ const Marcacoes = () => {
                             {isFootcamp && expanded && (
                               <TableRow key={m.id + "-details"} className="border-border/50 bg-surface-elevated/30">
                                 <TableCell colSpan={9} className="py-4">
-                                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                  <div className="space-y-4">
+                                    {/* Atleta */}
                                     <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Encarregado</p>
-                                      <p className="text-foreground">{m.encarregado || "—"}</p>
+                                      <p className="text-xs uppercase tracking-wider text-primary/80 mb-2">👤 Atleta</p>
+                                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                                        <div><p className="text-xs text-muted-foreground">Data nasc.</p><p className="text-foreground">{m.data_nascimento || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Clube atual</p><p className="text-foreground">{m.clube_atual || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Posição</p><p className="text-foreground">{m.posicao || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Escalão</p><p className="text-foreground">{m.escalao || "—"}</p></div>
+                                      </div>
                                     </div>
+
+                                    {/* Encarregado */}
                                     <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro anual</p>
-                                      <p className="text-foreground">
-                                        {m.seguro_anual ? (
-                                          <span>Oferecido 🎁</span>
-                                        ) : (
-                                          <span>Incluído (+20€)</span>
+                                      <p className="text-xs uppercase tracking-wider text-primary/80 mb-2">👨‍👩‍👦 Encarregado</p>
+                                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                                        <div><p className="text-xs text-muted-foreground">Nome</p><p className="text-foreground">{m.encarregado || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Telemóvel</p><p className="text-foreground font-mono">{m.telemovel}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Email</p><p className="text-foreground break-all">{m.email_encarregado || "—"}</p></div>
+                                      </div>
+                                    </div>
+
+                                    {/* Emergência */}
+                                    <div>
+                                      <p className="text-xs uppercase tracking-wider text-destructive/90 mb-2">🚨 Contacto de emergência</p>
+                                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                                        <div><p className="text-xs text-muted-foreground">Nome</p><p className="text-foreground">{m.emergencia_nome || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Parentesco</p><p className="text-foreground">{m.emergencia_parentesco || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Telemóvel</p><p className="text-foreground font-mono">{m.emergencia_telemovel || "—"}</p></div>
+                                      </div>
+                                    </div>
+
+                                    {/* Saúde */}
+                                    <MedicalAlerts m={m} />
+
+                                    {/* Equipamento + Semanas + Resumo */}
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Equipamento</p>
+                                        <p className="text-foreground">👕 {m.tamanho_tshirt || "—"} · 🩳 {m.tamanho_calcas || "—"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro anual</p>
+                                        <p className="text-foreground">{m.seguro_anual ? "Oferecido 🎁" : "Incluído (+20€)"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
+                                        <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
+                                        {m.desconto_irmaos && m.nome_irmaos && (
+                                          <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
                                         )}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
-                                      <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
-                                      {m.desconto_irmaos && m.nome_irmaos && (
-                                        <p className="text-xs text-muted-foreground mt-1">Outro(s) irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Imagem autorizada</p>
+                                        <p className="text-foreground">{m.autorizacao_imagem == null ? "—" : m.autorizacao_imagem ? "Sim" : "Não"}</p>
+                                      </div>
+                                      <div className="col-span-2 md:col-span-2">
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
+                                        <ul className="text-foreground space-y-0.5">
+                                          {(m.semanas || []).map((s, i) => <li key={i}>• {s}</li>)}
+                                        </ul>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
+                                        <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Inscrito em</p>
+                                        <p className="text-foreground">{formatCreatedAt(m.created_at)}</p>
+                                      </div>
+                                      {m.observacoes && (
+                                        <div className="col-span-2 md:col-span-4">
+                                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações</p>
+                                          <p className="text-foreground whitespace-pre-wrap">{m.observacoes}</p>
+                                        </div>
                                       )}
                                     </div>
-                                    <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Imagem autorizada</p>
-                                      <p className="text-foreground">{m.autorizacao_imagem == null ? "—" : m.autorizacao_imagem ? "Sim" : "Não"}</p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Equipamento</p>
-                                      <p className="text-foreground">👕 {m.tamanho_tshirt || "—"} · 🩳 {m.tamanho_calcas || "—"}</p>
-                                    </div>
-                                    <div className="col-span-2">
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Restrição alimentar</p>
-                                      <p className="text-foreground">
-                                        {m.restricao_alimentar == null ? "—" : m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
-                                      <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
-                                    </div>
-                                    <div className="col-span-2 md:col-span-1">
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
-                                      <ul className="text-foreground space-y-0.5">
-                                        {(m.semanas || []).map((s, i) => <li key={i}>• {s}</li>)}
-                                      </ul>
-                                    </div>
-                                    {m.observacoes && (
-                                      <div className="col-span-2 md:col-span-4">
-                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações</p>
-                                        <p className="text-foreground whitespace-pre-wrap">{m.observacoes}</p>
-                                      </div>
-                                    )}
                                   </div>
                                 </TableCell>
                               </TableRow>
                             )}
+
                           </Fragment>
                         );
                       })}
