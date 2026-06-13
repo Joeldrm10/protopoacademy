@@ -56,14 +56,11 @@ const schema = z.object({
       ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Data inválida" });
       return;
     }
-    const today = new Date();
-    let age = today.getFullYear() - d.getFullYear();
-    const m = today.getMonth() - d.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
-    if (age < 6) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Este Footcamp destina-se apenas a atletas com idade mínima de 6 anos." });
-    } else if (age > 16) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Este Footcamp destina-se apenas a atletas até aos 16 anos." });
+    const min = new Date("2010-01-01");
+    const max = new Date("2020-12-31");
+    const t = d.getTime();
+    if (t < min.getTime() || t > max.getTime()) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Este Footcamp destina-se apenas a atletas dos 6 aos 16 anos." });
     }
   }),
   idade: z.string().trim().min(1, "Idade é obrigatória"),
@@ -386,7 +383,7 @@ const FootcampSignupForm = () => {
                       <FormItem>
                         <FormLabel className="text-foreground">Data de nascimento</FormLabel>
                         <FormControl>
-                          <Input type="date" max={new Date().toISOString().split("T")[0]} {...field} />
+                          <Input type="date" min="2010-01-01" max="2020-12-31" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
