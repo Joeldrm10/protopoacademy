@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Link } from "react-router-dom";
 import {
   Form,
@@ -50,6 +51,9 @@ const schema = z.object({
   semanas: z.array(z.string()).min(1, "Seleciona pelo menos uma semana"),
   irmaos: z.boolean().optional(),
   nome_irmaos: z.string().trim().max(200).optional(),
+  autorizacao_imagem: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
+  restricao_alimentar: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
+  restricao_alimentar_desc: z.string().trim().max(300).optional(),
   observacoes: z.string().max(500).optional(),
   consentimento: z.literal(true, {
     errorMap: () => ({ message: "Tens de autorizar o tratamento dos dados" }),
@@ -57,6 +61,9 @@ const schema = z.object({
 }).refine((d) => !d.irmaos || (d.nome_irmaos && d.nome_irmaos.trim().length >= 2), {
   message: "Indica o nome do(s) irmão(s) inscrito(s)",
   path: ["nome_irmaos"],
+}).refine((d) => d.restricao_alimentar !== "sim" || (d.restricao_alimentar_desc && d.restricao_alimentar_desc.trim().length >= 2), {
+  message: "Indica a restrição alimentar",
+  path: ["restricao_alimentar_desc"],
 });
 
 type FormData = z.infer<typeof schema>;
@@ -76,6 +83,9 @@ const FootcampSignupForm = () => {
       semanas: [],
       irmaos: false,
       nome_irmaos: "",
+      autorizacao_imagem: undefined as unknown as "sim",
+      restricao_alimentar: undefined as unknown as "nao",
+      restricao_alimentar_desc: "",
       observacoes: "",
       consentimento: false as unknown as true,
     },
@@ -83,6 +93,7 @@ const FootcampSignupForm = () => {
 
   const semanasSelecionadas = form.watch("semanas") || [];
   const irmaos = form.watch("irmaos");
+  const restricaoAlimentar = form.watch("restricao_alimentar");
   const numSemanas = semanasSelecionadas.length;
   const precoBase = precosTabela[numSemanas] ?? 0;
   const seguroOferta = numSemanas === 4;
@@ -102,6 +113,10 @@ const FootcampSignupForm = () => {
         .map((id) => semanasOptions.find((s) => s.id === id)?.label)
         .filter(Boolean) as string[];
 
+      const restricaoSim = data.restricao_alimentar === "sim";
+      const restricaoDesc = restricaoSim ? (data.restricao_alimentar_desc?.trim() || null) : null;
+      const autorizaImagem = data.autorizacao_imagem === "sim";
+
       const { error: dbError } = await supabase.from("marcacoes").insert({
         nome: data.nome,
         idade: data.idade,
@@ -114,6 +129,9 @@ const FootcampSignupForm = () => {
         seguro_anual: seguroOferta,
         desconto_irmaos: !!data.irmaos,
         nome_irmaos: data.irmaos ? (data.nome_irmaos?.trim() || null) : null,
+        autorizacao_imagem: autorizaImagem,
+        restricao_alimentar: restricaoSim,
+        restricao_alimentar_desc: restricaoDesc,
         observacoes: data.observacoes || null,
         valor_total: precoFinal,
         estado: "pendente",
@@ -138,6 +156,8 @@ const FootcampSignupForm = () => {
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
         `Desconto irmãos: ${data.irmaos ? `Sim (${data.nome_irmaos})` : "Não"}`,
+        `Autorização de imagem: ${autorizaImagem ? "Sim" : "Não"}`,
+        `Restrição alimentar: ${restricaoSim ? `Sim — ${restricaoDesc}` : "Não"}`,
         precoBase > 0 ? `Valor estimado: ${precoFinal}€ (inclui ${seguroOferta ? "seguro anual oferecido" : `seguro anual ${SEGURO_ANUAL}€`}${data.irmaos ? ", com 10% desconto irmãos" : ""})` : "",
         data.observacoes ? `\nObservações: ${data.observacoes}` : "",
       ].filter(Boolean);
@@ -361,6 +381,92 @@ const FootcampSignupForm = () => {
                       </div>
                     )}
                   </div>
+                )}
+
+                <FormField
+                  control={form.control}
+                  name="autorizacao_imagem"
+                  render={({ field }) => (
+                    <FormItem className="rounded-xl border border-border p-4 space-y-3">
+                      <FormLabel className="text-foreground">
+                        Autoriza a recolha e utilização de fotografias/vídeos do atleta para divulgação da ProTopo?
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          className="flex flex-col sm:flex-row gap-2 sm:gap-4"
+                        >
+                          <label className={cn(
+                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
+                            field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
+                          )}>
+                            <RadioGroupItem value="sim" />
+                            <span className="text-sm text-foreground">Sim, autorizo</span>
+                          </label>
+                          <label className={cn(
+                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
+                            field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
+                          )}>
+                            <RadioGroupItem value="nao" />
+                            <span className="text-sm text-foreground">Não autorizo</span>
+                          </label>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="restricao_alimentar"
+                  render={({ field }) => (
+                    <FormItem className="rounded-xl border border-border p-4 space-y-3">
+                      <FormLabel className="text-foreground">
+                        O atleta tem alguma restrição alimentar?
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          className="flex flex-col sm:flex-row gap-2 sm:gap-4"
+                        >
+                          <label className={cn(
+                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
+                            field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
+                          )}>
+                            <RadioGroupItem value="nao" />
+                            <span className="text-sm text-foreground">Não</span>
+                          </label>
+                          <label className={cn(
+                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
+                            field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
+                          )}>
+                            <RadioGroupItem value="sim" />
+                            <span className="text-sm text-foreground">Sim</span>
+                          </label>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {restricaoAlimentar === "sim" && (
+                  <FormField
+                    control={form.control}
+                    name="restricao_alimentar_desc"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Indique a restrição alimentar</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Ex.: alergia a frutos secos, intolerância à lactose, sem glúten..." {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 )}
 
                 <FormField

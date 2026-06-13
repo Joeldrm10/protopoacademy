@@ -46,6 +46,9 @@ type Marcacao = {
   encarregado: string | null;
   valor_total: number | null;
   nome_irmaos: string | null;
+  autorizacao_imagem: boolean | null;
+  restricao_alimentar: boolean | null;
+  restricao_alimentar_desc: string | null;
 };
 
 const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
@@ -606,6 +609,16 @@ const Marcacoes = () => {
                                       )}
                                     </div>
                                     <div>
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Imagem autorizada</p>
+                                      <p className="text-foreground">{m.autorizacao_imagem == null ? "—" : m.autorizacao_imagem ? "Sim" : "Não"}</p>
+                                    </div>
+                                    <div className="col-span-2">
+                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Restrição alimentar</p>
+                                      <p className="text-foreground">
+                                        {m.restricao_alimentar == null ? "—" : m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}
+                                      </p>
+                                    </div>
+                                    <div>
                                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
                                       <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
                                     </div>
@@ -724,6 +737,15 @@ const Marcacoes = () => {
                           </div>
                           {m.desconto_irmaos && m.nome_irmaos && (
                             <div><span className="text-muted-foreground">Outro(s) irmão(s): </span><span className="text-foreground">{m.nome_irmaos}</span></div>
+                          )}
+                          {m.autorizacao_imagem != null && (
+                            <div><span className="text-muted-foreground">Imagem autorizada: </span><span className="text-foreground">{m.autorizacao_imagem ? "Sim" : "Não"}</span></div>
+                          )}
+                          {m.restricao_alimentar != null && (
+                            <div>
+                              <span className="text-muted-foreground">Restrição alimentar: </span>
+                              <span className="text-foreground">{m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}</span>
+                            </div>
                           )}
                           {m.observacoes && (
                             <div>
