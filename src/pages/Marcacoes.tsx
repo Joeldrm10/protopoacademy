@@ -747,6 +747,12 @@ const Marcacoes = () => {
                           {m.autorizacao_imagem != null && (
                             <div><span className="text-muted-foreground">Imagem autorizada: </span><span className="text-foreground">{m.autorizacao_imagem ? "Sim" : "Não"}</span></div>
                           )}
+                          {(m.tamanho_tshirt || m.tamanho_calcas) && (
+                            <div>
+                              <span className="text-muted-foreground">Equipamento: </span>
+                              <span className="text-foreground">👕 {m.tamanho_tshirt || "—"} · 🩳 {m.tamanho_calcas || "—"}</span>
+                            </div>
+                          )}
                           {m.restricao_alimentar != null && (
                             <div>
                               <span className="text-muted-foreground">Restrição alimentar: </span>
