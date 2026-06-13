@@ -16,19 +16,30 @@ export type Database = {
     Tables: {
       marcacoes: {
         Row: {
+          alergias_descricao: string | null
           autorizacao_imagem: boolean | null
+          clube_atual: string | null
           confirmado: boolean
           created_at: string
           data: string | null
+          data_nascimento: string | null
           desconto_irmaos: boolean | null
+          email_encarregado: string | null
+          emergencia_nome: string | null
+          emergencia_parentesco: string | null
+          emergencia_telemovel: string | null
           encarregado: string | null
+          escalao: string | null
           estado: string
           hora: string | null
           id: string
           idade: string
+          informacao_medica: string | null
+          medicacao_descricao: string | null
           nome: string
           nome_irmaos: string | null
           observacoes: string | null
+          posicao: string | null
           restricao_alimentar: boolean | null
           restricao_alimentar_desc: string | null
           seguro_anual: boolean | null
@@ -36,23 +47,36 @@ export type Database = {
           tamanho_calcas: string | null
           tamanho_tshirt: string | null
           telemovel: string
+          tem_alergias: boolean | null
           tipo: string
+          toma_medicacao: boolean | null
           valor_total: number | null
         }
         Insert: {
+          alergias_descricao?: string | null
           autorizacao_imagem?: boolean | null
+          clube_atual?: string | null
           confirmado?: boolean
           created_at?: string
           data?: string | null
+          data_nascimento?: string | null
           desconto_irmaos?: boolean | null
+          email_encarregado?: string | null
+          emergencia_nome?: string | null
+          emergencia_parentesco?: string | null
+          emergencia_telemovel?: string | null
           encarregado?: string | null
+          escalao?: string | null
           estado?: string
           hora?: string | null
           id?: string
           idade: string
+          informacao_medica?: string | null
+          medicacao_descricao?: string | null
           nome: string
           nome_irmaos?: string | null
           observacoes?: string | null
+          posicao?: string | null
           restricao_alimentar?: boolean | null
           restricao_alimentar_desc?: string | null
           seguro_anual?: boolean | null
@@ -60,23 +84,36 @@ export type Database = {
           tamanho_calcas?: string | null
           tamanho_tshirt?: string | null
           telemovel: string
+          tem_alergias?: boolean | null
           tipo: string
+          toma_medicacao?: boolean | null
           valor_total?: number | null
         }
         Update: {
+          alergias_descricao?: string | null
           autorizacao_imagem?: boolean | null
+          clube_atual?: string | null
           confirmado?: boolean
           created_at?: string
           data?: string | null
+          data_nascimento?: string | null
           desconto_irmaos?: boolean | null
+          email_encarregado?: string | null
+          emergencia_nome?: string | null
+          emergencia_parentesco?: string | null
+          emergencia_telemovel?: string | null
           encarregado?: string | null
+          escalao?: string | null
           estado?: string
           hora?: string | null
           id?: string
           idade?: string
+          informacao_medica?: string | null
+          medicacao_descricao?: string | null
           nome?: string
           nome_irmaos?: string | null
           observacoes?: string | null
+          posicao?: string | null
           restricao_alimentar?: boolean | null
           restricao_alimentar_desc?: string | null
           seguro_anual?: boolean | null
@@ -84,7 +121,9 @@ export type Database = {
           tamanho_calcas?: string | null
           tamanho_tshirt?: string | null
           telemovel?: string
+          tem_alergias?: boolean | null
           tipo?: string
+          toma_medicacao?: boolean | null
           valor_total?: number | null
         }
         Relationships: []
