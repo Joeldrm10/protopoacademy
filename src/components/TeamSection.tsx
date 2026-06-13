@@ -65,6 +65,14 @@ const technicalTeam: TeamMember[] = [
       "Responsável pelo treino específico de guarda-redes, Jérémy Pereira desenvolve competências técnicas e posicionais, trabalhando reflexos, tomada de decisão e segurança entre os postes.",
     image: teamJeremy,
   },
+  {
+    name: "Luís Lopes",
+    role: "Treinador UEFA A",
+    specialty: "🏆 Desenvolvimento Técnico e Tático",
+    description:
+      "Treinador UEFA A e novo membro da equipa ProTopo. Luís Lopes traz experiência, conhecimento técnico e uma abordagem focada no desenvolvimento individual dos atletas, contribuindo para a sua evolução dentro e fora do campo.",
+    image: luisLopes.url,
+  },
 ];
 
 const MemberCard = ({ member, delay, featured = false }: { member: TeamMember; delay: number; featured?: boolean }) => (
