@@ -150,7 +150,9 @@ const Marcacoes = () => {
 
   const familyMap = useMemo(() => {
     const map = new Map<string, Marcacao[]>();
-    marcacoes.forEach((m) => {
+    // Only consider non-cancelled real registrations for family detection
+    const candidates = marcacoes.filter((m) => m.estado !== "cancelado");
+    candidates.forEach((m) => {
       const mPhone = normalizePhone(m.telemovel);
       const mEnc = normalize(m.encarregado);
       const mName = normalize(m.nome);
@@ -158,7 +160,7 @@ const Marcacoes = () => {
 
       const related: Marcacao[] = [];
       const seenNames = new Set<string>([mName]);
-      marcacoes.forEach((other) => {
+      candidates.forEach((other) => {
         if (other.id === m.id) return;
         const otherName = normalize(other.nome);
         if (!otherName || seenNames.has(otherName)) return; // dedupe same athlete
@@ -184,6 +186,30 @@ const Marcacoes = () => {
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
   const cancelados = useMemo(() => marcacoes.filter((m) => m.estado === "cancelado").length, [marcacoes]);
+
+  // Receita prevista (uses valor_total, excludes cancelled)
+  const receita = useMemo(() => {
+    const active = marcacoes.filter((m) => m.estado !== "cancelado" && m.valor_total != null);
+    const total = active.reduce((s, m) => s + (m.valor_total || 0), 0);
+    const confirmado = active.filter((m) => m.estado === "confirmado").reduce((s, m) => s + (m.valor_total || 0), 0);
+    const pendente = total - confirmado;
+    return { total, confirmado, pendente };
+  }, [marcacoes]);
+
+  // Equipamento (footcamp, non-cancelled)
+  const TAMANHOS = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
+  const equipamentoStats = useMemo(() => {
+    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado !== "cancelado");
+    const tshirts: Record<string, number> = {};
+    const calcas: Record<string, number> = {};
+    TAMANHOS.forEach((t) => { tshirts[t] = 0; calcas[t] = 0; });
+    fc.forEach((m) => {
+      if (m.tamanho_tshirt && tshirts[m.tamanho_tshirt] != null) tshirts[m.tamanho_tshirt]++;
+      if (m.tamanho_calcas && calcas[m.tamanho_calcas] != null) calcas[m.tamanho_calcas]++;
+    });
+    return { tshirts, calcas };
+  }, [marcacoes]);
+
 
   // Footcamp stats
   const footcampStats = useMemo(() => {
