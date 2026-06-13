@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Users, Camera, UserCheck, Quote, Star, ArrowRight,
   Calendar, MapPin, Clock, Shirt, Apple, ShowerHead, Sparkles, Gift, MessageCircle,
+  Trophy, AlertTriangle, CreditCard, CheckCircle2, Smartphone,
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
@@ -474,8 +475,101 @@ const Footcamp = () => {
         </div>
       </section>
 
+      {/* DIA COMPLETO */}
+      <section className="py-16 bg-secondary">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="max-w-4xl mx-auto bg-card border border-primary/30 rounded-2xl p-8 md:p-10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex-shrink-0">
+                  <Sparkles className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <span className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-1 block">
+                    🎉 Novidade Verão 2026
+                  </span>
+                  <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground">
+                    Dia Completo às Quintas-Feiras
+                  </h3>
+                </div>
+              </div>
+              <p className="text-foreground text-base md:text-lg leading-relaxed mb-6">
+                Todas as quintas-feiras realizamos um dia completo das <span className="font-semibold">09:00 às 17:30</span>.
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  "Atividades diferenciadas",
+                  "Almoço incluído",
+                  "Lanche da manhã",
+                  "Lanche da tarde",
+                  "Experiências complementares para desenvolvimento dos atletas",
+                ].map((it) => (
+                  <li key={it} className="flex items-start gap-2.5 text-foreground/90">
+                    <span className="text-primary mt-1 flex-shrink-0">•</span>
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* VAGAS LIMITADAS */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="max-w-4xl mx-auto bg-card border-2 border-destructive/40 rounded-2xl p-8 md:p-10 text-center relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-destructive/0 via-destructive/60 to-destructive/0" />
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-destructive/10 border border-destructive/30 mb-5">
+                <AlertTriangle className="w-7 h-7 text-destructive" />
+              </div>
+              <h3 className="font-heading font-bold text-2xl md:text-3xl text-foreground mb-3">
+                Vagas Limitadas
+              </h3>
+              <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                Para garantir qualidade de acompanhamento e atenção individualizada, cada semana possui um número limitado de atletas.
+              </p>
+              <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed mt-3">
+                As inscrições serão confirmadas por ordem de receção e validação do pagamento.
+              </p>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* MÉTODOS DE PAGAMENTO */}
+      <section className="py-16 bg-secondary">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="max-w-3xl mx-auto bg-card border border-border rounded-2xl p-8 md:p-10 text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 mb-5">
+                <CreditCard className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-4">
+                Métodos de Pagamento
+              </h3>
+              <div className="flex flex-wrap justify-center gap-3 mb-6">
+                <span className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full font-heading font-semibold text-sm">
+                  <Smartphone className="w-4 h-4" />
+                  MB WAY
+                </span>
+                <span className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full font-heading font-semibold text-sm">
+                  <CreditCard className="w-4 h-4" />
+                  Transferência Bancária
+                </span>
+              </div>
+              <p className="text-muted-foreground text-base">
+                Após a inscrição a equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga e enviar os dados de pagamento.
+              </p>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
       {/* INSCRIÇÃO E PAGAMENTO */}
-      <section className="py-24 bg-secondary">
+      <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <AnimateOnScroll>
             <div className="max-w-3xl mx-auto text-center bg-card border border-border rounded-2xl p-8 md:p-12">
@@ -485,9 +579,14 @@ const Footcamp = () => {
               <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
                 Pronto para <span className="text-gradient-gold">inscrever?</span>
               </h2>
-              <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-xl mx-auto">
-                Após a inscrição, a equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga e enviar os dados de pagamento.
-              </p>
+              <div className="max-w-xl mx-auto mb-8 space-y-4">
+                <p className="text-foreground font-heading font-bold text-lg md:text-xl">
+                  Mais do que um camp, uma experiência de crescimento.
+                </p>
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                  Na ProTopo acreditamos que cada atleta merece um acompanhamento próximo, profissional e focado na sua evolução dentro e fora do campo.
+                </p>
+              </div>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link
                   to="/marcar?tipo=footcamp"
@@ -758,6 +857,44 @@ const Footcamp = () => {
         </div>
       </section>
 
+      {/* PORQUE ESCOLHER */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="text-center mb-14 max-w-3xl mx-auto">
+              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
+                🏆 Diferenciação
+              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                Porque escolher a <span className="text-gradient-gold">ProTopo Footcamp?</span>
+              </h2>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
+            {[
+              "Treinos especializados e acompanhamento técnico individualizado",
+              "Desenvolvimento técnico, físico e mental",
+              "Ambiente seguro, organizado e profissional",
+              "Equipamento oficial ProTopo incluído",
+              "Seguro desportivo anual",
+              "Lanches diários incluídos",
+              "Almoço incluído nos dias completos",
+              "Balneários com água quente",
+              "Intensidade competitiva adequada à idade",
+              "Atenção personalizada a cada atleta",
+            ].map((item, i) => (
+              <AnimateOnScroll key={item} delay={i * 60}>
+                <div className="flex items-start gap-3 bg-card border border-border rounded-xl p-5 h-full hover:border-primary/40 transition-all">
+                  <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground text-sm md:text-base leading-relaxed">{item}</span>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <FAQSection
         title={<>Perguntas <span className="text-gradient-gold">Frequentes</span></>}
         subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Verão 2026."
@@ -770,6 +907,10 @@ const Footcamp = () => {
           { question: "Existe desconto para irmãos?", answer: "Sim. Existe um desconto de 10% sobre o valor total para famílias com mais do que um atleta inscrito." },
           { question: "Para que idades é o Footcamp?", answer: "O Footcamp é destinado a jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
           { question: "Como funciona a inscrição e o pagamento?", answer: "Preenches o formulário de inscrição. Depois, a equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga, esclarecer dúvidas e enviar os dados de pagamento." },
+          { question: "O atleta pode tomar banho após o treino?", answer: "Sim. Existem balneários com água quente disponíveis para todos os atletas." },
+          { question: "O que devo levar para o Footcamp?", answer: "Roupa desportiva adequada, chuteiras e vontade de aprender. O equipamento ProTopo está incluído na inscrição." },
+          { question: "Como funciona a confirmação da vaga?", answer: "Após o envio do formulário a equipa ProTopo entra em contacto por WhatsApp para confirmar a disponibilidade e fornecer os dados de pagamento." },
+          { question: "Existem restrições alimentares?", answer: "Sim. No formulário de inscrição existe um campo específico para indicar alergias ou restrições alimentares." },
         ]}
       />
 
