@@ -100,13 +100,17 @@ const FamilyBadge = ({ self, related }: FamilyBadgeProps) => {
 };
 
 // Build WhatsApp URL from a Portuguese phone number
-const waUrl = (phone: string | null | undefined, nome?: string) => {
+const waUrl = (phone: string | null | undefined, nome?: string, tipo?: string) => {
   const digits = (phone || "").replace(/\D/g, "");
   if (!digits) return "#";
   const intl = digits.startsWith("351") ? digits : `351${digits}`;
-  const msg = `Olá${nome ? ` ${nome.split(" ")[0]}` : ""}! Contacto da ProTopo Academy sobre a tua inscrição.`;
+  const atleta = nome || "—";
+  const msg = tipo === "footcamp"
+    ? `Olá, sou da ProTopo Academy relativamente à inscrição de ${atleta} no Footcamp Verão 2026.`
+    : `Olá${nome ? ` ${nome.split(" ")[0]}` : ""}! Contacto da ProTopo Academy sobre a tua inscrição.`;
   return `https://wa.me/${intl}?text=${encodeURIComponent(msg)}`;
 };
+
 
 
 const Marcacoes = () => {
