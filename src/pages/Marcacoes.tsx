@@ -813,6 +813,11 @@ const Marcacoes = () => {
                           <span className="text-foreground">{m.idade}</span>
                         </div>
                       </div>
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <CalendarIcon className="w-3 h-3 text-primary/60" />
+                        <span>📅 Inscrito em:</span>
+                        <span className="text-foreground">{formatCreatedAt(m.created_at)}</span>
+                      </div>
                       {isFootcamp && (
                         <div className="space-y-2 rounded-lg bg-surface-elevated/40 p-3 text-xs">
                           {m.semanas && m.semanas.length > 0 && (
