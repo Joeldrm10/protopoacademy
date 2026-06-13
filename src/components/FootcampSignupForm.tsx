@@ -82,6 +82,9 @@ const FootcampSignupForm = () => {
       semanas: [],
       irmaos: false,
       nome_irmaos: "",
+      autorizacao_imagem: undefined as unknown as "sim",
+      restricao_alimentar: undefined as unknown as "nao",
+      restricao_alimentar_desc: "",
       observacoes: "",
       consentimento: false as unknown as true,
     },
@@ -89,6 +92,7 @@ const FootcampSignupForm = () => {
 
   const semanasSelecionadas = form.watch("semanas") || [];
   const irmaos = form.watch("irmaos");
+  const restricaoAlimentar = form.watch("restricao_alimentar");
   const numSemanas = semanasSelecionadas.length;
   const precoBase = precosTabela[numSemanas] ?? 0;
   const seguroOferta = numSemanas === 4;
