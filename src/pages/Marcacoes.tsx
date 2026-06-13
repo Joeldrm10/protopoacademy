@@ -113,6 +113,35 @@ const FamilyBadge = ({ self, related }: FamilyBadgeProps) => {
   );
 };
 
+const hasMedicalInfo = (m: Marcacao) =>
+  m.tem_alergias === true || m.toma_medicacao === true || m.restricao_alimentar === true || !!(m.informacao_medica && m.informacao_medica.trim());
+
+const MedicalAlerts = ({ m }: { m: Marcacao }) => {
+  const has = hasMedicalInfo(m);
+  return (
+    <div className={cn(
+      "rounded-lg border p-3 text-xs space-y-1",
+      has ? "border-destructive/40 bg-destructive/10" : "border-border bg-surface-elevated/30"
+    )}>
+      <p className={cn("font-bold uppercase tracking-wider text-[11px]", has ? "text-destructive" : "text-muted-foreground")}>
+        🚨 Alertas médicos
+      </p>
+      {!has ? (
+        <p className="text-muted-foreground">Sem alertas médicos.</p>
+      ) : (
+        <ul className="space-y-0.5 text-foreground">
+          {m.tem_alergias && <li><span className="text-muted-foreground">Alergias: </span>{m.alergias_descricao || "(sem descrição)"}</li>}
+          {m.toma_medicacao && <li><span className="text-muted-foreground">Medicação: </span>{m.medicacao_descricao || "(sem descrição)"}</li>}
+          {m.restricao_alimentar && <li><span className="text-muted-foreground">Restrição alimentar: </span>{m.restricao_alimentar_desc || "(sem descrição)"}</li>}
+          {m.informacao_medica && <li><span className="text-muted-foreground">Informação médica: </span>{m.informacao_medica}</li>}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+
+
 // Build WhatsApp URL from a Portuguese phone number
 const waUrl = (phone: string | null | undefined, nome?: string, tipo?: string) => {
   const digits = (phone || "").replace(/\D/g, "");
