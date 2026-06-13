@@ -385,6 +385,92 @@ const FootcampSignupForm = () => {
 
                 <FormField
                   control={form.control}
+                  name="autorizacao_imagem"
+                  render={({ field }) => (
+                    <FormItem className="rounded-xl border border-border p-4 space-y-3">
+                      <FormLabel className="text-foreground">
+                        Autoriza a recolha e utilização de fotografias/vídeos do atleta para divulgação da ProTopo?
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          className="flex flex-col sm:flex-row gap-2 sm:gap-4"
+                        >
+                          <label className={cn(
+                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
+                            field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
+                          )}>
+                            <RadioGroupItem value="sim" />
+                            <span className="text-sm text-foreground">Sim, autorizo</span>
+                          </label>
+                          <label className={cn(
+                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
+                            field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
+                          )}>
+                            <RadioGroupItem value="nao" />
+                            <span className="text-sm text-foreground">Não autorizo</span>
+                          </label>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="restricao_alimentar"
+                  render={({ field }) => (
+                    <FormItem className="rounded-xl border border-border p-4 space-y-3">
+                      <FormLabel className="text-foreground">
+                        O atleta tem alguma restrição alimentar?
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          className="flex flex-col sm:flex-row gap-2 sm:gap-4"
+                        >
+                          <label className={cn(
+                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
+                            field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
+                          )}>
+                            <RadioGroupItem value="nao" />
+                            <span className="text-sm text-foreground">Não</span>
+                          </label>
+                          <label className={cn(
+                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
+                            field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
+                          )}>
+                            <RadioGroupItem value="sim" />
+                            <span className="text-sm text-foreground">Sim</span>
+                          </label>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {restricaoAlimentar === "sim" && (
+                  <FormField
+                    control={form.control}
+                    name="restricao_alimentar_desc"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Indique a restrição alimentar</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Ex.: alergia a frutos secos, intolerância à lactose, sem glúten..." {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
+                <FormField
+                  control={form.control}
                   name="observacoes"
                   render={({ field }) => (
                     <FormItem>
