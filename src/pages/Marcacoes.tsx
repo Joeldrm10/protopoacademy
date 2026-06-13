@@ -746,8 +746,6 @@ const Marcacoes = () => {
                               <span className="text-muted-foreground">Restrição alimentar: </span>
                               <span className="text-foreground">{m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}</span>
                             </div>
-                          {false && (
-                            <div></div>
                           )}
                           {m.observacoes && (
                             <div>
