@@ -889,6 +889,36 @@ const Marcacoes = () => {
                       </div>
                       {isFootcamp && (
                         <div className="space-y-2 rounded-lg bg-surface-elevated/40 p-3 text-xs">
+                          {/* Atleta */}
+                          <div>
+                            <p className="text-[11px] uppercase tracking-wider text-primary/80 mb-1">👤 Atleta</p>
+                            <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+                              {m.data_nascimento && <div><span className="text-muted-foreground">Nasc.: </span><span className="text-foreground">{m.data_nascimento}</span></div>}
+                              {m.clube_atual && <div><span className="text-muted-foreground">Clube: </span><span className="text-foreground">{m.clube_atual}</span></div>}
+                              {m.posicao && <div><span className="text-muted-foreground">Posição: </span><span className="text-foreground">{m.posicao}</span></div>}
+                              {m.escalao && <div><span className="text-muted-foreground">Escalão: </span><span className="text-foreground">{m.escalao}</span></div>}
+                            </div>
+                          </div>
+
+                          {/* Encarregado email */}
+                          {m.email_encarregado && (
+                            <div><span className="text-muted-foreground">Email enc.: </span><span className="text-foreground break-all">{m.email_encarregado}</span></div>
+                          )}
+
+                          {/* Emergência */}
+                          {(m.emergencia_nome || m.emergencia_telemovel) && (
+                            <div className="rounded-md border border-destructive/30 bg-destructive/5 p-2">
+                              <p className="text-[11px] uppercase tracking-wider text-destructive mb-1">🚨 Emergência</p>
+                              <div className="text-foreground">{m.emergencia_nome || "—"} {m.emergencia_parentesco ? `(${m.emergencia_parentesco})` : ""}</div>
+                              {m.emergencia_telemovel && (
+                                <a href={`tel:${m.emergencia_telemovel}`} className="font-mono text-foreground">{m.emergencia_telemovel}</a>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Alertas médicos */}
+                          <MedicalAlerts m={m} />
+
                           {m.semanas && m.semanas.length > 0 && (
                             <div>
                               <p className="text-muted-foreground mb-1">Semanas:</p>
@@ -914,12 +944,6 @@ const Marcacoes = () => {
                               <span className="text-foreground">👕 {m.tamanho_tshirt || "—"} · 🩳 {m.tamanho_calcas || "—"}</span>
                             </div>
                           )}
-                          {m.restricao_alimentar != null && (
-                            <div>
-                              <span className="text-muted-foreground">Restrição alimentar: </span>
-                              <span className="text-foreground">{m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}</span>
-                            </div>
-                          )}
                           {m.observacoes && (
                             <div>
                               <p className="text-muted-foreground mb-0.5 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações:</p>
@@ -928,6 +952,7 @@ const Marcacoes = () => {
                           )}
                         </div>
                       )}
+
                       <div className="flex items-center justify-between pt-1 border-t border-border/50 gap-2">
                         <Select value={m.estado} onValueChange={(v) => handleEstadoChange(m.id, v)}>
                           <SelectTrigger className={cn("h-8 text-xs font-semibold rounded-full px-3 border w-auto", estadoStyles[m.estado] || estadoStyles.pendente)}>
