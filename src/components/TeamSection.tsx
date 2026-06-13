@@ -1,6 +1,7 @@
 import AnimateOnScroll from "./AnimateOnScroll";
 import { Badge } from "./ui/badge";
-import teamNuno from "@/assets/team-nuno.jpg";
+import nunoDirecao from "@/assets/nuno-direcao.jpg.asset.json";
+import nunoTecnico from "@/assets/nuno-tecnico.jpg.asset.json";
 import teamJoao from "@/assets/team-joao.jpg";
 import teamLucas from "@/assets/team-lucas.jpg";
 import teamJeremy from "@/assets/team-jeremy.jpg";
