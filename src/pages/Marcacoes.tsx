@@ -51,7 +51,21 @@ type Marcacao = {
   restricao_alimentar_desc: string | null;
   tamanho_tshirt: string | null;
   tamanho_calcas: string | null;
+  data_nascimento: string | null;
+  clube_atual: string | null;
+  posicao: string | null;
+  escalao: string | null;
+  email_encarregado: string | null;
+  emergencia_nome: string | null;
+  emergencia_parentesco: string | null;
+  emergencia_telemovel: string | null;
+  tem_alergias: boolean | null;
+  alergias_descricao: string | null;
+  toma_medicacao: boolean | null;
+  medicacao_descricao: string | null;
+  informacao_medica: string | null;
 };
+
 
 const ESTADOS = ["pendente", "contactado", "confirmado", "cancelado"] as const;
 const estadoStyles: Record<string, string> = {
@@ -98,6 +112,35 @@ const FamilyBadge = ({ self, related }: FamilyBadgeProps) => {
     </Popover>
   );
 };
+
+const hasMedicalInfo = (m: Marcacao) =>
+  m.tem_alergias === true || m.toma_medicacao === true || m.restricao_alimentar === true || !!(m.informacao_medica && m.informacao_medica.trim());
+
+const MedicalAlerts = ({ m }: { m: Marcacao }) => {
+  const has = hasMedicalInfo(m);
+  return (
+    <div className={cn(
+      "rounded-lg border p-3 text-xs space-y-1",
+      has ? "border-destructive/40 bg-destructive/10" : "border-border bg-surface-elevated/30"
+    )}>
+      <p className={cn("font-bold uppercase tracking-wider text-[11px]", has ? "text-destructive" : "text-muted-foreground")}>
+        🚨 Alertas médicos
+      </p>
+      {!has ? (
+        <p className="text-muted-foreground">Sem alertas médicos.</p>
+      ) : (
+        <ul className="space-y-0.5 text-foreground">
+          {m.tem_alergias && <li><span className="text-muted-foreground">Alergias: </span>{m.alergias_descricao || "(sem descrição)"}</li>}
+          {m.toma_medicacao && <li><span className="text-muted-foreground">Medicação: </span>{m.medicacao_descricao || "(sem descrição)"}</li>}
+          {m.restricao_alimentar && <li><span className="text-muted-foreground">Restrição alimentar: </span>{m.restricao_alimentar_desc || "(sem descrição)"}</li>}
+          {m.informacao_medica && <li><span className="text-muted-foreground">Informação médica: </span>{m.informacao_medica}</li>}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+
 
 // Build WhatsApp URL from a Portuguese phone number
 const waUrl = (phone: string | null | undefined, nome?: string, tipo?: string) => {
@@ -675,62 +718,88 @@ const Marcacoes = () => {
                             {isFootcamp && expanded && (
                               <TableRow key={m.id + "-details"} className="border-border/50 bg-surface-elevated/30">
                                 <TableCell colSpan={9} className="py-4">
-                                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                  <div className="space-y-4">
+                                    {/* Atleta */}
                                     <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Encarregado</p>
-                                      <p className="text-foreground">{m.encarregado || "—"}</p>
+                                      <p className="text-xs uppercase tracking-wider text-primary/80 mb-2">👤 Atleta</p>
+                                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                                        <div><p className="text-xs text-muted-foreground">Data nasc.</p><p className="text-foreground">{m.data_nascimento || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Clube atual</p><p className="text-foreground">{m.clube_atual || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Posição</p><p className="text-foreground">{m.posicao || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Escalão</p><p className="text-foreground">{m.escalao || "—"}</p></div>
+                                      </div>
                                     </div>
+
+                                    {/* Encarregado */}
                                     <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro anual</p>
-                                      <p className="text-foreground">
-                                        {m.seguro_anual ? (
-                                          <span>Oferecido 🎁</span>
-                                        ) : (
-                                          <span>Incluído (+20€)</span>
+                                      <p className="text-xs uppercase tracking-wider text-primary/80 mb-2">👨‍👩‍👦 Encarregado</p>
+                                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                                        <div><p className="text-xs text-muted-foreground">Nome</p><p className="text-foreground">{m.encarregado || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Telemóvel</p><p className="text-foreground font-mono">{m.telemovel}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Email</p><p className="text-foreground break-all">{m.email_encarregado || "—"}</p></div>
+                                      </div>
+                                    </div>
+
+                                    {/* Emergência */}
+                                    <div>
+                                      <p className="text-xs uppercase tracking-wider text-destructive/90 mb-2">🚨 Contacto de emergência</p>
+                                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                                        <div><p className="text-xs text-muted-foreground">Nome</p><p className="text-foreground">{m.emergencia_nome || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Parentesco</p><p className="text-foreground">{m.emergencia_parentesco || "—"}</p></div>
+                                        <div><p className="text-xs text-muted-foreground">Telemóvel</p><p className="text-foreground font-mono">{m.emergencia_telemovel || "—"}</p></div>
+                                      </div>
+                                    </div>
+
+                                    {/* Saúde */}
+                                    <MedicalAlerts m={m} />
+
+                                    {/* Equipamento + Semanas + Resumo */}
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Equipamento</p>
+                                        <p className="text-foreground">👕 {m.tamanho_tshirt || "—"} · 🩳 {m.tamanho_calcas || "—"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro anual</p>
+                                        <p className="text-foreground">{m.seguro_anual ? "Oferecido 🎁" : "Incluído (+20€)"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
+                                        <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
+                                        {m.desconto_irmaos && m.nome_irmaos && (
+                                          <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
                                         )}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
-                                      <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
-                                      {m.desconto_irmaos && m.nome_irmaos && (
-                                        <p className="text-xs text-muted-foreground mt-1">Outro(s) irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Imagem autorizada</p>
+                                        <p className="text-foreground">{m.autorizacao_imagem == null ? "—" : m.autorizacao_imagem ? "Sim" : "Não"}</p>
+                                      </div>
+                                      <div className="col-span-2 md:col-span-2">
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
+                                        <ul className="text-foreground space-y-0.5">
+                                          {(m.semanas || []).map((s, i) => <li key={i}>• {s}</li>)}
+                                        </ul>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
+                                        <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Inscrito em</p>
+                                        <p className="text-foreground">{formatCreatedAt(m.created_at)}</p>
+                                      </div>
+                                      {m.observacoes && (
+                                        <div className="col-span-2 md:col-span-4">
+                                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações</p>
+                                          <p className="text-foreground whitespace-pre-wrap">{m.observacoes}</p>
+                                        </div>
                                       )}
                                     </div>
-                                    <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Imagem autorizada</p>
-                                      <p className="text-foreground">{m.autorizacao_imagem == null ? "—" : m.autorizacao_imagem ? "Sim" : "Não"}</p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Equipamento</p>
-                                      <p className="text-foreground">👕 {m.tamanho_tshirt || "—"} · 🩳 {m.tamanho_calcas || "—"}</p>
-                                    </div>
-                                    <div className="col-span-2">
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Restrição alimentar</p>
-                                      <p className="text-foreground">
-                                        {m.restricao_alimentar == null ? "—" : m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
-                                      <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
-                                    </div>
-                                    <div className="col-span-2 md:col-span-1">
-                                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
-                                      <ul className="text-foreground space-y-0.5">
-                                        {(m.semanas || []).map((s, i) => <li key={i}>• {s}</li>)}
-                                      </ul>
-                                    </div>
-                                    {m.observacoes && (
-                                      <div className="col-span-2 md:col-span-4">
-                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações</p>
-                                        <p className="text-foreground whitespace-pre-wrap">{m.observacoes}</p>
-                                      </div>
-                                    )}
                                   </div>
                                 </TableCell>
                               </TableRow>
                             )}
+
                           </Fragment>
                         );
                       })}
@@ -820,6 +889,36 @@ const Marcacoes = () => {
                       </div>
                       {isFootcamp && (
                         <div className="space-y-2 rounded-lg bg-surface-elevated/40 p-3 text-xs">
+                          {/* Atleta */}
+                          <div>
+                            <p className="text-[11px] uppercase tracking-wider text-primary/80 mb-1">👤 Atleta</p>
+                            <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+                              {m.data_nascimento && <div><span className="text-muted-foreground">Nasc.: </span><span className="text-foreground">{m.data_nascimento}</span></div>}
+                              {m.clube_atual && <div><span className="text-muted-foreground">Clube: </span><span className="text-foreground">{m.clube_atual}</span></div>}
+                              {m.posicao && <div><span className="text-muted-foreground">Posição: </span><span className="text-foreground">{m.posicao}</span></div>}
+                              {m.escalao && <div><span className="text-muted-foreground">Escalão: </span><span className="text-foreground">{m.escalao}</span></div>}
+                            </div>
+                          </div>
+
+                          {/* Encarregado email */}
+                          {m.email_encarregado && (
+                            <div><span className="text-muted-foreground">Email enc.: </span><span className="text-foreground break-all">{m.email_encarregado}</span></div>
+                          )}
+
+                          {/* Emergência */}
+                          {(m.emergencia_nome || m.emergencia_telemovel) && (
+                            <div className="rounded-md border border-destructive/30 bg-destructive/5 p-2">
+                              <p className="text-[11px] uppercase tracking-wider text-destructive mb-1">🚨 Emergência</p>
+                              <div className="text-foreground">{m.emergencia_nome || "—"} {m.emergencia_parentesco ? `(${m.emergencia_parentesco})` : ""}</div>
+                              {m.emergencia_telemovel && (
+                                <a href={`tel:${m.emergencia_telemovel}`} className="font-mono text-foreground">{m.emergencia_telemovel}</a>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Alertas médicos */}
+                          <MedicalAlerts m={m} />
+
                           {m.semanas && m.semanas.length > 0 && (
                             <div>
                               <p className="text-muted-foreground mb-1">Semanas:</p>
@@ -845,12 +944,6 @@ const Marcacoes = () => {
                               <span className="text-foreground">👕 {m.tamanho_tshirt || "—"} · 🩳 {m.tamanho_calcas || "—"}</span>
                             </div>
                           )}
-                          {m.restricao_alimentar != null && (
-                            <div>
-                              <span className="text-muted-foreground">Restrição alimentar: </span>
-                              <span className="text-foreground">{m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}</span>
-                            </div>
-                          )}
                           {m.observacoes && (
                             <div>
                               <p className="text-muted-foreground mb-0.5 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações:</p>
@@ -859,6 +952,7 @@ const Marcacoes = () => {
                           )}
                         </div>
                       )}
+
                       <div className="flex items-center justify-between pt-1 border-t border-border/50 gap-2">
                         <Select value={m.estado} onValueChange={(v) => handleEstadoChange(m.id, v)}>
                           <SelectTrigger className={cn("h-8 text-xs font-semibold rounded-full px-3 border w-auto", estadoStyles[m.estado] || estadoStyles.pendente)}>
