@@ -50,6 +50,9 @@ const schema = z.object({
   semanas: z.array(z.string()).min(1, "Seleciona pelo menos uma semana"),
   irmaos: z.boolean().optional(),
   nome_irmaos: z.string().trim().max(200).optional(),
+  autorizacao_imagem: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
+  restricao_alimentar: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
+  restricao_alimentar_desc: z.string().trim().max(300).optional(),
   observacoes: z.string().max(500).optional(),
   consentimento: z.literal(true, {
     errorMap: () => ({ message: "Tens de autorizar o tratamento dos dados" }),
@@ -57,6 +60,9 @@ const schema = z.object({
 }).refine((d) => !d.irmaos || (d.nome_irmaos && d.nome_irmaos.trim().length >= 2), {
   message: "Indica o nome do(s) irmão(s) inscrito(s)",
   path: ["nome_irmaos"],
+}).refine((d) => d.restricao_alimentar !== "sim" || (d.restricao_alimentar_desc && d.restricao_alimentar_desc.trim().length >= 2), {
+  message: "Indica a restrição alimentar",
+  path: ["restricao_alimentar_desc"],
 });
 
 type FormData = z.infer<typeof schema>;
