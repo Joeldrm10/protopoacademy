@@ -100,13 +100,17 @@ const FamilyBadge = ({ self, related }: FamilyBadgeProps) => {
 };
 
 // Build WhatsApp URL from a Portuguese phone number
-const waUrl = (phone: string | null | undefined, nome?: string) => {
+const waUrl = (phone: string | null | undefined, nome?: string, tipo?: string) => {
   const digits = (phone || "").replace(/\D/g, "");
   if (!digits) return "#";
   const intl = digits.startsWith("351") ? digits : `351${digits}`;
-  const msg = `Olá${nome ? ` ${nome.split(" ")[0]}` : ""}! Contacto da ProTopo Academy sobre a tua inscrição.`;
+  const atleta = nome || "—";
+  const msg = tipo === "footcamp"
+    ? `Olá, sou da ProTopo Academy relativamente à inscrição de ${atleta} no Footcamp Verão 2026.`
+    : `Olá${nome ? ` ${nome.split(" ")[0]}` : ""}! Contacto da ProTopo Academy sobre a tua inscrição.`;
   return `https://wa.me/${intl}?text=${encodeURIComponent(msg)}`;
 };
+
 
 
 const Marcacoes = () => {
@@ -146,7 +150,9 @@ const Marcacoes = () => {
 
   const familyMap = useMemo(() => {
     const map = new Map<string, Marcacao[]>();
-    marcacoes.forEach((m) => {
+    // Only consider non-cancelled real registrations for family detection
+    const candidates = marcacoes.filter((m) => m.estado !== "cancelado");
+    candidates.forEach((m) => {
       const mPhone = normalizePhone(m.telemovel);
       const mEnc = normalize(m.encarregado);
       const mName = normalize(m.nome);
@@ -154,7 +160,7 @@ const Marcacoes = () => {
 
       const related: Marcacao[] = [];
       const seenNames = new Set<string>([mName]);
-      marcacoes.forEach((other) => {
+      candidates.forEach((other) => {
         if (other.id === m.id) return;
         const otherName = normalize(other.nome);
         if (!otherName || seenNames.has(otherName)) return; // dedupe same athlete
@@ -180,6 +186,30 @@ const Marcacoes = () => {
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
   const cancelados = useMemo(() => marcacoes.filter((m) => m.estado === "cancelado").length, [marcacoes]);
+
+  // Receita prevista (uses valor_total, excludes cancelled)
+  const receita = useMemo(() => {
+    const active = marcacoes.filter((m) => m.estado !== "cancelado" && m.valor_total != null);
+    const total = active.reduce((s, m) => s + (m.valor_total || 0), 0);
+    const confirmado = active.filter((m) => m.estado === "confirmado").reduce((s, m) => s + (m.valor_total || 0), 0);
+    const pendente = total - confirmado;
+    return { total, confirmado, pendente };
+  }, [marcacoes]);
+
+  // Equipamento (footcamp, non-cancelled)
+  const TAMANHOS = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
+  const equipamentoStats = useMemo(() => {
+    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado !== "cancelado");
+    const tshirts: Record<string, number> = {};
+    const calcas: Record<string, number> = {};
+    TAMANHOS.forEach((t) => { tshirts[t] = 0; calcas[t] = 0; });
+    fc.forEach((m) => {
+      if (m.tamanho_tshirt && tshirts[m.tamanho_tshirt] != null) tshirts[m.tamanho_tshirt]++;
+      if (m.tamanho_calcas && calcas[m.tamanho_calcas] != null) calcas[m.tamanho_calcas]++;
+    });
+    return { tshirts, calcas };
+  }, [marcacoes]);
+
 
   // Footcamp stats
   const footcampStats = useMemo(() => {
@@ -382,6 +412,63 @@ const Marcacoes = () => {
               </div>
             )}
 
+            {/* Receita Prevista */}
+            <div className="bg-gradient-to-br from-primary/10 via-card to-card border border-primary/30 rounded-xl p-4 sm:p-5 mb-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Euro className="w-4 h-4 text-primary" />
+                <h2 className="font-heading text-sm uppercase tracking-wider text-primary">💰 Receita Prevista</h2>
+              </div>
+              <div className="grid grid-cols-3 gap-3 text-sm">
+                <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                  <p className="text-xs text-muted-foreground">Total previsto</p>
+                  <p className="font-heading text-xl text-foreground">{receita.total}€</p>
+                </div>
+                <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                  <p className="text-xs" style={{ color: "hsl(142 71% 45%)" }}>Confirmado</p>
+                  <p className="font-heading text-xl" style={{ color: "hsl(142 71% 45%)" }}>{receita.confirmado}€</p>
+                </div>
+                <div className="bg-surface-elevated/40 rounded-lg p-2.5">
+                  <p className="text-xs text-primary">Pendente</p>
+                  <p className="font-heading text-xl text-primary">{receita.pendente}€</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Equipamento */}
+            {footcampStats.total > 0 && (
+              <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <h2 className="font-heading text-sm uppercase tracking-wider text-foreground">👕 Equipamento</h2>
+                </div>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">T-shirts</p>
+                    <div className="grid grid-cols-3 sm:grid-cols-9 gap-2 text-xs">
+                      {TAMANHOS.map((t) => (
+                        <div key={t} className="bg-surface-elevated/40 rounded-md p-2 text-center">
+                          <p className="text-muted-foreground">{t}</p>
+                          <p className="font-heading text-base text-foreground">{equipamentoStats.tshirts[t]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">Calções</p>
+                    <div className="grid grid-cols-3 sm:grid-cols-9 gap-2 text-xs">
+                      {TAMANHOS.map((t) => (
+                        <div key={t} className="bg-surface-elevated/40 rounded-md p-2 text-center">
+                          <p className="text-muted-foreground">{t}</p>
+                          <p className="font-heading text-base text-foreground">{equipamentoStats.calcas[t]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+
+
             {/* Filters + Refresh */}
             <div className="bg-card border border-border rounded-xl p-4 mb-6">
               <div className="flex flex-wrap items-center gap-3">
@@ -530,7 +617,7 @@ const Marcacoes = () => {
                                 <div className="flex items-center gap-2">
                                   <span>{m.telemovel}</span>
                                   <a
-                                    href={waUrl(m.telemovel, m.nome)}
+                                    href={waUrl(m.telemovel, m.nome, m.tipo)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     title="Abrir WhatsApp"
@@ -690,7 +777,7 @@ const Marcacoes = () => {
                             {m.telemovel}
                           </a>
                           <a
-                            href={waUrl(m.telemovel, m.nome)}
+                            href={waUrl(m.telemovel, m.nome, m.tipo)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/15 text-green-500 border border-green-500/30 text-xs font-bold uppercase tracking-wider hover:bg-green-500/25 transition-colors"
@@ -725,6 +812,11 @@ const Marcacoes = () => {
                           <span className="text-xs">Idade:</span>
                           <span className="text-foreground">{m.idade}</span>
                         </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <CalendarIcon className="w-3 h-3 text-primary/60" />
+                        <span>📅 Inscrito em:</span>
+                        <span className="text-foreground">{formatCreatedAt(m.created_at)}</span>
                       </div>
                       {isFootcamp && (
                         <div className="space-y-2 rounded-lg bg-surface-elevated/40 p-3 text-xs">
