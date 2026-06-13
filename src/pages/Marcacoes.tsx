@@ -738,6 +738,17 @@ const Marcacoes = () => {
                           {m.desconto_irmaos && m.nome_irmaos && (
                             <div><span className="text-muted-foreground">Outro(s) irmão(s): </span><span className="text-foreground">{m.nome_irmaos}</span></div>
                           )}
+                          {m.autorizacao_imagem != null && (
+                            <div><span className="text-muted-foreground">Imagem autorizada: </span><span className="text-foreground">{m.autorizacao_imagem ? "Sim" : "Não"}</span></div>
+                          )}
+                          {m.restricao_alimentar != null && (
+                            <div>
+                              <span className="text-muted-foreground">Restrição alimentar: </span>
+                              <span className="text-foreground">{m.restricao_alimentar ? `Sim — ${m.restricao_alimentar_desc || "(sem descrição)"}` : "Não"}</span>
+                            </div>
+                          {false && (
+                            <div></div>
+                          )}
                           {m.observacoes && (
                             <div>
                               <p className="text-muted-foreground mb-0.5 flex items-center gap-1"><FileText className="w-3 h-3" /> Observações:</p>
