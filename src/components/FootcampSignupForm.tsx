@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Send, Loader2, MessageCircle, Shield, Zap, Phone } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Send, Loader2, MessageCircle, Shield, Zap, Phone, Siren, Stethoscope, User as UserIcon } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
@@ -45,15 +45,28 @@ const SEGURO_ANUAL = 20;
 const ptPhoneRegex = /^9\d{8}$/;
 
 const tamanhos = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
+const posicoes = ["Guarda-redes", "Defesa", "Médio", "Avançado", "Várias posições"] as const;
+const escaloes = ["Petiz", "Traquina", "Benjamim", "Infantil", "Iniciado", "Juvenil", "Outro"] as const;
 
 const schema = z.object({
   nome: z.string().trim().min(2, "Nome é obrigatório").max(100),
+  data_nascimento: z.string().trim().min(1, "Data de nascimento é obrigatória"),
   idade: z.string().trim().min(1, "Idade é obrigatória").refine(
     (v) => { const n = Number(v); return !isNaN(n) && n >= 6 && n <= 16; },
     "Idades dos 6 aos 16 anos"
   ),
+  clube_atual: z.string().trim().min(2, "Clube é obrigatório").max(100),
+  posicao: z.enum(posicoes, { errorMap: () => ({ message: "Seleciona uma posição" }) }),
+  escalao: z.enum(escaloes, { errorMap: () => ({ message: "Seleciona um escalão" }) }),
   encarregado: z.string().trim().min(2, "Nome do encarregado é obrigatório").max(100),
   telemovel: z.string().trim().refine(
+    (val) => ptPhoneRegex.test(val.replace(/\s/g, "")),
+    "Telemóvel inválido. 9 dígitos a começar por 9."
+  ),
+  email_encarregado: z.string().trim().email("Email inválido").max(150),
+  emergencia_nome: z.string().trim().min(2, "Nome obrigatório").max(100),
+  emergencia_parentesco: z.string().trim().min(2, "Parentesco obrigatório").max(50),
+  emergencia_telemovel: z.string().trim().refine(
     (val) => ptPhoneRegex.test(val.replace(/\s/g, "")),
     "Telemóvel inválido. 9 dígitos a começar por 9."
   ),
@@ -63,6 +76,11 @@ const schema = z.object({
   tamanho_tshirt: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
   tamanho_calcas: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
   autorizacao_imagem: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
+  tem_alergias: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
+  alergias_descricao: z.string().trim().max(300).optional(),
+  toma_medicacao: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
+  medicacao_descricao: z.string().trim().max(300).optional(),
+  informacao_medica: z.string().trim().max(500).optional(),
   restricao_alimentar: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
   restricao_alimentar_desc: z.string().trim().max(300).optional(),
   observacoes: z.string().max(500).optional(),
@@ -75,9 +93,26 @@ const schema = z.object({
 }).refine((d) => d.restricao_alimentar !== "sim" || (d.restricao_alimentar_desc && d.restricao_alimentar_desc.trim().length >= 2), {
   message: "Indica a restrição alimentar",
   path: ["restricao_alimentar_desc"],
+}).refine((d) => d.tem_alergias !== "sim" || (d.alergias_descricao && d.alergias_descricao.trim().length >= 2), {
+  message: "Indica as alergias",
+  path: ["alergias_descricao"],
+}).refine((d) => d.toma_medicacao !== "sim" || (d.medicacao_descricao && d.medicacao_descricao.trim().length >= 2), {
+  message: "Indica a medicação",
+  path: ["medicacao_descricao"],
 });
 
 type FormData = z.infer<typeof schema>;
+
+const calcAge = (iso: string): string => {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  const today = new Date();
+  let age = today.getFullYear() - d.getFullYear();
+  const m = today.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
+  return age >= 0 && age < 120 ? String(age) : "";
+};
 
 const FootcampSignupForm = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -88,15 +123,28 @@ const FootcampSignupForm = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       nome: "",
+      data_nascimento: "",
       idade: "",
+      clube_atual: "",
+      posicao: undefined as unknown as "Defesa",
+      escalao: undefined as unknown as "Benjamim",
       encarregado: "",
       telemovel: "",
+      email_encarregado: "",
+      emergencia_nome: "",
+      emergencia_parentesco: "",
+      emergencia_telemovel: "",
       semanas: [],
       irmaos: false,
       nome_irmaos: "",
       tamanho_tshirt: undefined as unknown as "M",
       tamanho_calcas: undefined as unknown as "M",
       autorizacao_imagem: undefined as unknown as "sim",
+      tem_alergias: undefined as unknown as "nao",
+      alergias_descricao: "",
+      toma_medicacao: undefined as unknown as "nao",
+      medicacao_descricao: "",
+      informacao_medica: "",
       restricao_alimentar: undefined as unknown as "nao",
       restricao_alimentar_desc: "",
       observacoes: "",
@@ -107,6 +155,18 @@ const FootcampSignupForm = () => {
   const semanasSelecionadas = form.watch("semanas") || [];
   const irmaos = form.watch("irmaos");
   const restricaoAlimentar = form.watch("restricao_alimentar");
+  const temAlergias = form.watch("tem_alergias");
+  const tomaMedicacao = form.watch("toma_medicacao");
+  const dataNascimento = form.watch("data_nascimento");
+
+  // Auto-calculate age from birthdate
+  useEffect(() => {
+    if (dataNascimento) {
+      const age = calcAge(dataNascimento);
+      if (age) form.setValue("idade", age, { shouldValidate: true });
+    }
+  }, [dataNascimento]);
+
   const numSemanas = semanasSelecionadas.length;
   const precoBase = precosTabela[numSemanas] ?? 0;
   const seguroOferta = numSemanas === 4;
@@ -129,6 +189,11 @@ const FootcampSignupForm = () => {
       const restricaoSim = data.restricao_alimentar === "sim";
       const restricaoDesc = restricaoSim ? (data.restricao_alimentar_desc?.trim() || null) : null;
       const autorizaImagem = data.autorizacao_imagem === "sim";
+      const alergiasSim = data.tem_alergias === "sim";
+      const alergiasDesc = alergiasSim ? (data.alergias_descricao?.trim() || null) : null;
+      const medicacaoSim = data.toma_medicacao === "sim";
+      const medicacaoDesc = medicacaoSim ? (data.medicacao_descricao?.trim() || null) : null;
+      const infoMedica = data.informacao_medica?.trim() || null;
 
       const { error: dbError } = await supabase.from("marcacoes").insert({
         nome: data.nome,
@@ -150,6 +215,19 @@ const FootcampSignupForm = () => {
         observacoes: data.observacoes || null,
         valor_total: precoFinal,
         estado: "pendente",
+        data_nascimento: data.data_nascimento,
+        clube_atual: data.clube_atual,
+        posicao: data.posicao,
+        escalao: data.escalao,
+        email_encarregado: data.email_encarregado,
+        emergencia_nome: data.emergencia_nome,
+        emergencia_parentesco: data.emergencia_parentesco,
+        emergencia_telemovel: data.emergencia_telemovel,
+        tem_alergias: alergiasSim,
+        alergias_descricao: alergiasDesc,
+        toma_medicacao: medicacaoSim,
+        medicacao_descricao: medicacaoDesc,
+        informacao_medica: infoMedica,
       } as any);
 
       if (dbError) {
@@ -159,25 +237,58 @@ const FootcampSignupForm = () => {
         return;
       }
 
+      const seguroTxt = seguroOferta ? "Oferecido 🎁" : `${SEGURO_ANUAL}€ (incluído)`;
       const parts = [
-        `Olá! Quero inscrever-me na ProTopo Footcamp — Edição Verão 2026.`,
+        `📋 NOVA INSCRIÇÃO FOOTCAMP VERÃO 2026`,
         ``,
-        `Atleta: ${data.nome}`,
+        `👤 ATLETA`,
+        `Nome: ${data.nome}`,
+        `Data de nascimento: ${data.data_nascimento}`,
         `Idade: ${data.idade}`,
-        `Encarregado: ${data.encarregado}`,
-        `Telemóvel: ${data.telemovel}`,
+        `Clube atual: ${data.clube_atual}`,
+        `Posição: ${data.posicao}`,
+        `Escalão: ${data.escalao}`,
         ``,
-        `Semanas pretendidas:`,
+        `👨‍👩‍👦 ENCARREGADO DE EDUCAÇÃO`,
+        `Nome: ${data.encarregado}`,
+        `Telemóvel: ${data.telemovel}`,
+        `Email: ${data.email_encarregado}`,
+        ``,
+        `🚨 CONTACTO DE EMERGÊNCIA`,
+        `Nome: ${data.emergencia_nome}`,
+        `Parentesco: ${data.emergencia_parentesco}`,
+        `Telemóvel: ${data.emergencia_telemovel}`,
+        ``,
+        `📅 SEMANAS PRETENDIDAS`,
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
-        `👕 T-shirt: ${data.tamanho_tshirt}`,
-        `🩳 Calções: ${data.tamanho_calcas}`,
+        `👕 EQUIPAMENTO`,
+        `T-shirt: ${data.tamanho_tshirt}`,
+        `Calções: ${data.tamanho_calcas}`,
         ``,
-        `Desconto irmãos: ${data.irmaos ? `Sim (${data.nome_irmaos})` : "Não"}`,
-        `Autorização de imagem: ${autorizaImagem ? "Sim" : "Não"}`,
+        `👨‍👩‍👧‍👦 IRMÃOS`,
+        `Tem irmãos inscritos: ${data.irmaos ? "Sim" : "Não"}`,
+        data.irmaos && data.nome_irmaos ? `Nome(s) do(s) irmão(s): ${data.nome_irmaos}` : "",
+        ``,
+        `🏥 SAÚDE`,
+        `Alergias: ${alergiasSim ? `Sim — ${alergiasDesc}` : "Não"}`,
+        `Medicação regular: ${medicacaoSim ? `Sim — ${medicacaoDesc}` : "Não"}`,
         `Restrição alimentar: ${restricaoSim ? `Sim — ${restricaoDesc}` : "Não"}`,
-        precoBase > 0 ? `Valor estimado: ${precoFinal}€ (inclui ${seguroOferta ? "seguro anual oferecido" : `seguro anual ${SEGURO_ANUAL}€`}${data.irmaos ? ", com 10% desconto irmãos" : ""})` : "",
-        data.observacoes ? `\nObservações: ${data.observacoes}` : "",
+        `Informação médica relevante: ${infoMedica || "Nenhuma"}`,
+        ``,
+        `📸 AUTORIZAÇÃO DE IMAGEM`,
+        autorizaImagem ? "Sim" : "Não",
+        ``,
+        `📝 OBSERVAÇÕES`,
+        data.observacoes || "Sem observações",
+        ``,
+        `💰 VALOR`,
+        `Valor das semanas: ${precoBase}€`,
+        `Seguro: ${seguroTxt}`,
+        data.irmaos ? `Desconto irmãos (-10%): -${(subtotal * 0.1).toFixed(2)}€` : "",
+        `Total final: ${precoFinal}€`,
+        ``,
+        `✅ Consentimento de dados: autorizado`,
       ].filter(Boolean);
 
       const message = encodeURIComponent(parts.join("\n"));
@@ -226,6 +337,13 @@ const FootcampSignupForm = () => {
     );
   }
 
+  const SectionHeader = ({ icon: Icon, title }: { icon: any; title: string }) => (
+    <div className="flex items-center gap-2 pt-2 pb-1 border-b border-primary/20">
+      <Icon className="w-4 h-4 text-primary" />
+      <h3 className="font-heading text-sm uppercase tracking-wider text-primary">{title}</h3>
+    </div>
+  );
+
   return (
     <section className="py-16 bg-secondary relative overflow-hidden">
       <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
@@ -235,6 +353,7 @@ const FootcampSignupForm = () => {
           <div className="max-w-lg mx-auto bg-card border border-border rounded-2xl p-6 md:p-10 shadow-xl">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <SectionHeader icon={UserIcon} title="Dados do atleta" />
                 <FormField
                   control={form.control}
                   name="nome"
@@ -250,6 +369,19 @@ const FootcampSignupForm = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
+                    name="data_nascimento"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Data de nascimento</FormLabel>
+                        <FormControl>
+                          <Input type="date" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
                     name="idade"
                     render={({ field }) => (
                       <FormItem>
@@ -261,6 +393,73 @@ const FootcampSignupForm = () => {
                       </FormItem>
                     )}
                   />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="clube_atual"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-foreground">Clube atual</FormLabel>
+                      <FormControl><Input placeholder="Nome do clube" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="posicao"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Posição principal</FormLabel>
+                        <FormControl>
+                          <Select value={field.value} onValueChange={field.onChange}>
+                            <SelectTrigger className="border-border"><SelectValue placeholder="Selecionar" /></SelectTrigger>
+                            <SelectContent>
+                              {posicoes.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="escalao"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Escalão</FormLabel>
+                        <FormControl>
+                          <Select value={field.value} onValueChange={field.onChange}>
+                            <SelectTrigger className="border-border"><SelectValue placeholder="Selecionar" /></SelectTrigger>
+                            <SelectContent>
+                              {escaloes.map((e) => <SelectItem key={e} value={e}>{e}</SelectItem>)}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <SectionHeader icon={UserIcon} title="Encarregado de educação" />
+                <FormField
+                  control={form.control}
+                  name="encarregado"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-foreground">Nome do encarregado de educação</FormLabel>
+                      <FormControl><Input placeholder="Nome completo" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
                     name="telemovel"
@@ -281,20 +480,69 @@ const FootcampSignupForm = () => {
                       </FormItem>
                     )}
                   />
+                  <FormField
+                    control={form.control}
+                    name="email_encarregado"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Email</FormLabel>
+                        <FormControl><Input type="email" placeholder="email@exemplo.com" {...field} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
 
+                <SectionHeader icon={Siren} title="🚨 Contacto de emergência" />
+                <p className="text-xs text-muted-foreground -mt-2">
+                  Sempre que possível, indica uma pessoa diferente do contacto principal.
+                </p>
                 <FormField
                   control={form.control}
-                  name="encarregado"
+                  name="emergencia_nome"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground">Nome do encarregado de educação</FormLabel>
+                      <FormLabel className="text-foreground">Nome</FormLabel>
                       <FormControl><Input placeholder="Nome completo" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="emergencia_parentesco"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Parentesco</FormLabel>
+                        <FormControl><Input placeholder="Ex.: Pai, Mãe, Avó, Tio" {...field} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="emergencia_telemovel"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Telemóvel</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="tel"
+                            inputMode="numeric"
+                            maxLength={9}
+                            placeholder="912345678"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.value.replace(/\D/g, ""))}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
+                <SectionHeader icon={UserIcon} title="Semanas e equipamento" />
                 <FormField
                   control={form.control}
                   name="semanas"
@@ -448,35 +696,86 @@ const FootcampSignupForm = () => {
                   </div>
                 )}
 
+                <SectionHeader icon={Stethoscope} title="🏥 Informação médica" />
+
                 <FormField
                   control={form.control}
-                  name="autorizacao_imagem"
+                  name="tem_alergias"
                   render={({ field }) => (
                     <FormItem className="rounded-xl border border-border p-4 space-y-3">
-                      <FormLabel className="text-foreground">
-                        Autoriza a recolha e utilização de fotografias/vídeos do atleta para divulgação da ProTopo?
-                      </FormLabel>
+                      <FormLabel className="text-foreground">O atleta tem alguma alergia?</FormLabel>
                       <FormControl>
-                        <RadioGroup
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          className="flex flex-col sm:flex-row gap-2 sm:gap-4"
-                        >
-                          <label className={cn(
-                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
-                            field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
-                          )}>
-                            <RadioGroupItem value="sim" />
-                            <span className="text-sm text-foreground">Sim, autorizo</span>
+                        <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                          <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1", field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                            <RadioGroupItem value="nao" /><span className="text-sm text-foreground">Não</span>
                           </label>
-                          <label className={cn(
-                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
-                            field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
-                          )}>
-                            <RadioGroupItem value="nao" />
-                            <span className="text-sm text-foreground">Não autorizo</span>
+                          <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1", field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                            <RadioGroupItem value="sim" /><span className="text-sm text-foreground">Sim</span>
                           </label>
                         </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {temAlergias === "sim" && (
+                  <FormField
+                    control={form.control}
+                    name="alergias_descricao"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Quais alergias?</FormLabel>
+                        <FormControl><Input placeholder="Ex.: frutos secos, pólen, picadas..." {...field} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
+                <FormField
+                  control={form.control}
+                  name="toma_medicacao"
+                  render={({ field }) => (
+                    <FormItem className="rounded-xl border border-border p-4 space-y-3">
+                      <FormLabel className="text-foreground">O atleta toma alguma medicação regularmente?</FormLabel>
+                      <FormControl>
+                        <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                          <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1", field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                            <RadioGroupItem value="nao" /><span className="text-sm text-foreground">Não</span>
+                          </label>
+                          <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1", field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                            <RadioGroupItem value="sim" /><span className="text-sm text-foreground">Sim</span>
+                          </label>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {tomaMedicacao === "sim" && (
+                  <FormField
+                    control={form.control}
+                    name="medicacao_descricao"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Qual medicação?</FormLabel>
+                        <FormControl><Input placeholder="Nome, dose e horário se aplicável" {...field} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
+                <FormField
+                  control={form.control}
+                  name="informacao_medica"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-foreground">Informação médica relevante (opcional)</FormLabel>
+                      <FormControl>
+                        <Textarea rows={2} placeholder="Exemplo: asma, lesões, cuidados especiais ou outras informações importantes." {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -488,28 +787,14 @@ const FootcampSignupForm = () => {
                   name="restricao_alimentar"
                   render={({ field }) => (
                     <FormItem className="rounded-xl border border-border p-4 space-y-3">
-                      <FormLabel className="text-foreground">
-                        O atleta tem alguma restrição alimentar?
-                      </FormLabel>
+                      <FormLabel className="text-foreground">O atleta tem alguma restrição alimentar?</FormLabel>
                       <FormControl>
-                        <RadioGroup
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          className="flex flex-col sm:flex-row gap-2 sm:gap-4"
-                        >
-                          <label className={cn(
-                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
-                            field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
-                          )}>
-                            <RadioGroupItem value="nao" />
-                            <span className="text-sm text-foreground">Não</span>
+                        <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                          <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1", field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                            <RadioGroupItem value="nao" /><span className="text-sm text-foreground">Não</span>
                           </label>
-                          <label className={cn(
-                            "flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1",
-                            field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
-                          )}>
-                            <RadioGroupItem value="sim" />
-                            <span className="text-sm text-foreground">Sim</span>
+                          <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1", field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                            <RadioGroupItem value="sim" /><span className="text-sm text-foreground">Sim</span>
                           </label>
                         </RadioGroup>
                       </FormControl>
@@ -534,6 +819,31 @@ const FootcampSignupForm = () => {
                   />
                 )}
 
+                <SectionHeader icon={UserIcon} title="Autorização e observações" />
+
+                <FormField
+                  control={form.control}
+                  name="autorizacao_imagem"
+                  render={({ field }) => (
+                    <FormItem className="rounded-xl border border-border p-4 space-y-3">
+                      <FormLabel className="text-foreground">
+                        Autoriza a recolha e utilização de fotografias/vídeos do atleta para divulgação da ProTopo?
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                          <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1", field.value === "sim" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                            <RadioGroupItem value="sim" /><span className="text-sm text-foreground">Sim, autorizo</span>
+                          </label>
+                          <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all flex-1", field.value === "nao" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                            <RadioGroupItem value="nao" /><span className="text-sm text-foreground">Não autorizo</span>
+                          </label>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="observacoes"
@@ -554,11 +864,7 @@ const FootcampSignupForm = () => {
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-start gap-3 rounded-xl border border-border p-4">
                       <FormControl>
-                        <Checkbox
-                          checked={!!field.value}
-                          onCheckedChange={field.onChange}
-                          className="mt-0.5"
-                        />
+                        <Checkbox checked={!!field.value} onCheckedChange={field.onChange} className="mt-0.5" />
                       </FormControl>
                       <div className="space-y-1 leading-snug">
                         <FormLabel className="text-sm text-foreground font-normal cursor-pointer">
