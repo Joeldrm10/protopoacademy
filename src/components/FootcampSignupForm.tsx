@@ -583,6 +583,12 @@ const FootcampSignupForm = () => {
                   </p>
                 </div>
 
+                <ul className="space-y-1.5 text-sm text-foreground">
+                  <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Inscrição sujeita a confirmação de vaga</span></li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Resposta por WhatsApp</span></li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Dados utilizados apenas para gestão da inscrição</span></li>
+                </ul>
+
                 <Button type="submit" variant="hero" size="lg" className="w-full py-5 text-base" disabled={loading}>
                   {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
                   {loading ? "A enviar..." : "Enviar inscrição por WhatsApp"}
