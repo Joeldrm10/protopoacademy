@@ -395,7 +395,7 @@ const FootcampSignupForm = () => {
                       <FormItem>
                         <FormLabel className="text-foreground">Data de nascimento</FormLabel>
                         <FormControl>
-                          <Input type="date" min="2010-01-01" max="2020-12-31" {...field} />
+                          <Input type="date" min={getBirthDateRange().min} max={getBirthDateRange().max} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
