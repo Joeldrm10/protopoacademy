@@ -568,6 +568,51 @@ const Footcamp = () => {
         </div>
       </section>
 
+      {/* COMO FUNCIONA A INSCRIÇÃO */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll>
+            <div className="text-center mb-12 max-w-3xl mx-auto">
+              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
+                📝 Inscrição
+              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                Como funciona a <span className="text-gradient-gold">inscrição</span>
+              </h2>
+              <p className="text-muted-foreground">Em 4 passos simples garantes o lugar do atleta.</p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
+            {[
+              { n: 1, title: "Preenche o formulário", desc: "Seleciona as semanas pretendidas e preenche os dados do atleta." },
+              { n: 2, title: "Confirmamos a disponibilidade", desc: "A equipa ProTopo verifica as vagas disponíveis para as semanas escolhidas." },
+              { n: 3, title: "Recebes contacto por WhatsApp", desc: "Enviamos todas as informações necessárias e os dados para pagamento." },
+              { n: 4, title: "Vaga garantida", desc: "Após validação do pagamento, a inscrição fica concluída." },
+            ].map((p, i) => (
+              <AnimateOnScroll key={p.n} delay={i * 100}>
+                <div className="relative bg-card border border-border rounded-2xl p-6 h-full hover:border-primary/40 transition-all">
+                  <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-primary/10 border border-primary/20 mb-4">
+                    <span className="font-heading font-black text-xl text-gradient-gold">{p.n}</span>
+                  </div>
+                  <h3 className="font-heading font-bold text-base md:text-lg text-foreground mb-2">{p.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{p.desc}</p>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
+
+          <AnimateOnScroll delay={500}>
+            <div className="mt-8 max-w-3xl mx-auto rounded-xl border border-destructive/40 bg-destructive/5 p-4 flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+              <p className="text-sm md:text-base text-foreground">
+                <span className="font-semibold">As vagas são limitadas e atribuídas por ordem de confirmação.</span>
+              </p>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
       {/* INSCRIÇÃO E PAGAMENTO */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
