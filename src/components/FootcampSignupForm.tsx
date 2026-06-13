@@ -48,6 +48,18 @@ const tamanhos = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as
 const posicoes = ["Guarda-redes", "Defesa", "Médio", "Avançado", "Várias posições"] as const;
 const escaloes = ["Petiz", "Traquina", "Benjamim", "Infantil", "Iniciado", "Juvenil", "Outro"] as const;
 
+const MIN_AGE = 6;
+const MAX_AGE = 16;
+// Datas-limite calculadas dinamicamente com base na data atual.
+// Mais novo permitido: hoje - MIN_AGE anos. Mais velho permitido: (hoje - MAX_AGE anos) + 1 dia.
+const getBirthDateRange = () => {
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear() - MIN_AGE, today.getMonth(), today.getDate());
+  const minDate = new Date(today.getFullYear() - MAX_AGE - 1, today.getMonth(), today.getDate() + 1);
+  const toIso = (d: Date) => d.toISOString().split("T")[0];
+  return { min: toIso(minDate), max: toIso(maxDate) };
+};
+
 const schema = z.object({
   nome: z.string().trim().min(2, "Nome é obrigatório").max(100),
   data_nascimento: z.string().trim().min(1, "Data de nascimento é obrigatória").superRefine((v, ctx) => {
@@ -56,13 +68,13 @@ const schema = z.object({
       ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Data inválida" });
       return;
     }
-    const min = new Date("2010-01-01");
-    const max = new Date("2020-12-31");
+    const { min, max } = getBirthDateRange();
     const t = d.getTime();
-    if (t < min.getTime() || t > max.getTime()) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Este Footcamp destina-se apenas a atletas dos 6 aos 16 anos." });
+    if (t < new Date(min).getTime() || t > new Date(max).getTime()) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: `Este Footcamp destina-se apenas a atletas dos ${MIN_AGE} aos ${MAX_AGE} anos.` });
     }
   }),
+
   idade: z.string().trim().min(1, "Idade é obrigatória"),
   clube_atual: z.string().trim().min(2, "Clube é obrigatório").max(100),
   posicao: z.enum(posicoes, { errorMap: () => ({ message: "Seleciona uma posição" }) }),
@@ -383,7 +395,7 @@ const FootcampSignupForm = () => {
                       <FormItem>
                         <FormLabel className="text-foreground">Data de nascimento</FormLabel>
                         <FormControl>
-                          <Input type="date" min="2010-01-01" max="2020-12-31" {...field} />
+                          <Input type="date" min={getBirthDateRange().min} max={getBirthDateRange().max} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
