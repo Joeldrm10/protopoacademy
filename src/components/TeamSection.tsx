@@ -1,6 +1,7 @@
 import AnimateOnScroll from "./AnimateOnScroll";
 import { Badge } from "./ui/badge";
-import teamNuno from "@/assets/team-nuno.jpg";
+import nunoDirecao from "@/assets/nuno-direcao.jpg.asset.json";
+import nunoTecnico from "@/assets/nuno-tecnico.jpg.asset.json";
 import teamJoao from "@/assets/team-joao.jpg";
 import teamLucas from "@/assets/team-lucas.jpg";
 import teamJeremy from "@/assets/team-jeremy.jpg";
@@ -19,7 +20,7 @@ const leadership: TeamMember[] = [
     role: "Co-Fundador & CEO | Treinador",
     description:
       "Responsável pela visão e desenvolvimento da ProTopo Academy, Nuno Rodrigues acompanha de perto a evolução dos atletas, com especial foco no trabalho técnico de passe e receção. A sua abordagem centra-se na consistência, na qualidade do gesto técnico e na melhoria contínua do desempenho individual.",
-    image: teamNuno,
+    image: nunoDirecao.url,
   },
   {
     name: "João Alves",
@@ -37,7 +38,7 @@ const technicalTeam: TeamMember[] = [
     specialty: "Passe e Receção",
     description:
       "Focado no desenvolvimento técnico, Nuno Rodrigues trabalha sobretudo o passe e a receção, garantindo maior controlo de jogo, precisão e qualidade nas decisões dos atletas.",
-    image: teamNuno,
+    image: nunoTecnico.url,
   },
   {
     name: "João Alves",
