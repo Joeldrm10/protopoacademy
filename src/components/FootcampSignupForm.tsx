@@ -37,6 +37,8 @@ const SEGURO_ANUAL = 20;
 
 const ptPhoneRegex = /^9\d{8}$/;
 
+const tamanhos = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
+
 const schema = z.object({
   nome: z.string().trim().min(2, "Nome é obrigatório").max(100),
   idade: z.string().trim().min(1, "Idade é obrigatória").refine(
@@ -51,6 +53,8 @@ const schema = z.object({
   semanas: z.array(z.string()).min(1, "Seleciona pelo menos uma semana"),
   irmaos: z.boolean().optional(),
   nome_irmaos: z.string().trim().max(200).optional(),
+  tamanho_tshirt: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
+  tamanho_calcas: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
   autorizacao_imagem: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
   restricao_alimentar: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
   restricao_alimentar_desc: z.string().trim().max(300).optional(),
