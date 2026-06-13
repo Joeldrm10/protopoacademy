@@ -87,6 +87,8 @@ const FootcampSignupForm = () => {
       semanas: [],
       irmaos: false,
       nome_irmaos: "",
+      tamanho_tshirt: undefined as unknown as "M",
+      tamanho_calcas: undefined as unknown as "M",
       autorizacao_imagem: undefined as unknown as "sim",
       restricao_alimentar: undefined as unknown as "nao",
       restricao_alimentar_desc: "",
