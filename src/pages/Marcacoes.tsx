@@ -777,7 +777,7 @@ const Marcacoes = () => {
                             {m.telemovel}
                           </a>
                           <a
-                            href={waUrl(m.telemovel, m.nome)}
+                            href={waUrl(m.telemovel, m.nome, m.tipo)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/15 text-green-500 border border-green-500/30 text-xs font-bold uppercase tracking-wider hover:bg-green-500/25 transition-colors"
