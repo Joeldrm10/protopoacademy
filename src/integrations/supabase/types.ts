@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       marcacoes: {
         Row: {
+          autorizacao_imagem: boolean | null
           confirmado: boolean
           created_at: string
           data: string | null
@@ -28,6 +29,8 @@ export type Database = {
           nome: string
           nome_irmaos: string | null
           observacoes: string | null
+          restricao_alimentar: boolean | null
+          restricao_alimentar_desc: string | null
           seguro_anual: boolean | null
           semanas: string[] | null
           telemovel: string
@@ -35,6 +38,7 @@ export type Database = {
           valor_total: number | null
         }
         Insert: {
+          autorizacao_imagem?: boolean | null
           confirmado?: boolean
           created_at?: string
           data?: string | null
@@ -47,6 +51,8 @@ export type Database = {
           nome: string
           nome_irmaos?: string | null
           observacoes?: string | null
+          restricao_alimentar?: boolean | null
+          restricao_alimentar_desc?: string | null
           seguro_anual?: boolean | null
           semanas?: string[] | null
           telemovel: string
@@ -54,6 +60,7 @@ export type Database = {
           valor_total?: number | null
         }
         Update: {
+          autorizacao_imagem?: boolean | null
           confirmado?: boolean
           created_at?: string
           data?: string | null
@@ -66,6 +73,8 @@ export type Database = {
           nome?: string
           nome_irmaos?: string | null
           observacoes?: string | null
+          restricao_alimentar?: boolean | null
+          restricao_alimentar_desc?: string | null
           seguro_anual?: boolean | null
           semanas?: string[] | null
           telemovel?: string
