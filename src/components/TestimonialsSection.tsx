@@ -108,10 +108,10 @@ const TestimonialsSection = () => {
             Junta-te aos atletas que já estão a evoluir connosco.
           </p>
           <Link
-            to="/marcar"
+            to="/marcar?tipo=footcamp"
             className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg hover:shadow-xl"
           >
-            Quero começar
+            Inscrever Footcamp
           </Link>
         </AnimateOnScroll>
       </div>
