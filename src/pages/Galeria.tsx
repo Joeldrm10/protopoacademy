@@ -139,16 +139,16 @@ const Galeria = () => {
           <AnimateOnScroll>
             <div className="mt-20 max-w-2xl mx-auto text-center bg-card/50 border border-border rounded-2xl p-8 md:p-12">
               <h2 className="font-heading font-bold text-3xl md:text-4xl mb-3">
-                Queres fazer <span className="text-gradient-gold">parte</span>?
+                Queres participar no <span className="text-gradient-gold">Footcamp</span>?
               </h2>
               <p className="text-muted-foreground mb-6">
-                Junta-te aos nossos atletas e começa a tua evolução hoje.
+                Garante já a vaga do teu atleta para o Footcamp Verão 2026.
               </p>
               <Link
-                to="/marcar"
+                to="/marcar?tipo=footcamp"
                 className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
               >
-                Marcar treino
+                Inscrever Footcamp
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

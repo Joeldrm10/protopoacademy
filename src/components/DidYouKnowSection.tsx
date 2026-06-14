@@ -122,10 +122,10 @@ const DidYouKnowSection = () => {
               Na <span className="text-foreground font-semibold not-italic">ProTopo Academy</span>, não treinamos só no campo — também ajudamos os atletas a evoluir fora dele.
             </p>
             <Link
-              to="/marcar"
+              to="/marcar?tipo=footcamp"
               className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-10 py-4 rounded-lg font-heading font-bold text-base md:text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Quero melhorar o meu rendimento
+              Inscrever Footcamp
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
