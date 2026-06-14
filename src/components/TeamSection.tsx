@@ -58,20 +58,20 @@ const technicalTeam: TeamMember[] = [
     image: teamLucas,
   },
   {
+    name: "Luís Lopes",
+    role: "Treinador UEFA A",
+    specialty: "📹 Análise de Vídeo",
+    description:
+      "Treinador UEFA A e membro da equipa ProTopo. Especialista em análise de vídeo, Luís Lopes utiliza ferramentas de observação e avaliação de desempenho para identificar oportunidades de melhoria e acelerar o desenvolvimento técnico e tático dos atletas. A sua abordagem complementa o trabalho de campo com uma análise detalhada do jogo e da evolução individual de cada jogador.",
+    image: luisLopes.url,
+  },
+  {
     name: "Jérémy Pereira",
     role: "Treinador de Guarda-Redes",
     specialty: "Guarda-Redes",
     description:
       "Responsável pelo treino específico de guarda-redes, Jérémy Pereira desenvolve competências técnicas e posicionais, trabalhando reflexos, tomada de decisão e segurança entre os postes.",
     image: teamJeremy,
-  },
-  {
-    name: "Luís Lopes",
-    role: "Treinador UEFA A",
-    specialty: "🏆 Desenvolvimento Técnico e Tático",
-    description:
-      "Treinador UEFA A e novo membro da equipa ProTopo. Luís Lopes traz experiência, conhecimento técnico e uma abordagem focada no desenvolvimento individual dos atletas, contribuindo para a sua evolução dentro e fora do campo.",
-    image: luisLopes.url,
   },
 ];
 
