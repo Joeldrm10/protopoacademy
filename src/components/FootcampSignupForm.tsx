@@ -292,10 +292,20 @@ const FootcampSignupForm = () => {
         data.irmaos && data.nome_irmaos ? `Nome(s) do(s) irmão(s): ${data.nome_irmaos}` : "",
         ``,
         `🏥 SAÚDE`,
-        `Alergias: ${alergiasSim ? `Sim — ${alergiasDesc}` : "Não"}`,
-        `Medicação regular: ${medicacaoSim ? `Sim — ${medicacaoDesc}` : "Não"}`,
-        `Restrição alimentar: ${restricaoSim ? `Sim — ${restricaoDesc}` : "Não"}`,
-        `Informação médica relevante: ${infoMedica || "Nenhuma"}`,
+        ...(alergiasSim || medicacaoSim || restricaoSim || infoMedica
+          ? [
+              ...(alergiasSim
+                ? [`⚠ Alergias: ${alergiasDesc}`]
+                : [`✓ Sem alergias`]),
+              ...(medicacaoSim
+                ? [`⚠ Medicação regular: ${medicacaoDesc}`]
+                : [`✓ Sem medicação regular`]),
+              ...(restricaoSim
+                ? [`⚠ Restrição alimentar: ${restricaoDesc}`]
+                : [`✓ Sem restrição alimentar`]),
+              ...(infoMedica ? [`⚠ Informação médica relevante: ${infoMedica}`] : []),
+            ]
+          : [`Sem informações médicas relevantes.`]),
         ``,
         `📸 AUTORIZAÇÃO DE IMAGEM`,
         autorizaImagem ? "Sim" : "Não",
