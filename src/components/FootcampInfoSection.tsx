@@ -1,6 +1,7 @@
 import {
   Calendar, MapPin, Clock, Shirt, Package, Gift, ShowerHead, Apple,
   Sparkles, MessageCircle, CheckCircle2, HelpCircle, Users, Trophy,
+  Shield,
 } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import { WHATSAPP_URL_FOOTCAMP_INFO } from "@/lib/constants";
@@ -140,11 +141,59 @@ const FootcampInfoSection = () => {
                 </div>
               ))}
             </div>
-            <div className="mt-4 rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-1.5">
-              <p className="text-sm text-foreground">🛡️ Seguro anual <span className="font-semibold">obrigatório</span>: <span className="font-bold">20€</span></p>
-              <p className="text-sm text-foreground">🎁 Na inscrição das <span className="font-semibold">4 semanas</span>, o seguro anual é <span className="font-semibold text-primary">oferecido</span></p>
-              <p className="text-sm text-foreground">👨‍👦 Desconto irmãos: <span className="font-semibold">-10% sobre o valor total</span></p>
+            <div className="mt-4 rounded-lg bg-primary/5 border border-primary/20 p-3 text-center">
+              <p className="text-xs md:text-sm text-foreground">
+                O seguro anual (20€) é obrigatório e acresce aos planos de 1, 2 e 3 semanas. Na inscrição das 4 semanas, o seguro é oferecido.
+              </p>
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <div className="bg-card border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 border border-primary/20">
+                    <Shield className="w-4 h-4 text-primary" />
+                  </div>
+                  <h3 className="font-heading font-bold text-base text-foreground">Seguro Anual</h3>
+                </div>
+                <ul className="space-y-1.5">
+                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Obrigatório para todos os participantes</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Valor: <span className="font-bold">20€</span></span>
+                  </li>
+                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Cobertura válida durante 12 meses</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 border border-primary/20">
+                    <Gift className="w-4 h-4 text-primary" />
+                  </div>
+                  <h3 className="font-heading font-bold text-base text-foreground">Oferta Especial</h3>
+                </div>
+                <ul className="space-y-1.5">
+                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Inscrição de 4 semanas = seguro anual incluído</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Poupança imediata de <span className="font-bold text-primary">20€</span></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="mt-4 text-xs text-muted-foreground text-center">
+              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-10% sobre o valor total</span>
+            </p>
           </div>
         </AnimateOnScroll>
 
