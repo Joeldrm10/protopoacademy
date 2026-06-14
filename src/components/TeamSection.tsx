@@ -99,8 +99,6 @@ const MemberCard = ({ member, delay, featured = false }: { member: TeamMember; d
                 ? "center 20%"
                 : member.name === "Jérémy Pereira"
                 ? "30% 25%"
-                : member.name === "Luís Lopes"
-                ? "60% 20%"
                 : "center",
           }}
         />
