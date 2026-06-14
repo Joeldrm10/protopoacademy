@@ -143,7 +143,7 @@ const FootcampInfoSection = () => {
             </div>
             <div className="mt-4 rounded-lg bg-primary/5 border border-primary/20 p-3 text-center">
               <p className="text-xs md:text-sm text-foreground">
-                O seguro anual (20€) é obrigatório e acresce aos planos de 1, 2 e 3 semanas. Na inscrição das 4 semanas, o seguro é oferecido.
+                O seguro anual (20€) é obrigatório para todos os participantes. Nos planos de 1, 2 e 3 semanas acresce ao valor apresentado. Na inscrição de 4 semanas está incluído gratuitamente.
               </p>
             </div>
 
@@ -185,7 +185,7 @@ const FootcampInfoSection = () => {
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Poupança imediata de <span className="font-bold text-primary">20€</span></span>
+                    <span>Seguro anual incluído sem custo adicional</span>
                   </li>
                 </ul>
               </div>
