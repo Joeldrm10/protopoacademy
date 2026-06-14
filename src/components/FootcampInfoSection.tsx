@@ -162,10 +162,6 @@ const FootcampInfoSection = () => {
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Valor: <span className="font-bold">20€</span></span>
-                  </li>
-                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
-                    <span className="text-primary mt-0.5">•</span>
                     <span>Cobertura válida durante 12 meses</span>
                   </li>
                 </ul>
@@ -181,11 +177,11 @@ const FootcampInfoSection = () => {
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Inscrição de 4 semanas = seguro anual incluído</span>
+                    <span>Seguro anual incluído sem custo adicional</span>
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Seguro anual incluído sem custo adicional</span>
+                    <span>Exclusivo para inscrições de 4 semanas</span>
                   </li>
                 </ul>
               </div>
