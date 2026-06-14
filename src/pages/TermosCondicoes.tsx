@@ -23,82 +23,95 @@ const TermosCondicoes = () => {
         <div className="space-y-10 text-foreground/90 leading-relaxed">
           <section>
             <p className="text-muted-foreground">
-              Os presentes Termos e Condições aplicam-se a todos os utilizadores que marquem treinos
-              com a ProTopo Academy. Ao efetuar uma marcação, o utilizador declara que leu, compreendeu
-              e aceita as condições abaixo descritas.
+              Os presentes Termos e Condições aplicam-se a todos os utilizadores que efetuem a inscrição no Footcamp Verão 2026 da ProTopo Academy. Ao submeter o formulário de inscrição, o utilizador declara que leu, compreendeu e aceita as condições abaixo descritas.
             </p>
           </section>
 
           <section>
-            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">1. Marcação de treinos</h2>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">1. Inscrições</h2>
             <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
-              <li>As marcações são efetuadas através do formulário disponível no site.</li>
-              <li>Toda a marcação está <strong className="text-foreground">sujeita a confirmação</strong> por parte da ProTopo Academy.</li>
-              <li>O treino só é considerado confirmado após contacto direto da nossa equipa (telefone ou WhatsApp).</li>
+              <li>A inscrição é efetuada através do formulário disponibilizado pela ProTopo Academy.</li>
+              <li>O envio do formulário <strong className="text-foreground">não garante automaticamente a vaga</strong>.</li>
+              <li>A inscrição apenas fica confirmada após validação da disponibilidade, contacto da equipa ProTopo e confirmação do pagamento.</li>
+              <li>As vagas são limitadas e atribuídas por ordem de confirmação.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">2. Cancelamento e reagendamento</h2>
-            <p className="text-muted-foreground mb-3">
-              Em caso de impossibilidade de comparecer, o utilizador deve avisar com a maior antecedência possível.
-            </p>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">2. Pagamentos</h2>
             <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
-              <li>Cancelamentos ou reagendamentos devem ser comunicados com pelo menos <strong className="text-foreground">24 horas de antecedência</strong>.</li>
-              <li>Avisos abaixo deste prazo poderão não permitir a remarcação do treino.</li>
+              <li>Os pagamentos podem ser efetuados pelos métodos disponibilizados pela ProTopo Academy.</li>
+              <li>Após a inscrição, a equipa entrará em contacto para fornecer os dados necessários.</li>
+              <li>A vaga apenas fica garantida após confirmação do pagamento.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">3. Faltas e atrasos</h2>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">3. Seguro Desportivo</h2>
             <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
-              <li>A falta sem aviso prévio pode implicar a perda do treino marcado.</li>
-              <li>Em caso de atraso, o tempo de treino poderá ser reduzido para não comprometer marcações seguintes.</li>
-              <li>Atrasos superiores a 15 minutos podem levar ao cancelamento da sessão.</li>
+              <li>O seguro anual é <strong className="text-foreground">obrigatório</strong> para todos os participantes.</li>
+              <li>O valor do seguro é definido pela organização.</li>
+              <li>Nas campanhas ou promoções em que seja indicado, o seguro poderá ser oferecido sem custo adicional.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">4. Responsabilidade do utilizador</h2>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">4. Menores de Idade</h2>
+            <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
+              <li>Todos os participantes são menores de idade.</li>
+              <li>A inscrição deve ser efetuada ou autorizada pelo respetivo encarregado de educação.</li>
+              <li>A ProTopo Academy poderá solicitar confirmação da autorização sempre que necessário.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">5. Cancelamentos e Alterações</h2>
+            <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
+              <li>A organização reserva-se o direito de alterar horários, atividades, treinadores ou outros elementos do programa por motivos operacionais, climatéricos, de segurança ou força maior.</li>
+              <li>Qualquer alteração relevante será comunicada aos encarregados de educação.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">6. Responsabilidade</h2>
+            <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
+              <li>Os encarregados de educação declaram que as informações fornecidas na inscrição são verdadeiras e completas.</li>
+              <li>Qualquer informação médica, alergia, restrição alimentar ou necessidade especial relevante deverá ser comunicada através do formulário de inscrição.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">7. Isenção de responsabilidade</h2>
             <p className="text-muted-foreground">
-              Durante os treinos, o utilizador compromete-se a seguir as orientações dos treinadores,
-              utilizar equipamento adequado e informar previamente sobre qualquer condição médica,
-              lesão ou limitação física que possa afetar a prática desportiva.
+              A prática desportiva envolve riscos inerentes. A ProTopo Academy não se responsabiliza por lesões, acidentes ou danos resultantes da prática desportiva, desde que a atividade decorra dentro das normas de segurança e das instruções dadas pelos treinadores. Recomenda-se que o participante esteja apto fisicamente para a prática desportiva.
             </p>
           </section>
 
           <section>
-            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">5. Alteração de horários</h2>
-            <p className="text-muted-foreground">
-              A ProTopo Academy reserva-se o direito de alterar horários de treinos por motivos
-              meteorológicos, logísticos ou de força maior, comprometendo-se a comunicar a alteração
-              ao utilizador com a maior brevidade possível e a propor uma nova data.
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">8. Contactos</h2>
+            <p className="mb-3 text-muted-foreground">
+              Para esclarecimento de dúvidas relacionadas com inscrições, participação ou proteção de dados:
             </p>
+            <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
+              <li>
+                <span className="text-foreground font-medium">Email:</span>{" "}
+                <a href={EMAIL_URL_GERAL} className="text-primary hover:underline">
+                  {EMAIL}
+                </a>
+              </li>
+              <li>
+                <span className="text-foreground font-medium">WhatsApp:</span>{" "}
+                <a href={WHATSAPP_URL_GERAL} className="text-primary hover:underline">
+                  {WHATSAPP_NUMBER_EXPORT}
+                </a>
+              </li>
+            </ul>
           </section>
 
           <section>
-            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">6. Isenção de responsabilidade</h2>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">9. Aceitação dos termos</h2>
             <p className="text-muted-foreground">
-              A prática desportiva envolve riscos inerentes. A ProTopo Academy não se responsabiliza
-              por lesões, acidentes ou danos resultantes da prática desportiva, desde que a atividade
-              decorra dentro das normas de segurança e das instruções dadas pelos treinadores.
-              Recomenda-se que o utilizador esteja apto fisicamente para a prática desportiva.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">7. Menores de idade</h2>
-            <p className="text-muted-foreground">
-              Utilizadores com menos de 18 anos devem efetuar a marcação com autorização de um
-              encarregado de educação, que assume a responsabilidade pela inscrição.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">8. Aceitação dos termos</h2>
-            <p className="text-muted-foreground">
-              Ao submeter o formulário de marcação, o utilizador confirma que leu e aceita
-              integralmente os presentes Termos e Condições, bem como a{" "}
+              Ao submeter o formulário de inscrição, o utilizador confirma que leu e aceita integralmente os presentes Termos e Condições, bem como a{" "}
               <Link to="/politica-privacidade" className="text-primary hover:underline">
                 Política de Privacidade
               </Link>
