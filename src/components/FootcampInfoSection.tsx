@@ -1,6 +1,7 @@
 import {
   Calendar, MapPin, Clock, Shirt, Package, Gift, ShowerHead, Apple,
   Sparkles, MessageCircle, CheckCircle2, HelpCircle, Users, Trophy,
+  Shield,
 } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import { WHATSAPP_URL_FOOTCAMP_INFO } from "@/lib/constants";
