@@ -161,7 +161,7 @@ const Marcacoes = () => {
   const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
-  const [filterDate, setFilterDate] = useState<Date | undefined>();
+  const [filterSemana, setFilterSemana] = useState<string>("todos");
   const [filterTipo, setFilterTipo] = useState<string>("todos");
   const [filterEstado, setFilterEstado] = useState<string>("todos");
   const [searchNome, setSearchNome] = useState("");
@@ -171,14 +171,18 @@ const Marcacoes = () => {
     return marcacoes.filter((m) => {
       if (filterTipo !== "todos" && m.tipo !== filterTipo) return false;
       if (filterEstado !== "todos" && m.estado !== filterEstado) return false;
-      if (filterDate) {
-        const selected = format(filterDate, "yyyy-MM-dd");
-        if (m.data !== selected) return false;
+      if (filterSemana !== "todos") {
+        const semanas = m.semanas || [];
+        const hasWeek = semanas.some((s) => {
+          const match = s.match(/(\d)/);
+          return match && match[1] === filterSemana;
+        });
+        if (!hasWeek) return false;
       }
       if (searchNome && !m.nome.toLowerCase().includes(searchNome.toLowerCase())) return false;
       return true;
     });
-  }, [marcacoes, filterDate, filterTipo, filterEstado, searchNome]);
+  }, [marcacoes, filterSemana, filterTipo, filterEstado, searchNome]);
 
   // Family detection: index marcações by normalized encarregado and telemóvel
   const normalize = (s: string | null | undefined) =>
