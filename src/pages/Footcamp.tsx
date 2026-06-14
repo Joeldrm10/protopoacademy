@@ -924,7 +924,7 @@ const Footcamp = () => {
               "Desenvolvimento técnico, físico e mental",
               "Ambiente seguro, organizado e profissional",
               "Equipamento oficial ProTopo incluído",
-              "Seguro desportivo anual",
+              "Treinadores certificados UEFA",
               "Lanches diários incluídos",
               "Almoço incluído nos dias completos",
               "Balneários com água quente",
