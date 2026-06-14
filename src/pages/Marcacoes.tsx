@@ -529,23 +529,32 @@ const Marcacoes = () => {
                     className="pl-9 w-[200px] border-border"
                   />
                 </div>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-[200px] justify-start text-left font-normal border-border",
-                        !filterDate && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {filterDate ? format(filterDate, "dd/MM/yyyy", { locale: pt }) : "Filtrar por data"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar mode="single" selected={filterDate} onSelect={setFilterDate} locale={pt} className="p-3 pointer-events-auto" />
-                  </PopoverContent>
-                </Popover>
+                <div className="flex flex-wrap items-center gap-2">
+                  {[
+                    { value: "todos", label: "Todos os atletas" },
+                    { value: "1", label: "Semana 1" },
+                    { value: "2", label: "Semana 2" },
+                    { value: "3", label: "Semana 3" },
+                    { value: "4", label: "Semana 4" },
+                  ].map((opt) => {
+                    const active = filterSemana === opt.value;
+                    return (
+                      <Button
+                        key={opt.value}
+                        type="button"
+                        variant={active ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setFilterSemana(opt.value)}
+                        className={cn(
+                          "border-border",
+                          active && "bg-primary text-primary-foreground hover:bg-primary/90 border-primary shadow-md shadow-primary/20"
+                        )}
+                      >
+                        {opt.label}
+                      </Button>
+                    );
+                  })}
+                </div>
                 <Select value={filterTipo} onValueChange={setFilterTipo}>
                   <SelectTrigger className="w-[180px] border-border">
                     <SelectValue placeholder="Tipo de treino" />
@@ -569,8 +578,8 @@ const Marcacoes = () => {
                     <SelectItem value="cancelado">Cancelado</SelectItem>
                   </SelectContent>
                 </Select>
-                {(filterDate || filterTipo !== "todos" || filterEstado !== "todos" || searchNome) && (
-                  <Button variant="ghost" size="sm" onClick={() => { setFilterDate(undefined); setFilterTipo("todos"); setFilterEstado("todos"); setSearchNome(""); }} className="text-muted-foreground hover:text-foreground">
+                {(filterSemana !== "todos" || filterTipo !== "todos" || filterEstado !== "todos" || searchNome) && (
+                  <Button variant="ghost" size="sm" onClick={() => { setFilterSemana("todos"); setFilterTipo("todos"); setFilterEstado("todos"); setSearchNome(""); }} className="text-muted-foreground hover:text-foreground">
                     <X className="w-4 h-4 mr-1" /> Limpar
                   </Button>
                 )}
