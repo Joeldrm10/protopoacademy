@@ -1,9 +1,10 @@
 import { Target, TrendingUp, Users, Shield } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
+import { technicalTeam } from "./TeamSection";
 
 const stats = [
   { icon: Users, value: "50+", label: "Atletas" },
-  { icon: Target, value: "4", label: "Treinadores" },
+  { icon: Target, value: `${technicalTeam.length}`, label: "Treinadores" },
   { icon: TrendingUp, value: "100%", label: "Foco na evolução" },
   { icon: Shield, value: "6-16", label: "Anos de idade" },
 ];
