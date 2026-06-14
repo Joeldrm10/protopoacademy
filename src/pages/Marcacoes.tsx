@@ -234,19 +234,21 @@ const Marcacoes = () => {
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
   const cancelados = useMemo(() => marcacoes.filter((m) => m.estado === "cancelado").length, [marcacoes]);
 
-  // Receita prevista (uses valor_total, excludes cancelled)
+  // Receita prevista — total e confirmado consideram apenas inscrições confirmadas; pendente mostra apenas o valor das pendentes
   const receita = useMemo(() => {
-    const active = marcacoes.filter((m) => m.estado !== "cancelado" && m.valor_total != null);
-    const total = active.reduce((s, m) => s + (m.valor_total || 0), 0);
-    const confirmado = active.filter((m) => m.estado === "confirmado").reduce((s, m) => s + (m.valor_total || 0), 0);
-    const pendente = total - confirmado;
-    return { total, confirmado, pendente };
+    const confirmado = marcacoes
+      .filter((m) => m.estado === "confirmado" && m.valor_total != null)
+      .reduce((s, m) => s + (m.valor_total || 0), 0);
+    const pendente = marcacoes
+      .filter((m) => m.estado === "pendente" && m.valor_total != null)
+      .reduce((s, m) => s + (m.valor_total || 0), 0);
+    return { total: confirmado, confirmado, pendente };
   }, [marcacoes]);
 
-  // Equipamento (footcamp, non-cancelled)
+  // Equipamento (footcamp, apenas confirmados)
   const TAMANHOS = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
   const equipamentoStats = useMemo(() => {
-    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado !== "cancelado");
+    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado === "confirmado");
     const tshirts: Record<string, number> = {};
     const calcas: Record<string, number> = {};
     TAMANHOS.forEach((t) => { tshirts[t] = 0; calcas[t] = 0; });
@@ -258,9 +260,9 @@ const Marcacoes = () => {
   }, [marcacoes]);
 
 
-  // Footcamp stats
+  // Footcamp stats — apenas inscrições confirmadas
   const footcampStats = useMemo(() => {
-    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado !== "cancelado");
+    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado === "confirmado");
     const weekCounts = [0, 0, 0, 0];
     fc.forEach((m) => {
       (m.semanas || []).forEach((s) => {
@@ -271,12 +273,12 @@ const Marcacoes = () => {
         }
       });
     });
-    // Families: groups of 2+ that share encarregado/telemóvel
+    // Famílias: grupos de 2+ que partilham encarregado/telemóvel (apenas confirmados)
     const seen = new Set<string>();
     let familiesCount = 0;
     fc.forEach((m) => {
       if (seen.has(m.id)) return;
-      const rel = (familyMap.get(m.id) || []).filter((r) => r.tipo === "footcamp" && r.estado !== "cancelado");
+      const rel = (familyMap.get(m.id) || []).filter((r) => r.tipo === "footcamp" && r.estado === "confirmado");
       if (rel.length > 0) {
         familiesCount++;
         seen.add(m.id);
@@ -458,6 +460,11 @@ const Marcacoes = () => {
                 </div>
               </div>
             )}
+
+            {/* Nota de apoio */}
+            <p className="text-xs text-muted-foreground italic mb-4 -mt-2">
+              Estatísticas e equipamento contabilizam apenas inscrições confirmadas.
+            </p>
 
             {/* Receita Prevista */}
             <div className="bg-gradient-to-br from-primary/10 via-card to-card border border-primary/30 rounded-xl p-4 sm:p-5 mb-6">
