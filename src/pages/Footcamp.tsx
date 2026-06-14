@@ -455,14 +455,16 @@ const Footcamp = () => {
                   <li>• <span className="font-semibold">Obrigatório</span> para todos os participantes</li>
                   <li>• Custo: <span className="font-bold">20€</span></li>
                   <li>• Válido durante <span className="font-semibold">12 meses</span></li>
-                  <li>• <span className="text-primary font-semibold">Oferta</span> na inscrição das 4 semanas</li>
                 </ul>
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll delay={200}>
               <div className="rounded-xl p-5 h-full border border-primary/40 bg-primary/5">
                 <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🎁 Oferta especial</p>
-                <p className="text-foreground">Na compra das <span className="font-bold">4 semanas</span>, o seguro anual é <span className="font-bold">oferecido</span>.</p>
+                <ul className="text-foreground text-sm space-y-1">
+                  <li>• Inscrição de <span className="font-bold">4 semanas</span> = Seguro anual incluído</li>
+                  <li>• Poupança imediata de <span className="font-bold text-primary">20€</span></li>
+                </ul>
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll delay={300}>
