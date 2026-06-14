@@ -24,7 +24,7 @@ const PoliticaPrivacidade = () => {
           <section>
             <p className="text-muted-foreground">
               A tua privacidade é importante para nós. Esta página explica, de forma simples e clara, que
-              dados recolhemos quando marcas um treino na ProTopo Academy, para que servem e quais são os
+              dados recolhemos quando efetuas a inscrição no Footcamp da ProTopo Academy, para que servem e quais são os
               teus direitos.
             </p>
           </section>
@@ -34,14 +34,14 @@ const PoliticaPrivacidade = () => {
               1. Que dados recolhemos
             </h2>
             <p className="mb-3 text-muted-foreground">
-              Os dados são recolhidos para marcações de atletas com idades compreendidas entre os 6 e os 16 anos.
-              Quando preencheres o formulário de marcação, pedimos apenas o essencial:
+              Os dados são recolhidos para inscrições de atletas com idades compreendidas entre os 6 e os 16 anos.
+              Quando preencheres o formulário de inscrição, pedimos apenas o essencial:
             </p>
             <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
               <li>Nome</li>
               <li>Idade</li>
               <li>Número de telemóvel</li>
-              <li>Tipo de treino, data e hora pretendidos</li>
+              <li>Semana(s) selecionada(s) e dados do participante</li>
             </ul>
           </section>
 
@@ -50,15 +50,24 @@ const PoliticaPrivacidade = () => {
               2. Para que servem os teus dados
             </h2>
             <p className="text-muted-foreground">
-              Os teus dados são usados <strong className="text-foreground">apenas</strong> para organizar o
-              teu treino e para entrarmos em contacto contigo (por chamada ou WhatsApp) a confirmar a
-              marcação. Não enviamos publicidade nem usamos os teus dados para qualquer outro fim.
+              Os teus dados são usados <strong className="text-foreground">apenas</strong> para organizar a
+              tua participação no Footcamp e para entrarmos em contacto contigo (por chamada ou WhatsApp) a confirmar a
+              inscrição. Não enviamos publicidade nem usamos os teus dados para qualquer outro fim.
             </p>
           </section>
 
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              3. Partilha com terceiros
+              3. Base legal do tratamento de dados
+            </h2>
+            <p className="text-muted-foreground">
+              Os dados pessoais são tratados com base no consentimento do utilizador e na necessidade de gestão da inscrição, comunicação com os participantes e organização do Footcamp da ProTopo Academy.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
+              4. Partilha com terceiros
             </h2>
             <p className="text-muted-foreground">
               Os teus dados <strong className="text-foreground">não são partilhados, vendidos nem cedidos</strong>{" "}
@@ -68,28 +77,26 @@ const PoliticaPrivacidade = () => {
 
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              4. Segurança
+              5. Segurança e conservação dos dados
             </h2>
             <p className="text-muted-foreground">
               Os dados são tratados com medidas de segurança adequadas para proteger a informação
-              pessoal dos utilizadores e mantidos apenas durante o tempo estritamente necessário
-              para gerir a marcação. Depois disso, são eliminados.
+              pessoal dos utilizadores. Os dados pessoais serão conservados apenas durante o período necessário à gestão da inscrição, participação e acompanhamento relacionado com o Footcamp, sendo posteriormente eliminados, salvo quando exista obrigação legal que imponha a sua conservação por um período superior.
             </p>
           </section>
 
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              5. Menores de idade
+              6. Menores de idade
             </h2>
             <p className="text-muted-foreground">
-              Se o utilizador tiver menos de 18 anos, recomenda-se que o pedido seja feito com
-              autorização de um encarregado de educação.
+              As inscrições de participantes menores de idade devem ser efetuadas ou autorizadas pelo respetivo encarregado de educação.
             </p>
           </section>
 
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              6. Os teus direitos
+              7. Os teus direitos
             </h2>
             <p className="mb-3 text-muted-foreground">
               A qualquer momento podes pedir-nos para:
@@ -106,7 +113,7 @@ const PoliticaPrivacidade = () => {
 
           <section className="rounded-2xl border border-primary/20 bg-card p-6 md:p-8">
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">
-              7. Responsável pelo tratamento dos dados
+              8. Responsável pelo tratamento dos dados
             </h2>
             <p className="text-muted-foreground mb-5">
               O responsável pela recolha e tratamento dos teus dados pessoais é a{" "}
