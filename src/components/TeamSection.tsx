@@ -32,7 +32,7 @@ const leadership: TeamMember[] = [
   },
 ];
 
-const technicalTeam: TeamMember[] = [
+export const technicalTeam: TeamMember[] = [
   {
     name: "Nuno Rodrigues",
     role: "Treinador",
