@@ -8,11 +8,11 @@ const wa = (msg: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 
 export const WHATSAPP_NUMBER_EXPORT = WHATSAPP_NUMBER;
-export const WHATSAPP_URL_GERAL = wa("Olá! Vi o site da ProTopo Academy e gostava de saber mais sobre os treinos.");
-export const WHATSAPP_URL_MARCAR = wa("Olá, gostaria de marcar um treino na ProTopo Academy.");
-export const WHATSAPP_URL_DUVIDAS = wa("Olá, gostaria de tirar algumas dúvidas sobre os treinos da ProTopo Academy.");
-export const WHATSAPP_URL_PLANOS = wa("Olá, quero saber mais sobre os planos da ProTopo Academy.");
-export const WHATSAPP_URL_DIRETO = wa("Olá, quero marcar um treino");
-export const EMAIL_URL_GERAL = `mailto:${EMAIL}?subject=Pedido%20de%20informa%C3%A7%C3%A3o&body=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20treinos.`;
+export const WHATSAPP_URL_GERAL = wa("Olá! Gostaria de esclarecer algumas dúvidas sobre o Footcamp Verão 2026.");
+export const WHATSAPP_URL_MARCAR = wa("Olá! Vi o site da ProTopo Academy e gostaria de obter mais informações sobre o Footcamp Verão 2026.");
+export const WHATSAPP_URL_DUVIDAS = wa("Olá! Tenho algumas dúvidas sobre o Footcamp Verão 2026.");
+export const WHATSAPP_URL_PLANOS = wa("Olá! Tenho interesse no Footcamp Verão 2026 e gostaria de receber mais informações.");
+export const WHATSAPP_URL_DIRETO = wa("Olá! Pretendo inscrever um atleta no Footcamp Verão 2026.");
+export const EMAIL_URL_GERAL = `mailto:${EMAIL}?subject=Pedido%20de%20informa%C3%A7%C3%A3o&body=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Footcamp%20Ver%C3%A3o%202026.`;
 export const EMAIL_URL_DADOS = `mailto:${EMAIL}?subject=Pedido%20relativo%20a%20dados%20pessoais`;
-export const WHATSAPP_URL_FOOTCAMP_INFO = wa("Olá! Gostava de saber mais informações sobre a ProTopo Footcamp — Edição Verão 2026.");
+export const WHATSAPP_URL_FOOTCAMP_INFO = wa("Olá! Tenho interesse no Footcamp Verão 2026 e gostaria de receber mais informações.");
