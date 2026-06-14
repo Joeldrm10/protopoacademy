@@ -461,6 +461,11 @@ const Marcacoes = () => {
               </div>
             )}
 
+            {/* Nota de apoio */}
+            <p className="text-xs text-muted-foreground italic mb-4 -mt-2">
+              Estatísticas e equipamento contabilizam apenas inscrições confirmadas.
+            </p>
+
             {/* Receita Prevista */}
             <div className="bg-gradient-to-br from-primary/10 via-card to-card border border-primary/30 rounded-xl p-4 sm:p-5 mb-6">
               <div className="flex items-center gap-2 mb-3">
