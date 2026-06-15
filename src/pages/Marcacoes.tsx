@@ -851,7 +851,7 @@ const Marcacoes = () => {
                                   <Trophy className="w-3 h-3" />Footcamp
                                 </span>
                               )}
-                              {related.length > 0 && <FamilyBadge siblings={related} />}
+                              {related.siblings.length > 0 && <FamilyBadge siblings={related.siblings} matched={related.matched} />}
                             </div>
                             <ChevronDown className={cn("w-5 h-5 text-muted-foreground shrink-0 transition-transform", isOpen && "rotate-180")} />
                           </div>
