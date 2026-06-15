@@ -77,18 +77,25 @@ const estadoStyles: Record<string, string> = {
 
 type FamilyBadgeProps = {
   siblings: string[];
+  matched: string[];
 };
-const FamilyBadge = ({ siblings }: FamilyBadgeProps) => {
+const FamilyBadge = ({ siblings, matched }: FamilyBadgeProps) => {
   if (siblings.length === 0) return null;
+  const isIdentified = matched.length > 0;
   return (
     <Popover>
       <PopoverTrigger asChild>
         <button
           type="button"
-          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
-          title="Irmãos indicados nesta inscrição"
+          className={cn(
+            "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors",
+            isIdentified
+              ? "bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
+              : "bg-muted/40 text-muted-foreground border-border hover:bg-muted/60"
+          )}
+          title={isIdentified ? "Família identificada" : "Irmãos indicados (sem correspondência)"}
         >
-          🟢 Família identificada
+          {isIdentified ? "🟢 Família identificada" : "👥 Irmãos indicados"}
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-64 p-3">
@@ -96,14 +103,25 @@ const FamilyBadge = ({ siblings }: FamilyBadgeProps) => {
           <UserCheck className="w-3 h-3" /> Irmãos indicados
         </p>
         <ul className="space-y-1 list-disc list-inside">
-          {siblings.map((n, i) => (
-            <li key={i} className="text-sm text-foreground">{n}</li>
-          ))}
+          {siblings.map((n, i) => {
+            const isMatch = matched.includes(n);
+            return (
+              <li key={i} className="text-sm text-foreground flex items-center gap-1.5">
+                <span>{n}</span>
+                {isMatch ? (
+                  <span className="text-[10px] font-semibold text-green-500">✓ inscrito</span>
+                ) : (
+                  <span className="text-[10px] text-muted-foreground">não inscrito</span>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </PopoverContent>
     </Popover>
   );
 };
+
 
 const hasMedicalInfo = (m: Marcacao) =>
   m.tem_alergias === true || m.toma_medicacao === true || m.restricao_alimentar === true || !!(m.informacao_medica && m.informacao_medica.trim());
