@@ -206,7 +206,11 @@ const FootcampSignupForm = () => {
   const seguroOferta = numSemanas === 4;
   const seguroCusto = seguroOferta ? 0 : (numSemanas > 0 ? SEGURO_ANUAL : 0);
   const subtotal = precoBase + seguroCusto;
-  const precoFinal = irmaos ? +(subtotal * 0.9).toFixed(2) : subtotal;
+  // O desconto irmãos só é aplicado após validação bidirecional no Admin.
+  // No formulário mostramos sempre o subtotal como valor previsto.
+  const precoPrevisto = subtotal;
+  const descontoIrmaosPotencial = irmaos ? +(subtotal * 0.1).toFixed(2) : 0;
+
 
   const onSubmit = async (data: FormData) => {
     const now = Date.now();
