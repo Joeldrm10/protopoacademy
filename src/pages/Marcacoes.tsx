@@ -232,20 +232,35 @@ const Marcacoes = () => {
   }, [marcacoes]);
 
 
+  // Valor efetivo: o desconto de irmãos só é aplicado quando a família
+  // está realmente identificada (pelo menos um irmão indicado existe nas inscrições).
+  // Se o utilizador marcou desconto mas a família ainda não está validada,
+  // reverte-se o -10% aplicado no formulário.
+  const effectiveValor = (m: Marcacao): number | null => {
+    if (m.valor_total == null) return null;
+    const fam = familyMap.get(m.id);
+    const claimed = !!m.desconto_irmaos;
+    const validated = (fam?.matched.length ?? 0) > 0;
+    if (claimed && !validated) {
+      return Math.round((m.valor_total / 0.9) * 100) / 100;
+    }
+    return m.valor_total;
+  };
+
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
   const cancelados = useMemo(() => marcacoes.filter((m) => m.estado === "cancelado").length, [marcacoes]);
 
-  // Receita prevista — total e confirmado consideram apenas inscrições confirmadas; pendente mostra apenas o valor das pendentes
+  // Receita prevista — usa o valor efetivo (desconto só conta com família validada)
   const receita = useMemo(() => {
     const confirmado = marcacoes
-      .filter((m) => m.estado === "confirmado" && m.valor_total != null)
-      .reduce((s, m) => s + (m.valor_total || 0), 0);
+      .filter((m) => m.estado === "confirmado")
+      .reduce((s, m) => s + (effectiveValor(m) || 0), 0);
     const pendente = marcacoes
-      .filter((m) => m.estado === "pendente" && m.valor_total != null)
-      .reduce((s, m) => s + (m.valor_total || 0), 0);
+      .filter((m) => m.estado === "pendente")
+      .reduce((s, m) => s + (effectiveValor(m) || 0), 0);
     return { total: confirmado, confirmado, pendente };
-  }, [marcacoes]);
+  }, [marcacoes, familyMap]);
 
   // Equipamento (footcamp, apenas confirmados)
   const TAMANHOS = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
@@ -687,9 +702,9 @@ const Marcacoes = () => {
                                     <MessageCircle className="w-3.5 h-3.5" />
                                   </a>
                                 </div>
-                                {isFootcamp && m.valor_total != null && (
+                                {isFootcamp && effectiveValor(m) != null && (
                                   <p className="text-xs font-sans font-bold text-primary mt-1 flex items-center gap-0.5">
-                                    <Euro className="w-3 h-3" />{m.valor_total}
+                                    <Euro className="w-3 h-3" />{effectiveValor(m)}
                                   </p>
                                 )}
                               </TableCell>
@@ -783,10 +798,25 @@ const Marcacoes = () => {
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
-                                        <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
-                                        {m.desconto_irmaos && m.nome_irmaos && (
-                                          <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
-                                        )}
+                                        {(() => {
+                                          const fam = familyMap.get(m.id);
+                                          const claimed = !!m.desconto_irmaos;
+                                          const validated = (fam?.matched.length ?? 0) > 0;
+                                          if (!claimed) return <p className="text-foreground">Não</p>;
+                                          return (
+                                            <>
+                                              <p className="text-foreground">
+                                                {validated ? "Sim (-10% aplicado)" : "Solicitado (não aplicado)"}
+                                              </p>
+                                              {m.nome_irmaos && (
+                                                <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
+                                              )}
+                                              {!validated && (
+                                                <p className="text-[10px] text-amber-500 mt-0.5">Família por validar</p>
+                                              )}
+                                            </>
+                                          );
+                                        })()}
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Imagem autorizada</p>
@@ -800,7 +830,18 @@ const Marcacoes = () => {
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
-                                        <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
+                                        {(() => {
+                                          const eff = effectiveValor(m);
+                                          const adjusted = eff != null && m.valor_total != null && eff !== m.valor_total;
+                                          return (
+                                            <p className="text-foreground font-semibold text-primary">
+                                              {eff != null ? `${eff}€` : "—"}
+                                              {adjusted && (
+                                                <span className="ml-1 text-[10px] text-muted-foreground font-normal">(sem desconto)</span>
+                                              )}
+                                            </p>
+                                          );
+                                        })()}
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Inscrito em</p>
@@ -868,9 +909,9 @@ const Marcacoes = () => {
                                 <Phone className="w-3.5 h-3.5 text-primary" />{m.telemovel}
                               </span>
                             </div>
-                            {isFootcamp && m.valor_total != null && (
+                            {isFootcamp && effectiveValor(m) != null && (
                               <span className="font-heading text-base text-primary flex items-center gap-0.5">
-                                <Euro className="w-4 h-4" />{m.valor_total}
+                                <Euro className="w-4 h-4" />{effectiveValor(m)}
                               </span>
                             )}
                           </div>
@@ -930,11 +971,35 @@ const Marcacoes = () => {
 
                                 <div className="flex gap-4 flex-wrap text-xs">
                                   <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Oferecido 🎁" : "Incluído (+20€)"}</span></span>
-                                  <span><span className="text-muted-foreground">Irmãos: </span><span className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</span></span>
+                                  {(() => {
+                                    const fam = familyMap.get(m.id);
+                                    const claimed = !!m.desconto_irmaos;
+                                    const validated = (fam?.matched.length ?? 0) > 0;
+                                    return (
+                                      <span>
+                                        <span className="text-muted-foreground">Irmãos: </span>
+                                        <span className="text-foreground">
+                                          {!claimed ? "Não" : validated ? "Sim (-10% aplicado)" : "Solicitado (não aplicado)"}
+                                        </span>
+                                      </span>
+                                    );
+                                  })()}
                                 </div>
                                 {m.desconto_irmaos && m.nome_irmaos && (
                                   <div className="text-xs"><span className="text-muted-foreground">Outro(s) irmão(s): </span><span className="text-foreground">{m.nome_irmaos}</span></div>
                                 )}
+                                {(() => {
+                                  const eff = effectiveValor(m);
+                                  if (eff == null) return null;
+                                  const adjusted = m.valor_total != null && eff !== m.valor_total;
+                                  return (
+                                    <div className="text-xs">
+                                      <span className="text-muted-foreground">Valor final: </span>
+                                      <span className="text-primary font-semibold">{eff}€</span>
+                                      {adjusted && <span className="ml-1 text-[10px] text-amber-500">(família por validar)</span>}
+                                    </div>
+                                  );
+                                })()}
 
                                 <MedicalAlerts m={m} />
 
