@@ -828,7 +828,7 @@ const Marcacoes = () => {
                 <div className="md:hidden space-y-3">
                   {filteredMarcacoes.map((m) => {
                     const isFootcamp = m.tipo === "footcamp";
-                    const related = familyMap.get(m.id) || [];
+                    const related = familyMap.get(m.id) || { siblings: [], matched: [] };
                     const isOpen = expandedMobile.has(m.id);
                     return (
                       <div key={m.id} className="bg-card border border-border rounded-xl overflow-hidden">
