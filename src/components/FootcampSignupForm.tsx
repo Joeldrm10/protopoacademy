@@ -763,7 +763,7 @@ const FootcampSignupForm = () => {
                     {irmaos && (
                       <div className="flex items-baseline justify-between gap-3">
                         <span className="text-sm text-muted-foreground">Desconto irmãos (-10%)</span>
-                        <span className="text-xs text-amber-400 font-medium">Pendente de validação</span>
+                        <span className="text-xs text-amber-400 font-medium text-right">Ainda não aplicado<br/>(aguarda validação)</span>
                       </div>
                     )}
                     <div className="border-t border-primary/20 pt-2 flex items-baseline justify-between gap-3">
@@ -771,12 +771,19 @@ const FootcampSignupForm = () => {
                       <span className="font-heading font-bold text-2xl text-gradient-gold">{precoPrevisto}€</span>
                     </div>
 
+                    {irmaos && (
+                      <p className="text-xs text-amber-400/90 leading-snug pt-1">
+                        ⚠️ O valor apresentado ainda não inclui o desconto de irmãos. Será aplicado após confirmação da inscrição do(s) irmão(s) pela equipa ProTopo.
+                      </p>
+                    )}
+
                     {seguroOferta && (
                       <div className="mt-2 rounded-lg bg-primary/10 border border-primary/30 px-3 py-2">
                         <p className="text-xs text-primary font-medium">🎁 Oferta especial: Seguro anual oferecido na inscrição das 4 semanas.</p>
                       </div>
                     )}
                   </div>
+
                 )}
 
                 <SectionHeader icon={Stethoscope} title="🏥 Informação médica" />
