@@ -158,6 +158,14 @@ const Marcacoes = () => {
   const [filterEstado, setFilterEstado] = useState<string>("todos");
   const [searchNome, setSearchNome] = useState("");
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [expandedMobile, setExpandedMobile] = useState<Set<string>>(new Set());
+  const toggleMobile = (id: string) => {
+    setExpandedMobile((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
 
   const filteredMarcacoes = useMemo(() => {
     return marcacoes.filter((m) => {
