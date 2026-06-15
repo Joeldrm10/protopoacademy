@@ -333,7 +333,7 @@ const FootcampSignupForm = () => {
         `💰 VALOR`,
         `Valor das semanas: ${precoBase}€`,
         `Seguro: ${seguroTxt}`,
-        data.irmaos ? `Desconto irmãos (-10%): pendente de validação (-${descontoIrmaosPotencial}€ se confirmado)` : "",
+        data.irmaos ? `Desconto irmãos (-10%): ainda não aplicado — aguarda validação (-${descontoIrmaosPotencial}€ se confirmado)` : "",
         `Valor previsto: ${precoPrevisto}€`,
         ``,
         `✅ Consentimento de dados: autorizado`,
