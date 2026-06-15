@@ -1020,7 +1020,7 @@ const FootcampSignupForm = () => {
                       {irmaos && (
                         <div className="flex justify-between gap-3 text-sm">
                           <span className="text-muted-foreground">Desconto irmãos (-10%)</span>
-                          <span className="text-amber-400 font-medium text-xs text-right">Pendente de validação</span>
+                          <span className="text-amber-400 font-medium text-xs text-right">Ainda não aplicado<br/>(aguarda validação)</span>
                         </div>
                       )}
                       <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
@@ -1030,10 +1030,11 @@ const FootcampSignupForm = () => {
                     </div>
 
                     {irmaos && (
-                      <p className="text-xs text-muted-foreground leading-snug">
-                        O desconto de irmãos será validado pela equipa ProTopo após confirmação da inscrição do(s) irmão(s).
+                      <p className="text-xs text-amber-400/90 leading-snug">
+                        ⚠️ O valor apresentado ainda não inclui o desconto de irmãos. Será validado e aplicado pela equipa ProTopo após confirmação da inscrição do(s) irmão(s).
                       </p>
                     )}
+
                   </div>
                 )}
 
