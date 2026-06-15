@@ -135,10 +135,23 @@ const calcAge = (iso: string): string => {
   return age >= 0 && age < 120 ? String(age) : "";
 };
 
+type Summary = {
+  nome: string;
+  semanasLabels: string[];
+  numSemanas: number;
+  precoBase: number;
+  seguroCusto: number;
+  seguroOferta: boolean;
+  irmaos: boolean;
+  precoPrevisto: number;
+};
+
 const FootcampSignupForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [lastSummary, setLastSummary] = useState<Summary | null>(null);
   const lastSubmitRef = useRef<number>(0);
+
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -193,7 +206,11 @@ const FootcampSignupForm = () => {
   const seguroOferta = numSemanas === 4;
   const seguroCusto = seguroOferta ? 0 : (numSemanas > 0 ? SEGURO_ANUAL : 0);
   const subtotal = precoBase + seguroCusto;
-  const precoFinal = irmaos ? +(subtotal * 0.9).toFixed(2) : subtotal;
+  // O desconto irmãos só é aplicado após validação bidirecional no Admin.
+  // No formulário mostramos sempre o subtotal como valor previsto.
+  const precoPrevisto = subtotal;
+  const descontoIrmaosPotencial = irmaos ? +(subtotal * 0.1).toFixed(2) : 0;
+
 
   const onSubmit = async (data: FormData) => {
     const now = Date.now();
@@ -234,7 +251,7 @@ const FootcampSignupForm = () => {
         restricao_alimentar: restricaoSim,
         restricao_alimentar_desc: restricaoDesc,
         observacoes: data.observacoes || null,
-        valor_total: precoFinal,
+        valor_total: precoPrevisto,
         estado: "pendente",
         data_nascimento: data.data_nascimento,
         clube_atual: data.clube_atual,
@@ -316,8 +333,8 @@ const FootcampSignupForm = () => {
         `💰 VALOR`,
         `Valor das semanas: ${precoBase}€`,
         `Seguro: ${seguroTxt}`,
-        data.irmaos ? `Desconto irmãos (-10%): -${(subtotal * 0.1).toFixed(2)}€` : "",
-        `Total final: ${precoFinal}€`,
+        data.irmaos ? `Desconto irmãos (-10%): pendente de validação (-${descontoIrmaosPotencial}€ se confirmado)` : "",
+        `Valor previsto: ${precoPrevisto}€`,
         ``,
         `✅ Consentimento de dados: autorizado`,
       ].filter(Boolean);
@@ -325,7 +342,18 @@ const FootcampSignupForm = () => {
       const message = encodeURIComponent(parts.join("\n"));
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
       lastSubmitRef.current = Date.now();
+      setLastSummary({
+        nome: data.nome,
+        semanasLabels,
+        numSemanas,
+        precoBase,
+        seguroCusto,
+        seguroOferta,
+        irmaos: !!data.irmaos,
+        precoPrevisto,
+      });
       setSubmitted(true);
+
     } catch (err) {
       console.error(err);
       toast({ title: "Erro", description: "Ocorreu um erro inesperado.", variant: "destructive" });
@@ -344,9 +372,32 @@ const FootcampSignupForm = () => {
                 <Send className="w-7 h-7 text-primary" />
               </div>
               <h3 className="font-heading font-bold text-2xl mb-3 text-foreground">Inscrição enviada!</h3>
+
+              {lastSummary && (
+                <div className="text-left rounded-xl border border-primary/30 bg-primary/5 p-4 mb-5">
+                  <h4 className="font-heading text-sm uppercase tracking-wider text-primary mb-3">Resumo</h4>
+                  <div className="space-y-1.5 text-sm text-foreground">
+                    <div className="flex justify-between gap-3"><span className="text-muted-foreground">Atleta</span><span className="font-medium text-right">{lastSummary.nome}</span></div>
+                    <div>
+                      <span className="text-muted-foreground">Semanas ({lastSummary.numSemanas})</span>
+                      <ul className="mt-1 space-y-0.5">
+                        {lastSummary.semanasLabels.map((l) => (
+                          <li key={l} className="text-xs text-foreground">• {l}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex justify-between gap-3 border-t border-primary/20 pt-2 mt-2">
+                      <span className="text-foreground font-semibold">Valor previsto</span>
+                      <span className="font-heading font-bold text-xl text-gradient-gold">{lastSummary.precoPrevisto}€</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <p className="text-muted-foreground mb-6">
-                A equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga e enviar os dados de pagamento.
+                A equipa ProTopo confirma a vaga, valida eventuais descontos e envia os dados de pagamento por WhatsApp.
               </p>
+
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
                   href={WHATSAPP_URL_FOOTCAMP_INFO}
@@ -712,13 +763,14 @@ const FootcampSignupForm = () => {
                     {irmaos && (
                       <div className="flex items-baseline justify-between gap-3">
                         <span className="text-sm text-muted-foreground">Desconto irmãos (-10%)</span>
-                        <span className="text-sm text-foreground font-medium">-{(subtotal * 0.1).toFixed(2)}€</span>
+                        <span className="text-xs text-amber-400 font-medium">Pendente de validação</span>
                       </div>
                     )}
                     <div className="border-t border-primary/20 pt-2 flex items-baseline justify-between gap-3">
-                      <span className="text-sm text-foreground font-semibold">Valor total</span>
-                      <span className="font-heading font-bold text-2xl text-gradient-gold">{precoFinal}€</span>
+                      <span className="text-sm text-foreground font-semibold">Valor previsto</span>
+                      <span className="font-heading font-bold text-2xl text-gradient-gold">{precoPrevisto}€</span>
                     </div>
+
                     {seguroOferta && (
                       <div className="mt-2 rounded-lg bg-primary/10 border border-primary/30 px-3 py-2">
                         <p className="text-xs text-primary font-medium">🎁 Oferta especial: Seguro anual oferecido na inscrição das 4 semanas.</p>
@@ -933,12 +985,58 @@ const FootcampSignupForm = () => {
                   <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Dados utilizados apenas para gestão da inscrição</span></li>
                 </ul>
 
+                {numSemanas > 0 && (
+                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-3">
+                    <h4 className="font-heading text-sm uppercase tracking-wider text-primary">Resumo da inscrição</h4>
+
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Semanas selecionadas ({numSemanas})</p>
+                      <ul className="space-y-0.5">
+                        {semanasSelecionadas.map((id) => {
+                          const label = semanasOptions.find((s) => s.id === id)?.label;
+                          return label ? <li key={id} className="text-sm text-foreground">• {label}</li> : null;
+                        })}
+                      </ul>
+                    </div>
+
+                    <div className="space-y-1.5 border-t border-primary/20 pt-3">
+                      <div className="flex justify-between gap-3 text-sm">
+                        <span className="text-muted-foreground">Valor do pacote</span>
+                        <span className="text-foreground font-medium">{precoBase}€</span>
+                      </div>
+                      <div className="flex justify-between gap-3 text-sm">
+                        <span className="text-muted-foreground">Seguro anual</span>
+                        <span className="text-foreground font-medium">
+                          {seguroOferta ? <span className="text-primary">Oferecido 🎁</span> : `${SEGURO_ANUAL}€`}
+                        </span>
+                      </div>
+                      {irmaos && (
+                        <div className="flex justify-between gap-3 text-sm">
+                          <span className="text-muted-foreground">Desconto irmãos (-10%)</span>
+                          <span className="text-amber-400 font-medium text-xs text-right">Pendente de validação</span>
+                        </div>
+                      )}
+                      <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
+                        <span className="text-foreground font-semibold">Valor previsto a pagar</span>
+                        <span className="font-heading font-bold text-2xl text-gradient-gold">{precoPrevisto}€</span>
+                      </div>
+                    </div>
+
+                    {irmaos && (
+                      <p className="text-xs text-muted-foreground leading-snug">
+                        O desconto de irmãos será validado pela equipa ProTopo após confirmação da inscrição do(s) irmão(s).
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 <div className="pt-1">
                   <Button type="submit" variant="hero" size="lg" className="w-full py-6 text-base shadow-lg shadow-primary/20" disabled={loading}>
                     {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
                     {loading ? "A enviar..." : "ENVIAR INSCRIÇÃO POR WHATSAPP"}
                   </Button>
                 </div>
+
 
               </form>
             </Form>

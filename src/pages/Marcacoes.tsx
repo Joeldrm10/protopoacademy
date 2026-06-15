@@ -254,20 +254,21 @@ const Marcacoes = () => {
   }, [marcacoes]);
 
 
-  // Valor efetivo: o desconto de irmãos só é aplicado quando a família
-  // está realmente identificada (pelo menos um irmão indicado existe nas inscrições).
-  // Se o utilizador marcou desconto mas a família ainda não está validada,
-  // reverte-se o -10% aplicado no formulário.
+  // Valor efetivo: o valor guardado (valor_total) corresponde ao subtotal
+  // SEM desconto de irmãos. O desconto -10% só é aplicado quando a família
+  // está validada bidirecionalmente (pelo menos um irmão indicado existe e
+  // também indicou de volta este atleta).
   const effectiveValor = (m: Marcacao): number | null => {
     if (m.valor_total == null) return null;
     const fam = familyMap.get(m.id);
     const claimed = !!m.desconto_irmaos;
     const validated = (fam?.matched.length ?? 0) > 0;
-    if (claimed && !validated) {
-      return Math.round((m.valor_total / 0.9) * 100) / 100;
+    if (claimed && validated) {
+      return Math.round(m.valor_total * 0.9 * 100) / 100;
     }
     return m.valor_total;
   };
+
 
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
