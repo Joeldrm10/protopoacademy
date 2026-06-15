@@ -76,36 +76,28 @@ const estadoStyles: Record<string, string> = {
 };
 
 type FamilyBadgeProps = {
-  self: Marcacao;
-  related: Marcacao[];
+  siblings: string[];
 };
-const FamilyBadge = ({ self, related }: FamilyBadgeProps) => {
-  if (related.length === 0) return null;
-  const all = [self, ...related];
-  const total = all.length;
+const FamilyBadge = ({ siblings }: FamilyBadgeProps) => {
+  if (siblings.length === 0) return null;
   return (
     <Popover>
       <PopoverTrigger asChild>
         <button
           type="button"
           className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
-          title="Clica para ver inscrições relacionadas"
+          title="Irmãos indicados nesta inscrição"
         >
-          🟢 Família identificada ({total} atletas)
+          🟢 Família identificada
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-64 p-3">
         <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1">
-          <UserCheck className="w-3 h-3" /> Família identificada ({total} atletas)
+          <UserCheck className="w-3 h-3" /> Irmãos indicados
         </p>
-        <ul className="space-y-1.5">
-          {all.map((r) => (
-            <li key={r.id} className="text-sm">
-              <p className="font-semibold text-foreground">{r.nome}</p>
-              <p className="text-xs text-muted-foreground">
-                {r.encarregado || "—"} · <span className="font-mono">{r.telemovel}</span>
-              </p>
-            </li>
+        <ul className="space-y-1 list-disc list-inside">
+          {siblings.map((n, i) => (
+            <li key={i} className="text-sm text-foreground">{n}</li>
           ))}
         </ul>
       </PopoverContent>
@@ -184,41 +176,20 @@ const Marcacoes = () => {
     });
   }, [marcacoes, filterSemana, filterTipo, filterEstado, searchNome]);
 
-  // Family detection: APENAS através do campo "nome_irmaos" (relação explícita declarada no formulário).
-  // Não usar apelidos, telemóvel ou encarregado.
-  const normalize = (s: string | null | undefined) =>
-    (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
-
+  // Family detection: APENAS quando a PRÓPRIA inscrição tem
+  // "desconto_irmaos" ativo E o campo "nome_irmaos" preenchido.
+  // Não usar apelidos, nomes parecidos, telemóvel, encarregado nem relação inversa.
   const splitSiblings = (s: string | null | undefined) =>
     (s || "")
       .split(/[,;\n/]|\s+e\s+|\s+&\s+/i)
-      .map((n) => normalize(n))
-      .filter(Boolean);
+      .map((n) => n.trim())
+      .filter((n) => n.length > 0);
 
   const familyMap = useMemo(() => {
-    const map = new Map<string, Marcacao[]>();
-    const candidates = marcacoes.filter((m) => m.estado !== "cancelado");
-    candidates.forEach((m) => {
-      const mName = normalize(m.nome);
-      const mSiblings = m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [];
-
-      const related: Marcacao[] = [];
-      const seenNames = new Set<string>([mName]);
-      candidates.forEach((other) => {
-        if (other.id === m.id) return;
-        const otherName = normalize(other.nome);
-        if (!otherName || seenNames.has(otherName)) return;
-        const otherSiblings = other.desconto_irmaos ? splitSiblings(other.nome_irmaos) : [];
-
-        const nameInOtherSiblings = !!mName && otherSiblings.includes(mName);
-        const otherInMySiblings = mSiblings.includes(otherName);
-
-        if (nameInOtherSiblings || otherInMySiblings) {
-          related.push(other);
-          seenNames.add(otherName);
-        }
-      });
-      map.set(m.id, related);
+    const map = new Map<string, string[]>();
+    marcacoes.forEach((m) => {
+      const siblings = m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [];
+      map.set(m.id, siblings);
     });
     return map;
   }, [marcacoes]);
@@ -266,20 +237,14 @@ const Marcacoes = () => {
         }
       });
     });
-    // Famílias: grupos de 2+ que partilham encarregado/telemóvel (apenas confirmados)
-    const seen = new Set<string>();
-    let familiesCount = 0;
-    fc.forEach((m) => {
-      if (seen.has(m.id)) return;
-      const rel = (familyMap.get(m.id) || []).filter((r) => r.tipo === "footcamp" && r.estado === "confirmado");
-      if (rel.length > 0) {
-        familiesCount++;
-        seen.add(m.id);
-        rel.forEach((r) => seen.add(r.id));
-      }
-    });
+    // Famílias: número de inscrições confirmadas com desconto de irmãos ativo
+    // e pelo menos um nome preenchido no campo de irmãos.
+    const familiesCount = fc.filter(
+      (m) => m.desconto_irmaos && splitSiblings(m.nome_irmaos).length > 0
+    ).length;
     return { total: fc.length, weeks: weekCounts, families: familiesCount };
-  }, [marcacoes, familyMap]);
+  }, [marcacoes]);
+
 
   const fetchMarcacoes = async () => {
     setLoading(true);
@@ -660,7 +625,7 @@ const Marcacoes = () => {
                                       {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                     </Button>
                                   )}
-                                  <FamilyBadge self={m} related={related} />
+                                  <FamilyBadge siblings={related} />
                                 </div>
                                 {isFootcamp && m.encarregado && (
                                   <p className="text-xs text-muted-foreground font-normal mt-0.5">
@@ -830,7 +795,7 @@ const Marcacoes = () => {
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-bold text-foreground text-lg leading-tight">{m.nome}</span>
-                          <FamilyBadge self={m} related={related} />
+                          <FamilyBadge siblings={related} />
                         </div>
                         <span className={cn(
                           "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0",
