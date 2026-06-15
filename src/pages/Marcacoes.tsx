@@ -625,7 +625,7 @@ const Marcacoes = () => {
                                       {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                     </Button>
                                   )}
-                                  <FamilyBadge self={m} related={related} />
+                                  <FamilyBadge siblings={related} />
                                 </div>
                                 {isFootcamp && m.encarregado && (
                                   <p className="text-xs text-muted-foreground font-normal mt-0.5">
@@ -795,7 +795,7 @@ const Marcacoes = () => {
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-bold text-foreground text-lg leading-tight">{m.nome}</span>
-                          <FamilyBadge self={m} related={related} />
+                          <FamilyBadge siblings={related} />
                         </div>
                         <span className={cn(
                           "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0",
