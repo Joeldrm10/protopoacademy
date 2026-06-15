@@ -55,10 +55,10 @@ const aposPassos = [
 
 const FootcampInfoSection = () => {
   return (
-    <section className="py-12 md:py-20 bg-background relative overflow-hidden">
+    <section className="py-6 md:py-10 bg-background relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 relative z-10 space-y-10 md:space-y-14 max-w-5xl">
+      <div className="container mx-auto px-4 relative z-10 space-y-6 md:space-y-8 max-w-5xl">
 
         {/* 1. RESUMO */}
         <AnimateOnScroll>
