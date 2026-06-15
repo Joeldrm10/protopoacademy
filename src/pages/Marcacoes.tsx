@@ -971,11 +971,35 @@ const Marcacoes = () => {
 
                                 <div className="flex gap-4 flex-wrap text-xs">
                                   <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Oferecido 🎁" : "Incluído (+20€)"}</span></span>
-                                  <span><span className="text-muted-foreground">Irmãos: </span><span className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</span></span>
+                                  {(() => {
+                                    const fam = familyMap.get(m.id);
+                                    const claimed = !!m.desconto_irmaos;
+                                    const validated = (fam?.matched.length ?? 0) > 0;
+                                    return (
+                                      <span>
+                                        <span className="text-muted-foreground">Irmãos: </span>
+                                        <span className="text-foreground">
+                                          {!claimed ? "Não" : validated ? "Sim (-10% aplicado)" : "Solicitado (não aplicado)"}
+                                        </span>
+                                      </span>
+                                    );
+                                  })()}
                                 </div>
                                 {m.desconto_irmaos && m.nome_irmaos && (
                                   <div className="text-xs"><span className="text-muted-foreground">Outro(s) irmão(s): </span><span className="text-foreground">{m.nome_irmaos}</span></div>
                                 )}
+                                {(() => {
+                                  const eff = effectiveValor(m);
+                                  if (eff == null) return null;
+                                  const adjusted = m.valor_total != null && eff !== m.valor_total;
+                                  return (
+                                    <div className="text-xs">
+                                      <span className="text-muted-foreground">Valor final: </span>
+                                      <span className="text-primary font-semibold">{eff}€</span>
+                                      {adjusted && <span className="ml-1 text-[10px] text-amber-500">(família por validar)</span>}
+                                    </div>
+                                  );
+                                })()}
 
                                 <MedicalAlerts m={m} />
 
