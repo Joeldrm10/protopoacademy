@@ -184,10 +184,10 @@ const Marcacoes = () => {
     });
   }, [marcacoes, filterSemana, filterTipo, filterEstado, searchNome]);
 
-  // Family detection: index marcações by normalized encarregado and telemóvel
+  // Family detection: APENAS através do campo "nome_irmaos" (relação explícita declarada no formulário).
+  // Não usar apelidos, telemóvel ou encarregado.
   const normalize = (s: string | null | undefined) =>
     (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
-  const normalizePhone = (s: string | null | undefined) => (s || "").replace(/\D/g, "");
 
   const splitSiblings = (s: string | null | undefined) =>
     (s || "")
@@ -197,30 +197,23 @@ const Marcacoes = () => {
 
   const familyMap = useMemo(() => {
     const map = new Map<string, Marcacao[]>();
-    // Only consider non-cancelled real registrations for family detection
     const candidates = marcacoes.filter((m) => m.estado !== "cancelado");
     candidates.forEach((m) => {
-      const mPhone = normalizePhone(m.telemovel);
-      const mEnc = normalize(m.encarregado);
       const mName = normalize(m.nome);
-      const mSiblings = splitSiblings(m.nome_irmaos);
+      const mSiblings = m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [];
 
       const related: Marcacao[] = [];
       const seenNames = new Set<string>([mName]);
       candidates.forEach((other) => {
         if (other.id === m.id) return;
         const otherName = normalize(other.nome);
-        if (!otherName || seenNames.has(otherName)) return; // dedupe same athlete
-        const otherPhone = normalizePhone(other.telemovel);
-        const otherEnc = normalize(other.encarregado);
-        const otherSiblings = splitSiblings(other.nome_irmaos);
+        if (!otherName || seenNames.has(otherName)) return;
+        const otherSiblings = other.desconto_irmaos ? splitSiblings(other.nome_irmaos) : [];
 
-        const samePhone = !!mPhone && mPhone === otherPhone;
-        const sameEnc = !!mEnc && mEnc === otherEnc;
         const nameInOtherSiblings = !!mName && otherSiblings.includes(mName);
         const otherInMySiblings = mSiblings.includes(otherName);
 
-        if (samePhone || sameEnc || nameInOtherSiblings || otherInMySiblings) {
+        if (nameInOtherSiblings || otherInMySiblings) {
           related.push(other);
           seenNames.add(otherName);
         }
