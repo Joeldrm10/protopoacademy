@@ -171,11 +171,7 @@ const FootcampInfoSection = () => {
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Seguro anual incluído sem custo adicional</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
-                    <span className="text-primary mt-0.5">•</span>
-                    <span>Exclusivo para inscrições de 4 semanas</span>
+                    <span>Incluído gratuitamente na inscrição de 4 semanas</span>
                   </li>
                 </ul>
               </div>
