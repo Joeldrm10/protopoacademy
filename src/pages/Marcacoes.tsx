@@ -702,9 +702,9 @@ const Marcacoes = () => {
                                     <MessageCircle className="w-3.5 h-3.5" />
                                   </a>
                                 </div>
-                                {isFootcamp && m.valor_total != null && (
+                                {isFootcamp && effectiveValor(m) != null && (
                                   <p className="text-xs font-sans font-bold text-primary mt-1 flex items-center gap-0.5">
-                                    <Euro className="w-3 h-3" />{m.valor_total}
+                                    <Euro className="w-3 h-3" />{effectiveValor(m)}
                                   </p>
                                 )}
                               </TableCell>
