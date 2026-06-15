@@ -985,12 +985,58 @@ const FootcampSignupForm = () => {
                   <li className="flex items-start gap-2"><span className="text-primary mt-0.5">✔</span><span>Dados utilizados apenas para gestão da inscrição</span></li>
                 </ul>
 
+                {numSemanas > 0 && (
+                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-3">
+                    <h4 className="font-heading text-sm uppercase tracking-wider text-primary">Resumo da inscrição</h4>
+
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Semanas selecionadas ({numSemanas})</p>
+                      <ul className="space-y-0.5">
+                        {semanasSelecionadas.map((id) => {
+                          const label = semanasOptions.find((s) => s.id === id)?.label;
+                          return label ? <li key={id} className="text-sm text-foreground">• {label}</li> : null;
+                        })}
+                      </ul>
+                    </div>
+
+                    <div className="space-y-1.5 border-t border-primary/20 pt-3">
+                      <div className="flex justify-between gap-3 text-sm">
+                        <span className="text-muted-foreground">Valor do pacote</span>
+                        <span className="text-foreground font-medium">{precoBase}€</span>
+                      </div>
+                      <div className="flex justify-between gap-3 text-sm">
+                        <span className="text-muted-foreground">Seguro anual</span>
+                        <span className="text-foreground font-medium">
+                          {seguroOferta ? <span className="text-primary">Oferecido 🎁</span> : `${SEGURO_ANUAL}€`}
+                        </span>
+                      </div>
+                      {irmaos && (
+                        <div className="flex justify-between gap-3 text-sm">
+                          <span className="text-muted-foreground">Desconto irmãos (-10%)</span>
+                          <span className="text-amber-400 font-medium text-xs text-right">Pendente de validação</span>
+                        </div>
+                      )}
+                      <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
+                        <span className="text-foreground font-semibold">Valor previsto a pagar</span>
+                        <span className="font-heading font-bold text-2xl text-gradient-gold">{precoPrevisto}€</span>
+                      </div>
+                    </div>
+
+                    {irmaos && (
+                      <p className="text-xs text-muted-foreground leading-snug">
+                        O desconto de irmãos será validado pela equipa ProTopo após confirmação da inscrição do(s) irmão(s).
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 <div className="pt-1">
                   <Button type="submit" variant="hero" size="lg" className="w-full py-6 text-base shadow-lg shadow-primary/20" disabled={loading}>
                     {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
                     {loading ? "A enviar..." : "ENVIAR INSCRIÇÃO POR WHATSAPP"}
                   </Button>
                 </div>
+
 
               </form>
             </Form>
