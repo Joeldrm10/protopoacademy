@@ -335,6 +335,8 @@ const FootcampSignupForm = () => {
         `Seguro: ${seguroTxt}`,
         data.irmaos ? `Desconto irmãos (-10%): ainda não aplicado — aguarda validação (-${descontoIrmaosPotencial}€ se confirmado)` : "",
         `Valor previsto: ${precoPrevisto}€`,
+        data.irmaos ? `(Valor ainda sem desconto de irmãos — será aplicado após validação)` : "",
+
         ``,
         `✅ Consentimento de dados: autorizado`,
       ].filter(Boolean);
