@@ -76,36 +76,28 @@ const estadoStyles: Record<string, string> = {
 };
 
 type FamilyBadgeProps = {
-  self: Marcacao;
-  related: Marcacao[];
+  siblings: string[];
 };
-const FamilyBadge = ({ self, related }: FamilyBadgeProps) => {
-  if (related.length === 0) return null;
-  const all = [self, ...related];
-  const total = all.length;
+const FamilyBadge = ({ siblings }: FamilyBadgeProps) => {
+  if (siblings.length === 0) return null;
   return (
     <Popover>
       <PopoverTrigger asChild>
         <button
           type="button"
           className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
-          title="Clica para ver inscrições relacionadas"
+          title="Irmãos indicados nesta inscrição"
         >
-          🟢 Família identificada ({total} atletas)
+          🟢 Família identificada
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-64 p-3">
         <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1">
-          <UserCheck className="w-3 h-3" /> Família identificada ({total} atletas)
+          <UserCheck className="w-3 h-3" /> Irmãos indicados
         </p>
-        <ul className="space-y-1.5">
-          {all.map((r) => (
-            <li key={r.id} className="text-sm">
-              <p className="font-semibold text-foreground">{r.nome}</p>
-              <p className="text-xs text-muted-foreground">
-                {r.encarregado || "—"} · <span className="font-mono">{r.telemovel}</span>
-              </p>
-            </li>
+        <ul className="space-y-1 list-disc list-inside">
+          {siblings.map((n, i) => (
+            <li key={i} className="text-sm text-foreground">{n}</li>
           ))}
         </ul>
       </PopoverContent>
