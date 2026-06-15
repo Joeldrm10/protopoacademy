@@ -775,7 +775,7 @@ const FootcampSignupForm = () => {
                         </div>
                         <div className="border-t border-primary/20 pt-2 flex items-baseline justify-between gap-3">
                           <span className="text-sm text-foreground font-semibold">Valor estimado após validação</span>
-                          <span className="font-heading font-bold text-2xl text-gradient-gold">{+(precoPrevisto * 0.9).toFixed(2).replace(".", ",")}€</span>
+                          <span className="font-heading font-bold text-2xl text-gradient-gold">{(precoPrevisto * 0.9).toFixed(2).replace(".", ",")}€</span>
                         </div>
                         <p className="text-xs text-amber-400/90 leading-snug pt-1">
                           O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).
