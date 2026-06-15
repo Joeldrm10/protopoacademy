@@ -176,41 +176,20 @@ const Marcacoes = () => {
     });
   }, [marcacoes, filterSemana, filterTipo, filterEstado, searchNome]);
 
-  // Family detection: APENAS através do campo "nome_irmaos" (relação explícita declarada no formulário).
-  // Não usar apelidos, telemóvel ou encarregado.
-  const normalize = (s: string | null | undefined) =>
-    (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
-
+  // Family detection: APENAS quando a PRÓPRIA inscrição tem
+  // "desconto_irmaos" ativo E o campo "nome_irmaos" preenchido.
+  // Não usar apelidos, nomes parecidos, telemóvel, encarregado nem relação inversa.
   const splitSiblings = (s: string | null | undefined) =>
     (s || "")
       .split(/[,;\n/]|\s+e\s+|\s+&\s+/i)
-      .map((n) => normalize(n))
-      .filter(Boolean);
+      .map((n) => n.trim())
+      .filter((n) => n.length > 0);
 
   const familyMap = useMemo(() => {
-    const map = new Map<string, Marcacao[]>();
-    const candidates = marcacoes.filter((m) => m.estado !== "cancelado");
-    candidates.forEach((m) => {
-      const mName = normalize(m.nome);
-      const mSiblings = m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [];
-
-      const related: Marcacao[] = [];
-      const seenNames = new Set<string>([mName]);
-      candidates.forEach((other) => {
-        if (other.id === m.id) return;
-        const otherName = normalize(other.nome);
-        if (!otherName || seenNames.has(otherName)) return;
-        const otherSiblings = other.desconto_irmaos ? splitSiblings(other.nome_irmaos) : [];
-
-        const nameInOtherSiblings = !!mName && otherSiblings.includes(mName);
-        const otherInMySiblings = mSiblings.includes(otherName);
-
-        if (nameInOtherSiblings || otherInMySiblings) {
-          related.push(other);
-          seenNames.add(otherName);
-        }
-      });
-      map.set(m.id, related);
+    const map = new Map<string, string[]>();
+    marcacoes.forEach((m) => {
+      const siblings = m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [];
+      map.set(m.id, siblings);
     });
     return map;
   }, [marcacoes]);
@@ -258,20 +237,14 @@ const Marcacoes = () => {
         }
       });
     });
-    // Famílias: grupos de 2+ que partilham encarregado/telemóvel (apenas confirmados)
-    const seen = new Set<string>();
-    let familiesCount = 0;
-    fc.forEach((m) => {
-      if (seen.has(m.id)) return;
-      const rel = (familyMap.get(m.id) || []).filter((r) => r.tipo === "footcamp" && r.estado === "confirmado");
-      if (rel.length > 0) {
-        familiesCount++;
-        seen.add(m.id);
-        rel.forEach((r) => seen.add(r.id));
-      }
-    });
+    // Famílias: número de inscrições confirmadas com desconto de irmãos ativo
+    // e pelo menos um nome preenchido no campo de irmãos.
+    const familiesCount = fc.filter(
+      (m) => m.desconto_irmaos && splitSiblings(m.nome_irmaos).length > 0
+    ).length;
     return { total: fc.length, weeks: weekCounts, families: familiesCount };
-  }, [marcacoes, familyMap]);
+  }, [marcacoes]);
+
 
   const fetchMarcacoes = async () => {
     setLoading(true);
