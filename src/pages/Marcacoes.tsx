@@ -211,22 +211,44 @@ const Marcacoes = () => {
       .map((n) => n.trim())
       .filter((n) => n.length > 0);
 
+  // Validação BIDIRECIONAL: a família só é identificada quando A indica B
+  // e B também indica A. Não usar apelidos, encarregado, contacto nem cadeias.
   const familyMap = useMemo(() => {
     const map = new Map<string, { siblings: string[]; matched: string[] }>();
     const normalize = (s: string) =>
       s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim().replace(/\s+/g, " ");
     const tokens = (s: string) => normalize(s).split(" ").filter((t) => t.length >= 2);
-    const registered = marcacoes.map((m) => ({ id: m.id, tokens: tokens(m.nome) }));
-    marcacoes.forEach((m) => {
-      const siblings = m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [];
-      const matched = siblings.filter((sib) => {
+
+    // Pré-calcula, para cada inscrição, o nome (em tokens) e os tokens de
+    // cada irmão indicado (apenas se essa inscrição também marcou o desconto).
+    const data = marcacoes.map((m) => ({
+      id: m.id,
+      nameTokens: tokens(m.nome),
+      siblings: m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [],
+      siblingTokens: (m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [])
+        .map((s) => tokens(s))
+        .filter((t) => t.length > 0),
+    }));
+
+    // Verifica se a lista de irmãos indicados por `r` contém o nome de `m`.
+    const indicates = (rSiblingTokens: string[][], mNameTokens: string[]) =>
+      mNameTokens.length > 0 &&
+      rSiblingTokens.some((sib) => sib.every((t) => mNameTokens.includes(t)));
+
+    data.forEach((m) => {
+      const matched = m.siblings.filter((sib) => {
         const sibTokens = tokens(sib);
         if (sibTokens.length === 0) return false;
-        return registered.some(
-          (r) => r.id !== m.id && sibTokens.every((t) => r.tokens.includes(t))
+        // Encontra atleta r cujo nome corresponde ao irmão indicado,
+        // e que também indicou m de volta (bidirecional).
+        return data.some(
+          (r) =>
+            r.id !== m.id &&
+            sibTokens.every((t) => r.nameTokens.includes(t)) &&
+            indicates(r.siblingTokens, m.nameTokens)
         );
       });
-      map.set(m.id, { siblings, matched });
+      map.set(m.id, { siblings: m.siblings, matched });
     });
     return map;
   }, [marcacoes]);
