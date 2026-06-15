@@ -251,7 +251,7 @@ const FootcampSignupForm = () => {
         restricao_alimentar: restricaoSim,
         restricao_alimentar_desc: restricaoDesc,
         observacoes: data.observacoes || null,
-        valor_total: precoFinal,
+        valor_total: precoPrevisto,
         estado: "pendente",
         data_nascimento: data.data_nascimento,
         clube_atual: data.clube_atual,
