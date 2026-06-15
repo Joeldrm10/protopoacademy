@@ -372,9 +372,32 @@ const FootcampSignupForm = () => {
                 <Send className="w-7 h-7 text-primary" />
               </div>
               <h3 className="font-heading font-bold text-2xl mb-3 text-foreground">Inscrição enviada!</h3>
+
+              {lastSummary && (
+                <div className="text-left rounded-xl border border-primary/30 bg-primary/5 p-4 mb-5">
+                  <h4 className="font-heading text-sm uppercase tracking-wider text-primary mb-3">Resumo</h4>
+                  <div className="space-y-1.5 text-sm text-foreground">
+                    <div className="flex justify-between gap-3"><span className="text-muted-foreground">Atleta</span><span className="font-medium text-right">{lastSummary.nome}</span></div>
+                    <div>
+                      <span className="text-muted-foreground">Semanas ({lastSummary.numSemanas})</span>
+                      <ul className="mt-1 space-y-0.5">
+                        {lastSummary.semanasLabels.map((l) => (
+                          <li key={l} className="text-xs text-foreground">• {l}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex justify-between gap-3 border-t border-primary/20 pt-2 mt-2">
+                      <span className="text-foreground font-semibold">Valor previsto</span>
+                      <span className="font-heading font-bold text-xl text-gradient-gold">{lastSummary.precoPrevisto}€</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <p className="text-muted-foreground mb-6">
-                A equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga e enviar os dados de pagamento.
+                A equipa ProTopo confirma a vaga, valida eventuais descontos e envia os dados de pagamento por WhatsApp.
               </p>
+
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
                   href={WHATSAPP_URL_FOOTCAMP_INFO}
