@@ -232,20 +232,35 @@ const Marcacoes = () => {
   }, [marcacoes]);
 
 
+  // Valor efetivo: o desconto de irmãos só é aplicado quando a família
+  // está realmente identificada (pelo menos um irmão indicado existe nas inscrições).
+  // Se o utilizador marcou desconto mas a família ainda não está validada,
+  // reverte-se o -10% aplicado no formulário.
+  const effectiveValor = (m: Marcacao): number | null => {
+    if (m.valor_total == null) return null;
+    const fam = familyMap.get(m.id);
+    const claimed = !!m.desconto_irmaos;
+    const validated = (fam?.matched.length ?? 0) > 0;
+    if (claimed && !validated) {
+      return Math.round((m.valor_total / 0.9) * 100) / 100;
+    }
+    return m.valor_total;
+  };
+
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
   const cancelados = useMemo(() => marcacoes.filter((m) => m.estado === "cancelado").length, [marcacoes]);
 
-  // Receita prevista — total e confirmado consideram apenas inscrições confirmadas; pendente mostra apenas o valor das pendentes
+  // Receita prevista — usa o valor efetivo (desconto só conta com família validada)
   const receita = useMemo(() => {
     const confirmado = marcacoes
-      .filter((m) => m.estado === "confirmado" && m.valor_total != null)
-      .reduce((s, m) => s + (m.valor_total || 0), 0);
+      .filter((m) => m.estado === "confirmado")
+      .reduce((s, m) => s + (effectiveValor(m) || 0), 0);
     const pendente = marcacoes
-      .filter((m) => m.estado === "pendente" && m.valor_total != null)
-      .reduce((s, m) => s + (m.valor_total || 0), 0);
+      .filter((m) => m.estado === "pendente")
+      .reduce((s, m) => s + (effectiveValor(m) || 0), 0);
     return { total: confirmado, confirmado, pendente };
-  }, [marcacoes]);
+  }, [marcacoes, familyMap]);
 
   // Equipamento (footcamp, apenas confirmados)
   const TAMANHOS = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
