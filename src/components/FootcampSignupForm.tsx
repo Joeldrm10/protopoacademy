@@ -333,8 +333,8 @@ const FootcampSignupForm = () => {
         `💰 VALOR`,
         `Valor das semanas: ${precoBase}€`,
         `Seguro: ${seguroTxt}`,
-        data.irmaos ? `Desconto irmãos (-10%): -${(subtotal * 0.1).toFixed(2)}€` : "",
-        `Total final: ${precoFinal}€`,
+        data.irmaos ? `Desconto irmãos (-10%): pendente de validação (-${descontoIrmaosPotencial}€ se confirmado)` : "",
+        `Valor previsto: ${precoPrevisto}€`,
         ``,
         `✅ Consentimento de dados: autorizado`,
       ].filter(Boolean);
@@ -342,7 +342,18 @@ const FootcampSignupForm = () => {
       const message = encodeURIComponent(parts.join("\n"));
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
       lastSubmitRef.current = Date.now();
+      setLastSummary({
+        nome: data.nome,
+        semanasLabels,
+        numSemanas,
+        precoBase,
+        seguroCusto,
+        seguroOferta,
+        irmaos: !!data.irmaos,
+        precoPrevisto,
+      });
       setSubmitted(true);
+
     } catch (err) {
       console.error(err);
       toast({ title: "Erro", description: "Ocorreu um erro inesperado.", variant: "destructive" });
