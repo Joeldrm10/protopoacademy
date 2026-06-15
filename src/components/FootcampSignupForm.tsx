@@ -135,10 +135,23 @@ const calcAge = (iso: string): string => {
   return age >= 0 && age < 120 ? String(age) : "";
 };
 
+type Summary = {
+  nome: string;
+  semanasLabels: string[];
+  numSemanas: number;
+  precoBase: number;
+  seguroCusto: number;
+  seguroOferta: boolean;
+  irmaos: boolean;
+  precoPrevisto: number;
+};
+
 const FootcampSignupForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [lastSummary, setLastSummary] = useState<Summary | null>(null);
   const lastSubmitRef = useRef<number>(0);
+
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
