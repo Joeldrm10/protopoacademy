@@ -77,18 +77,25 @@ const estadoStyles: Record<string, string> = {
 
 type FamilyBadgeProps = {
   siblings: string[];
+  matched: string[];
 };
-const FamilyBadge = ({ siblings }: FamilyBadgeProps) => {
+const FamilyBadge = ({ siblings, matched }: FamilyBadgeProps) => {
   if (siblings.length === 0) return null;
+  const isIdentified = matched.length > 0;
   return (
     <Popover>
       <PopoverTrigger asChild>
         <button
           type="button"
-          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
-          title="Irmãos indicados nesta inscrição"
+          className={cn(
+            "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-colors",
+            isIdentified
+              ? "bg-green-500/15 text-green-500 border-green-500/25 hover:bg-green-500/25"
+              : "bg-muted/40 text-muted-foreground border-border hover:bg-muted/60"
+          )}
+          title={isIdentified ? "Família identificada" : "Irmãos indicados (sem correspondência)"}
         >
-          🟢 Família identificada
+          {isIdentified ? "🟢 Família identificada" : "👥 Irmãos indicados"}
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-64 p-3">
@@ -96,14 +103,25 @@ const FamilyBadge = ({ siblings }: FamilyBadgeProps) => {
           <UserCheck className="w-3 h-3" /> Irmãos indicados
         </p>
         <ul className="space-y-1 list-disc list-inside">
-          {siblings.map((n, i) => (
-            <li key={i} className="text-sm text-foreground">{n}</li>
-          ))}
+          {siblings.map((n, i) => {
+            const isMatch = matched.includes(n);
+            return (
+              <li key={i} className="text-sm text-foreground flex items-center gap-1.5">
+                <span>{n}</span>
+                {isMatch ? (
+                  <span className="text-[10px] font-semibold text-green-500">✓ inscrito</span>
+                ) : (
+                  <span className="text-[10px] text-muted-foreground">não inscrito</span>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </PopoverContent>
     </Popover>
   );
 };
+
 
 const hasMedicalInfo = (m: Marcacao) =>
   m.tem_alergias === true || m.toma_medicacao === true || m.restricao_alimentar === true || !!(m.informacao_medica && m.informacao_medica.trim());
@@ -194,13 +212,25 @@ const Marcacoes = () => {
       .filter((n) => n.length > 0);
 
   const familyMap = useMemo(() => {
-    const map = new Map<string, string[]>();
+    const map = new Map<string, { siblings: string[]; matched: string[] }>();
+    const normalize = (s: string) =>
+      s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim().replace(/\s+/g, " ");
+    const tokens = (s: string) => normalize(s).split(" ").filter((t) => t.length >= 2);
+    const registered = marcacoes.map((m) => ({ id: m.id, tokens: tokens(m.nome) }));
     marcacoes.forEach((m) => {
       const siblings = m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [];
-      map.set(m.id, siblings);
+      const matched = siblings.filter((sib) => {
+        const sibTokens = tokens(sib);
+        if (sibTokens.length === 0) return false;
+        return registered.some(
+          (r) => r.id !== m.id && sibTokens.every((t) => r.tokens.includes(t))
+        );
+      });
+      map.set(m.id, { siblings, matched });
     });
     return map;
   }, [marcacoes]);
+
 
   const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
   const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
@@ -609,7 +639,8 @@ const Marcacoes = () => {
                       {filteredMarcacoes.map((m) => {
                         const isFootcamp = m.tipo === "footcamp";
                         const expanded = expandedRow === m.id;
-                        const related = familyMap.get(m.id) || [];
+                        const related = familyMap.get(m.id) || { siblings: [], matched: [] };
+
                         return (
                           <Fragment key={m.id}>
                             <TableRow className="border-border/50 hover:bg-surface-elevated/50 transition-colors">
@@ -633,7 +664,8 @@ const Marcacoes = () => {
                                       {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                     </Button>
                                   )}
-                                  <FamilyBadge siblings={related} />
+                                  <FamilyBadge siblings={related.siblings} matched={related.matched} />
+
                                 </div>
                                 {isFootcamp && m.encarregado && (
                                   <p className="text-xs text-muted-foreground font-normal mt-0.5">
@@ -796,7 +828,7 @@ const Marcacoes = () => {
                 <div className="md:hidden space-y-3">
                   {filteredMarcacoes.map((m) => {
                     const isFootcamp = m.tipo === "footcamp";
-                    const related = familyMap.get(m.id) || [];
+                    const related = familyMap.get(m.id) || { siblings: [], matched: [] };
                     const isOpen = expandedMobile.has(m.id);
                     return (
                       <div key={m.id} className="bg-card border border-border rounded-xl overflow-hidden">
@@ -819,7 +851,7 @@ const Marcacoes = () => {
                                   <Trophy className="w-3 h-3" />Footcamp
                                 </span>
                               )}
-                              {related.length > 0 && <FamilyBadge siblings={related} />}
+                              {related.siblings.length > 0 && <FamilyBadge siblings={related.siblings} matched={related.matched} />}
                             </div>
                             <ChevronDown className={cn("w-5 h-5 text-muted-foreground shrink-0 transition-transform", isOpen && "rotate-180")} />
                           </div>
