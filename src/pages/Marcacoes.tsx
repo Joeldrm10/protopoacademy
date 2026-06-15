@@ -798,10 +798,25 @@ const Marcacoes = () => {
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
-                                        <p className="text-foreground">{m.desconto_irmaos ? "Sim (-10%)" : "Não"}</p>
-                                        {m.desconto_irmaos && m.nome_irmaos && (
-                                          <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
-                                        )}
+                                        {(() => {
+                                          const fam = familyMap.get(m.id);
+                                          const claimed = !!m.desconto_irmaos;
+                                          const validated = (fam?.matched.length ?? 0) > 0;
+                                          if (!claimed) return <p className="text-foreground">Não</p>;
+                                          return (
+                                            <>
+                                              <p className="text-foreground">
+                                                {validated ? "Sim (-10% aplicado)" : "Solicitado (não aplicado)"}
+                                              </p>
+                                              {m.nome_irmaos && (
+                                                <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
+                                              )}
+                                              {!validated && (
+                                                <p className="text-[10px] text-amber-500 mt-0.5">Família por validar</p>
+                                              )}
+                                            </>
+                                          );
+                                        })()}
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Imagem autorizada</p>
@@ -815,7 +830,18 @@ const Marcacoes = () => {
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
-                                        <p className="text-foreground font-semibold text-primary">{m.valor_total != null ? `${m.valor_total}€` : "—"}</p>
+                                        {(() => {
+                                          const eff = effectiveValor(m);
+                                          const adjusted = eff != null && m.valor_total != null && eff !== m.valor_total;
+                                          return (
+                                            <p className="text-foreground font-semibold text-primary">
+                                              {eff != null ? `${eff}€` : "—"}
+                                              {adjusted && (
+                                                <span className="ml-1 text-[10px] text-muted-foreground font-normal">(sem desconto)</span>
+                                              )}
+                                            </p>
+                                          );
+                                        })()}
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Inscrito em</p>
