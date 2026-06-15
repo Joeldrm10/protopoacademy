@@ -333,9 +333,9 @@ const FootcampSignupForm = () => {
         `💰 VALOR`,
         `Valor das semanas: ${precoBase}€`,
         `Seguro: ${seguroTxt}`,
-        data.irmaos ? `Desconto irmãos (-10%): ainda não aplicado — aguarda validação (-${descontoIrmaosPotencial}€ se confirmado)` : "",
-        `Valor previsto: ${precoPrevisto}€`,
-        data.irmaos ? `(Valor ainda sem desconto de irmãos — será aplicado após validação)` : "",
+        data.irmaos
+          ? `Valor sem desconto: ${precoPrevisto}€\nDesconto irmãos (-10%): A aguardar validação\nValor estimado após validação: ${(precoPrevisto * 0.9).toFixed(2).replace(".", ",")}€\n\nNota: O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).`
+          : `Valor previsto a pagar: ${precoPrevisto}€`,
 
         ``,
         `✅ Consentimento de dados: autorizado`,
