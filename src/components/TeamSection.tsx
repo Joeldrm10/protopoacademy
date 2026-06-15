@@ -62,7 +62,7 @@ export const technicalTeam: TeamMember[] = [
     role: "Treinador UEFA A",
     specialty: "📹 Análise de Vídeo",
     description:
-      "Treinador UEFA A e membro da equipa ProTopo. Especialista em análise de vídeo, Luís Lopes utiliza ferramentas de observação e avaliação de desempenho para identificar oportunidades de melhoria e acelerar o desenvolvimento técnico e tático dos atletas. A sua abordagem complementa o trabalho de campo com uma análise detalhada do jogo e da evolução individual de cada jogador.",
+      "Treinador UEFA A e membro da equipa ProTopo. Especialista em análise de vídeo e avaliação de desempenho, ajudando os atletas a identificar oportunidades de melhoria e acelerar a sua evolução técnica e tática.",
     image: luisLopes.url,
   },
   {
