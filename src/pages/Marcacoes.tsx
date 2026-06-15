@@ -909,9 +909,9 @@ const Marcacoes = () => {
                                 <Phone className="w-3.5 h-3.5 text-primary" />{m.telemovel}
                               </span>
                             </div>
-                            {isFootcamp && m.valor_total != null && (
+                            {isFootcamp && effectiveValor(m) != null && (
                               <span className="font-heading text-base text-primary flex items-center gap-0.5">
-                                <Euro className="w-4 h-4" />{m.valor_total}
+                                <Euro className="w-4 h-4" />{effectiveValor(m)}
                               </span>
                             )}
                           </div>
