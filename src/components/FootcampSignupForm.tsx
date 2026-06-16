@@ -396,12 +396,12 @@ const FootcampSignupForm = () => {
                           <span className="font-medium">{lastSummary.precoPrevisto}€</span>
                         </div>
                         <div className="flex justify-between gap-3">
-                          <span className="text-muted-foreground">Desconto irmãos (-10%)</span>
+                          <span className="text-muted-foreground">Desconto irmãos (-15%)</span>
                           <span className="text-amber-400 font-medium text-xs text-right">A aguardar validação</span>
                         </div>
                         <div className="flex justify-between gap-3 border-t border-primary/20 pt-2">
                           <span className="text-foreground font-semibold">Valor estimado após validação</span>
-                          <span className="font-heading font-bold text-xl text-gradient-gold">{(lastSummary.precoPrevisto * 0.9).toFixed(2).replace(".", ",")}€</span>
+                          <span className="font-heading font-bold text-xl text-gradient-gold">{(lastSummary.precoPrevisto * (1 - DESCONTO_IRMAOS)).toFixed(2).replace(".", ",")}€</span>
                         </div>
                         <p className="text-xs text-amber-400/90 leading-snug pt-1">
                           O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).
