@@ -470,7 +470,7 @@ const Footcamp = () => {
             <AnimateOnScroll delay={300}>
               <div className="bg-card border border-border rounded-xl p-5 h-full">
                 <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">Desconto irmãos</p>
-                <p className="text-foreground"><span className="font-bold">10%</span> de desconto no valor total.</p>
+                <p className="text-foreground"><span className="font-bold">15%</span> de desconto no valor total.</p>
               </div>
             </AnimateOnScroll>
           </div>
