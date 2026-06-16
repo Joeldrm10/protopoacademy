@@ -1005,12 +1005,18 @@ const FootcampSignupForm = () => {
                     </div>
 
                     <div className="space-y-1.5 border-t border-primary/20 pt-3">
+                      <div className="flex justify-between gap-3 text-sm">
+                        <span className="text-muted-foreground">Valor sem desconto</span>
+                        <span className="text-foreground font-medium">{precoPrevisto}€</span>
+                      </div>
+                      {seguroOferta && (
+                        <div className="flex justify-between gap-3 text-sm">
+                          <span className="text-muted-foreground">Seguro anual</span>
+                          <span className="text-foreground font-medium">Oferecido 🎁</span>
+                        </div>
+                      )}
                       {irmaos ? (
                         <>
-                          <div className="flex justify-between gap-3 text-sm">
-                            <span className="text-muted-foreground">Valor sem desconto</span>
-                            <span className="text-foreground font-medium">{precoPrevisto}€</span>
-                          </div>
                           <div className="flex justify-between gap-3 text-sm">
                             <span className="text-muted-foreground">Desconto irmãos (-15%)</span>
                             <span className="text-amber-400 font-medium text-xs text-right">A aguardar validação</span>
@@ -1024,7 +1030,7 @@ const FootcampSignupForm = () => {
                           </p>
                         </>
                       ) : (
-                        <div className="flex items-baseline justify-between gap-3">
+                        <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
                           <span className="text-foreground font-semibold">Valor previsto a pagar</span>
                           <span className="font-heading font-bold text-2xl text-gradient-gold">{precoPrevisto}€</span>
                         </div>
