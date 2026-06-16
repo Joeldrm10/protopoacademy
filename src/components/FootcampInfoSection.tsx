@@ -39,10 +39,10 @@ const incluidoCards = [
 ];
 
 const pacotes = [
-  { sem: "1 Semana", preco: "95€", featured: false },
-  { sem: "2 Semanas", preco: "180€", featured: false },
-  { sem: "3 Semanas", preco: "260€", featured: false },
-  { sem: "4 Semanas", preco: "340€", featured: true, badge: "Melhor valor" },
+  { sem: "1ª Semana", preco: "95€", featured: false },
+  { sem: "2ª Semana", preco: "170€", featured: false },
+  { sem: "3ª Semana", preco: "250€", featured: false },
+  { sem: "4ª Semana", preco: "340€", featured: true, badge: "Melhor valor" },
 ];
 
 const aposPassos = [
