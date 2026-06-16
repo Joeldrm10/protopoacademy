@@ -746,7 +746,7 @@ const FootcampSignupForm = () => {
                         <Checkbox checked={!!field.value} onCheckedChange={field.onChange} />
                       </FormControl>
                       <FormLabel className="text-sm text-foreground font-normal cursor-pointer !mt-0">
-                        Tenho irmãos também inscritos (-10%)
+                        Tenho irmãos também inscritos (-15%)
                       </FormLabel>
                     </FormItem>
                   )}
