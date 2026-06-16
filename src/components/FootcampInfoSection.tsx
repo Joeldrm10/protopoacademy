@@ -156,7 +156,11 @@ const FootcampInfoSection = () => {
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Cobertura válida durante 12 meses</span>
+                    <span>Custo: <span className="font-semibold text-foreground">20€</span></span>
+                  </li>
+                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Válido para próximas edições no prazo de um ano</span>
                   </li>
                 </ul>
               </div>
