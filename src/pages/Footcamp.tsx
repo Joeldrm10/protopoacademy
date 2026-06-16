@@ -454,7 +454,7 @@ const Footcamp = () => {
                 <ul className="text-foreground text-sm space-y-1">
                   <li>• <span className="font-semibold">Obrigatório</span> para todos os participantes</li>
                   <li>• Custo: <span className="font-bold">20€</span></li>
-                  <li>• Válido durante <span className="font-semibold">12 meses</span></li>
+                  <li>• Válido para próximas edições no prazo de um ano</li>
                 </ul>
               </div>
             </AnimateOnScroll>
