@@ -833,7 +833,7 @@ const Marcacoes = () => {
                                           return (
                                             <>
                                               <p className="text-foreground">
-                                                {validated ? "Sim (-10% aplicado)" : "Solicitado (não aplicado)"}
+                                                {validated ? "Sim (-15% aplicado)" : "Solicitado (não aplicado)"}
                                               </p>
                                               {m.nome_irmaos && (
                                                 <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
