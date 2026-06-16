@@ -255,7 +255,7 @@ const Marcacoes = () => {
 
 
   // Valor efetivo: o valor guardado (valor_total) corresponde ao subtotal
-  // SEM desconto de irmãos. O desconto -10% só é aplicado quando a família
+  // SEM desconto de irmãos. O desconto -15% só é aplicado quando a família
   // está validada bidirecionalmente (pelo menos um irmão indicado existe e
   // também indicou de volta este atleta).
   const effectiveValor = (m: Marcacao): number | null => {
@@ -264,7 +264,7 @@ const Marcacoes = () => {
     const claimed = !!m.desconto_irmaos;
     const validated = (fam?.matched.length ?? 0) > 0;
     if (claimed && validated) {
-      return Math.round(m.valor_total * 0.9 * 100) / 100;
+      return Math.round(m.valor_total * 0.85 * 100) / 100;
     }
     return m.valor_total;
   };
