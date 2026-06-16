@@ -182,7 +182,7 @@ const FootcampInfoSection = () => {
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground text-center">
-              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-10% sobre o valor total</span>
+              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-15% sobre o valor total</span>
             </p>
           </div>
         </AnimateOnScroll>
