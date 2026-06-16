@@ -39,8 +39,9 @@ const semanasOptions = [
   { id: "s4", label: "4ª Semana — 27 a 31 de julho" },
 ];
 
-const precosTabela: Record<number, number> = { 1: 95, 2: 180, 3: 260, 4: 340 };
+const precosTabela: Record<number, number> = { 1: 95, 2: 170, 3: 250, 4: 340 };
 const SEGURO_ANUAL = 20;
+const DESCONTO_IRMAOS = 0.15;
 
 const ptPhoneRegex = /^9\d{8}$/;
 
