@@ -210,7 +210,6 @@ const FootcampSignupForm = () => {
   // O desconto irmãos só é aplicado após validação bidirecional no Admin.
   // No formulário mostramos sempre o subtotal como valor previsto.
   const precoPrevisto = subtotal;
-  const descontoIrmaosPotencial = irmaos ? +(subtotal * 0.1).toFixed(2) : 0;
 
 
   const onSubmit = async (data: FormData) => {
@@ -772,52 +771,17 @@ const FootcampSignupForm = () => {
                 )}
 
                 {numSemanas > 0 && (
-                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-2">
+                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-sm text-muted-foreground">Semanas ({numSemanas})</span>
-                      <span className="text-sm text-foreground font-medium">{precoBase}€</span>
-                    </div>
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-sm text-muted-foreground">Seguro anual</span>
-                      <span className="text-sm text-foreground font-medium">
-                        {seguroOferta ? <span className="text-primary">Oferta 🎁</span> : `${SEGURO_ANUAL}€`}
+                      <span className="text-sm text-foreground font-semibold">Total estimado</span>
+                      <span className="font-heading font-bold text-2xl text-gradient-gold">
+                        {irmaos
+                          ? `${(precoPrevisto * (1 - DESCONTO_IRMAOS)).toFixed(2).replace(".", ",")}€`
+                          : `${precoPrevisto}€`
+                        }
                       </span>
                     </div>
-
-                    {irmaos && (
-                      <>
-                        <div className="flex items-baseline justify-between gap-3">
-                          <span className="text-sm text-muted-foreground">Valor sem desconto</span>
-                          <span className="text-sm text-foreground font-medium">{precoPrevisto}€</span>
-                        </div>
-                        <div className="flex items-baseline justify-between gap-3">
-                          <span className="text-sm text-muted-foreground">Desconto irmãos (-15%)</span>
-                          <span className="text-xs text-amber-400 font-medium text-right">A aguardar validação</span>
-                        </div>
-                        <div className="border-t border-primary/20 pt-2 flex items-baseline justify-between gap-3">
-                          <span className="text-sm text-foreground font-semibold">Valor estimado após validação</span>
-                          <span className="font-heading font-bold text-2xl text-gradient-gold">{(precoPrevisto * (1 - DESCONTO_IRMAOS)).toFixed(2).replace(".", ",")}€</span>
-                        </div>
-                        <p className="text-xs text-amber-400/90 leading-snug pt-1">
-                          O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).
-                        </p>
-                      </>
-                    )}
-
-                    {!irmaos && (
-                      <div className="border-t border-primary/20 pt-2 flex items-baseline justify-between gap-3">
-                        <span className="text-sm text-foreground font-semibold">Valor previsto a pagar</span>
-                        <span className="font-heading font-bold text-2xl text-gradient-gold">{precoPrevisto}€</span>
-                      </div>
-                    )}
-
-                    {seguroOferta && (
-                      <div className="mt-2 rounded-lg bg-primary/10 border border-primary/30 px-3 py-2">
-                        <p className="text-xs text-primary font-medium">🎁 Oferta especial: Seguro anual oferecido na inscrição das 4 semanas. Válido para próximas edições no prazo de um ano.</p>
-                      </div>
-                    )}
                   </div>
-
                 )}
 
                 <SectionHeader icon={Stethoscope} title="🏥 Informação médica" />
@@ -1041,34 +1005,31 @@ const FootcampSignupForm = () => {
                     </div>
 
                     <div className="space-y-1.5 border-t border-primary/20 pt-3">
-                      <div className="flex justify-between gap-3 text-sm">
-                        <span className="text-muted-foreground">Valor do pacote</span>
-                        <span className="text-foreground font-medium">{precoBase}€</span>
-                      </div>
-                      <div className="flex justify-between gap-3 text-sm">
-                        <span className="text-muted-foreground">Seguro anual</span>
-                        <span className="text-foreground font-medium">
-                          {seguroOferta ? <span className="text-primary">Oferecido 🎁</span> : `${SEGURO_ANUAL}€`}
-                        </span>
-                      </div>
-                      {irmaos && (
-                        <div className="flex justify-between gap-3 text-sm">
-                          <span className="text-muted-foreground">Desconto irmãos (-15%)</span>
-                          <span className="text-amber-400 font-medium text-xs text-right">Ainda não aplicado<br/>(aguarda validação)</span>
+                      {irmaos ? (
+                        <>
+                          <div className="flex justify-between gap-3 text-sm">
+                            <span className="text-muted-foreground">Valor sem desconto</span>
+                            <span className="text-foreground font-medium">{precoPrevisto}€</span>
+                          </div>
+                          <div className="flex justify-between gap-3 text-sm">
+                            <span className="text-muted-foreground">Desconto irmãos (-15%)</span>
+                            <span className="text-amber-400 font-medium text-xs text-right">A aguardar validação</span>
+                          </div>
+                          <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
+                            <span className="text-foreground font-semibold">Valor estimado após validação</span>
+                            <span className="font-heading font-bold text-2xl text-gradient-gold">{(precoPrevisto * (1 - DESCONTO_IRMAOS)).toFixed(2).replace(".", ",")}€</span>
+                          </div>
+                          <p className="text-xs text-amber-400/90 leading-snug pt-1">
+                            O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).
+                          </p>
+                        </>
+                      ) : (
+                        <div className="flex items-baseline justify-between gap-3">
+                          <span className="text-foreground font-semibold">Valor previsto a pagar</span>
+                          <span className="font-heading font-bold text-2xl text-gradient-gold">{precoPrevisto}€</span>
                         </div>
                       )}
-                      <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
-                        <span className="text-foreground font-semibold">Valor previsto a pagar</span>
-                        <span className="font-heading font-bold text-2xl text-gradient-gold">{precoPrevisto}€</span>
-                      </div>
                     </div>
-
-                    {irmaos && (
-                      <p className="text-xs text-amber-400/90 leading-snug">
-                        ⚠️ O valor apresentado ainda não inclui o desconto de irmãos. Será validado e aplicado pela equipa ProTopo após confirmação da inscrição do(s) irmão(s).
-                      </p>
-                    )}
-
                   </div>
                 )}
 
