@@ -422,10 +422,10 @@ const Footcamp = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
             {[
-              { sem: "1 semana", preco: "95€", featured: false },
-              { sem: "2 semanas", preco: "180€", featured: false },
-              { sem: "3 semanas", preco: "260€", featured: false },
-              { sem: "4 semanas", preco: "340€", featured: true, badge: "Melhor valor" },
+              { sem: "1ª Semana", preco: "95€", featured: false },
+              { sem: "2ª Semana", preco: "170€", featured: false },
+              { sem: "3ª Semana", preco: "250€", featured: false },
+              { sem: "4ª Semana", preco: "340€", featured: true, badge: "Melhor valor" },
             ].map((p, i) => (
               <AnimateOnScroll key={p.sem} delay={i * 100}>
                 <div
@@ -454,7 +454,7 @@ const Footcamp = () => {
                 <ul className="text-foreground text-sm space-y-1">
                   <li>• <span className="font-semibold">Obrigatório</span> para todos os participantes</li>
                   <li>• Custo: <span className="font-bold">20€</span></li>
-                  <li>• Válido durante <span className="font-semibold">12 meses</span></li>
+                  <li>• Válido para próximas edições no prazo de um ano</li>
                 </ul>
               </div>
             </AnimateOnScroll>
@@ -470,7 +470,7 @@ const Footcamp = () => {
             <AnimateOnScroll delay={300}>
               <div className="bg-card border border-border rounded-xl p-5 h-full">
                 <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">Desconto irmãos</p>
-                <p className="text-foreground"><span className="font-bold">10%</span> de desconto no valor total.</p>
+                <p className="text-foreground"><span className="font-bold">15%</span> de desconto no valor total.</p>
               </div>
             </AnimateOnScroll>
           </div>

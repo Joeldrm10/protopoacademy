@@ -6,9 +6,11 @@ import kitSocks from "@/assets/kit-socks.png";
 import kitBag from "@/assets/kit-bag.png";
 
 const kitItems = [
-  { name: "T-shirt ProTopo", image: kitTshirt },
-  { name: "Meias", image: kitBag },
-  { name: "Saco para chuteiras", image: kitSocks },
+  { name: "T-shirt de treino ProTopo", image: kitTshirt },
+  { name: "T-shirt casual ProTopo", image: kitTshirt },
+  { name: "Calções ProTopo", image: kitTshirt },
+  { name: "Par de meias", image: kitSocks },
+  { name: "Saco ProTopo", image: kitBag },
 ];
 
 const KitSection = () => {
