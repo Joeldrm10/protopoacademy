@@ -1053,7 +1053,7 @@ const FootcampSignupForm = () => {
                       </div>
                       {irmaos && (
                         <div className="flex justify-between gap-3 text-sm">
-                          <span className="text-muted-foreground">Desconto irmãos (-10%)</span>
+                          <span className="text-muted-foreground">Desconto irmãos (-15%)</span>
                           <span className="text-amber-400 font-medium text-xs text-right">Ainda não aplicado<br/>(aguarda validação)</span>
                         </div>
                       )}
