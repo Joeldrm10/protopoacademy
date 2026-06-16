@@ -327,12 +327,17 @@ const Marcacoes = () => {
     const { data, error } = await supabase
       .from("marcacoes")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false, nullsFirst: false });
 
     if (error) {
       console.error("Erro ao carregar marcações:", error);
     } else {
-      setMarcacoes((data || []) as unknown as Marcacao[]);
+      const rows = ((data || []) as unknown as Marcacao[]).slice().sort((a, b) => {
+        const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return tb - ta;
+      });
+      setMarcacoes(rows);
     }
     setLoading(false);
   };
