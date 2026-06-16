@@ -19,7 +19,7 @@ const incluidoCards = [
   {
     icon: Shirt,
     title: "Kit oficial ProTopo",
-    items: ["T-shirt ProTopo", "Calções ProTopo", "Par de meias"],
+    items: ["T-shirt de treino ProTopo", "T-shirt casual ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo"],
   },
   {
     icon: Apple,
