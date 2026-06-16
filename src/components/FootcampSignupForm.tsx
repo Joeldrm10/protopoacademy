@@ -813,7 +813,7 @@ const FootcampSignupForm = () => {
 
                     {seguroOferta && (
                       <div className="mt-2 rounded-lg bg-primary/10 border border-primary/30 px-3 py-2">
-                        <p className="text-xs text-primary font-medium">🎁 Oferta especial: Seguro anual oferecido na inscrição das 4 semanas.</p>
+                        <p className="text-xs text-primary font-medium">🎁 Oferta especial: Seguro anual oferecido na inscrição das 4 semanas. Válido para próximas edições no prazo de um ano.</p>
                       </div>
                     )}
                   </div>
