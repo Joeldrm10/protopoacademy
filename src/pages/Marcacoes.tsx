@@ -1006,7 +1006,7 @@ const Marcacoes = () => {
                                       <span>
                                         <span className="text-muted-foreground">Irmãos: </span>
                                         <span className="text-foreground">
-                                          {!claimed ? "Não" : validated ? "Sim (-10% aplicado)" : "Solicitado (não aplicado)"}
+                                          {!claimed ? "Não" : validated ? "Sim (-15% aplicado)" : "Solicitado (não aplicado)"}
                                         </span>
                                       </span>
                                     );
