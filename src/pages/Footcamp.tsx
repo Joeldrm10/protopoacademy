@@ -348,7 +348,7 @@ const Footcamp = () => {
               {
                 icon: Shirt,
                 title: "Kit de treino ProTopo",
-                items: ["T-shirt ProTopo", "Calções de treino ProTopo", "Par de meias"],
+                items: ["T-shirt de treino ProTopo", "T-shirt casual ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo"],
               },
               {
                 icon: Apple,
