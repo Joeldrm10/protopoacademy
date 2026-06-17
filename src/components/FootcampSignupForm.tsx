@@ -33,10 +33,10 @@ import { WHATSAPP_NUMBER_EXPORT as WHATSAPP_NUMBER, WHATSAPP_URL_FOOTCAMP_INFO }
 const COOLDOWN_MS = 60_000;
 
 const semanasOptions = [
-  { id: "s1", label: "1ª Semana — 6 a 10 de julho" },
-  { id: "s2", label: "2ª Semana — 13 a 17 de julho" },
-  { id: "s3", label: "3ª Semana — 20 a 24 de julho" },
-  { id: "s4", label: "4ª Semana — 27 a 31 de julho" },
+  { id: "s1", label: "1 SEMANA — 6 a 10 de julho" },
+  { id: "s2", label: "2 SEMANAS — 13 a 17 de julho" },
+  { id: "s3", label: "3 SEMANAS — 20 a 24 de julho" },
+  { id: "s4", label: "4 SEMANAS — 27 a 31 de julho" },
 ];
 
 const precosTabela: Record<number, number> = { 1: 95, 2: 170, 3: 250, 4: 340 };

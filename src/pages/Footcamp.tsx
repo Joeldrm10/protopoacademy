@@ -422,10 +422,10 @@ const Footcamp = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
             {[
-              { sem: "1ª Semana", preco: "95€", featured: false },
-              { sem: "2ª Semana", preco: "170€", featured: false },
-              { sem: "3ª Semana", preco: "250€", featured: false },
-              { sem: "4ª Semana", preco: "340€", featured: true, badge: "Melhor valor" },
+              { sem: "1 SEMANA", preco: "95€", featured: false },
+              { sem: "2 SEMANAS", preco: "170€", featured: false },
+              { sem: "3 SEMANAS", preco: "250€", featured: false },
+              { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor" },
             ].map((p, i) => (
               <AnimateOnScroll key={p.sem} delay={i * 100}>
                 <div
@@ -442,6 +442,9 @@ const Footcamp = () => {
                   )}
                   <p className="text-foreground font-heading font-semibold uppercase tracking-wider text-xs mb-3">{p.sem}</p>
                   <p className="font-heading font-black text-3xl md:text-4xl text-gradient-gold">{p.preco}</p>
+                  {p.featured && (
+                    <p className="mt-2 text-xs text-primary font-semibold">🎁 Seguro anual oferecido</p>
+                  )}
                 </div>
               </AnimateOnScroll>
             ))}

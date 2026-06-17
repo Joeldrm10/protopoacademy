@@ -39,10 +39,10 @@ const incluidoCards = [
 ];
 
 const pacotes = [
-  { sem: "1ª Semana", preco: "95€", featured: false },
-  { sem: "2ª Semana", preco: "170€", featured: false },
-  { sem: "3ª Semana", preco: "250€", featured: false },
-  { sem: "4ª Semana", preco: "340€", featured: true, badge: "Melhor valor" },
+  { sem: "1 SEMANA", preco: "95€", featured: false },
+  { sem: "2 SEMANAS", preco: "170€", featured: false },
+  { sem: "3 SEMANAS", preco: "250€", featured: false },
+  { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor" },
 ];
 
 const aposPassos = [
@@ -138,6 +138,9 @@ const FootcampInfoSection = () => {
                   )}
                   <p className="text-foreground font-heading font-semibold uppercase tracking-wider text-[11px] mb-2">{p.sem}</p>
                   <p className="font-heading font-black text-2xl md:text-3xl text-gradient-gold">{p.preco}</p>
+                  {p.featured && (
+                    <p className="mt-1.5 text-[10px] text-primary font-semibold">🎁 Seguro anual oferecido</p>
+                  )}
                 </div>
               ))}
             </div>
