@@ -950,7 +950,7 @@ const Footcamp = () => {
         subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Verão 2026."
         faqs={[
           { question: "O seguro é obrigatório?", answer: "Sim. O seguro anual tem validade de 1 ano e cobre a participação nas atividades da ProTopo. Custa 20€ e é oferecido na inscrição das 4 semanas." },
-          { question: "O que está incluído na inscrição?", answer: "Kit de treino ProTopo (t-shirt, calções e meias), seguro anual, lanches diários, acompanhamento técnico especializado e acesso a todas as atividades selecionadas. Nos dias completos, almoço e lanches estão incluídos." },
+          { question: "O que está incluído na inscrição?", answer: "Kit de treino ProTopo (t-shirt de treino, t-shirt casual, calções, meias e saco), seguro anual, lanches diários, acompanhamento técnico especializado e acesso a todas as atividades selecionadas. Nos dias completos, almoço e lanches estão incluídos." },
           { question: "Há balneários?", answer: "Sim. Os atletas podem equipar-se e tomar banho de água quente após os treinos." },
           { question: "O almoço está incluído?", answer: "Nos dias completos (quinta-feira) o almoço e os lanches estão incluídos. Nos restantes dias, são fornecidos lanches, água e fruta." },
           { question: "Posso inscrever apenas uma semana?", answer: "Sim. Cada família pode escolher as semanas pretendidas. Quanto mais semanas, melhor o valor por semana." },
