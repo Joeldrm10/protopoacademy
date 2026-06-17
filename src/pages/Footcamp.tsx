@@ -442,6 +442,9 @@ const Footcamp = () => {
                   )}
                   <p className="text-foreground font-heading font-semibold uppercase tracking-wider text-xs mb-3">{p.sem}</p>
                   <p className="font-heading font-black text-3xl md:text-4xl text-gradient-gold">{p.preco}</p>
+                  {p.featured && (
+                    <p className="mt-2 text-xs text-primary font-semibold">🎁 Seguro anual oferecido</p>
+                  )}
                 </div>
               </AnimateOnScroll>
             ))}

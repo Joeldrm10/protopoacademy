@@ -138,6 +138,9 @@ const FootcampInfoSection = () => {
                   )}
                   <p className="text-foreground font-heading font-semibold uppercase tracking-wider text-[11px] mb-2">{p.sem}</p>
                   <p className="font-heading font-black text-2xl md:text-3xl text-gradient-gold">{p.preco}</p>
+                  {p.featured && (
+                    <p className="mt-1.5 text-[10px] text-primary font-semibold">🎁 Seguro anual oferecido</p>
+                  )}
                 </div>
               ))}
             </div>
