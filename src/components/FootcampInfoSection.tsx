@@ -38,11 +38,11 @@ const incluidoCards = [
   },
 ];
 
-const pacotes = [
-  { sem: "1 SEMANA", preco: "95€", featured: false },
-  { sem: "2 SEMANAS", preco: "170€", featured: false },
-  { sem: "3 SEMANAS", preco: "250€", featured: false },
-  { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor" },
+const pacotes: { sem: string; preco: string; featured: boolean; badge?: string; seguroInfo?: string }[] = [
+  { sem: "1 SEMANA", preco: "95€", featured: false, seguroInfo: "+ Seguro 10€" },
+  { sem: "2 SEMANAS", preco: "170€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
+  { sem: "3 SEMANAS", preco: "250€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
+  { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor", seguroInfo: "🎁 Seguro oferecido" },
 ];
 
 const aposPassos = [
