@@ -422,11 +422,11 @@ const Footcamp = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
             {[
-              { sem: "1 SEMANA", preco: "95€", featured: false },
-              { sem: "2 SEMANAS", preco: "170€", featured: false },
-              { sem: "3 SEMANAS", preco: "250€", featured: false },
-              { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor" },
-            ].map((p, i) => (
+              { sem: "1 SEMANA", preco: "95€", featured: false, seguroInfo: "+ Seguro 10€" },
+              { sem: "2 SEMANAS", preco: "170€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
+              { sem: "3 SEMANAS", preco: "250€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
+              { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor", seguroInfo: "🎁 Seguro oferecido" },
+            ].map((p: any, i) => (
               <AnimateOnScroll key={p.sem} delay={i * 100}>
                 <div
                   className={`relative h-full rounded-2xl border p-6 md:p-8 text-center transition-all duration-300 ${
@@ -442,8 +442,8 @@ const Footcamp = () => {
                   )}
                   <p className="text-foreground font-heading font-semibold uppercase tracking-wider text-xs mb-3">{p.sem}</p>
                   <p className="font-heading font-black text-3xl md:text-4xl text-gradient-gold">{p.preco}</p>
-                  {p.featured && (
-                    <p className="mt-2 text-xs text-primary font-semibold">🎁 Seguro anual oferecido</p>
+                  {p.seguroInfo && (
+                    <p className="mt-2 text-xs text-primary font-semibold">{p.seguroInfo}</p>
                   )}
                 </div>
               </AnimateOnScroll>
@@ -453,11 +453,11 @@ const Footcamp = () => {
           <div className="mt-8 grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
             <AnimateOnScroll delay={100}>
               <div className="rounded-xl p-5 h-full border-2 border-primary/40 bg-primary/5">
-                <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🛡️ Seguro Anual</p>
+                <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🛡️ Seguro</p>
                 <ul className="text-foreground text-sm space-y-1">
                   <li>• <span className="font-semibold">Obrigatório</span> para todos os participantes</li>
-                  <li>• Custo: <span className="font-bold">20€</span></li>
-                  <li>• Válido para próximas edições no prazo de um ano</li>
+                  <li>• 1 semana: <span className="font-bold">10€</span></li>
+                  <li>• 2, 3 ou 4 semanas: <span className="font-bold">Oferta 🎁</span></li>
                 </ul>
               </div>
             </AnimateOnScroll>
@@ -465,8 +465,7 @@ const Footcamp = () => {
               <div className="rounded-xl p-5 h-full border border-primary/40 bg-primary/5">
                 <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🎁 Oferta especial</p>
                 <ul className="text-foreground text-sm space-y-1">
-                  <li>• Inscrição de <span className="font-bold">4 semanas</span> = Seguro anual incluído</li>
-                  <li>• Poupança imediata de <span className="font-bold text-primary">20€</span></li>
+                  <li>• Seguro oferecido nas inscrições de <span className="font-bold">2, 3 ou 4 semanas</span></li>
                 </ul>
               </div>
             </AnimateOnScroll>
