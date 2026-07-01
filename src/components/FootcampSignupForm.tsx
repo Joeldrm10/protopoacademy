@@ -40,7 +40,7 @@ const semanasOptions = [
 ];
 
 const precosTabela: Record<number, number> = { 1: 95, 2: 170, 3: 250, 4: 340 };
-const SEGURO_ANUAL = 20;
+const SEGURO_1_SEMANA = 10;
 const DESCONTO_IRMAOS = 0.15;
 
 const ptPhoneRegex = /^9\d{8}$/;
@@ -204,8 +204,8 @@ const FootcampSignupForm = () => {
 
   const numSemanas = semanasSelecionadas.length;
   const precoBase = precosTabela[numSemanas] ?? 0;
-  const seguroOferta = numSemanas === 4;
-  const seguroCusto = seguroOferta ? 0 : (numSemanas > 0 ? SEGURO_ANUAL : 0);
+  const seguroOferta = numSemanas >= 2;
+  const seguroCusto = numSemanas === 1 ? SEGURO_1_SEMANA : 0;
   const subtotal = precoBase + seguroCusto;
   // O desconto irmãos só é aplicado após validação bidirecional no Admin.
   // No formulário mostramos sempre o subtotal como valor previsto.
@@ -275,7 +275,7 @@ const FootcampSignupForm = () => {
         return;
       }
 
-      const seguroTxt = seguroOferta ? "Oferecido 🎁" : `${SEGURO_ANUAL}€ (incluído)`;
+      const seguroTxt = seguroOferta ? "Oferta 🎁 (2, 3 ou 4 semanas)" : `${SEGURO_1_SEMANA}€`;
       const parts = [
         `📋 NOVA INSCRIÇÃO FOOTCAMP VERÃO 2026`,
         ``,
@@ -394,8 +394,8 @@ const FootcampSignupForm = () => {
                         <span className="text-foreground font-medium">{lastSummary.precoPrevisto}€</span>
                       </div>
                       <div className="flex justify-between gap-3 text-sm">
-                        <span className="text-muted-foreground">Seguro anual</span>
-                        <span className="text-foreground font-medium">{lastSummary.seguroOferta ? "Oferecido 🎁" : "Não incluído"}</span>
+                        <span className="text-muted-foreground">Seguro</span>
+                        <span className="text-foreground font-medium">{lastSummary.seguroOferta ? "Oferta 🎁" : `${lastSummary.seguroCusto}€`}</span>
                       </div>
                       {lastSummary.irmaos ? (
                         <>
@@ -1015,12 +1015,10 @@ const FootcampSignupForm = () => {
                         <span className="text-muted-foreground">Valor sem desconto</span>
                         <span className="text-foreground font-medium">{precoPrevisto}€</span>
                       </div>
-                      {seguroOferta && (
-                        <div className="flex justify-between gap-3 text-sm">
-                          <span className="text-muted-foreground">Seguro anual</span>
-                          <span className="text-foreground font-medium">Oferecido 🎁</span>
-                        </div>
-                      )}
+                      <div className="flex justify-between gap-3 text-sm">
+                        <span className="text-muted-foreground">Seguro</span>
+                        <span className="text-foreground font-medium">{seguroOferta ? "Oferta 🎁" : `${seguroCusto}€`}</span>
+                      </div>
                       {irmaos ? (
                         <>
                           <div className="flex justify-between gap-3 text-sm">
