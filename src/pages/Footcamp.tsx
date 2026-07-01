@@ -450,28 +450,20 @@ const Footcamp = () => {
             ))}
           </div>
 
-          <div className="mt-8 grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          <div className="mt-8 grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
             <AnimateOnScroll delay={100}>
               <div className="rounded-xl p-5 h-full border-2 border-primary/40 bg-primary/5">
-                <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🛡️ Seguro</p>
+                <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🛡️ Seguro anual</p>
                 <ul className="text-foreground text-sm space-y-1">
-                  <li>• <span className="font-semibold">Obrigatório</span> para todos os participantes</li>
-                  <li>• 1 semana: <span className="font-bold">10€</span></li>
-                  <li>• 2, 3 ou 4 semanas: <span className="font-bold">Oferta 🎁</span></li>
+                  <li>• <span className="font-bold">10€</span> para inscrições de 1 semana</li>
+                  <li>• <span className="font-bold">Oferta</span> nas inscrições de 2, 3 ou 4 semanas</li>
+                  <li>• Válido durante <span className="font-bold">1 ano</span></li>
                 </ul>
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll delay={200}>
-              <div className="rounded-xl p-5 h-full border border-primary/40 bg-primary/5">
-                <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🎁 Oferta especial</p>
-                <ul className="text-foreground text-sm space-y-1">
-                  <li>• Seguro oferecido nas inscrições de <span className="font-bold">2, 3 ou 4 semanas</span></li>
-                </ul>
-              </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll delay={300}>
               <div className="bg-card border border-border rounded-xl p-5 h-full">
-                <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">Desconto irmãos</p>
+                <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">👨‍👦 Desconto irmãos</p>
                 <p className="text-foreground"><span className="font-bold">15%</span> de desconto no valor total.</p>
               </div>
             </AnimateOnScroll>
