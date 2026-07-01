@@ -38,11 +38,11 @@ const incluidoCards = [
   },
 ];
 
-const pacotes = [
-  { sem: "1 SEMANA", preco: "95€", featured: false },
-  { sem: "2 SEMANAS", preco: "170€", featured: false },
-  { sem: "3 SEMANAS", preco: "250€", featured: false },
-  { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor" },
+const pacotes: { sem: string; preco: string; featured: boolean; badge?: string; seguroInfo?: string }[] = [
+  { sem: "1 SEMANA", preco: "95€", featured: false, seguroInfo: "+ Seguro 10€" },
+  { sem: "2 SEMANAS", preco: "170€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
+  { sem: "3 SEMANAS", preco: "250€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
+  { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor", seguroInfo: "🎁 Seguro oferecido" },
 ];
 
 const aposPassos = [
@@ -138,8 +138,8 @@ const FootcampInfoSection = () => {
                   )}
                   <p className="text-foreground font-heading font-semibold uppercase tracking-wider text-[11px] mb-2">{p.sem}</p>
                   <p className="font-heading font-black text-2xl md:text-3xl text-gradient-gold">{p.preco}</p>
-                  {p.featured && (
-                    <p className="mt-1.5 text-[10px] text-primary font-semibold">🎁 Seguro anual oferecido</p>
+                  {p.seguroInfo && (
+                    <p className="mt-1.5 text-[10px] text-primary font-semibold">{p.seguroInfo}</p>
                   )}
                 </div>
               ))}
@@ -150,7 +150,7 @@ const FootcampInfoSection = () => {
                   <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 border border-primary/20">
                     <Shield className="w-4 h-4 text-primary" />
                   </div>
-                  <h3 className="font-heading font-bold text-base text-foreground">Seguro Anual</h3>
+                  <h3 className="font-heading font-bold text-base text-foreground">Seguro</h3>
                 </div>
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
@@ -159,11 +159,11 @@ const FootcampInfoSection = () => {
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Custo: <span className="font-semibold text-foreground">20€</span></span>
+                    <span>Inscrição de 1 semana: <span className="font-semibold text-foreground">10€</span></span>
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Válido para próximas edições no prazo de um ano</span>
+                    <span>Inscrição de 2, 3 ou 4 semanas: <span className="font-semibold text-foreground">Oferta 🎁</span></span>
                   </li>
                 </ul>
               </div>
@@ -178,7 +178,7 @@ const FootcampInfoSection = () => {
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Incluído gratuitamente na inscrição de 4 semanas</span>
+                    <span>Seguro oferecido nas inscrições de 2, 3 ou 4 semanas</span>
                   </li>
                 </ul>
               </div>

@@ -49,9 +49,9 @@ const TermosCondicoes = () => {
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">3. Seguro Desportivo</h2>
             <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
-              <li>O seguro anual é <strong className="text-foreground">obrigatório</strong> para todos os participantes.</li>
-              <li>O valor do seguro é definido pela organização.</li>
-              <li>Nas campanhas ou promoções em que seja indicado, o seguro poderá ser oferecido sem custo adicional.</li>
+              <li>O seguro é <strong className="text-foreground">obrigatório</strong> para todos os participantes.</li>
+              <li>Nas inscrições de <strong className="text-foreground">1 semana</strong>, o seguro tem um custo de <strong className="text-foreground">10€</strong>, que acresce ao valor do pacote.</li>
+              <li>Nas inscrições de <strong className="text-foreground">2, 3 ou 4 semanas</strong>, o seguro é <strong className="text-foreground">oferecido</strong> pela ProTopo, sem custo adicional.</li>
             </ul>
           </section>
 

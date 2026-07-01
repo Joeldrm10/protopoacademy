@@ -820,8 +820,8 @@ const Marcacoes = () => {
                                         <p className="text-foreground">👕 {m.tamanho_tshirt || "—"} · 🩳 {m.tamanho_calcas || "—"}</p>
                                       </div>
                                       <div>
-                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro anual</p>
-                                        <p className="text-foreground">{m.seguro_anual ? "Oferecido 🎁" : "Incluído (+20€)"}</p>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro</p>
+                                        <p className="text-foreground">{m.seguro_anual ? "Oferta 🎁" : "Incluído no valor total"}</p>
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
@@ -997,7 +997,7 @@ const Marcacoes = () => {
                                 )}
 
                                 <div className="flex gap-4 flex-wrap text-xs">
-                                  <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Oferecido 🎁" : "Incluído (+20€)"}</span></span>
+                                  <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Oferta 🎁" : "Incluído no valor total"}</span></span>
                                   {(() => {
                                     const fam = familyMap.get(m.id);
                                     const claimed = !!m.desconto_irmaos;
