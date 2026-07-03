@@ -11,6 +11,7 @@ import Footcamp from "./pages/Footcamp.tsx";
 import Sobre from "./pages/Sobre.tsx";
 import Servicos from "./pages/Servicos.tsx";
 import Contacto from "./pages/Contacto.tsx";
+import Educacao from "./pages/Educacao.tsx";
 import PoliticaPrivacidade from "./pages/PoliticaPrivacidade.tsx";
 import TermosCondicoes from "./pages/TermosCondicoes.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/servicos" element={<Servicos />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/educacao" element={<Educacao />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-condicoes" element={<TermosCondicoes />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

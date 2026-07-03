@@ -107,6 +107,7 @@ const Navbar = () => {
     { label: "Galeria", href: "/galeria" },
     { label: "Footcamp", href: "/footcamp" },
     { label: "Sobre", href: "/sobre" },
+    { label: "Educação", href: "/educacao" },
     { label: "Contacto", href: "/contacto" },
   ];
 
