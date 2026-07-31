@@ -1,329 +1,126 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  Moon,
-  Zap,
-  Brain,
-  ShieldAlert,
-  StretchHorizontal,
-  Activity,
-  Shield,
-  Scale,
-  ArrowRight,
-  TrendingDown,
-  Timer,
-  Footprints,
-  BedDouble,
-  Sparkles,
-} from "lucide-react";
+import { Moon, StretchHorizontal, Sun, ArrowRight, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 
 type CategoryId = "sono" | "alongamentos" | "ferias";
 
-type Tip = {
-  id: string;
-  category: CategoryId;
+type Block = {
+  id: CategoryId;
   icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  short: React.ReactNode;
-  full: React.ReactNode;
+  category: string;
+  title: React.ReactNode;
+  tips: React.ReactNode[];
 };
 
-const CATEGORIES: { id: CategoryId; label: string; full: string }[] = [
-  { id: "sono", label: "Sono", full: "Sono e Recuperação" },
-  { id: "alongamentos", label: "Alongamentos", full: "Alongamentos" },
-  { id: "ferias", label: "Férias", full: "Férias / Regresso à época" },
+const CATEGORIES: { id: "todos" | CategoryId; label: string }[] = [
+  { id: "todos", label: "Todos" },
+  { id: "sono", label: "Sono" },
+  { id: "alongamentos", label: "Alongamentos" },
+  { id: "ferias", label: "Férias" },
 ];
-
-const categoryLabel = (id: CategoryId) =>
-  CATEGORIES.find((c) => c.id === id)?.full ?? "";
 
 const H = ({ children }: { children: React.ReactNode }) => (
   <span className="text-gradient-gold font-semibold">{children}</span>
 );
 
-// Edita/acrescenta dicas aqui — o layout adapta-se automaticamente.
-const TIPS: Tip[] = [
+// Edita/acrescenta blocos e dicas aqui — o layout adapta-se automaticamente.
+const BLOCKS: Block[] = [
   {
-    id: "sono-1",
-    category: "sono",
-    icon: BedDouble,
-    title: "Dormir bem melhora o rendimento",
-    short: (
+    id: "sono",
+    icon: Moon,
+    category: "Sono e Recuperação",
+    title: (
+      <>
+        O teu desempenho em campo começa no <H>sono</H>.
+      </>
+    ),
+    tips: [
       <>
         <H>Dormir bem</H> melhora a recuperação e o rendimento físico no treino seguinte.
-      </>
-    ),
-    full: (
+      </>,
       <>
-        O sono é uma das ferramentas mais poderosas — e mais subestimadas — de qualquer atleta.
-        Durante o sono profundo o corpo repara o tecido muscular e consolida o que foi aprendido no
-        treino. Um atleta que dorme bem chega ao treino seguinte com mais <H>energia</H>, melhor{" "}
-        <H>concentração</H> e menor risco de lesão.
-      </>
-    ),
+        Dormir <H>menos de 6 horas</H> pode reduzir o <H>tempo de reação</H> e a velocidade de
+        decisão em jogo.
+      </>,
+      <>
+        Dormir pouco aumenta o risco de <H>lesões musculares</H>.
+      </>,
+    ],
   },
   {
-    id: "sono-2",
-    category: "sono",
-    icon: Moon,
-    title: "Menos de 6 horas aumenta lesões",
-    short: (
-      <>
-        Dormir <H>menos de 6 horas</H> aumenta o risco de lesões musculares.
-      </>
-    ),
-    full: (
-      <>
-        Noites curtas de forma repetida deixam o músculo sem tempo suficiente de reparação. O
-        resultado é maior <H>fadiga acumulada</H>, perda de controlo motor e um aumento claro do
-        risco de <H>lesões musculares</H>, sobretudo em arranques, mudanças de direção e remates.
-      </>
-    ),
-  },
-  {
-    id: "sono-3",
-    category: "sono",
-    icon: Zap,
-    title: "Tempo de reação mais lento",
-    short: (
-      <>
-        Dormir pouco reduz o <H>tempo de reação</H> em campo.
-      </>
-    ),
-    full: (
-      <>
-        O tempo de reação é decisivo em duelos, desarmes e no primeiro toque. Com privação de sono,
-        o sistema nervoso responde mais devagar — no futebol, alguns <H>milésimos de segundo</H>{" "}
-        fazem a diferença entre ganhar ou perder a bola.
-      </>
-    ),
-  },
-  {
-    id: "sono-4",
-    category: "sono",
-    icon: Brain,
-    title: "Pior tomada de decisão",
-    short: (
-      <>
-        Dormir pouco prejudica a <H>tomada de decisão</H> sob pressão.
-      </>
-    ),
-    full: (
-      <>
-        Passe, condução ou remate? Sob cansaço mental, o cérebro processa menos informação por
-        segundo e o atleta tende a escolher a opção mais fácil em vez da melhor. Dormir bem melhora
-        a <H>leitura de jogo</H> e a qualidade das decisões nos momentos críticos.
-      </>
-    ),
-  },
-  {
-    id: "sono-5",
-    category: "sono",
-    icon: ShieldAlert,
-    title: "Mais probabilidade de lesões",
-    short: (
-      <>
-        Dormir pouco aumenta a probabilidade de <H>lesões</H> nos treinos e jogos.
-      </>
-    ),
-    full: (
-      <>
-        Além da recuperação muscular, o sono regula hormonas ligadas ao crescimento e à
-        inflamação. Atletas jovens com rotinas de sono irregulares apresentam mais queixas de{" "}
-        <H>dores</H> e maior número de paragens ao longo da época.
-      </>
-    ),
-  },
-  {
-    id: "along-1",
-    category: "alongamentos",
+    id: "alongamentos",
     icon: StretchHorizontal,
-    title: "Melhor postura",
-    short: (
+    category: "Alongamentos",
+    title: (
       <>
-        Os alongamentos podem melhorar a tua <H>postura</H>.
+        Os alongamentos podem melhorar a tua <H>postura</H>?
       </>
     ),
-    full: (
-      <>
-        Muitas horas sentado encurtam músculos da anca e da zona lombar. Alongar de forma regular
-        devolve comprimento a esses músculos e ajuda a manter uma <H>postura alinhada</H>, o que se
-        traduz em melhor corrida e menos dores nas costas.
-      </>
-    ),
-  },
-  {
-    id: "along-2",
-    category: "alongamentos",
-    icon: Activity,
-    title: "Flexibilidade e circulação",
-    short: (
+    tips: [
       <>
         Alongar melhora a <H>flexibilidade</H>, reduz a tensão muscular e aumenta a{" "}
         <H>circulação sanguínea</H>.
-      </>
-    ),
-    full: (
+      </>,
       <>
-        Com mais flexibilidade, o gesto técnico torna-se mais livre e eficiente. O aumento da
-        circulação leva mais <H>oxigénio</H> e nutrientes ao músculo, acelerando a recuperação
-        depois do esforço.
-      </>
-    ),
-  },
-  {
-    id: "along-3",
-    category: "alongamentos",
-    icon: Shield,
-    title: "Prevenção de lesões",
-    short: (
-      <>
-        Alongamentos regulares ajudam a <H>prevenir lesões</H> e melhoram a amplitude de movimento.
-      </>
-    ),
-    full: (
-      <>
-        Uma articulação com boa <H>amplitude de movimento</H> tolera melhor as posições extremas
-        que o futebol exige. Isso reduz o risco de entorses e de roturas em movimentos rápidos e
-        inesperados.
-      </>
-    ),
-  },
-  {
-    id: "along-4",
-    category: "alongamentos",
-    icon: Scale,
-    title: "Mais equilíbrio",
-    short: (
+        Alongamentos regulares ajudam a <H>prevenir lesões</H>, melhorando a amplitude de movimento
+        nas articulações.
+      </>,
       <>
         Alongamentos diários melhoram o <H>equilíbrio</H>.
-      </>
-    ),
-    full: (
-      <>
-        O equilíbrio depende da relação entre músculos, articulações e sistema nervoso. Rotinas
-        curtas e diárias de alongamento melhoram esta coordenação e ajudam o atleta a manter-se{" "}
-        <H>estável</H> em duelos e apoios instáveis.
-      </>
-    ),
+      </>,
+    ],
   },
   {
-    id: "ferias-1",
-    category: "ferias",
-    icon: TrendingDown,
-    title: "Pausas longas reduzem a capacidade física",
-    short: (
+    id: "ferias",
+    icon: Sun,
+    category: "Férias / Regresso à época",
+    title: (
+      <>
+        Antes de começares a nova época, prepara o teu <H>regresso</H>.
+      </>
+    ),
+    tips: [
       <>
         Após <H>2 a 4 semanas</H> sem treinar, um atleta pode perder entre <H>5% e 15%</H> da sua
         capacidade física.
-      </>
-    ),
-    full: (
+      </>,
       <>
-        A paragem total leva a uma perda progressiva de adaptações conquistadas ao longo da época.
-        Quanto mais longa a pausa, maior a perda — e maior o tempo necessário para{" "}
-        <H>recuperar o nível</H> no regresso aos treinos.
-      </>
-    ),
-  },
-  {
-    id: "ferias-2",
-    category: "ferias",
-    icon: Timer,
-    title: "A resistência é a primeira a baixar",
-    short: (
-      <>
-        A força e a velocidade mantêm-se mais tempo, mas a <H>resistência</H> é das primeiras
-        capacidades a diminuir.
-      </>
-    ),
-    full: (
-      <>
-        A capacidade aeróbia responde muito depressa à falta de estímulo. Por isso, no regresso, é
-        comum o atleta sentir-se rápido em ações curtas mas <H>sem fôlego</H> para manter o ritmo
-        durante todo o jogo.
-      </>
-    ),
-  },
-  {
-    id: "ferias-3",
-    category: "ferias",
-    icon: Footprints,
-    title: "Mantém-te ativo nas férias",
-    short: (
+        A força e a velocidade tendem a manter-se durante mais tempo, mas a <H>resistência</H> é
+        uma das primeiras capacidades a diminuir.
+      </>,
       <>
         Manter uma rotina de <H>atividade física</H> durante as férias ajuda a preservar o
         rendimento.
-      </>
-    ),
-    full: (
-      <>
-        Não é preciso treinar como na época. Correr, nadar, andar de bicicleta ou jogar bola com os
-        amigos <H>2 a 3 vezes por semana</H> é suficiente para travar grande parte da perda de
-        condição física.
-      </>
-    ),
-  },
-  {
-    id: "ferias-4",
-    category: "ferias",
-    icon: Sparkles,
-    title: "Descanso e atividade física",
-    short: (
+      </>,
       <>
         <H>Descanso</H> e <H>atividade física</H> devem andar lado a lado.
-      </>
-    ),
-    full: (
-      <>
-        As férias servem para recuperar corpo e cabeça — mas descanso não significa paragem total.
-        O equilíbrio entre repouso e movimento é o que permite voltar à época{" "}
-        <H>fresco e preparado</H>.
-      </>
-    ),
+      </>,
+    ],
   },
 ];
 
-const INITIAL_COUNT = 6;
-
 const Educacao = () => {
-  const [filter, setFilter] = useState<"todas" | CategoryId>("todas");
-  const [visible, setVisible] = useState(INITIAL_COUNT);
-  const [openTip, setOpenTip] = useState<Tip | null>(null);
+  const [filter, setFilter] = useState<"todos" | CategoryId>("todos");
+  const [open, setOpen] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, []);
 
-  const filtered = useMemo(
-    () => (filter === "todas" ? TIPS : TIPS.filter((t) => t.category === filter)),
+  const shown = useMemo(
+    () => (filter === "todos" ? BLOCKS : BLOCKS.filter((b) => b.id === filter)),
     [filter]
   );
-
-  const shown = filtered.slice(0, visible);
-  const hasMore = filtered.length > shown.length;
-
-  const selectFilter = (id: "todas" | CategoryId) => {
-    setFilter(id);
-    setVisible(INITIAL_COUNT);
-  };
 
   return (
     <div className="min-h-screen bg-background">
       <SEO
         title="Sabias que? | Educação | ProTopo Academy"
-        description="Biblioteca de dicas sobre sono, recuperação, alongamentos, férias e regresso à época para atletas."
+        description="Dicas sobre sono, recuperação, alongamentos e regresso à época para atletas da ProTopo Academy."
         path="/educacao"
       />
       <Navbar />
@@ -339,20 +136,22 @@ const Educacao = () => {
             Sabias <span className="text-gradient-gold">que?</span>
           </h1>
           <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-            Pequenas dicas que fazem <span className="text-foreground font-medium">grande diferença</span> no teu rendimento em campo.
+            Pequenas dicas que fazem{" "}
+            <span className="text-foreground font-medium">grande diferença</span> no teu rendimento
+            em campo.
           </p>
         </div>
       </section>
 
       <div className="container mx-auto px-4 pb-24 md:pb-32">
         {/* Filtros */}
-        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-12">
-          {[{ id: "todas" as const, label: "Todas" }, ...CATEGORIES].map((c) => {
+        <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-12">
+          {CATEGORIES.map((c) => {
             const active = filter === c.id;
             return (
               <button
                 key={c.id}
-                onClick={() => selectFilter(c.id)}
+                onClick={() => setFilter(c.id)}
                 aria-pressed={active}
                 className={`px-4 md:px-5 py-2 rounded-full font-heading font-semibold text-xs md:text-sm uppercase tracking-wider border transition-all duration-300 ${
                   active
@@ -366,33 +165,59 @@ const Educacao = () => {
           })}
         </div>
 
-        {/* Grelha de dicas */}
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {shown.map((tip, idx) => {
-            const Icon = tip.icon;
+        {/* Blocos */}
+        <div className="max-w-3xl mx-auto space-y-5 md:space-y-6">
+          {shown.map((block, idx) => {
+            const Icon = block.icon;
+            const isOpen = !!open[block.id];
             return (
-              <AnimateOnScroll key={tip.id} delay={(idx % 3) * 80}>
-                <div className="group h-full flex flex-col bg-card/60 border border-border rounded-xl p-5 md:p-6 hover:border-primary/40 transition-all duration-300 hover:-translate-y-1">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="shrink-0 w-11 h-11 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <Icon className="w-5 h-5 text-primary" />
+              <AnimateOnScroll key={block.id} delay={idx * 80}>
+                <div className="bg-card/60 border border-border rounded-2xl p-6 md:p-8 hover:border-primary/40 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-primary" />
                     </div>
-                    <span className="text-[0.65rem] font-heading font-semibold uppercase tracking-[0.15em] text-primary/80">
-                      {categoryLabel(tip.category)}
-                    </span>
+                    <div className="min-w-0">
+                      <span className="block text-[0.65rem] font-heading font-semibold uppercase tracking-[0.15em] text-primary/80 mb-2">
+                        {block.category}
+                      </span>
+                      <h2 className="font-heading font-bold text-xl md:text-2xl text-foreground leading-snug">
+                        {block.title}
+                      </h2>
+                    </div>
                   </div>
-                  <h3 className="font-heading font-bold text-lg text-foreground mb-2 leading-snug">
-                    {tip.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm md:text-[0.95rem] leading-relaxed mb-4">
-                    {tip.short}
-                  </p>
-                  <button
-                    onClick={() => setOpenTip(tip)}
-                    className="mt-auto inline-flex items-center gap-2 text-primary font-heading font-semibold text-sm uppercase tracking-wider hover:gap-3 transition-all"
+
+                  <div
+                    className={`grid transition-all duration-300 ease-out ${
+                      isOpen ? "grid-rows-[1fr] opacity-100 mt-5" : "grid-rows-[0fr] opacity-0"
+                    }`}
                   >
-                    Ler mais
-                    <ArrowRight className="w-4 h-4" />
+                    <div className="overflow-hidden">
+                      <ul className="space-y-3">
+                        {block.tips.map((tip, i) => (
+                          <li
+                            key={i}
+                            className="flex gap-3 text-muted-foreground text-sm md:text-base leading-relaxed"
+                          >
+                            <span className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>{tip}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setOpen((o) => ({ ...o, [block.id]: !o[block.id] }))}
+                    aria-expanded={isOpen}
+                    className="mt-5 inline-flex items-center gap-2 text-primary font-heading font-semibold text-sm uppercase tracking-wider hover:gap-3 transition-all"
+                  >
+                    {isOpen ? "Ver menos" : "Ver dicas"}
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform duration-300 ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
                   </button>
                 </div>
               </AnimateOnScroll>
@@ -400,23 +225,13 @@ const Educacao = () => {
           })}
         </div>
 
-        {hasMore && (
-          <div className="text-center mt-10">
-            <button
-              onClick={() => setVisible((v) => v + INITIAL_COUNT)}
-              className="inline-flex items-center gap-2 border border-primary/40 text-primary px-8 py-3 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:bg-primary/10 transition-all duration-300"
-            >
-              Ver mais dicas
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-
         {/* Closing CTA */}
         <AnimateOnScroll>
           <div className="max-w-2xl mx-auto text-center mt-16 md:mt-20">
             <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8 italic">
-              Na <span className="text-foreground font-semibold not-italic">ProTopo Academy</span>, não treinamos só no campo — também ajudamos os atletas a evoluir fora dele.
+              Na{" "}
+              <span className="text-foreground font-semibold not-italic">ProTopo Academy</span>, não
+              treinamos só no campo — também ajudamos os atletas a evoluir fora dele.
             </p>
             <Link
               to="/marcar?tipo=footcamp"
@@ -428,29 +243,6 @@ const Educacao = () => {
           </div>
         </AnimateOnScroll>
       </div>
-
-      <Dialog open={!!openTip} onOpenChange={(o) => !o && setOpenTip(null)}>
-        <DialogContent className="max-w-lg">
-          {openTip && (
-            <>
-              <DialogHeader>
-                <span className="text-[0.65rem] font-heading font-semibold uppercase tracking-[0.15em] text-primary/80 text-left">
-                  {categoryLabel(openTip.category)}
-                </span>
-                <DialogTitle className="font-heading text-xl md:text-2xl text-left">
-                  {openTip.title}
-                </DialogTitle>
-                <DialogDescription asChild>
-                  <div className="text-left text-foreground/90 text-base leading-relaxed pt-2 space-y-3">
-                    <p>{openTip.short}</p>
-                    <p>{openTip.full}</p>
-                  </div>
-                </DialogDescription>
-              </DialogHeader>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
 
       <Footer />
     </div>
