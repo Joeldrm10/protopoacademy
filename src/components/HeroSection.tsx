@@ -1,8 +1,8 @@
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
-import { WHATSAPP_URL_GERAL as WHATSAPP_URL } from "@/lib/constants";
-import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
+import { WHATSAPP_URL_GERAL as WHATSAPP_URL, WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS, FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
