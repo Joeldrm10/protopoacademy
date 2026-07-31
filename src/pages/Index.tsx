@@ -9,11 +9,12 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import FootcampHighlight from "@/components/FootcampHighlight";
 import GalleryCTA from "@/components/GalleryCTA";
 import EducacaoCTA from "@/components/EducacaoCTA";
+import ThankYouSection from "@/components/ThankYouSection";
 
 
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
-import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS, FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 
 const Index = () => {
   const location = useLocation();
@@ -41,6 +42,7 @@ const Index = () => {
       />
       <Navbar />
       <HeroSection />
+      {FOOTCAMP_ENCERRADO && <ThankYouSection />}
       
       <AboutSection />
       {/* Treinos individuais e de grupo temporariamente ocultos — reativar via SHOW_INDIVIDUAL_GROUP_TRAININGS */}

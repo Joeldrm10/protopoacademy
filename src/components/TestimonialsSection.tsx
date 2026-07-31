@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Quote, Star, ArrowRight } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
+import { WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
+import { FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 import { supabase } from "@/integrations/supabase/client";
 
 type Testemunho = {
@@ -105,14 +107,27 @@ const TestimonialsSection = () => {
 
         <AnimateOnScroll delay={200} className="text-center">
           <p className="font-heading font-semibold text-xl md:text-2xl text-foreground mb-6">
-            Junta-te aos atletas que já estão a evoluir connosco.
+            {FOOTCAMP_ENCERRADO
+              ? "Obrigado a todos os atletas do Footcamp Verão 2026."
+              : "Junta-te aos atletas que já estão a evoluir connosco."}
           </p>
-          <Link
-            to="/marcar?tipo=footcamp"
-            className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg hover:shadow-xl"
-          >
-            Inscrever Footcamp
-          </Link>
+          {FOOTCAMP_ENCERRADO ? (
+            <a
+              href={WHATSAPP_URL_PROXIMA_EDICAO}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg hover:shadow-xl"
+            >
+              Quero saber da próxima edição
+            </a>
+          ) : (
+            <Link
+              to="/marcar?tipo=footcamp"
+              className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg hover:shadow-xl"
+            >
+              Inscrever Footcamp
+            </Link>
+          )}
         </AnimateOnScroll>
       </div>
     </section>
