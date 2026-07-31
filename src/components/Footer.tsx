@@ -1,8 +1,8 @@
 import { MapPin, Mail, ArrowUp, MessageCircle, ArrowRight, Instagram } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import { WHATSAPP_URL_DIRETO as WHATSAPP_URL, EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, LOCATION } from "@/lib/constants";
-import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
+import { WHATSAPP_URL_DIRETO as WHATSAPP_URL, WHATSAPP_URL_PROXIMA_EDICAO, EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, LOCATION } from "@/lib/constants";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS, FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 
 const Footer = () => {
   const location = useLocation();
