@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, X, Menu, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
-import { WHATSAPP_URL_MARCAR as WHATSAPP_URL } from "@/lib/constants";
-import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
+import { WHATSAPP_URL_MARCAR as WHATSAPP_URL, WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS, FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 import MarqueeBanner from "@/components/MarqueeBanner";
 
 const Navbar = () => {
@@ -179,14 +179,26 @@ const Navbar = () => {
             <MessageCircle className="w-4 h-4" />
             WhatsApp
           </a>
-          <Link
-            to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
-            onClick={() => setMenuOpen(false)}
-            className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
-          >
-            {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marcar" : "Inscrever Footcamp"}
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
+          {FOOTCAMP_ENCERRADO ? (
+            <a
+              href={WHATSAPP_URL_PROXIMA_EDICAO}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
+            >
+              Próxima edição
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+          ) : (
+            <Link
+              to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
+              onClick={() => setMenuOpen(false)}
+              className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-2.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
+            >
+              {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marcar" : "Inscrever Footcamp"}
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -246,14 +258,27 @@ const Navbar = () => {
           <MessageCircle className="w-5 h-5" />
           WhatsApp
         </a>
-        <Link
-          to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
-          onClick={() => setMenuOpen(false)}
-          className="inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full max-w-xs px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
-        >
-          {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marcar" : "Inscrever Footcamp"}
-          <ArrowRight className="w-5 h-5" />
-        </Link>
+        {FOOTCAMP_ENCERRADO ? (
+          <a
+            href={WHATSAPP_URL_PROXIMA_EDICAO}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            className="inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full max-w-xs px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider text-center"
+          >
+            Próxima edição
+            <ArrowRight className="w-5 h-5" />
+          </a>
+        ) : (
+          <Link
+            to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
+            onClick={() => setMenuOpen(false)}
+            className="inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full max-w-xs px-10 py-4 rounded-lg font-heading font-bold text-lg uppercase tracking-wider"
+          >
+            {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marcar" : "Inscrever Footcamp"}
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        )}
       </div>
     </nav>
     </div>

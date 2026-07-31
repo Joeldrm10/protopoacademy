@@ -1,8 +1,8 @@
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
-import { WHATSAPP_URL_GERAL as WHATSAPP_URL } from "@/lib/constants";
-import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
+import { WHATSAPP_URL_GERAL as WHATSAPP_URL, WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS, FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 
 const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hIP6ai7E6jUUXYAH1_NkifcbQSoZ-beA/viewform";
 
@@ -68,32 +68,58 @@ const HeroSection = () => {
             Treinos adaptados a cada faixa etária.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
-              className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
-              style={{ animation: "pulse-gold 2s infinite" }}
-            >
-              {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marca já o teu treino" : "Inscrever no Footcamp"}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            {!SHOW_INDIVIDUAL_GROUP_TRAININGS && (
-              <Link
-                to="/footcamp"
-                className="inline-flex items-center justify-center gap-2 border border-primary/40 text-foreground w-full sm:w-auto px-8 py-5 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all duration-300"
-              >
-                Ver detalhes
-              </Link>
+            {FOOTCAMP_ENCERRADO ? (
+              <>
+                <a
+                  href={WHATSAPP_URL_PROXIMA_EDICAO}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  Quero saber da próxima edição
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-8 py-5 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Pedir informações
+                </a>
+              </>
+            ) : (
+              <>
+                <Link
+                  to={SHOW_INDIVIDUAL_GROUP_TRAININGS ? "/marcar" : "/marcar?tipo=footcamp"}
+                  className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  style={{ animation: "pulse-gold 2s infinite" }}
+                >
+                  {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marca já o teu treino" : "Inscrever no Footcamp"}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                {!SHOW_INDIVIDUAL_GROUP_TRAININGS && (
+                  <Link
+                    to="/footcamp"
+                    className="inline-flex items-center justify-center gap-2 border border-primary/40 text-foreground w-full sm:w-auto px-8 py-5 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all duration-300"
+                  >
+                    Ver detalhes
+                  </Link>
+                )}
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-8 py-5 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Tirar dúvidas no WhatsApp
+                </a>
+              </>
             )}
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-8 py-5 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
-            >
-              <MessageCircle className="w-5 h-5" />
-              Tirar dúvidas no WhatsApp
-            </a>
           </div>
+
         </div>
       </div>
 

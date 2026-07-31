@@ -15,6 +15,8 @@ import TestemunhoFormDialog from "@/components/TestemunhoFormDialog";
 
 import FootcampCountdown from "@/components/FootcampCountdown";
 import { supabase } from "@/integrations/supabase/client";
+import { FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
+import { WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
 import { WHATSAPP_URL_FOOTCAMP_INFO } from "@/lib/constants";
 
 import footcampHero from "@/assets/hero-footcamp-desktop-wide.jpg";
@@ -129,10 +131,10 @@ const Footcamp = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="ProTopo Footcamp Verão 2026 | Inscrições Abertas"
-        description="ProTopo Footcamp — Edição Verão 2026. 4 semanas de julho. Treino diferenciado para atletas dos 6 aos 16 anos. Inscrições abertas."
-        ogTitle="ProTopo Footcamp — Edição Verão 2026"
-        ogDescription="Treino diferenciado e de excelência. Inscrições abertas para julho 2026."
+        title={FOOTCAMP_ENCERRADO ? "ProTopo Footcamp Verão 2026 | Edição concluída" : "ProTopo Footcamp Verão 2026 | Inscrições Abertas"}
+        description={FOOTCAMP_ENCERRADO ? "O ProTopo Footcamp Verão 2026 terminou. Obrigado a todos os atletas, famílias e equipa técnica. Próxima edição em breve." : "ProTopo Footcamp — Edição Verão 2026. 4 semanas de julho. Treino diferenciado para atletas dos 6 aos 16 anos. Inscrições abertas."}
+        ogTitle={FOOTCAMP_ENCERRADO ? "ProTopo Footcamp Verão 2026 — Edição concluída" : "ProTopo Footcamp — Edição Verão 2026"}
+        ogDescription={FOOTCAMP_ENCERRADO ? "Obrigado a todos os atletas. Próxima edição em breve." : "Treino diferenciado e de excelência. Inscrições abertas para julho 2026."}
         ogImage="/og/footcamp.jpg"
         path="/footcamp"
       />
@@ -160,24 +162,33 @@ const Footcamp = () => {
           <div className="animate-fade-in-up">
             <span className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full font-heading font-bold uppercase tracking-[0.2em] text-xs mb-5 shadow-lg">
               <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
-              Inscrições Abertas · Edição Verão 2026
+              {FOOTCAMP_ENCERRADO ? "Footcamp Verão 2026 concluído" : "Inscrições Abertas · Edição Verão 2026"}
             </span>
             <h1 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
               ProTopo
               <span className="block text-gradient-gold mt-1">Footcamp</span>
             </h1>
             <p className="text-foreground/90 text-lg md:text-2xl max-w-2xl mx-auto font-body leading-relaxed mb-6">
-              Evolui este verão com treinos intensivos, competição e experiências únicas para atletas dos 6 aos 16 anos.
+              {FOOTCAMP_ENCERRADO
+                ? "A edição Verão 2026 terminou a 31 de julho. Obrigado a todos os atletas, famílias e equipa técnica que fizeram parte desta edição."
+                : "Evolui este verão com treinos intensivos, competição e experiências únicas para atletas dos 6 aos 16 anos."}
             </p>
 
             {/* Quick highlights */}
             <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-3xl mx-auto mb-4">
-              {[
+              {(FOOTCAMP_ENCERRADO
+                ? [
+                    "✅ Edição concluída",
+                    "🔜 Próxima edição em breve",
+                    "👕 Kit de treino incluído",
+                    "⚽ Dos 6 aos 16 anos",
+                  ]
+                : [
                 "📅 Julho 2026",
                 "🗓️ 4 semanas disponíveis",
                 "👕 Kit de treino incluído",
                 "⏰ Quinta-feira: dia completo",
-              ].map((t) => (
+              ]).map((t) => (
                 <span
                   key={t}
                   className="bg-background/50 backdrop-blur-sm border border-primary/30 text-foreground px-3 py-1.5 rounded-full font-heading font-semibold text-xs md:text-sm"
@@ -189,23 +200,43 @@ const Footcamp = () => {
 
             {/* Urgency badges */}
             <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-3xl mx-auto mb-8">
-              <span className="inline-flex items-center gap-1.5 bg-primary/15 border border-primary/50 text-primary px-3 py-1.5 rounded-full font-heading font-bold text-xs md:text-sm uppercase tracking-wider animate-pulse">
-                🔥 Inscrições Abertas
-              </span>
-              <span className="inline-flex items-center gap-1.5 bg-destructive/15 border border-destructive/50 text-destructive px-3 py-1.5 rounded-full font-heading font-bold text-xs md:text-sm uppercase tracking-wider animate-pulse">
-                ⚠️ Vagas Limitadas
-              </span>
+              {FOOTCAMP_ENCERRADO ? (
+                <span className="inline-flex items-center gap-1.5 bg-primary/15 border border-primary/50 text-primary px-3 py-1.5 rounded-full font-heading font-bold text-xs md:text-sm uppercase tracking-wider">
+                  🔜 Próxima edição em breve
+                </span>
+              ) : (
+                <>
+                  <span className="inline-flex items-center gap-1.5 bg-primary/15 border border-primary/50 text-primary px-3 py-1.5 rounded-full font-heading font-bold text-xs md:text-sm uppercase tracking-wider animate-pulse">
+                    🔥 Inscrições Abertas
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 bg-destructive/15 border border-destructive/50 text-destructive px-3 py-1.5 rounded-full font-heading font-bold text-xs md:text-sm uppercase tracking-wider animate-pulse">
+                    ⚠️ Vagas Limitadas
+                  </span>
+                </>
+              )}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-              <Link
-                to="/marcar?tipo=footcamp"
-                className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
-                style={{ animation: "pulse-gold 2.4s ease-in-out infinite" }}
-              >
-                Garantir vaga
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              {FOOTCAMP_ENCERRADO ? (
+                <a
+                  href={WHATSAPP_URL_PROXIMA_EDICAO}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl text-center"
+                >
+                  Quero saber da próxima edição
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              ) : (
+                <Link
+                  to="/marcar?tipo=footcamp"
+                  className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+                  style={{ animation: "pulse-gold 2.4s ease-in-out infinite" }}
+                >
+                  Garantir vaga
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              )}
               <a
                 href={WHATSAPP_URL_FOOTCAMP_INFO}
                 target="_blank"
@@ -220,7 +251,7 @@ const Footcamp = () => {
         </div>
       </section>
 
-      <FootcampCountdown />
+      {!FOOTCAMP_ENCERRADO && <FootcampCountdown />}
 
       {/* O QUE É O FOOTCAMP */}
       <section className="py-24 bg-background">
@@ -512,7 +543,8 @@ const Footcamp = () => {
         </div>
       </section>
 
-      {/* VAGAS LIMITADAS */}
+      {/* VAGAS LIMITADAS / ESTADO PÓS-EVENTO */}
+      {!FOOTCAMP_ENCERRADO && (
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <AnimateOnScroll>
@@ -534,6 +566,7 @@ const Footcamp = () => {
           </AnimateOnScroll>
         </div>
       </section>
+      )}
 
       {/* MÉTODOS DE PAGAMENTO */}
       <section className="py-16 bg-secondary">
@@ -615,10 +648,14 @@ const Footcamp = () => {
           <AnimateOnScroll>
             <div className="max-w-3xl mx-auto text-center bg-card border border-border rounded-2xl p-8 md:p-12">
               <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-                📝 Inscrição e pagamento
+                {FOOTCAMP_ENCERRADO ? "✅ Edição concluída" : "📝 Inscrição e pagamento"}
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-                Pronto para <span className="text-gradient-gold">inscrever?</span>
+                {FOOTCAMP_ENCERRADO ? (
+                  <>Próxima edição <span className="text-gradient-gold">em breve</span></>
+                ) : (
+                  <>Pronto para <span className="text-gradient-gold">inscrever?</span></>
+                )}
               </h2>
               <div className="max-w-xl mx-auto mb-8 space-y-4">
                 <p className="text-foreground font-heading font-bold text-lg md:text-xl">
@@ -629,13 +666,25 @@ const Footcamp = () => {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                <Link
-                  to="/marcar?tipo=footcamp"
-                  className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
-                >
-                  Inscrever no Footcamp
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                {FOOTCAMP_ENCERRADO ? (
+                  <a
+                    href={WHATSAPP_URL_PROXIMA_EDICAO}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg text-center"
+                  >
+                    Quero saber da próxima edição
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                ) : (
+                  <Link
+                    to="/marcar?tipo=footcamp"
+                    className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
+                  >
+                    Inscrever no Footcamp
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                )}
                 <a
                   href={WHATSAPP_URL_FOOTCAMP_INFO}
                   target="_blank"
