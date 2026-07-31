@@ -5,6 +5,8 @@ import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
+import { WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
+import { FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 
 type CategoryId = "sono" | "alongamentos" | "ferias";
 

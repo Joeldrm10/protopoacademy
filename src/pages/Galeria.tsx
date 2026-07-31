@@ -5,6 +5,8 @@ import SEO from "@/components/SEO";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
+import { FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 
 import galleryCover from "@/assets/gallery-cover.jpg";
 import galleryCones from "@/assets/gallery-cones.jpg";
