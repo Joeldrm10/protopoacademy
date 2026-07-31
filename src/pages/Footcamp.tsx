@@ -293,7 +293,7 @@ const Footcamp = () => {
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
                 Semanas <span className="text-gradient-gold">de julho</span>
               </h2>
-              <p className="text-muted-foreground">Escolhe uma ou mais semanas. Inscrições sujeitas a vagas.</p>
+              <p className="text-muted-foreground">{FOOTCAMP_ENCERRADO ? "Semanas realizadas na edição Verão 2026 (concluída)." : "Escolhe uma ou mais semanas. Inscrições sujeitas a vagas."}</p>
             </div>
           </AnimateOnScroll>
 
@@ -442,12 +442,20 @@ const Footcamp = () => {
           <AnimateOnScroll>
             <div className="text-center mb-14 max-w-3xl mx-auto">
               <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-                💰 Preços
+                {FOOTCAMP_ENCERRADO ? "💰 Preços da última edição" : "💰 Preços"}
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-                Escolhe o teu <span className="text-gradient-gold">pacote</span>
+                {FOOTCAMP_ENCERRADO ? (
+                  <>Preços da <span className="text-gradient-gold">última edição</span></>
+                ) : (
+                  <>Escolhe o teu <span className="text-gradient-gold">pacote</span></>
+                )}
               </h2>
-              <p className="text-muted-foreground">Quanto mais semanas, melhor o valor por semana.</p>
+              <p className="text-muted-foreground">
+                {FOOTCAMP_ENCERRADO
+                  ? "Valores praticados no Footcamp Verão 2026 (edição concluída). Os preços da próxima edição serão anunciados em breve."
+                  : "Quanto mais semanas, melhor o valor por semana."}
+              </p>
             </div>
           </AnimateOnScroll>
 
@@ -569,6 +577,7 @@ const Footcamp = () => {
       )}
 
       {/* MÉTODOS DE PAGAMENTO */}
+      {!FOOTCAMP_ENCERRADO && (
       <section className="py-16 bg-secondary">
         <div className="container mx-auto px-4">
           <AnimateOnScroll>
@@ -596,8 +605,10 @@ const Footcamp = () => {
           </AnimateOnScroll>
         </div>
       </section>
+      )}
 
       {/* COMO FUNCIONA A INSCRIÇÃO */}
+      {!FOOTCAMP_ENCERRADO && (
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <AnimateOnScroll>
@@ -641,6 +652,7 @@ const Footcamp = () => {
           </AnimateOnScroll>
         </div>
       </section>
+      )}
 
       {/* INSCRIÇÃO E PAGAMENTO */}
       <section className="py-24 bg-background">
