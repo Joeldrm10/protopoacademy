@@ -139,18 +139,36 @@ const Galeria = () => {
           <AnimateOnScroll>
             <div className="mt-20 max-w-2xl mx-auto text-center bg-card/50 border border-border rounded-2xl p-8 md:p-12">
               <h2 className="font-heading font-bold text-3xl md:text-4xl mb-3">
-                Queres participar no <span className="text-gradient-gold">Footcamp</span>?
+                {FOOTCAMP_ENCERRADO ? (
+                  <>Próxima edição do <span className="text-gradient-gold">Footcamp</span> em breve</>
+                ) : (
+                  <>Queres participar no <span className="text-gradient-gold">Footcamp</span>?</>
+                )}
               </h2>
               <p className="text-muted-foreground mb-6">
-                Garante já a vaga do teu atleta para o Footcamp Verão 2026.
+                {FOOTCAMP_ENCERRADO
+                  ? "O Footcamp Verão 2026 já terminou. Obrigado a todos os atletas!"
+                  : "Garante já a vaga do teu atleta para o Footcamp Verão 2026."}
               </p>
-              <Link
-                to="/marcar?tipo=footcamp"
-                className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
-              >
-                Inscrever Footcamp
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              {FOOTCAMP_ENCERRADO ? (
+                <a
+                  href={WHATSAPP_URL_PROXIMA_EDICAO}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
+                >
+                  Quero saber da próxima edição
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              ) : (
+                <Link
+                  to="/marcar?tipo=footcamp"
+                  className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg"
+                >
+                  Inscrever Footcamp
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              )}
             </div>
           </AnimateOnScroll>
         </div>

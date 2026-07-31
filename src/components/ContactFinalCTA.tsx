@@ -1,8 +1,8 @@
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimateOnScroll from "./AnimateOnScroll";
-import { WHATSAPP_URL_DUVIDAS as WHATSAPP_URL } from "@/lib/constants";
-import { SHOW_INDIVIDUAL_GROUP_TRAININGS } from "@/lib/featureFlags";
+import { WHATSAPP_URL_DUVIDAS as WHATSAPP_URL, WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
+import { SHOW_INDIVIDUAL_GROUP_TRAININGS, FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 
 const ContactFinalCTA = () => {
   const isFootcamp = !SHOW_INDIVIDUAL_GROUP_TRAININGS;
@@ -16,18 +16,32 @@ const ContactFinalCTA = () => {
               Pronto para <span className="text-gradient-gold">começar?</span>
             </h2>
             <p className="relative text-muted-foreground text-base md:text-lg max-w-xl mx-auto mb-8">
-              {isFootcamp
+              {FOOTCAMP_ENCERRADO
+                ? "O Footcamp Verão 2026 já terminou. Próxima edição em breve — fala connosco para receberes as informações."
+                : isFootcamp
                 ? "Inscreve o teu atleta no Footcamp Verão 2026 ou tira as tuas dúvidas connosco."
                 : "Marca já o teu treino ou tira as tuas dúvidas connosco."}
             </p>
             <div className="relative flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to={isFootcamp ? "/marcar?tipo=footcamp" : "/marcar"}
-                className="group inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
-              >
-                {isFootcamp ? "Inscrever Footcamp" : "Marcar treino"}
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+              {FOOTCAMP_ENCERRADO ? (
+                <a
+                  href={WHATSAPP_URL_PROXIMA_EDICAO}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg text-center"
+                >
+                  Próxima edição
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              ) : (
+                <Link
+                  to={isFootcamp ? "/marcar?tipo=footcamp" : "/marcar"}
+                  className="group inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg"
+                >
+                  {isFootcamp ? "Inscrever Footcamp" : "Marcar treino"}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              )}
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
