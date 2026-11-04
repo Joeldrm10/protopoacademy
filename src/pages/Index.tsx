@@ -4,6 +4,7 @@ import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
+import VideoSection from "@/components/VideoSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FootcampHighlight from "@/components/FootcampHighlight";
@@ -42,6 +43,7 @@ const Index = () => {
       />
       <Navbar />
       <HeroSection />
+      <VideoSection />
       {FOOTCAMP_ENCERRADO && <ThankYouSection />}
       
       <AboutSection />
