@@ -132,9 +132,9 @@ const Footcamp = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title={FOOTCAMP_ENCERRADO ? "ProTopo Footcamp Verão 2026 | Edição concluída" : "ProTopo Footcamp Verão 2026 | Inscrições Abertas"}
-        description={FOOTCAMP_ENCERRADO ? "O ProTopo Footcamp Verão 2026 terminou. Obrigado a todos os atletas, famílias e equipa técnica. Próxima edição em breve." : "ProTopo Footcamp — Edição Verão 2026. 4 semanas de julho. Treino diferenciado para atletas dos 6 aos 16 anos. Inscrições abertas."}
+        description={FOOTCAMP_ENCERRADO ? "O ProTopo Footcamp Verão 2026 terminou. Obrigado a todos os atletas, famílias e equipa técnica. Footcamp Outono 2026: 16 a 20 de novembro." : "ProTopo Footcamp — Edição Verão 2026. 4 semanas de julho. Treino diferenciado para atletas dos 6 aos 16 anos. Inscrições abertas."}
         ogTitle={FOOTCAMP_ENCERRADO ? "ProTopo Footcamp Verão 2026 — Edição concluída" : "ProTopo Footcamp — Edição Verão 2026"}
-        ogDescription={FOOTCAMP_ENCERRADO ? "Obrigado a todos os atletas. Próxima edição em breve." : "Treino diferenciado e de excelência. Inscrições abertas para julho 2026."}
+        ogDescription={FOOTCAMP_ENCERRADO ? "Obrigado a todos os atletas. Footcamp Outono 2026: 16 a 20 de novembro." : "Treino diferenciado e de excelência. Inscrições abertas para julho 2026."}
         ogImage="/og/footcamp.jpg"
         path="/footcamp"
       />
@@ -179,7 +179,7 @@ const Footcamp = () => {
               {(FOOTCAMP_ENCERRADO
                 ? [
                     "✅ Edição concluída",
-                    "🔜 Próxima edição em breve",
+                    "🍂 Footcamp Outono 2026 · 16 a 20 nov",
                     "👕 Kit de treino incluído",
                     "⚽ Dos 6 aos 16 anos",
                   ]
@@ -202,7 +202,7 @@ const Footcamp = () => {
             <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-3xl mx-auto mb-8">
               {FOOTCAMP_ENCERRADO ? (
                 <span className="inline-flex items-center gap-1.5 bg-primary/15 border border-primary/50 text-primary px-3 py-1.5 rounded-full font-heading font-bold text-xs md:text-sm uppercase tracking-wider">
-                  🔜 Próxima edição em breve
+                  🍂 Footcamp Outono 2026 · 16 a 20 nov
                 </span>
               ) : (
                 <>
@@ -224,7 +224,7 @@ const Footcamp = () => {
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl text-center"
                 >
-                  Quero saber da próxima edição
+                  Receber novidades
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               ) : (
@@ -453,7 +453,7 @@ const Footcamp = () => {
               </h2>
               <p className="text-muted-foreground">
                 {FOOTCAMP_ENCERRADO
-                  ? "Valores praticados no Footcamp Verão 2026 (edição concluída). Os preços da próxima edição serão anunciados em breve."
+                  ? "Valores praticados no Footcamp Verão 2026 (edição concluída). As condições do Footcamp Outono 2026 serão anunciadas em breve."
                   : "Quanto mais semanas, melhor o valor por semana."}
               </p>
             </div>
@@ -664,7 +664,7 @@ const Footcamp = () => {
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
                 {FOOTCAMP_ENCERRADO ? (
-                  <>Próxima edição <span className="text-gradient-gold">em breve</span></>
+                  <>Footcamp <span className="text-gradient-gold">Outono 2026</span></>
                 ) : (
                   <>Pronto para <span className="text-gradient-gold">inscrever?</span></>
                 )}
@@ -685,7 +685,7 @@ const Footcamp = () => {
                     rel="noopener noreferrer"
                     className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg text-center"
                   >
-                    Quero saber da próxima edição
+                    Receber novidades
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 ) : (

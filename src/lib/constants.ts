@@ -16,5 +16,5 @@ export const WHATSAPP_URL_DIRETO = wa("Olá! Pretendo inscrever um atleta no Foo
 export const EMAIL_URL_GERAL = `mailto:${EMAIL}?subject=Pedido%20de%20informa%C3%A7%C3%A3o&body=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Footcamp%20Ver%C3%A3o%202026.`;
 export const EMAIL_URL_DADOS = `mailto:${EMAIL}?subject=Pedido%20relativo%20a%20dados%20pessoais`;
 export const WHATSAPP_URL_FOOTCAMP_INFO = wa("Olá! Tenho interesse no Footcamp Verão 2026 e gostaria de receber mais informações.");
-export const WHATSAPP_URL_PROXIMA_EDICAO = wa("Olá, gostaria de receber informações sobre a próxima edição do ProTopo Footcamp.");
+export const WHATSAPP_URL_PROXIMA_EDICAO = wa("Olá! Gostaria de receber mais informações sobre o Footcamp Outono 2026.");
 

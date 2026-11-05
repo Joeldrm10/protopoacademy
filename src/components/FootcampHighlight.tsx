@@ -8,7 +8,7 @@ import { FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 const highlights = FOOTCAMP_ENCERRADO
   ? [
       { icon: "✅", label: "Edição concluída" },
-      { icon: "🔜", label: "Próxima edição em breve" },
+      { icon: "🔜", label: "Outono 2026 · 16 a 20 nov" },
       { icon: "⚽", label: "Dos 6 aos 16 anos" },
       { icon: "🎁", label: "Kit ProTopo Incluído" },
     ]
@@ -42,7 +42,7 @@ const FootcampHighlight = () => {
             <AnimateOnScroll>
               <span className="relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full font-heading font-bold uppercase tracking-[0.2em] text-xs mb-6 shadow-lg overflow-hidden">
                 <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
-                {FOOTCAMP_ENCERRADO ? "Footcamp Verão 2026 concluído" : "Edição Verão 2026 · Inscrições Abertas"}
+                {FOOTCAMP_ENCERRADO ? "Edição anterior · Verão 2026 concluído" : "Edição Verão 2026 · Inscrições Abertas"}
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-[marquee_3s_linear_infinite]" />
               </span>
               <h2 className="font-heading font-black text-4xl md:text-6xl leading-[0.95] mb-4">
@@ -78,7 +78,7 @@ const FootcampHighlight = () => {
                     rel="noopener noreferrer"
                     className="group/btn inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
                   >
-                    Quero saber da próxima edição
+                    Receber novidades
                     <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                   </a>
                 ) : (

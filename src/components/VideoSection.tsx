@@ -9,9 +9,13 @@ interface VideoSectionProps {
   badge?: string;
   /** Conteúdo opcional por baixo da descrição (ex.: botão de uma futura edição). */
   cta?: ReactNode;
+  title?: ReactNode;
+  description?: ReactNode;
+  /** Conteúdo extra entre a descrição e o CTA (ex.: datas, destaque). */
+  extra?: ReactNode;
 }
 
-const VideoSection = ({ badge = "ProTopo Academy", cta }: VideoSectionProps) => {
+const VideoSection = ({ badge = "ProTopo Academy", cta, title, description, extra }: VideoSectionProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
 
@@ -36,12 +40,13 @@ const VideoSection = ({ badge = "ProTopo Academy", cta }: VideoSectionProps) => 
               {badge}
             </span>
             <h2 className="font-heading font-bold text-4xl md:text-6xl mb-6">
-              O treino fala <span className="text-gradient-gold">por si.</span>
+              {title ?? <>O treino fala <span className="text-gradient-gold">por si.</span></>}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed max-w-md mx-auto md:mx-0">
-              Conhece a energia, a dedicação e o acompanhamento que fazem parte da experiência ProTopo.
+              {description ?? "Conhece a energia, a dedicação e o acompanhamento que fazem parte da experiência ProTopo."}
             </p>
             <div className="hidden md:block h-px w-24 bg-gradient-gold mt-8" />
+            {extra}
             {cta && <div className="mt-8">{cta}</div>}
           </AnimateOnScroll>
 

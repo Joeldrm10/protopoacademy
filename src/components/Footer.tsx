@@ -51,7 +51,7 @@ const Footer = () => {
               </h3>
               <p className="text-muted-foreground text-sm md:text-base max-w-md">
                 {FOOTCAMP_ENCERRADO
-                  ? "Obrigado a todos os atletas. Próxima edição em breve."
+                  ? "Obrigado a todos os atletas. Footcamp Outono 2026: 16 a 20 de novembro."
                   : SHOW_INDIVIDUAL_GROUP_TRAININGS
                   ? "Dá o próximo passo na tua evolução. Reserva o teu lugar hoje."
                   : "Edição Verão 2026. Garante já o lugar do teu atleta."}
@@ -64,7 +64,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
               >
-                Próxima edição
+                Outono 2026
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
             ) : (
