@@ -49,7 +49,7 @@ const Marcar = () => {
               </h1>
               <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
                 As inscrições para o ProTopo Footcamp Verão 2026 já terminaram. O Footcamp Outono 2026 (16 a 20 de novembro) já foi anunciado —
-                anunciadas novas edições.
+                os pormenores e as inscrições serão divulgados em breve.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <a
