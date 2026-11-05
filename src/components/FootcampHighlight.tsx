@@ -42,7 +42,7 @@ const FootcampHighlight = () => {
             <AnimateOnScroll>
               <span className="relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full font-heading font-bold uppercase tracking-[0.2em] text-xs mb-6 shadow-lg overflow-hidden">
                 <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
-                {FOOTCAMP_ENCERRADO ? "Footcamp Verão 2026 concluído" : "Edição Verão 2026 · Inscrições Abertas"}
+                {FOOTCAMP_ENCERRADO ? "Edição anterior · Verão 2026 concluído" : "Edição Verão 2026 · Inscrições Abertas"}
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-[marquee_3s_linear_infinite]" />
               </span>
               <h2 className="font-heading font-black text-4xl md:text-6xl leading-[0.95] mb-4">

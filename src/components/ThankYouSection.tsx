@@ -13,7 +13,7 @@ const ThankYouSection = () => {
               <Heart className="w-7 h-7 text-primary" />
             </div>
             <span className="block text-primary font-heading font-semibold uppercase tracking-[0.25em] text-xs mb-4">
-              Footcamp Verão 2026 concluído
+              Edições anteriores · Footcamp Verão 2026
             </span>
             <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4 text-foreground">
               Obrigado a todos os <span className="text-gradient-gold">atletas!</span>
