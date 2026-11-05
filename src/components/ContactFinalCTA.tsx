@@ -17,7 +17,7 @@ const ContactFinalCTA = () => {
             </h2>
             <p className="relative text-muted-foreground text-base md:text-lg max-w-xl mx-auto mb-8">
               {FOOTCAMP_ENCERRADO
-                ? "O Footcamp Verão 2026 já terminou. Próxima edição em breve — fala connosco para receberes as informações."
+                ? "O Footcamp Verão 2026 já terminou. Nova edição: Footcamp Outono 2026, de 16 a 20 de novembro — fala connosco para receberes as informações."
                 : isFootcamp
                 ? "Inscreve o teu atleta no Footcamp Verão 2026 ou tira as tuas dúvidas connosco."
                 : "Marca já o teu treino ou tira as tuas dúvidas connosco."}
@@ -30,7 +30,7 @@ const ContactFinalCTA = () => {
                   rel="noopener noreferrer"
                   className="group inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-7 py-3.5 rounded-lg font-heading font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-md hover:shadow-lg text-center"
                 >
-                  Próxima edição
+                  Outono 2026
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               ) : (

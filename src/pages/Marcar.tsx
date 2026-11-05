@@ -48,7 +48,7 @@ const Marcar = () => {
                 Inscrições <span className="text-gradient-gold">encerradas</span>
               </h1>
               <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
-                As inscrições para o ProTopo Footcamp Verão 2026 já terminaram. Em breve serão
+                As inscrições para o ProTopo Footcamp Verão 2026 já terminaram. O Footcamp Outono 2026 (16 a 20 de novembro) já foi anunciado —
                 anunciadas novas edições.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
@@ -59,7 +59,7 @@ const Marcar = () => {
                   className="group inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-8 py-4 rounded-lg font-heading font-bold text-sm md:text-base uppercase tracking-wider hover:opacity-90 transition-all shadow-lg text-center"
                 >
                   <MessageCircle className="w-5 h-5" />
-                  Receber informações da próxima edição
+                  Receber novidades
                 </a>
                 <Link
                   to="/footcamp"

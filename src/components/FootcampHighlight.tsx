@@ -8,7 +8,7 @@ import { FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 const highlights = FOOTCAMP_ENCERRADO
   ? [
       { icon: "✅", label: "Edição concluída" },
-      { icon: "🔜", label: "Próxima edição em breve" },
+      { icon: "🔜", label: "Outono 2026 · 16 a 20 nov" },
       { icon: "⚽", label: "Dos 6 aos 16 anos" },
       { icon: "🎁", label: "Kit ProTopo Incluído" },
     ]
@@ -78,7 +78,7 @@ const FootcampHighlight = () => {
                     rel="noopener noreferrer"
                     className="group/btn inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
                   >
-                    Quero saber da próxima edição
+                    Receber novidades
                     <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                   </a>
                 ) : (

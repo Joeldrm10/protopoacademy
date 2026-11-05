@@ -76,7 +76,7 @@ const HeroSection = () => {
                   rel="noopener noreferrer"
                   className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
-                  Quero saber da próxima edição
+                  Receber novidades
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a

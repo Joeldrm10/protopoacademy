@@ -45,7 +45,7 @@ const FinalCTA = () => {
             </h2>
             <p className="text-muted-foreground text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
               {FOOTCAMP_ENCERRADO
-                ? "Footcamp Verão 2026 concluído. Próxima edição em breve — fala connosco para receberes as novidades em primeira mão."
+                ? "Footcamp Verão 2026 concluído. Nova edição: Footcamp Outono 2026, de 16 a 20 de novembro — fala connosco para receberes as novidades em primeira mão."
                 : "Treino, disciplina e evolução num ambiente profissional e motivador. Começa a evoluir hoje."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -56,7 +56,7 @@ const FinalCTA = () => {
                   rel="noopener noreferrer"
                   className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-12 py-5 rounded-lg font-heading font-bold text-xl uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl text-center"
                 >
-                  Quero saber da próxima edição
+                  Receber novidades
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 </a>
               ) : (

@@ -18,7 +18,7 @@ const BookingCTA = () => {
             </span>
             <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4 text-foreground">
               {FOOTCAMP_ENCERRADO ? (
-                <>Próxima edição <span className="text-gradient-gold">em breve</span></>
+                <>Footcamp <span className="text-gradient-gold">Outono 2026</span></>
               ) : isFootcamp ? (
                 <>Garante a vaga no <span className="text-gradient-gold">Footcamp</span></>
               ) : (
@@ -27,7 +27,7 @@ const BookingCTA = () => {
             </h2>
             <p className="text-muted-foreground text-base md:text-lg mb-10 max-w-xl mx-auto">
               {FOOTCAMP_ENCERRADO
-                ? "As inscrições do Footcamp Verão 2026 estão encerradas. Fala connosco para saberes da próxima edição."
+                ? "As inscrições do Footcamp Verão 2026 estão encerradas. Fala connosco para saberes tudo sobre o Footcamp Outono 2026 (16 a 20 de novembro)."
                 : isFootcamp ? "Inscreve já o teu atleta no Footcamp Verão 2026." : "Dá o próximo passo na tua evolução."}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
@@ -38,7 +38,7 @@ const BookingCTA = () => {
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold text-base uppercase tracking-wider hover:opacity-90 transition-all shadow-lg hover:shadow-xl w-full sm:w-auto justify-center text-center"
                 >
-                  Quero saber da próxima edição
+                  Receber novidades
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               ) : (

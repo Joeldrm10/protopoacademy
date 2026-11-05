@@ -5,7 +5,7 @@ const ITEMS = FOOTCAMP_ENCERRADO
   ? [
       "✅ FOOTCAMP VERÃO 2026 CONCLUÍDO",
       "OBRIGADO A TODOS OS ATLETAS",
-      "🔜 PRÓXIMA EDIÇÃO EM BREVE",
+      "🍂 FOOTCAMP OUTONO 2026 · 16 A 20 NOVEMBRO",
     ]
   : [
       "🔥 INSCRIÇÕES ABERTAS",
@@ -36,7 +36,7 @@ const MarqueeBanner = () => {
       to="/footcamp"
       aria-label={
         FOOTCAMP_ENCERRADO
-          ? "Footcamp Verão 2026 concluído — próxima edição em breve"
+          ? "Footcamp Verão 2026 concluído — Footcamp Outono 2026 de 16 a 20 de novembro"
           : "Inscrições abertas — ProTopo Footcamp Verão 2026"
       }
       className="block relative overflow-hidden bg-black border-b border-primary/30 group cursor-pointer"

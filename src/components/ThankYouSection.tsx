@@ -29,7 +29,7 @@ const ThankYouSection = () => {
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white w-full sm:w-auto px-8 py-4 rounded-lg font-heading font-bold text-base uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
             >
               <MessageCircle className="w-5 h-5" />
-              Quero saber da próxima edição
+              Receber novidades
             </a>
           </div>
         </AnimateOnScroll>
