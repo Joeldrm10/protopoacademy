@@ -89,8 +89,7 @@ const schema = z.object({
     "Telemóvel inválido. 9 dígitos a começar por 9."
   ),
   semanas: z.array(z.string()).min(1, "Seleciona pelo menos uma semana"),
-  participou_anterior: z.boolean().default(false),
-  seguro_existente: z.boolean().default(false),
+  participacao: z.enum(["primeira", "anterior"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
   aceita_termos: z.literal(true, { errorMap: () => ({ message: "Aceita os Termos e Condições" }) }),
   irmaos: z.boolean().optional(),
   nome_irmaos: z.string().trim().max(200).optional(),
@@ -169,8 +168,7 @@ const FootcampSignupForm = () => {
       emergencia_parentesco: "",
       emergencia_telemovel: "",
       semanas: ["outono"],
-      participou_anterior: false,
-      seguro_existente: false,
+      participacao: undefined as unknown as "primeira",
       aceita_termos: false as unknown as true,
       irmaos: false,
       nome_irmaos: "",
@@ -206,8 +204,10 @@ const FootcampSignupForm = () => {
 
   const numSemanas = semanasSelecionadas.length;
   const precoBase = AUTUMN.base;
-  const seguroOferta = !!form.watch("seguro_existente");
-  const seguroCusto = autumnPrice(!seguroOferta).insurance;
+  const participouAnterior = form.watch("participacao") === "anterior";
+  // Atleta anterior declara seguro anual existente; a validade é confirmada no Admin.
+  const seguroOferta = participouAnterior;
+  const seguroCusto = autumnPrice(!participouAnterior).insurance;
   const subtotal = precoBase + seguroCusto;
   // O desconto irmãos só é aplicado após validação bidirecional no Admin.
   // No formulário mostramos sempre o subtotal como valor previsto.
@@ -243,8 +243,8 @@ const FootcampSignupForm = () => {
         data: "2026-11-16",
         hora: "09:00–12:30",
         edicao: AUTUMN_EDITION,
-        participou_anterior: data.participou_anterior,
-        seguro_existente_declarado: data.seguro_existente,
+        participou_anterior: data.participacao === "anterior",
+        seguro_existente_declarado: data.participacao === "anterior",
         preco_base: precoBase,
         seguro_valor: seguroCusto,
         desconto_percentagem: 10,
@@ -284,7 +284,7 @@ const FootcampSignupForm = () => {
         return;
       }
 
-      const seguroTxt = seguroOferta ? "Anual existente: 0€ (cobertura a validar)" : `${SEGURO_1_SEMANA}€`;
+      const seguroTxt = seguroOferta ? "Seguro anual: 0€ — Já incluído (validade a confirmar pela equipa)" : `Seguro anual: ${SEGURO_1_SEMANA}€`;
       const parts = [
         `📋 NOVA INSCRIÇÃO FOOTCAMP OUTONO 2026`,
         ``,
@@ -308,8 +308,8 @@ const FootcampSignupForm = () => {
         ``,
         `📅 PERÍODO: ${AUTUMN.dates}`,
         `Horário: ${AUTUMN.hours}`,
-        `Participou anteriormente: ${data.participou_anterior ? "Sim" : "Não"}`,
-        `Kit: ${data.participou_anterior ? "Elegibilidade a validar" : "Novo inscrito — oferecido"}`,
+        `Participação: ${data.participacao === "anterior" ? "Já participou numa edição anterior" : "Primeira vez na ProTopo"}`,
+        `Kit oficial: ${data.participacao === "anterior" ? "Não incluído (oferecido apenas na primeira inscrição)" : "Oferecido (primeira inscrição)"}`,
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
         `👕 EQUIPAMENTO`,
@@ -344,7 +344,7 @@ const FootcampSignupForm = () => {
         ``,
         `💰 VALOR`,
         `Participação: ${precoBase}€`,
-        `Seguro: ${seguroTxt}`,
+        seguroTxt,
         data.irmaos
           ? `Valor sem desconto: ${precoPrevisto}€\nDesconto irmãos (-10%): A aguardar validação\nValor estimado após validação: ${(precoBase * (1 - DESCONTO_IRMAOS) + seguroCusto).toFixed(2).replace(".", ",")}€\n\nNota: O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).`
           : `Valor previsto a pagar: ${precoPrevisto}€`,
@@ -406,8 +406,8 @@ const FootcampSignupForm = () => {
                         <span className="text-foreground font-medium">{lastSummary.precoBase}€</span>
                       </div>
                       <div className="flex justify-between gap-3 text-sm">
-                        <span className="text-muted-foreground">Seguro</span>
-                        <span className="text-foreground font-medium">{lastSummary.seguroOferta ? "0€ · Cobertura a validar" : `${lastSummary.seguroCusto}€`}</span>
+                        <span className="text-muted-foreground">Seguro anual</span>
+                        <span className="text-foreground font-medium">{lastSummary.seguroOferta ? "0€ — Já incluído" : `${lastSummary.seguroCusto}€`}</span>
                       </div>
                       {lastSummary.irmaos ? (
                         <>
@@ -417,7 +417,7 @@ const FootcampSignupForm = () => {
                           </div>
                           <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
                             <span className="text-foreground font-semibold">Valor estimado após validação</span>
-                            <span className="font-heading font-bold text-xl text-gradient-gold">{(lastSummary.precoBase * (1 - DESCONTO_IRMAOS) + seguroCusto).toFixed(2).replace(".", ",")}€</span>
+                            <span className="font-heading font-bold text-xl text-gradient-gold">{(lastSummary.precoBase * (1 - DESCONTO_IRMAOS) + lastSummary.seguroCusto).toFixed(2).replace(".", ",")}€</span>
                           </div>
                           <p className="text-xs text-amber-400/90 leading-snug pt-1">
                             O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).
@@ -666,20 +666,26 @@ const FootcampSignupForm = () => {
 
                 <SectionHeader icon={UserIcon} title="Período, seguro e equipamento" />
                 <p className="text-foreground font-semibold">{AUTUMN.week} · {AUTUMN.hours}</p>
-                <FormField control={form.control} name="participou_anterior" render={({ field }) => (
-                  <FormItem className="flex items-center gap-3 border border-border rounded-lg p-3">
-                    <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl>
-                    <FormLabel>O atleta já participou numa edição anterior</FormLabel>
+                <FormField control={form.control} name="participacao" render={({ field }) => (
+                  <FormItem className="rounded-xl border border-border p-4 space-y-3">
+                    <FormLabel className="text-foreground">Participação e seguro anual</FormLabel>
+                    <FormControl>
+                      <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col gap-2">
+                        <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all", field.value === "primeira" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                          <RadioGroupItem value="primeira" /><span className="text-sm text-foreground">É a primeira vez que o atleta participa na ProTopo (+10€ de seguro anual)</span>
+                        </label>
+                        <label className={cn("flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer transition-all", field.value === "anterior" ? "border-primary bg-primary/10" : "border-border hover:border-primary/40")}>
+                          <RadioGroupItem value="anterior" /><span className="text-sm text-foreground">O atleta já participou numa edição anterior da ProTopo</span>
+                        </label>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )} />
-                <p className="text-xs text-muted-foreground">Kit oficial oferecido aos novos inscritos: T-shirt de treino, calções, meias e saco. Para atletas anteriores, elegibilidade sujeita a confirmação.</p>
-                <FormField control={form.control} name="seguro_existente" render={({ field }) => (
-                  <FormItem className="flex items-center gap-3 border border-border rounded-lg p-3">
-                    <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl>
-                    <FormLabel>O atleta tem seguro anual ainda válido</FormLabel>
-                  </FormItem>
-                )} />
-                <p className="text-xs text-muted-foreground">Cobertura sujeita a validação pela equipa. Novo seguro: 10€. Seguro existente válido: 0€.</p>
+                <p className="text-xs text-muted-foreground">Kit oficial ProTopo oferecido aos atletas que se inscrevem pela primeira vez na ProTopo Academy: T-shirt oficial, calções, meias e saco.</p>
+                {participouAnterior && (
+                  <p className="text-xs text-muted-foreground">Os atletas que já participaram e tenham seguro anual ainda válido não pagam novamente. Se o seguro estiver expirado ou a validade não puder ser confirmada, a equipa ProTopo valida a situação antes de fechar o valor.</p>
+                )}
 
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -973,7 +979,7 @@ const FootcampSignupForm = () => {
                   </div>
                   <ol className="space-y-1.5 text-sm text-foreground">
                     <li><span className="text-primary font-semibold">1.</span> Recebemos a tua inscrição.</li>
-                    <li><span className="text-primary font-semibold">2.</span> Confirmamos a disponibilidade e a cobertura do seguro.</li>
+                    <li><span className="text-primary font-semibold">2.</span> Confirmamos a disponibilidade da vaga.</li>
                     <li><span className="text-primary font-semibold">3.</span> Entramos em contacto por WhatsApp.</li>
                     <li><span className="text-primary font-semibold">4.</span> Enviamos os dados de pagamento.</li>
                     <li><span className="text-primary font-semibold">5.</span> A vaga fica reservada após validação do pagamento.</li>
@@ -1006,8 +1012,8 @@ const FootcampSignupForm = () => {
                         <span className="text-foreground font-medium">{precoBase}€</span>
                       </div>
                       <div className="flex justify-between gap-3 text-sm">
-                        <span className="text-muted-foreground">Seguro</span>
-                        <span className="text-foreground font-medium">{seguroOferta ? "0€ · Cobertura a validar" : `${seguroCusto}€`}</span>
+                        <span className="text-muted-foreground">Seguro anual</span>
+                        <span className="text-foreground font-medium">{seguroOferta ? "0€ — Já incluído" : `${seguroCusto}€`}</span>
                       </div>
                       {irmaos ? (
                         <>

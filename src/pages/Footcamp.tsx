@@ -375,8 +375,8 @@ const Footcamp = () => {
             {[
               {
                 icon: Shirt,
-                title: "Kit oficial para novos inscritos",
-                items: ["T-shirt oficial ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo", "Oferta aos novos inscritos; atletas anteriores sujeitos a validação de elegibilidade"],
+                title: "Kit oficial oferecido",
+                items: ["T-shirt oficial ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo", "Oferecido a quem se inscreve pela primeira vez"],
               },
               {
                 icon: Apple,
@@ -387,7 +387,7 @@ const Footcamp = () => {
               {
                 icon: ShowerHead,
                 title: "Condições no local",
-                items: ["Balneários disponíveis", "Banho de água quente após o treino"],
+                items: ["Balneários disponíveis para os atletas se equiparem", "Banho com água quente após os treinos"],
               },
             ].map((card, i) => (
               <AnimateOnScroll key={card.title} delay={i * 100}>
@@ -440,7 +440,7 @@ const Footcamp = () => {
 
           <div className="grid grid-cols-1 gap-4 md:gap-6 max-w-md mx-auto">
             {[
-              { sem: "1 SEMANA", preco: "80€", featured: false, seguroInfo: "Seguro anual: +10€ apenas se necessário" },
+              { sem: "1 SEMANA", preco: "80€", featured: false },
             ].map((p: any, i) => (
               <AnimateOnScroll key={p.sem} delay={i * 100}>
                 <div
@@ -470,9 +470,8 @@ const Footcamp = () => {
               <div className="rounded-xl p-5 h-full border-2 border-primary/40 bg-primary/5">
                 <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🛡️ Seguro anual</p>
                 <ul className="text-foreground text-sm space-y-1">
-                  <li>• <span className="font-bold">10€</span> apenas para quem necessita de novo seguro</li>
-                  <li>• <span className="font-bold">0€</span> com seguro anual anterior válido, após confirmação da cobertura</li>
-                  <li>• Válido durante <span className="font-bold">1 ano</span>, sujeito às condições da apólice</li>
+                  <li>• Na primeira inscrição na ProTopo Academy, acresce <span className="font-bold">10€</span> de seguro anual, válido durante um ano e utilizável em futuras edições enquanto estiver em vigor.</li>
+                  <li>• Atletas que já participaram e tenham seguro anual ainda válido: <span className="font-bold">0€ — já incluído</span>.</li>
                 </ul>
               </div>
             </AnimateOnScroll>
@@ -561,7 +560,7 @@ const Footcamp = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
             {[
               { n: 1, title: "Preenche o formulário", desc: "Preenche os dados do atleta para 16 a 20 de novembro." },
-              { n: 2, title: "Confirmamos a disponibilidade", desc: "A equipa ProTopo verifica a vaga, o seguro e a elegibilidade do equipamento." },
+              { n: 2, title: "Confirmamos a disponibilidade", desc: "A equipa ProTopo verifica a vaga e confirma os dados da inscrição." },
               { n: 3, title: "Recebes contacto por WhatsApp", desc: "Enviamos todas as informações necessárias e os dados para pagamento." },
               { n: 4, title: "Vaga garantida", desc: "Após validação do pagamento, a inscrição fica concluída." },
             ].map((p, i) => (
@@ -937,8 +936,8 @@ const Footcamp = () => {
         faqs={[
           { question: "Quando e onde decorre?", answer: "De 16 a 20 de novembro de 2026, segunda a sexta-feira, das 09h00 às 12h30, no Clube Atlético Ouriense — Campo da Caridade, Ourém." },
           { question: "Quanto custa?", answer: "80€ por atleta pela semana completa. Desconto de irmãos de 10% sobre a participação, após validação bidirecional; não incide sobre o seguro." },
-          { question: "Preciso de novo seguro?", answer: "O seguro anual custa 10€ apenas quando é necessário um novo seguro. Uma cobertura anual anterior ainda válida não é cobrada novamente após confirmação pela equipa. A validade futura respeita as condições da apólice." },
-          { question: "Quem recebe o kit?", answer: "O kit é oferecido aos novos inscritos, conforme as condições da organização: T-shirt de treino, calções, meias e saco. Para atletas anteriores, a elegibilidade é validada pela equipa." },
+          { question: "Preciso de novo seguro?", answer: "Na primeira inscrição na ProTopo Academy, acresce 10€ de seguro anual, válido durante um ano e utilizável em futuras edições enquanto estiver em vigor. Os atletas que já participaram e tenham seguro anual ainda válido não precisam de pagar novamente." },
+          { question: "Quem recebe o kit?", answer: "O kit oficial ProTopo é oferecido aos atletas que se inscrevem pela primeira vez na ProTopo Academy: T-shirt oficial, calções, meias e saco." },
           { question: "O lanche está incluído?", answer: "Sim, o lanche diário inclui barras, água e fruta. Indica as restrições alimentares no formulário." },
           { question: "Há balneários?", answer: "Sim, estão disponíveis para os atletas se equiparem e tomarem banho após os treinos." },
           { question: "Para que idades é o Footcamp?", answer: "Dos 6 aos 16 anos, com grupos ajustados à idade." },

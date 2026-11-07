@@ -38,7 +38,7 @@ const KitSection = () => {
               O teu kit <span className="text-gradient-gold">ProTopo</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-10 max-w-xl mx-auto">
-              Kit oferecido aos novos inscritos; elegibilidade dos atletas anteriores sujeita a confirmação:
+              Kit oficial ProTopo oferecido aos atletas que se inscrevem pela primeira vez na ProTopo Academy:
             </p>
           </AnimateOnScroll>
 
