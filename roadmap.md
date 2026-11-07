@@ -1,4 +1,5 @@
 # Autumn Footcamp
+- [ ] Corrigir consistência financeira, seguro, kit e período no Admin; testar quatro totais sem alterar históricos nem publicar.
 - [x] Adapt public autumn information and open registration using existing pages.
 - [x] Adapt existing form, pricing, insurance and WhatsApp summary.
 - [x] Separate editions in Admin and preserve historic values.
