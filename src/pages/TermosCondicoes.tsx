@@ -23,7 +23,7 @@ const TermosCondicoes = () => {
         <div className="space-y-10 text-foreground/90 leading-relaxed">
           <section>
             <p className="text-muted-foreground">
-              Os presentes Termos e Condições aplicam-se a todos os utilizadores que efetuem a inscrição no Footcamp Verão 2026 da ProTopo Academy. Ao submeter o formulário de inscrição, o utilizador declara que leu, compreendeu e aceita as condições abaixo descritas.
+              Os presentes Termos e Condições aplicam-se a todos os utilizadores que efetuem a inscrição no Footcamp Outono 2026 da ProTopo Academy. Ao submeter o formulário de inscrição, o utilizador declara que leu, compreendeu e aceita as condições abaixo descritas.
             </p>
           </section>
 
@@ -38,6 +38,10 @@ const TermosCondicoes = () => {
           </section>
 
           <section>
+            <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">Condições do Outono 2026</h2>
+            <p className="text-muted-foreground">16 a 20 de novembro de 2026, das 09h00 às 12h30, no Clube Atlético Ouriense — Campo da Caridade, Ourém. Participação: 80€. Desconto de irmãos: 10% sobre a participação, após validação bidirecional, sem desconto sobre o seguro. Kit oferecido aos novos inscritos: T-shirt de treino, calções, meias e saco; atletas anteriores sujeitos a validação de elegibilidade. Lanche diário: barras, água e fruta. Balneários e banho disponíveis. As condições e documentos da edição de verão mantêm-se inalterados para as inscrições antigas.</p>
+          </section>
+          <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">2. Pagamentos</h2>
             <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
               <li>Os pagamentos podem ser efetuados pelos métodos disponibilizados pela ProTopo Academy.</li>
@@ -50,8 +54,8 @@ const TermosCondicoes = () => {
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">3. Seguro Desportivo</h2>
             <ul className="list-disc pl-6 space-y-1.5 text-muted-foreground">
               <li>O seguro é <strong className="text-foreground">obrigatório</strong> para todos os participantes.</li>
-              <li>Nas inscrições de <strong className="text-foreground">1 semana</strong>, o seguro tem um custo de <strong className="text-foreground">10€</strong>, que acresce ao valor do pacote.</li>
-              <li>Nas inscrições de <strong className="text-foreground">2, 3 ou 4 semanas</strong>, o seguro é <strong className="text-foreground">oferecido</strong> pela ProTopo, sem custo adicional.</li>
+              <li>O seguro anual custa 10€ apenas quando é necessário um novo seguro.</li>
+              <li>Seguro anual anterior ainda válido: 0€ após confirmação da cobertura. A validade de 1 ano e a utilização em futuras edições respeitam as condições da apólice.</li>
             </ul>
           </section>
 

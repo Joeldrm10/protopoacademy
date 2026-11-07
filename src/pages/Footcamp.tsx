@@ -131,10 +131,10 @@ const Footcamp = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title={FOOTCAMP_ENCERRADO ? "ProTopo Footcamp Verão 2026 | Edição concluída" : "ProTopo Footcamp Verão 2026 | Inscrições Abertas"}
-        description={FOOTCAMP_ENCERRADO ? "O ProTopo Footcamp Verão 2026 terminou. Obrigado a todos os atletas, famílias e equipa técnica. Footcamp Outono 2026: 16 a 20 de novembro." : "ProTopo Footcamp — Edição Verão 2026. 4 semanas de julho. Treino diferenciado para atletas dos 6 aos 16 anos. Inscrições abertas."}
-        ogTitle={FOOTCAMP_ENCERRADO ? "ProTopo Footcamp Verão 2026 — Edição concluída" : "ProTopo Footcamp — Edição Verão 2026"}
-        ogDescription={FOOTCAMP_ENCERRADO ? "Obrigado a todos os atletas. Footcamp Outono 2026: 16 a 20 de novembro." : "Treino diferenciado e de excelência. Inscrições abertas para julho 2026."}
+        title={FOOTCAMP_ENCERRADO ? "ProTopo Footcamp Outono 2026 | Edição concluída" : "ProTopo Footcamp Outono 2026 | Inscrições Abertas"}
+        description={FOOTCAMP_ENCERRADO ? "O ProTopo Footcamp Outono 2026 terminou. Obrigado a todos os atletas, famílias e equipa técnica. Footcamp Outono 2026: 16 a 20 de novembro." : "ProTopo Footcamp — Edição Outono 2026. 16 a 20 de novembro, das 09h00 às 12h30. Treino diferenciado para atletas dos 6 aos 16 anos. Inscrições abertas."}
+        ogTitle={FOOTCAMP_ENCERRADO ? "ProTopo Footcamp Outono 2026 — Edição concluída" : "ProTopo Footcamp — Edição Outono 2026"}
+        ogDescription={FOOTCAMP_ENCERRADO ? "Obrigado a todos os atletas. Footcamp Outono 2026: 16 a 20 de novembro." : "Treino diferenciado e de excelência. Inscrições abertas para novembro 2026."}
         ogImage="/og/footcamp.jpg"
         path="/footcamp"
       />
@@ -148,7 +148,7 @@ const Footcamp = () => {
             <source media="(min-width: 768px)" srcSet={footcampHero} />
             <img
               src={footcampHeroMobile}
-              alt="ProTopo Footcamp - Edição Verão 2026"
+              alt="ProTopo Footcamp - Edição Outono 2026"
               className="w-full h-full object-cover"
               style={{ objectPosition: "50% 50%" }}
               width={1920}
@@ -162,7 +162,7 @@ const Footcamp = () => {
           <div className="animate-fade-in-up">
             <span className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full font-heading font-bold uppercase tracking-[0.2em] text-xs mb-5 shadow-lg">
               <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
-              {FOOTCAMP_ENCERRADO ? "Footcamp Verão 2026 concluído" : "Inscrições Abertas · Edição Verão 2026"}
+              {FOOTCAMP_ENCERRADO ? "Footcamp Outono 2026 concluído" : "Inscrições Abertas · Edição Outono 2026"}
             </span>
             <h1 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
               ProTopo
@@ -170,8 +170,8 @@ const Footcamp = () => {
             </h1>
             <p className="text-foreground/90 text-lg md:text-2xl max-w-2xl mx-auto font-body leading-relaxed mb-6">
               {FOOTCAMP_ENCERRADO
-                ? "A edição Verão 2026 terminou a 31 de julho. Obrigado a todos os atletas, famílias e equipa técnica que fizeram parte desta edição."
-                : "Evolui este verão com treinos intensivos, competição e experiências únicas para atletas dos 6 aos 16 anos."}
+                ? "A edição Outono 2026 terminou a 31 de julho. Obrigado a todos os atletas, famílias e equipa técnica que fizeram parte desta edição."
+                : "Evolui este outono com treinos intensivos, competição e experiências únicas para atletas dos 6 aos 16 anos."}
             </p>
 
             {/* Quick highlights */}
@@ -180,14 +180,14 @@ const Footcamp = () => {
                 ? [
                     "✅ Edição concluída",
                     "🍂 Footcamp Outono 2026 · 16 a 20 nov",
-                    "👕 Kit de treino incluído",
+                    "👕 Kit para novos inscritos",
                     "⚽ Dos 6 aos 16 anos",
                   ]
                 : [
-                "📅 Julho 2026",
-                "🗓️ 4 semanas disponíveis",
-                "👕 Kit de treino incluído",
-                "⏰ Quinta-feira: dia completo",
+                "📅 16 a 20 de novembro",
+                "🗓️ 1 semana · 80€",
+                "👕 Kit para novos inscritos",
+                "⏰ 09h00 às 12h30",
               ]).map((t) => (
                 <span
                   key={t}
@@ -233,7 +233,7 @@ const Footcamp = () => {
                   className="group inline-flex items-center gap-3 bg-gradient-gold text-primary-foreground px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
                   style={{ animation: "pulse-gold 2.4s ease-in-out infinite" }}
                 >
-                  Garantir vaga
+                  Inscrever agora
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               )}
@@ -251,7 +251,7 @@ const Footcamp = () => {
         </div>
       </section>
 
-      {!FOOTCAMP_ENCERRADO && <FootcampCountdown />}
+      
 
       {/* O QUE É O FOOTCAMP */}
       <section className="py-24 bg-background">
@@ -291,18 +291,15 @@ const Footcamp = () => {
                 📅 Datas
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-                Semanas <span className="text-gradient-gold">de julho</span>
+                Datas e <span className="text-gradient-gold">horários</span>
               </h2>
-              <p className="text-muted-foreground">{FOOTCAMP_ENCERRADO ? "Semanas realizadas na edição Verão 2026 (concluída)." : "Escolhe uma ou mais semanas. Inscrições sujeitas a vagas."}</p>
+              <p className="text-muted-foreground">{FOOTCAMP_ENCERRADO ? "Semanas realizadas na edição Outono 2026 (concluída)." : "Uma semana completa para evoluir em campo."}</p>
             </div>
           </AnimateOnScroll>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 gap-4 md:gap-6 max-w-3xl mx-auto">
             {[
-              { n: "1ª", datas: "6 a 10 de julho" },
-              { n: "2ª", datas: "13 a 17 de julho" },
-              { n: "3ª", datas: "20 a 24 de julho" },
-              { n: "4ª", datas: "27 a 31 de julho" },
+              { n: "1", datas: "16 a 20 de novembro de 2026 · Segunda a sexta-feira" },
             ].map((s, i) => (
               <AnimateOnScroll key={s.n} delay={i * 100}>
                 <div className="group relative bg-card border border-border rounded-2xl p-6 h-full hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
@@ -319,7 +316,7 @@ const Footcamp = () => {
           <AnimateOnScroll delay={400}>
             <div className="mt-8 max-w-3xl mx-auto rounded-xl border border-primary/30 bg-primary/5 p-5 text-center">
               <p className="text-foreground">
-                <span className="font-heading font-bold text-primary">Dia completo:</span> Na quinta-feira de cada semana o programa decorre das <span className="font-semibold">09:00 às 17:30</span>.
+                <span className="font-heading font-bold text-primary">Horário:</span> Todos os dias, das <span className="font-semibold">09h00 às 12h30</span>.
               </p>
             </div>
           </AnimateOnScroll>
@@ -342,9 +339,9 @@ const Footcamp = () => {
 
           <div className="grid md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
-              { icon: MapPin, label: "Local", value: "Campo da Caridade — Adelino dos Santos Júnior, Ourém" },
+              { icon: MapPin, label: "Local", value: "Clube Atlético Ouriense — Campo da Caridade, Ourém" },
               { icon: Clock, label: "Horário normal", value: "09:00 às 12:30 · 3h30 por dia" },
-              { icon: Sparkles, label: "Flexibilidade", value: "Existe flexibilidade de horários mediante necessidade de cada atleta." },
+              { icon: Calendar, label: "Dias", value: "Segunda a sexta-feira · 16 a 20 de novembro de 2026" },
             ].map((item, i) => (
               <AnimateOnScroll key={item.label} delay={i * 120}>
                 <div className="bg-card border border-border rounded-2xl p-6 h-full">
@@ -378,19 +375,15 @@ const Footcamp = () => {
             {[
               {
                 icon: Shirt,
-                title: "Kit de treino ProTopo",
-                items: ["T-shirt de treino ProTopo", "T-shirt casual ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo"],
+                title: "Kit oficial para novos inscritos",
+                items: ["T-shirt oficial ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo", "Oferta aos novos inscritos; atletas anteriores sujeitos a validação de elegibilidade"],
               },
               {
                 icon: Apple,
                 title: "Alimentação diária",
                 items: ["Lanche diário incluído", "Barras energéticas", "Águas", "Fruta"],
               },
-              {
-                icon: Gift,
-                title: "Nos dias completos",
-                items: ["Almoço incluído", "Lanches incluídos"],
-              },
+
               {
                 icon: ShowerHead,
                 title: "Condições no local",
@@ -418,21 +411,7 @@ const Footcamp = () => {
             ))}
           </div>
 
-          <AnimateOnScroll delay={500}>
-            <div className="mt-8 max-w-3xl mx-auto rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 to-transparent p-6 md:p-8">
-              <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/15 border border-primary/30 flex-shrink-0">
-                  <Sparkles className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">Novidade</p>
-                  <p className="text-foreground leading-relaxed">
-                    Um dia completo por semana dedicado a <span className="font-semibold">atividades diferenciadas</span>, permitindo aos atletas contactar com novas experiências e desenvolver competências num ambiente divertido e educativo.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </AnimateOnScroll>
+
         </div>
       </section>
 
@@ -448,23 +427,20 @@ const Footcamp = () => {
                 {FOOTCAMP_ENCERRADO ? (
                   <>Preços da <span className="text-gradient-gold">última edição</span></>
                 ) : (
-                  <>Escolhe o teu <span className="text-gradient-gold">pacote</span></>
+                  <>Uma semana de <span className="text-gradient-gold">futebol</span></>
                 )}
               </h2>
               <p className="text-muted-foreground">
                 {FOOTCAMP_ENCERRADO
-                  ? "Valores praticados no Footcamp Verão 2026 (edição concluída). As condições do Footcamp Outono 2026 serão anunciadas em breve."
-                  : "Quanto mais semanas, melhor o valor por semana."}
+                  ? "Valores praticados no Footcamp Outono 2026 (edição concluída). As condições do Footcamp Outono 2026 serão anunciadas em breve."
+                  : "80€ por atleta pela semana completa."}
               </p>
             </div>
           </AnimateOnScroll>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 gap-4 md:gap-6 max-w-md mx-auto">
             {[
-              { sem: "1 SEMANA", preco: "95€", featured: false, seguroInfo: "+ Seguro 10€" },
-              { sem: "2 SEMANAS", preco: "170€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
-              { sem: "3 SEMANAS", preco: "250€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
-              { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor", seguroInfo: "🎁 Seguro oferecido" },
+              { sem: "1 SEMANA", preco: "80€", featured: false, seguroInfo: "Seguro anual: +10€ apenas se necessário" },
             ].map((p: any, i) => (
               <AnimateOnScroll key={p.sem} delay={i * 100}>
                 <div
@@ -494,60 +470,19 @@ const Footcamp = () => {
               <div className="rounded-xl p-5 h-full border-2 border-primary/40 bg-primary/5">
                 <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">🛡️ Seguro anual</p>
                 <ul className="text-foreground text-sm space-y-1">
-                  <li>• <span className="font-bold">10€</span> para inscrições de 1 semana</li>
-                  <li>• <span className="font-bold">Oferta</span> nas inscrições de 2, 3 ou 4 semanas</li>
-                  <li>• Válido durante <span className="font-bold">1 ano</span></li>
+                  <li>• <span className="font-bold">10€</span> apenas para quem necessita de novo seguro</li>
+                  <li>• <span className="font-bold">0€</span> com seguro anual anterior válido, após confirmação da cobertura</li>
+                  <li>• Válido durante <span className="font-bold">1 ano</span>, sujeito às condições da apólice</li>
                 </ul>
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll delay={200}>
               <div className="bg-card border border-border rounded-xl p-5 h-full">
                 <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">👨‍👦 Desconto irmãos</p>
-                <p className="text-foreground"><span className="font-bold">15%</span> de desconto no valor total.</p>
+                <p className="text-foreground"><span className="font-bold">10%</span> de desconto sobre a participação, sem desconto sobre o seguro. Aplicação após validação bidirecional dos irmãos.</p>
               </div>
             </AnimateOnScroll>
           </div>
-        </div>
-      </section>
-
-      {/* DIA COMPLETO */}
-      <section className="py-16 bg-secondary">
-        <div className="container mx-auto px-4">
-          <AnimateOnScroll>
-            <div className="max-w-4xl mx-auto bg-card border border-primary/30 rounded-2xl p-8 md:p-10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex-shrink-0">
-                  <Sparkles className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <span className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-1 block">
-                    🎉 Novidade Verão 2026
-                  </span>
-                  <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground">
-                    Dia Completo às Quintas-Feiras
-                  </h3>
-                </div>
-              </div>
-              <p className="text-foreground text-base md:text-lg leading-relaxed mb-6">
-                Todas as quintas-feiras realizamos um dia completo das <span className="font-semibold">09:00 às 17:30</span>.
-              </p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {[
-                  "Atividades diferenciadas",
-                  "Almoço incluído",
-                  "Lanche da manhã",
-                  "Lanche da tarde",
-                  "Experiências complementares para desenvolvimento dos atletas",
-                ].map((it) => (
-                  <li key={it} className="flex items-start gap-2.5 text-foreground/90">
-                    <span className="text-primary mt-1 flex-shrink-0">•</span>
-                    <span>{it}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </AnimateOnScroll>
         </div>
       </section>
 
@@ -625,8 +560,8 @@ const Footcamp = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
             {[
-              { n: 1, title: "Preenche o formulário", desc: "Seleciona as semanas pretendidas e preenche os dados do atleta." },
-              { n: 2, title: "Confirmamos a disponibilidade", desc: "A equipa ProTopo verifica as vagas disponíveis para as semanas escolhidas." },
+              { n: 1, title: "Preenche o formulário", desc: "Preenche os dados do atleta para 16 a 20 de novembro." },
+              { n: 2, title: "Confirmamos a disponibilidade", desc: "A equipa ProTopo verifica a vaga, o seguro e a elegibilidade do equipamento." },
               { n: 3, title: "Recebes contacto por WhatsApp", desc: "Enviamos todas as informações necessárias e os dados para pagamento." },
               { n: 4, title: "Vaga garantida", desc: "Após validação do pagamento, a inscrição fica concluída." },
             ].map((p, i) => (
@@ -718,7 +653,7 @@ const Footcamp = () => {
           <AnimateOnScroll>
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-                📊 Edição anterior · em números
+                📊 Edição anterior · Verão 2026 · em números
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
                 Resultados do <span className="text-gradient-gold">Footcamp</span>
@@ -759,7 +694,7 @@ const Footcamp = () => {
           <AnimateOnScroll>
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-                🌟 Experiência
+                🌟 Experiência · Verão 2026
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-6">
                 Mais do que <span className="text-gradient-gold">treinos</span>
@@ -805,7 +740,7 @@ const Footcamp = () => {
           <AnimateOnScroll>
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-                📸 Momentos
+                📸 Momentos · Verão 2026
               </p>
               <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
                 A intensidade do <span className="text-gradient-gold">Footcamp</span>
@@ -978,10 +913,9 @@ const Footcamp = () => {
               "Treinos especializados e acompanhamento técnico individualizado",
               "Desenvolvimento técnico, físico e mental",
               "Ambiente seguro, organizado e profissional",
-              "Equipamento oficial ProTopo incluído",
+              "Kit oficial oferecido aos novos inscritos",
               "Treinadores certificados UEFA",
               "Lanches diários incluídos",
-              "Almoço incluído nos dias completos",
               "Balneários com água quente",
               "Intensidade competitiva adequada à idade",
               "Atenção personalizada a cada atleta",
@@ -999,20 +933,16 @@ const Footcamp = () => {
 
       <FAQSection
         title={<>Perguntas <span className="text-gradient-gold">Frequentes</span></>}
-        subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Verão 2026."
+        subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Outono 2026."
         faqs={[
-          { question: "O seguro é obrigatório?", answer: "Sim. O seguro é obrigatório para todos os participantes. Nas inscrições de 1 semana tem um custo de 10€. Nas inscrições de 2, 3 ou 4 semanas é oferecido pela ProTopo." },
-          { question: "O que está incluído na inscrição?", answer: "Kit de treino ProTopo (t-shirt de treino, t-shirt casual, calções, meias e saco), seguro (10€ nas inscrições de 1 semana; oferecido nas inscrições de 2, 3 ou 4 semanas), lanches diários, acompanhamento técnico especializado e acesso a todas as atividades selecionadas. Nos dias completos, almoço e lanches estão incluídos." },
-          { question: "Há balneários?", answer: "Sim. Os atletas podem equipar-se e tomar banho de água quente após os treinos." },
-          { question: "O almoço está incluído?", answer: "Nos dias completos (quinta-feira) o almoço e os lanches estão incluídos. Nos restantes dias, são fornecidos lanches, água e fruta." },
-          { question: "Posso inscrever apenas uma semana?", answer: "Sim. Cada família pode escolher as semanas pretendidas. Quanto mais semanas, melhor o valor por semana." },
-          { question: "Existe desconto para irmãos?", answer: "Sim. Existe um desconto de 10% sobre o valor total para famílias com mais do que um atleta inscrito." },
-          { question: "Para que idades é o Footcamp?", answer: "O Footcamp é destinado a jovens atletas dos 6 aos 16 anos, com grupos organizados por faixa etária para garantir um trabalho ajustado a cada idade." },
-          { question: "Como funciona a inscrição e o pagamento?", answer: "Preenches o formulário de inscrição. Depois, a equipa ProTopo entra em contacto por WhatsApp para confirmar a vaga, esclarecer dúvidas e enviar os dados de pagamento." },
-          { question: "O atleta pode tomar banho após o treino?", answer: "Sim. Existem balneários com água quente disponíveis para todos os atletas." },
-          { question: "O que devo levar para o Footcamp?", answer: "Roupa desportiva adequada, chuteiras e vontade de aprender. O equipamento ProTopo está incluído na inscrição." },
-          { question: "Como funciona a confirmação da vaga?", answer: "Após o envio do formulário a equipa ProTopo entra em contacto por WhatsApp para confirmar a disponibilidade e fornecer os dados de pagamento." },
-          { question: "Existem restrições alimentares?", answer: "Sim. No formulário de inscrição existe um campo específico para indicar alergias ou restrições alimentares." },
+          { question: "Quando e onde decorre?", answer: "De 16 a 20 de novembro de 2026, segunda a sexta-feira, das 09h00 às 12h30, no Clube Atlético Ouriense — Campo da Caridade, Ourém." },
+          { question: "Quanto custa?", answer: "80€ por atleta pela semana completa. Desconto de irmãos de 10% sobre a participação, após validação bidirecional; não incide sobre o seguro." },
+          { question: "Preciso de novo seguro?", answer: "O seguro anual custa 10€ apenas quando é necessário um novo seguro. Uma cobertura anual anterior ainda válida não é cobrada novamente após confirmação pela equipa. A validade futura respeita as condições da apólice." },
+          { question: "Quem recebe o kit?", answer: "O kit é oferecido aos novos inscritos, conforme as condições da organização: T-shirt de treino, calções, meias e saco. Para atletas anteriores, a elegibilidade é validada pela equipa." },
+          { question: "O lanche está incluído?", answer: "Sim, o lanche diário inclui barras, água e fruta. Indica as restrições alimentares no formulário." },
+          { question: "Há balneários?", answer: "Sim, estão disponíveis para os atletas se equiparem e tomarem banho após os treinos." },
+          { question: "Para que idades é o Footcamp?", answer: "Dos 6 aos 16 anos, com grupos ajustados à idade." },
+          { question: "Como funciona a inscrição?", answer: "Preenche o formulário. A equipa confirma a vaga, valida o seguro e eventuais descontos e envia os dados de pagamento por WhatsApp. A vaga fica garantida após validação do pagamento." },
         ]}
       />
 

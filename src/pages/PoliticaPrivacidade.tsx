@@ -41,7 +41,11 @@ const PoliticaPrivacidade = () => {
               <li>Nome</li>
               <li>Idade</li>
               <li>Número de telemóvel</li>
-              <li>Semana(s) selecionada(s) e dados do participante</li>
+              <li>Edição e período de participação, data de nascimento, clube, posição e escalão</li>
+              <li>Dados e contactos do encarregado de educação e contacto de emergência</li>
+              <li>Informações médicas, alergias, medicação e restrições alimentares relevantes</li>
+              <li>Tamanhos do equipamento, irmãos indicados, participação anterior e situação do seguro</li>
+              <li>Consentimentos e autorização de imagem</li>
             </ul>
           </section>
 

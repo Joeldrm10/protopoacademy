@@ -7,30 +7,26 @@ import AnimateOnScroll from "./AnimateOnScroll";
 import { WHATSAPP_URL_FOOTCAMP_INFO } from "@/lib/constants";
 
 const resumoItems = [
-  { icon: Sparkles, text: "ProTopo Footcamp — Edição Verão 2026" },
+  { icon: Sparkles, text: "ProTopo Footcamp — Edição Outono 2026" },
   { icon: Users, text: "Atletas dos 6 aos 16 anos" },
-  { icon: MapPin, text: "Campo da Caridade — Adelino dos Santos Júnior, Ourém" },
-  { icon: Calendar, text: "Julho 2026" },
+  { icon: MapPin, text: "Clube Atlético Ouriense — Campo da Caridade, Ourém" },
+  { icon: Calendar, text: "16 a 20 de novembro de 2026" },
   { icon: Clock, text: "Horário normal: 09:00 às 12:30" },
-  { icon: Clock, text: "Quinta-feira: dia completo das 09:00 às 17:30" },
+  { icon: Clock, text: "Segunda a sexta-feira" },
 ];
 
 const incluidoCards = [
   {
     icon: Shirt,
-    title: "Kit oficial ProTopo",
-    items: ["T-shirt de treino ProTopo", "T-shirt casual ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo"],
+    title: "Kit para novos inscritos",
+    items: ["T-shirt de treino ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo", "Atletas anteriores: elegibilidade a validar"],
   },
   {
     icon: Apple,
     title: "Alimentação diária",
     items: ["Lanches diários", "Água", "Fruta", "Barras energéticas"],
   },
-  {
-    icon: Gift,
-    title: "Nas quintas-feiras",
-    items: ["Almoço incluído", "Atividades diferenciadas"],
-  },
+
   {
     icon: ShowerHead,
     title: "Condições no local",
@@ -39,15 +35,12 @@ const incluidoCards = [
 ];
 
 const pacotes: { sem: string; preco: string; featured: boolean; badge?: string; seguroInfo?: string }[] = [
-  { sem: "1 SEMANA", preco: "95€", featured: false, seguroInfo: "+ Seguro 10€" },
-  { sem: "2 SEMANAS", preco: "170€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
-  { sem: "3 SEMANAS", preco: "250€", featured: false, seguroInfo: "🎁 Seguro oferecido" },
-  { sem: "4 SEMANAS", preco: "340€", featured: true, badge: "Melhor valor", seguroInfo: "🎁 Seguro oferecido" },
+  { sem: "1 SEMANA", preco: "80€", featured: false, seguroInfo: "Seguro: +10€ apenas se necessário" },
 ];
 
 const aposPassos = [
   "A equipa ProTopo analisa a inscrição",
-  "Confirmamos a disponibilidade das semanas escolhidas",
+  "Confirmamos a disponibilidade e a cobertura do seguro",
   "Entramos em contacto por WhatsApp",
   "Enviamos os dados de pagamento",
   "A vaga fica reservada após confirmação do pagamento",
@@ -119,9 +112,9 @@ const FootcampInfoSection = () => {
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 border border-primary/20">
                 <Sparkles className="w-5 h-5 text-primary" />
               </div>
-              <h2 className="font-heading font-bold text-xl md:text-2xl text-foreground">💰 Pacotes disponíveis</h2>
+              <h2 className="font-heading font-bold text-xl md:text-2xl text-foreground">💰 Preço da participação</h2>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="grid grid-cols-1 max-w-md mx-auto gap-3 md:gap-4">
               {pacotes.map((p) => (
                 <div
                   key={p.sem}
@@ -155,11 +148,11 @@ const FootcampInfoSection = () => {
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span><span className="font-semibold text-foreground">10€</span> para inscrições de 1 semana</span>
+                    <span><span className="font-semibold text-foreground">10€</span> apenas para quem necessita de novo seguro</span>
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span><span className="font-semibold text-foreground">Oferta</span> nas inscrições de 2, 3 ou 4 semanas</span>
+                    <span><span className="font-semibold text-foreground">0€</span> com seguro anual válido, após confirmação da cobertura</span>
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
@@ -170,7 +163,7 @@ const FootcampInfoSection = () => {
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground text-center">
-              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-15% sobre o valor total</span>
+              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-10% sobre a participação, após validação bidirecional (seguro excluído)</span>
             </p>
           </div>
         </AnimateOnScroll>
