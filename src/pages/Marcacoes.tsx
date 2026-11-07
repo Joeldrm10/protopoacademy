@@ -276,7 +276,7 @@ const Marcacoes = () => {
     effectiveBookingValue(m, (familyMap.get(m.id)?.matched.length ?? 0) > 0);
 
   const seguroLabel = (m: Marcacao) => editionOf(m) === AUTUMN_EDITION
-    ? `${m.seguro_valor ?? 10}€ · ${m.seguro_existente_declarado ? (m.seguro_validado ? "Cobertura validada" : "Cobertura por validar") : "Novo seguro"}`
+    ? `${m.estado === "confirmado" ? m.seguro_valor ?? 10 : m.seguro_existente_declarado && m.seguro_validado ? 0 : 10}€ · ${m.seguro_existente_declarado ? (m.seguro_validado ? "Cobertura validada" : "Cobertura por validar") : "Novo seguro"}`
     : m.seguro_anual ? "Oferta 🎁" : "Incluído no valor total";
 
   const validateAutumn = async (m: Marcacao, kind: "insurance" | "kit", approved: boolean) => {
