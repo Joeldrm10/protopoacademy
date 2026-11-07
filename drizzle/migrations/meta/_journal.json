@@ -8,6 +8,13 @@
       "when": 1794044869289,
       "tag": "0000_footcamp_autumn_edition_snapshots",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794052030109,
+      "tag": "0001_autumn_insurance_confirmation",
+      "breakpoints": true
     }
   ]
 }
