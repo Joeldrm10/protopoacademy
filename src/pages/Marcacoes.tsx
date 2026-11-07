@@ -276,7 +276,7 @@ const Marcacoes = () => {
     effectiveBookingValue(m, (familyMap.get(m.id)?.matched.length ?? 0) > 0);
 
   const seguroLabel = (m: Marcacao) => editionOf(m) === AUTUMN_EDITION
-    ? `${m.seguro_valor ?? 10}€ · ${m.seguro_existente_declarado ? (m.seguro_validado ? "Cobertura validada" : "Cobertura por validar") : "Novo seguro"}`
+    ? `${m.estado === "confirmado" ? m.seguro_valor ?? 10 : m.seguro_existente_declarado && m.seguro_validado ? 0 : 10}€ · ${m.seguro_existente_declarado ? (m.seguro_validado ? "Cobertura validada" : "Cobertura por validar") : "Novo seguro"}`
     : m.seguro_anual ? "Oferta 🎁" : "Incluído no valor total";
 
   const validateAutumn = async (m: Marcacao, kind: "insurance" | "kit", approved: boolean) => {
@@ -285,7 +285,7 @@ const Marcacoes = () => {
       return;
     }
     const change = kind === "insurance"
-      ? { seguro_validado: approved, seguro_valor: approved ? 0 : 10, valor_total: 80 + (approved ? 0 : 10) }
+      ? { seguro_existente_declarado: approved, seguro_validado: approved, seguro_valor: approved ? 0 : 10, valor_total: 80 + (approved ? 0 : 10), desconto_valor: 0 }
       : { kit_elegivel: approved };
     const { error } = await supabase.from("marcacoes").update(change).eq("id", m.id);
     if (error) { toast.error("Não foi possível guardar a validação"); return; }
@@ -295,7 +295,7 @@ const Marcacoes = () => {
 
   const AutumnValidation = ({ m }: { m: Marcacao }) => editionOf(m) !== AUTUMN_EDITION ? null : (
     <div className="space-y-2 border border-primary/30 rounded-lg p-3 text-sm">
-      <p className="font-heading text-primary">Outono 2026 · Participação: 80€ · Seguro: {m.seguro_valor ?? 10}€ · Desconto aplicado: {m.desconto_valor ?? 0}€</p>
+      <p className="font-heading text-primary">Outono 2026 · Participação: 80€ · Seguro: {m.estado === "confirmado" ? m.seguro_valor ?? 10 : m.seguro_existente_declarado && m.seguro_validado ? 0 : 10}€ · Desconto aplicado: {m.desconto_valor ?? 0}€</p>
       <p>Participação anterior: {m.participou_anterior ? "Sim" : "Não"} · Kit: {m.kit_elegivel == null ? "Por validar" : m.kit_elegivel ? "Elegível" : "Não elegível"}</p>
       {m.seguro_existente_declarado && m.estado !== "confirmado" && <div className="flex flex-wrap gap-2">
         <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "insurance", true)}>Confirmar cobertura anual</Button>
@@ -402,7 +402,7 @@ const Marcacoes = () => {
       if (record.seguro_existente_declarado && !record.seguro_validado && record.seguro_valor === 0) {
         toast.error("Valida a cobertura anual ou indica a necessidade de novo seguro antes de confirmar."); return;
       }
-      const price = autumnPrice((record.seguro_valor ?? 10) > 0, !!record.desconto_irmaos && (familyMap.get(id)?.matched.length ?? 0) > 0);
+      const price = autumnPrice(!(record.seguro_existente_declarado && record.seguro_validado), !!record.desconto_irmaos && (familyMap.get(id)?.matched.length ?? 0) > 0);
       change.valor_total = price.total;
       change.preco_base = price.base;
       change.seguro_valor = price.insurance;

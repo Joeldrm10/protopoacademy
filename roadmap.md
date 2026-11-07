@@ -12,3 +12,10 @@
 - [x] Matemática verificada (90/80/72/82) no formulário, WhatsApp e base de dados; testes unitários passam.
 - [x] Balneários com água quente garantidos; "Acompanhamento técnico especializado" removido.
 - [x] Testes: cenários no navegador, inscrição real (90€ na BD, registo de teste removido), 91 legados intactos, mobile sem overflow.
+
+# Revisão final do formulário
+- [x] Simplificar kit e horário; exigir tamanhos apenas para novos atletas e preservar valores ocultos.
+- [x] Cobrar seguro provisoriamente até confirmação de cobertura válida no Admin; proteção aplicada apenas a novas inserções/atualizações, sem reescrever históricos.
+- [x] Confirmar validações, consentimentos independentes e valores; 21 testes passaram. Reabrir WhatsApp não volta a inserir o pedido.
+- [x] Verificar formulário em 1280/394px e Admin autenticado com leitura simulada do pedido; sem erros ou overflow. Não publicado.
+- Limitação: envio/receção efetivos no WhatsApp e criação/leitura reais de nova inscrição não testados nesta revisão para não alterar os dados existentes; testes de envio usaram respostas simuladas. Uma re-submissão independente ainda pode criar outro pedido (não foi imposta unicidade por atleta).

@@ -57,7 +57,7 @@ const getBirthDateRange = () => {
   return { min: toIso(minDate), max: toIso(maxDate) };
 };
 
-const schema = z.object({
+export const footcampSignupSchema = z.object({
   nome: z.string().trim().min(2, "Nome é obrigatório").max(100),
   data_nascimento: z.string().trim().min(1, "Data de nascimento é obrigatória").superRefine((v, ctx) => {
     const d = new Date(v);
@@ -93,8 +93,8 @@ const schema = z.object({
   aceita_termos: z.literal(true, { errorMap: () => ({ message: "Aceita os Termos e Condições" }) }),
   irmaos: z.boolean().optional(),
   nome_irmaos: z.string().trim().max(200).optional(),
-  tamanho_tshirt: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
-  tamanho_calcas: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
+  tamanho_tshirt: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }).optional(),
+  tamanho_calcas: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }).optional(),
   autorizacao_imagem: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
   tem_alergias: z.enum(["sim", "nao"], { errorMap: () => ({ message: "Seleciona uma opção" }) }),
   alergias_descricao: z.string().trim().max(300).optional(),
@@ -107,6 +107,11 @@ const schema = z.object({
   consentimento: z.literal(true, {
     errorMap: () => ({ message: "Tens de autorizar o tratamento dos dados" }),
   }),
+}).superRefine((d, ctx) => {
+  if (d.participacao === "primeira") {
+    if (!d.tamanho_tshirt) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["tamanho_tshirt"], message: "Seleciona o tamanho da T-shirt" });
+    if (!d.tamanho_calcas) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["tamanho_calcas"], message: "Seleciona o tamanho dos calções" });
+  }
 }).refine((d) => !d.irmaos || (d.nome_irmaos && d.nome_irmaos.trim().length >= 2), {
   message: "Indica o nome do(s) irmão(s) inscrito(s)",
   path: ["nome_irmaos"],
@@ -121,7 +126,7 @@ const schema = z.object({
   path: ["medicacao_descricao"],
 });
 
-type FormData = z.infer<typeof schema>;
+type FormData = z.infer<typeof footcampSignupSchema>;
 
 const calcAge = (iso: string): string => {
   if (!iso) return "";
@@ -150,10 +155,12 @@ const FootcampSignupForm = () => {
   const [loading, setLoading] = useState(false);
   const [lastSummary, setLastSummary] = useState<Summary | null>(null);
   const lastSubmitRef = useRef<number>(0);
+  const submittingRef = useRef(false);
+  const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
 
 
   const form = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(footcampSignupSchema),
     defaultValues: {
       nome: "",
       data_nascimento: "",
@@ -206,8 +213,8 @@ const FootcampSignupForm = () => {
   const precoBase = AUTUMN.base;
   const participouAnterior = form.watch("participacao") === "anterior";
   // Atleta anterior declara seguro anual existente; a validade é confirmada no Admin.
-  const seguroOferta = participouAnterior;
-  const seguroCusto = autumnPrice(!participouAnterior).insurance;
+  const seguroOferta = false;
+  const seguroCusto = autumnPrice(true).insurance;
   const subtotal = precoBase + seguroCusto;
   // O desconto irmãos só é aplicado após validação bidirecional no Admin.
   // No formulário mostramos sempre o subtotal como valor previsto.
@@ -215,12 +222,15 @@ const FootcampSignupForm = () => {
 
 
   const onSubmit = async (data: FormData) => {
+    if (submittingRef.current || submitted) return;
     const now = Date.now();
     if (now - lastSubmitRef.current < COOLDOWN_MS) {
       toast({ title: "Aguarda", description: "Espera 1 minuto entre envios.", variant: "destructive" });
       return;
     }
+    submittingRef.current = true;
     setLoading(true);
+    const whatsappWindow = window.open("about:blank", "_blank");
     try {
       const semanasLabels = data.semanas
         .map((id) => semanasOptions.find((s) => s.id === id)?.label)
@@ -254,8 +264,8 @@ const FootcampSignupForm = () => {
         seguro_anual: seguroOferta,
         desconto_irmaos: !!data.irmaos,
         nome_irmaos: data.irmaos ? (data.nome_irmaos?.trim() || null) : null,
-        tamanho_tshirt: data.tamanho_tshirt,
-        tamanho_calcas: data.tamanho_calcas,
+        tamanho_tshirt: data.tamanho_tshirt ?? null,
+        tamanho_calcas: data.tamanho_calcas ?? null,
         autorizacao_imagem: autorizaImagem,
         restricao_alimentar: restricaoSim,
         restricao_alimentar_desc: restricaoDesc,
@@ -278,13 +288,14 @@ const FootcampSignupForm = () => {
       } as any);
 
       if (dbError) {
+        whatsappWindow?.close();
         console.error("Erro ao guardar inscrição:", dbError);
         toast({ title: "Erro", description: "Não foi possível guardar a inscrição. Tenta novamente.", variant: "destructive" });
         setLoading(false);
         return;
       }
 
-      const seguroTxt = seguroOferta ? "Seguro anual: 0€ — Já incluído (validade a confirmar pela equipa)" : `Seguro anual: ${SEGURO_1_SEMANA}€`;
+      const seguroTxt = `Seguro anual: ${SEGURO_1_SEMANA}€${data.participacao === "anterior" ? " — provisório; 0€ apenas após confirmação de cobertura ainda válida" : ""}`;
       const parts = [
         `📋 NOVA INSCRIÇÃO FOOTCAMP OUTONO 2026`,
         ``,
@@ -312,9 +323,7 @@ const FootcampSignupForm = () => {
         `Kit oficial: ${data.participacao === "anterior" ? "Não incluído (oferecido apenas na primeira inscrição)" : "Oferecido (primeira inscrição)"}`,
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
-        `👕 EQUIPAMENTO`,
-        `T-shirt: ${data.tamanho_tshirt}`,
-        `Calções: ${data.tamanho_calcas}`,
+        ...(data.participacao === "primeira" ? [`👕 EQUIPAMENTO`, `T-shirt: ${data.tamanho_tshirt}`, `Calções: ${data.tamanho_calcas}`] : []),
         ``,
         `👨‍👩‍👧‍👦 IRMÃOS`,
         `Tem irmãos inscritos: ${data.irmaos ? "Sim" : "Não"}`,
@@ -351,10 +360,12 @@ const FootcampSignupForm = () => {
 
         ``,
         `✅ Consentimento de dados: autorizado`,
+        `✅ Termos e Condições: aceites`,
       ].filter(Boolean);
 
       const message = encodeURIComponent(parts.join("\n"));
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+      setWhatsappUrl(url);
       lastSubmitRef.current = Date.now();
       setLastSummary({
         nome: data.nome,
@@ -367,11 +378,16 @@ const FootcampSignupForm = () => {
         precoPrevisto,
       });
       setSubmitted(true);
+      if (whatsappWindow) {
+        try { whatsappWindow.location.href = url; } catch { whatsappWindow.close(); }
+      }
 
     } catch (err) {
+      whatsappWindow?.close();
       console.error(err);
       toast({ title: "Erro", description: "Ocorreu um erro inesperado.", variant: "destructive" });
     } finally {
+      submittingRef.current = false;
       setLoading(false);
     }
   };
@@ -385,7 +401,7 @@ const FootcampSignupForm = () => {
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
                 <Send className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="font-heading font-bold text-2xl mb-3 text-foreground">Inscrição enviada!</h3>
+              <h3 className="font-heading font-bold text-2xl mb-3 text-foreground">Pedido de inscrição registado!</h3>
 
               {lastSummary && (
                 <div className="text-left rounded-xl border border-primary/30 bg-primary/5 p-4 mb-5">
@@ -409,6 +425,7 @@ const FootcampSignupForm = () => {
                         <span className="text-muted-foreground">Seguro anual</span>
                         <span className="text-foreground font-medium">{lastSummary.seguroOferta ? "0€ — Já incluído" : `${lastSummary.seguroCusto}€`}</span>
                       </div>
+                      <div className="flex justify-between gap-3 text-sm"><span className="text-foreground font-semibold">Total registado sem desconto</span><span>{lastSummary.precoPrevisto}€</span></div>
                       {lastSummary.irmaos ? (
                         <>
                           <div className="flex justify-between gap-3 text-sm">
@@ -435,9 +452,10 @@ const FootcampSignupForm = () => {
               )}
 
               <p className="text-muted-foreground mb-6">
-                A equipa ProTopo confirma a vaga, valida eventuais descontos e envia os dados de pagamento por WhatsApp.
+                O pedido foi guardado. Envia a mensagem no WhatsApp para concluir o contacto. A abertura do WhatsApp não confirma o envio; a vaga só fica garantida após confirmação da equipa e validação do pagamento.
               </p>
 
+              {whatsappUrl && <Button asChild variant="hero" size="lg" className="w-full mb-4"><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle className="w-5 h-5 mr-2" />Abrir mensagem no WhatsApp</a></Button>}
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
                   href={WHATSAPP_URL_FOOTCAMP_INFO}
@@ -448,7 +466,7 @@ const FootcampSignupForm = () => {
                   <MessageCircle className="w-5 h-5" />
                   Tirar dúvidas
                 </a>
-                <Button variant="hero" size="lg" onClick={() => { setSubmitted(false); form.reset(); }}>
+                <Button variant="hero" size="lg" onClick={() => { setSubmitted(false); setWhatsappUrl(null); form.reset(); }}>
                   Nova inscrição
                 </Button>
               </div>
@@ -682,11 +700,11 @@ const FootcampSignupForm = () => {
                     <FormMessage />
                   </FormItem>
                 )} />
-                <p className="text-xs text-muted-foreground">Kit oficial ProTopo oferecido aos atletas que se inscrevem pela primeira vez na ProTopo Academy: T-shirt oficial, calções, meias e saco.</p>
                 {participouAnterior && (
-                  <p className="text-xs text-muted-foreground">Os atletas que já participaram e tenham seguro anual ainda válido não pagam novamente. Se o seguro estiver expirado ou a validade não puder ser confirmada, a equipa ProTopo valida a situação antes de fechar o valor.</p>
+                  <p className="text-xs text-muted-foreground">Até a equipa confirmar que o seguro anual ainda está válido, o resumo inclui 10€ de seguro. Após confirmação, o seguro passa a 0€ e o total é atualizado.</p>
                 )}
 
+                {form.watch("participacao") === "primeira" && (
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -733,6 +751,7 @@ const FootcampSignupForm = () => {
                     )}
                   />
                 </div>
+                )}
 
                 <FormField
                   control={form.control}
@@ -1013,8 +1032,9 @@ const FootcampSignupForm = () => {
                       </div>
                       <div className="flex justify-between gap-3 text-sm">
                         <span className="text-muted-foreground">Seguro anual</span>
-                        <span className="text-foreground font-medium">{seguroOferta ? "0€ — Já incluído" : `${seguroCusto}€`}</span>
+                        <span className="text-foreground font-medium">{participouAnterior ? `${seguroCusto}€ — por confirmar` : `${seguroCusto}€`}</span>
                       </div>
+                      <div className="flex justify-between gap-3 text-sm"><span className="text-foreground font-semibold">Total previsto sem desconto</span><span>{precoPrevisto}€</span></div>
                       {irmaos ? (
                         <>
                           <div className="flex justify-between gap-3 text-sm">

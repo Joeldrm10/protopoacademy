@@ -8,6 +8,17 @@ describe("Outono 2026 rules", () => {
   });
   it("costs 80 with existing insurance", () => expect(autumnPrice(false).total).toBe(80));
   it("adds 10 only for a new policy", () => expect(autumnPrice(true).total).toBe(90));
+  it("does not give free insurance for unconfirmed prior attendance", () => {
+    expect(effectiveBookingValue({edicao:"outono-2026",estado:"pendente",valor_total:80,seguro_valor:0,seguro_existente_declarado:true,seguro_validado:false},false)).toBe(90);
+  });
+  it("charges 80 only for confirmed existing annual coverage", () => {
+    expect(effectiveBookingValue({edicao:"outono-2026",estado:"pendente",valor_total:80,seguro_valor:0,seguro_existente_declarado:true,seguro_validado:true},false)).toBe(80);
+  });
+  it("charges validated siblings 81 with new insurance and 72 with valid existing coverage", () => {
+    const record = {edicao:"outono-2026",estado:"pendente",valor_total:90,desconto_irmaos:true,seguro_existente_declarado:true};
+    expect(effectiveBookingValue({...record,seguro_validado:false},true)).toBe(81);
+    expect(effectiveBookingValue({...record,seguro_validado:true},true)).toBe(72);
+  });
   it("discounts the total inscription value by 10%, including insurance", () => {
     expect(autumnPrice(true, true)).toEqual({ base: 80, insurance: 10, discount: 9, total: 81 });
     expect(autumnPrice(false, true)).toEqual({ base: 80, insurance: 0, discount: 8, total: 72 });

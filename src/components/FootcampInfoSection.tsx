@@ -11,15 +11,15 @@ const resumoItems = [
   { icon: Users, text: "Atletas dos 6 aos 16 anos" },
   { icon: MapPin, text: "Clube Atlético Ouriense — Campo da Caridade, Ourém" },
   { icon: Calendar, text: "16 a 20 de novembro de 2026" },
-  { icon: Clock, text: "Horário normal: 09:00 às 12:30" },
+  { icon: Clock, text: "Horário: 09:00 às 12:30" },
   { icon: Clock, text: "Segunda a sexta-feira" },
 ];
 
 const incluidoCards = [
   {
     icon: Shirt,
-    title: "Kit oficial oferecido",
-    items: ["T-shirt oficial ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo", "Oferecido a quem se inscreve pela primeira vez"],
+    title: "Kit oficial oferecido a novos atletas",
+    items: ["T-shirt oficial ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo"],
   },
   {
     icon: Apple,
@@ -86,7 +86,7 @@ const FootcampInfoSection = () => {
               {incluidoCards.map((card) => (
                 <div key={card.title} className="bg-card border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 border border-primary/20">
+                    <div className="inline-flex items-center justify-center w-9 h-9 flex-shrink-0 rounded-lg bg-primary/10 border border-primary/20">
                       <card.icon className="w-4 h-4 text-primary" />
                     </div>
                     <h3 className="font-heading font-bold text-base text-foreground">{card.title}</h3>
@@ -140,7 +140,7 @@ const FootcampInfoSection = () => {
             <div className="mt-4 max-w-xl mx-auto">
               <div className="bg-card border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 border border-primary/20">
+                  <div className="inline-flex items-center justify-center w-9 h-9 flex-shrink-0 rounded-lg bg-primary/10 border border-primary/20">
                     <Shield className="w-4 h-4 text-primary" />
                   </div>
                   <h3 className="font-heading font-bold text-base text-foreground">Seguro anual</h3>
@@ -159,7 +159,7 @@ const FootcampInfoSection = () => {
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground text-center">
-              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-10% sobre o valor total da inscrição, incluindo o seguro anual, após validação bidirecional</span>
+              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-10% sobre o valor total da inscrição, incluindo o seguro anual, após confirmação dos irmãos indicados nas respetivas inscrições</span>
             </p>
           </div>
         </AnimateOnScroll>
