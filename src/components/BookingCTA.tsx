@@ -28,7 +28,7 @@ const BookingCTA = () => {
             <p className="text-muted-foreground text-base md:text-lg mb-10 max-w-xl mx-auto">
               {FOOTCAMP_ENCERRADO
                 ? "As inscrições do Footcamp Verão 2026 estão encerradas. Fala connosco para saberes tudo sobre o Footcamp Outono 2026 (16 a 20 de novembro)."
-                : isFootcamp ? "Inscreve já o teu atleta no Footcamp Verão 2026." : "Dá o próximo passo na tua evolução."}
+                : isFootcamp ? "Inscreve já o teu atleta no Footcamp Outono 2026." : "Dá o próximo passo na tua evolução."}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
               {FOOTCAMP_ENCERRADO ? (

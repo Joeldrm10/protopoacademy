@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-// Data de início do Footcamp Verão 2026 (1ª semana — 6 de julho, 09:00 Lisboa)
-const TARGET = new Date("2026-07-06T09:00:00+01:00").getTime();
+// Data de início do Footcamp Outono 2026 (16 de novembro, 09:00 Lisboa)
+const TARGET = new Date("2026-11-16T09:00:00+00:00").getTime();
 
 function getRemaining() {
   const diff = Math.max(0, TARGET - Date.now());
@@ -43,7 +43,7 @@ const FootcampCountdown = () => {
           Faltam apenas
         </h2>
         <p className="text-muted-foreground text-sm md:text-base mb-8">
-          até ao início do <span className="text-foreground font-semibold">Footcamp Verão 2026</span>
+          até ao início do <span className="text-foreground font-semibold">Footcamp Outono 2026</span>
         </p>
         <div className="flex justify-center gap-2 md:gap-4 flex-wrap">
           <Unit value={t.days} label="Dias" />

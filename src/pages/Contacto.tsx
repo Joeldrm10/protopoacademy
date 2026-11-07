@@ -27,7 +27,7 @@ const Contacto = () => {
       <PageHero
         title="Fala"
         highlight="connosco"
-        subtitle="Tira dúvidas, confirma disponibilidade e recebe todas as informações sobre o Footcamp Verão 2026."
+        subtitle="Tira dúvidas, confirma disponibilidade e recebe todas as informações sobre o Footcamp Outono 2026."
         image={heroImg}
         imageMobile={heroImgMobile}
         objectPositionStyle="50% 50%"

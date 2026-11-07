@@ -37,7 +37,7 @@ const MarqueeBanner = () => {
       aria-label={
         FOOTCAMP_ENCERRADO
           ? "Footcamp Verão 2026 concluído — Footcamp Outono 2026 de 16 a 20 de novembro"
-          : "Inscrições abertas — ProTopo Footcamp Verão 2026"
+          : "Inscrições abertas — ProTopo Footcamp Outono 2026"
       }
       className="block relative overflow-hidden bg-black border-b border-primary/30 group cursor-pointer"
     >
