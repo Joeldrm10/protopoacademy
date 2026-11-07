@@ -282,47 +282,6 @@ const Footcamp = () => {
         </div>
       </section>
 
-      {/* DATAS E SEMANAS */}
-      <section className="py-24 bg-secondary">
-        <div className="container mx-auto px-4">
-          <AnimateOnScroll>
-            <div className="text-center mb-14 max-w-3xl mx-auto">
-              <p className="text-primary font-heading font-semibold uppercase tracking-[0.25em] text-sm mb-4">
-                📅 Datas
-              </p>
-              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-                Datas e <span className="text-gradient-gold">horários</span>
-              </h2>
-              <p className="text-muted-foreground">{FOOTCAMP_ENCERRADO ? "Semanas realizadas na edição Outono 2026 (concluída)." : "Uma semana completa para evoluir em campo."}</p>
-            </div>
-          </AnimateOnScroll>
-
-          <div className="grid grid-cols-1 gap-4 md:gap-6 max-w-3xl mx-auto">
-            {[
-              { n: "1", datas: "16 a 20 de novembro de 2026 · Segunda a sexta-feira" },
-            ].map((s, i) => (
-              <AnimateOnScroll key={s.n} delay={i * 100}>
-                <div className="group relative bg-card border border-border rounded-2xl p-6 h-full hover:border-primary/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.3)]">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 mb-4">
-                    <Calendar className="w-6 h-6 text-primary" />
-                  </div>
-                  <p className="font-heading font-black text-3xl text-gradient-gold mb-2">{s.n} Semana</p>
-                  <p className="text-foreground font-heading font-semibold">{s.datas}</p>
-                </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
-
-          <AnimateOnScroll delay={400}>
-            <div className="mt-8 max-w-3xl mx-auto rounded-xl border border-primary/30 bg-primary/5 p-5 text-center">
-              <p className="text-foreground">
-                <span className="font-heading font-bold text-primary">Horário:</span> Todos os dias, das <span className="font-semibold">09h00 às 12h30</span>.
-              </p>
-            </div>
-          </AnimateOnScroll>
-        </div>
-      </section>
-
       {/* LOCAL E HORÁRIOS */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -340,8 +299,8 @@ const Footcamp = () => {
           <div className="grid md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
               { icon: MapPin, label: "Local", value: "Clube Atlético Ouriense — Campo da Caridade, Ourém" },
-              { icon: Clock, label: "Horário normal", value: "09:00 às 12:30 · 3h30 por dia" },
-              { icon: Calendar, label: "Dias", value: "Segunda a sexta-feira · 16 a 20 de novembro de 2026" },
+              { icon: Clock, label: "Horário", value: "09h00 às 12h30 · 3h30 por dia" },
+              { icon: Calendar, label: "Dias", value: "16 a 20 de novembro de 2026 · Segunda a sexta-feira (1 semana)" },
             ].map((item, i) => (
               <AnimateOnScroll key={item.label} delay={i * 120}>
                 <div className="bg-card border border-border rounded-2xl p-6 h-full">
