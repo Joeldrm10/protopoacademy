@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useSearchParams, useLocation, Link } from "react-router-dom";
 import { CalendarX, MessageCircle, ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
@@ -17,28 +17,55 @@ const Marcar = () => {
   // Para reativar: SHOW_INDIVIDUAL_GROUP_TRAININGS = true.
   const isFootcamp = !SHOW_INDIVIDUAL_GROUP_TRAININGS || searchParams.get("tipo") === "footcamp";
 
-  useEffect(() => {
-    // Âncora #formulario: faz scroll até ao início do formulário (ex.: abertura via QR Code),
-    // mesmo quando a página demora a carregar. O scroll-margin-top do elemento compensa o cabeçalho fixo.
-    if (location.hash === "#formulario") {
-      let attempts = 0;
-      let timer: ReturnType<typeof setTimeout>;
-      const scrollToForm = () => {
-        const el = document.getElementById("formulario");
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        } else if (attempts++ < 30) {
-          timer = setTimeout(scrollToForm, 100);
-        }
-      };
-      const raf = requestAnimationFrame(scrollToForm);
-      return () => {
-        cancelAnimationFrame(raf);
-        clearTimeout(timer);
-      };
+  const directFormAccess = isFootcamp && location.hash === "#formulario";
+
+  useLayoutEffect(() => {
+    if (!directFormAccess || FOOTCAMP_ENCERRADO) {
+      window.scrollTo(0, 0);
+      return;
     }
-    window.scrollTo(0, 0);
-  }, [location.hash]);
+
+    let stopped = false;
+    let frame = 0;
+    const scrollToForm = () => {
+      if (stopped) return;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const target = document.getElementById("formulario");
+        if (!target || stopped) return;
+        // Override the site's smooth scrolling for an immediate QR-code arrival.
+        const html = document.documentElement;
+        const previous = html.style.scrollBehavior;
+        html.style.scrollBehavior = "auto";
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+        html.style.scrollBehavior = previous;
+      });
+    };
+    const mutationObserver = new MutationObserver(scrollToForm);
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+    const resizeObserver = new ResizeObserver(scrollToForm);
+    const main = document.querySelector("main");
+    const header = document.querySelector("nav")?.parentElement;
+    if (main) resizeObserver.observe(main);
+    if (header) resizeObserver.observe(header);
+    const stop = () => {
+      stopped = true;
+      cancelAnimationFrame(frame);
+      mutationObserver.disconnect();
+      resizeObserver.disconnect();
+    };
+    // Late fonts/images can move the form; never reposition after the visitor starts interacting.
+    window.addEventListener("load", scrollToForm);
+    const interactions = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+    interactions.forEach((event) => window.addEventListener(event, stop, { passive: true, once: true }));
+    void document.fonts.ready.then(scrollToForm);
+    scrollToForm();
+    return () => {
+      stop();
+      window.removeEventListener("load", scrollToForm);
+      interactions.forEach((event) => window.removeEventListener(event, stop));
+    };
+  }, [directFormAccess, location.key]);
 
   // Estado pós-evento: formulário de inscrição desativado.
   if (FOOTCAMP_ENCERRADO) {
@@ -143,7 +170,7 @@ const Marcar = () => {
         {isFootcamp && <FootcampInfoSection />}
 
         <div className="-mt-4">
-          {isFootcamp ? <FootcampSignupForm /> : <BookingForm showHeader={false} />}
+          {isFootcamp ? <FootcampSignupForm directAccess={directFormAccess} /> : <BookingForm showHeader={false} />}
         </div>
       </main>
 
