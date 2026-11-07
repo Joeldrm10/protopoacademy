@@ -15,9 +15,12 @@ describe("Outono 2026 rules", () => {
   it("does not apply unvalidated sibling requests", () => {
     expect(effectiveBookingValue({edicao:"outono-2026",estado:"pendente",valor_total:90,seguro_valor:10,desconto_irmaos:true},false)).toBe(90);
   });
-  it("keeps historical summer amounts unchanged", () => {
+  it("keeps historical summer pricing under its existing rules", () => {
     expect(editionOf({edicao:null})).toBe("verao-2026");
-    expect(effectiveBookingValue({edicao:null,estado:"confirmado",valor_total:270,desconto_irmaos:true},true)).toBe(270);
+    const legacy = {edicao:null,estado:"confirmado",valor_total:270,desconto_irmaos:true};
+    expect(effectiveBookingValue(legacy,true)).toBe(229.5);
+    expect(legacy.valor_total).toBe(270);
+    expect(effectiveBookingValue(legacy,false)).toBe(270);
   });
   it("keeps confirmed autumn financial snapshots unchanged", () => {
     expect(effectiveBookingValue({edicao:"outono-2026",estado:"confirmado",valor_total:82,seguro_valor:10,desconto_irmaos:true},false)).toBe(82);

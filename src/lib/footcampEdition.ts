@@ -28,7 +28,12 @@ export type FinancialRecord = {
 
 export function effectiveBookingValue(record: FinancialRecord, validated: boolean) {
   if (record.valor_total == null) return null;
-  if (editionOf(record) !== AUTUMN_EDITION) return record.valor_total;
+  // Preserve the existing summer display calculation, never use autumn rates.
+  if (editionOf(record) !== AUTUMN_EDITION) {
+    return record.desconto_irmaos && validated
+      ? Math.round(record.valor_total * 0.85 * 100) / 100
+      : record.valor_total;
+  }
   if (record.estado === "confirmado") return record.valor_total;
   return autumnPrice((record.seguro_valor ?? 10) > 0, !!record.desconto_irmaos && validated).total;
 }
