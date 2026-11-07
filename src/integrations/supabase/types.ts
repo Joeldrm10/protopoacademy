@@ -24,6 +24,9 @@ export type Database = {
           data: string | null
           data_nascimento: string | null
           desconto_irmaos: boolean | null
+          desconto_percentagem: number | null
+          desconto_valor: number | null
+          edicao: string | null
           email_encarregado: string | null
           emergencia_nome: string | null
           emergencia_parentesco: string | null
@@ -35,14 +38,20 @@ export type Database = {
           id: string
           idade: string
           informacao_medica: string | null
+          kit_elegivel: boolean | null
           medicacao_descricao: string | null
           nome: string
           nome_irmaos: string | null
           observacoes: string | null
+          participou_anterior: boolean | null
           posicao: string | null
+          preco_base: number | null
           restricao_alimentar: boolean | null
           restricao_alimentar_desc: string | null
           seguro_anual: boolean | null
+          seguro_existente_declarado: boolean | null
+          seguro_validado: boolean | null
+          seguro_valor: number | null
           semanas: string[] | null
           tamanho_calcas: string | null
           tamanho_tshirt: string | null
@@ -61,6 +70,9 @@ export type Database = {
           data?: string | null
           data_nascimento?: string | null
           desconto_irmaos?: boolean | null
+          desconto_percentagem?: number | null
+          desconto_valor?: number | null
+          edicao?: string | null
           email_encarregado?: string | null
           emergencia_nome?: string | null
           emergencia_parentesco?: string | null
@@ -72,14 +84,20 @@ export type Database = {
           id?: string
           idade: string
           informacao_medica?: string | null
+          kit_elegivel?: boolean | null
           medicacao_descricao?: string | null
           nome: string
           nome_irmaos?: string | null
           observacoes?: string | null
+          participou_anterior?: boolean | null
           posicao?: string | null
+          preco_base?: number | null
           restricao_alimentar?: boolean | null
           restricao_alimentar_desc?: string | null
           seguro_anual?: boolean | null
+          seguro_existente_declarado?: boolean | null
+          seguro_validado?: boolean | null
+          seguro_valor?: number | null
           semanas?: string[] | null
           tamanho_calcas?: string | null
           tamanho_tshirt?: string | null
@@ -98,6 +116,9 @@ export type Database = {
           data?: string | null
           data_nascimento?: string | null
           desconto_irmaos?: boolean | null
+          desconto_percentagem?: number | null
+          desconto_valor?: number | null
+          edicao?: string | null
           email_encarregado?: string | null
           emergencia_nome?: string | null
           emergencia_parentesco?: string | null
@@ -109,14 +130,20 @@ export type Database = {
           id?: string
           idade?: string
           informacao_medica?: string | null
+          kit_elegivel?: boolean | null
           medicacao_descricao?: string | null
           nome?: string
           nome_irmaos?: string | null
           observacoes?: string | null
+          participou_anterior?: boolean | null
           posicao?: string | null
+          preco_base?: number | null
           restricao_alimentar?: boolean | null
           restricao_alimentar_desc?: string | null
           seguro_anual?: boolean | null
+          seguro_existente_declarado?: boolean | null
+          seguro_validado?: boolean | null
+          seguro_valor?: number | null
           semanas?: string[] | null
           tamanho_calcas?: string | null
           tamanho_tshirt?: string | null
