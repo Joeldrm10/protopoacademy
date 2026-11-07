@@ -49,9 +49,12 @@ const Marcar = () => {
     const header = document.querySelector("nav")?.parentElement;
     if (main) resizeObserver.observe(main);
     if (header) resizeObserver.observe(header);
+    // Safari can apply its native fragment jump after React's first alignment.
+    const settleTimers = [100, 500, 1500].map((delay) => window.setTimeout(scrollToForm, delay));
     const stop = () => {
       stopped = true;
       cancelAnimationFrame(frame);
+      settleTimers.forEach(window.clearTimeout);
       mutationObserver.disconnect();
       resizeObserver.disconnect();
     };
