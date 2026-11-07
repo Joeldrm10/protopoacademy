@@ -8,9 +8,9 @@ describe("Outono 2026 rules", () => {
   });
   it("costs 80 with existing insurance", () => expect(autumnPrice(false).total).toBe(80));
   it("adds 10 only for a new policy", () => expect(autumnPrice(true).total).toBe(90));
-  it("discounts participation by 10%, never insurance", () => {
-    expect(autumnPrice(true, true)).toEqual({ base: 80, insurance: 10, discount: 8, total: 82 });
-    expect(autumnPrice(false, true).total).toBe(72);
+  it("discounts the total inscription value by 10%, including insurance", () => {
+    expect(autumnPrice(true, true)).toEqual({ base: 80, insurance: 10, discount: 9, total: 81 });
+    expect(autumnPrice(false, true)).toEqual({ base: 80, insurance: 0, discount: 8, total: 72 });
   });
   it("does not apply unvalidated sibling requests", () => {
     expect(effectiveBookingValue({edicao:"outono-2026",estado:"pendente",valor_total:90,seguro_valor:10,desconto_irmaos:true},false)).toBe(90);

@@ -159,7 +159,7 @@ const FootcampInfoSection = () => {
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground text-center">
-              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-10% sobre a participação, após validação bidirecional (seguro excluído)</span>
+              👨‍👦 Desconto irmãos: <span className="font-semibold text-foreground">-10% sobre o valor total da inscrição, incluindo o seguro anual, após validação bidirecional</span>
             </p>
           </div>
         </AnimateOnScroll>
