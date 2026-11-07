@@ -37,7 +37,8 @@ const Marcar = () => {
         const html = document.documentElement;
         const previous = html.style.scrollBehavior;
         html.style.scrollBehavior = "auto";
-        target.scrollIntoView({ behavior: "auto", block: "start" });
+        const headerOffset = Number.parseFloat(getComputedStyle(html).getPropertyValue("--header-offset")) || 96;
+        window.scrollTo({ top: Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerOffset - 16), behavior: "auto" });
         html.style.scrollBehavior = previous;
       });
     };
