@@ -485,7 +485,7 @@ const FootcampSignupForm = () => {
   );
 
   return (
-    <section className="py-16 bg-secondary relative overflow-hidden">
+    <section id="formulario" className="py-16 bg-secondary relative overflow-hidden scroll-mt-24 md:scroll-mt-28">
       <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">

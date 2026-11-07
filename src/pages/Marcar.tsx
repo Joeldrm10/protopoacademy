@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, useLocation, Link } from "react-router-dom";
 import { CalendarX, MessageCircle, ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
