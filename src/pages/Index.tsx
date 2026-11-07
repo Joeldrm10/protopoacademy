@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -47,28 +47,24 @@ const Index = () => {
       <HeroSection />
       {/* Anúncio Footcamp Outono 2026 (sem inscrições abertas) — usa o vídeo promocional existente */}
       <VideoSection
-        badge="Nova edição anunciada"
+        badge="Inscrições abertas"
         title={<>🍂 Footcamp <span className="text-gradient-gold">Outono 2026</span></>}
-        description="Uma nova edição está a chegar! Novos desafios, experiências e muitas novidades."
+        description="Uma semana para evoluir, aprender e viver o futebol ao máximo!"
         extra={
           <div className="mt-6 flex flex-col gap-3 items-center md:items-start">
             <span className="inline-flex items-center gap-2 bg-card border border-primary/30 text-foreground px-4 py-2 rounded-lg font-heading font-bold uppercase tracking-wider text-sm">
-              <CalendarDays className="w-4 h-4 text-primary" /> 16 a 20 de novembro
+              <CalendarDays className="w-4 h-4 text-primary" /> 16 a 20 de novembro | 9h00 às 12h30
             </span>
             <span className="inline-flex items-center gap-2 text-primary font-heading font-semibold uppercase tracking-[0.15em] text-xs">
-              <Sparkles className="w-4 h-4" /> Em breve, todos os pormenores.
+              <Sparkles className="w-4 h-4" /> 80€ por atleta · Lanche incluído
             </span>
           </div>
         }
         cta={
-          <a
-            href={WHATSAPP_URL_PROXIMA_EDICAO}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-8 py-4 rounded-lg font-heading font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg"
-          >
-            <MessageCircle className="w-5 h-5" /> Receber novidades
-          </a>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/marcar?tipo=footcamp" className="inline-flex items-center gap-2 bg-gradient-gold text-primary-foreground px-6 py-3 rounded-lg font-heading font-bold uppercase">Inscrever agora</Link>
+            <Link to="/footcamp" className="inline-flex items-center gap-2 border border-primary text-foreground px-6 py-3 rounded-lg font-heading font-bold uppercase">Ver informações</Link>
+          </div>
         }
       />
       <AboutSection />
@@ -76,7 +72,7 @@ const Index = () => {
       {SHOW_INDIVIDUAL_GROUP_TRAININGS && <ServicesSection />}
       <TestimonialsSection />
       {/* Edições anteriores (histórico) */}
-      {FOOTCAMP_ENCERRADO && <ThankYouSection />}
+      <ThankYouSection />
       <FootcampHighlight />
       <GalleryCTA />
       <EducacaoCTA />

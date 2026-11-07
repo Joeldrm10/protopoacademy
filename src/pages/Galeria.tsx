@@ -150,7 +150,7 @@ const Galeria = () => {
               <p className="text-muted-foreground mb-6">
                 {FOOTCAMP_ENCERRADO
                   ? "O Footcamp Verão 2026 já terminou. Obrigado a todos os atletas!"
-                  : "Garante já a vaga do teu atleta para o Footcamp Verão 2026."}
+                  : "Garante já a vaga do teu atleta para o Footcamp Outono 2026."}
               </p>
               {FOOTCAMP_ENCERRADO ? (
                 <a

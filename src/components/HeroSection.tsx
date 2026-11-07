@@ -8,7 +8,7 @@ const SIGNUP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehTziF9gbt6HgIV9hI
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-16 md:pb-0">
+    <section className="relative min-h-[560px] flex items-center justify-center overflow-hidden pb-16 md:pb-0">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
@@ -52,20 +52,20 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="animate-fade-in-up">
           <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-6">
-            Academia de Treinos Personalizados
+            Inscrições abertas · 16 a 20 de novembro
           </span>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold uppercase tracking-[0.1em] leading-none mb-6">
-            Elevamos o teu
-            <span className="block text-gradient-gold mt-1">futebol</span>
+            🍂 Footcamp
+            <span className="block text-gradient-gold mt-1">Outono 2026</span>
           </h1>
           <p className="text-body text-muted-foreground max-w-2xl mx-auto mb-4">
-            Treinos personalizados para atletas que querem evoluir, competir e atingir o próximo nível.
+            Uma semana para evoluir, aprender e viver o futebol ao máximo!
           </p>
           <p className="text-title text-foreground/90 max-w-2xl mx-auto mb-2">
             Treinos para atletas dos 6 aos 16 anos
           </p>
           <p className="text-body-sm text-muted-foreground max-w-2xl mx-auto mb-10 italic">
-            Treinos adaptados a cada faixa etária.
+            9h00 às 12h30 · 80€ por atleta
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             {FOOTCAMP_ENCERRADO ? (
@@ -96,7 +96,7 @@ const HeroSection = () => {
                   className="group inline-flex items-center justify-center gap-3 bg-gradient-gold text-primary-foreground w-full sm:w-auto px-10 py-5 rounded-lg font-heading font-bold text-lg uppercase tracking-wider hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
                   style={{ animation: "pulse-gold 2s infinite" }}
                 >
-                  {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marca já o teu treino" : "Inscrever no Footcamp"}
+                  {SHOW_INDIVIDUAL_GROUP_TRAININGS ? "Marca já o teu treino" : "Inscrever agora"}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 {!SHOW_INDIVIDUAL_GROUP_TRAININGS && (
@@ -104,7 +104,7 @@ const HeroSection = () => {
                     to="/footcamp"
                     className="inline-flex items-center justify-center gap-2 border border-primary/40 text-foreground w-full sm:w-auto px-8 py-5 rounded-lg font-heading font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary transition-all duration-300"
                   >
-                    Ver detalhes
+                    Ver informações
                   </Link>
                 )}
                 <a
