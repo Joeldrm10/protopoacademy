@@ -1,4 +1,6 @@
 # Autumn Footcamp
+- [x] Corrigir consistência financeira, seguro, kit e período no Admin; 30 testes passaram (80/72/90/81€), leitura real autenticada e alterações simuladas em desktop/mobile. Os 95 registos mantêm a mesma impressão digital; não publicado.
+- Limitação desta revisão Admin: gravações testadas com respostas simuladas para preservar todos os registos reais. Não existe geração de documentos/exportações no projeto para verificar; os relatórios visíveis usam os valores guardados.
 - [x] Adapt public autumn information and open registration using existing pages.
 - [x] Adapt existing form, pricing, insurance and WhatsApp summary.
 - [x] Separate editions in Admin and preserve historic values.

@@ -1,4 +1,4 @@
-import { AUTUMN_EDITION, SUMMER_EDITION, autumnPrice, editionOf, effectiveBookingValue } from "@/lib/footcampEdition";
+import { AUTUMN_EDITION, SUMMER_EDITION, autumnFinancialDetail, autumnFinancialUpdate, autumnInsuranceLabel, autumnKitIncluded, editionOf, effectiveBookingValue } from "@/lib/footcampEdition";
 import { useEffect, useMemo, useState, Fragment } from "react";
 import AdminAuth from "@/components/AdminAuth";
 import { useAuth } from "@/hooks/useAuth";
@@ -268,46 +268,65 @@ const Marcacoes = () => {
   }, [marcacoes]);
 
 
-  // Valor efetivo: o valor guardado (valor_total) corresponde ao subtotal
-  // SEM desconto de irmãos. O desconto -15% só é aplicado quando a família
-  // está validada bidirecionalmente (pelo menos um irmão indicado existe e
-  // também indicou de volta este atleta).
-  const effectiveValor = (m: Marcacao): number | null =>
-    effectiveBookingValue(m, (familyMap.get(m.id)?.matched.length ?? 0) > 0);
-
+  const siblingEligible = (m: Marcacao) => m.desconto_irmaos === true && (familyMap.get(m.id)?.matched.length ?? 0) > 0;
+  const effectiveValor = (m: Marcacao): number | null => effectiveBookingValue(m, siblingEligible(m));
   const seguroLabel = (m: Marcacao) => editionOf(m) === AUTUMN_EDITION
-    ? `${m.estado === "confirmado" ? m.seguro_valor ?? 10 : m.seguro_existente_declarado && m.seguro_validado ? 0 : 10}€ · ${m.seguro_existente_declarado ? (m.seguro_validado ? "Cobertura validada" : "Cobertura por validar") : "Novo seguro"}`
+    ? autumnInsuranceLabel(m)
     : m.seguro_anual ? "Oferta 🎁" : "Incluído no valor total";
 
-  const validateAutumn = async (m: Marcacao, kind: "insurance" | "kit", approved: boolean) => {
-    if (m.estado === "confirmado" && kind === "insurance") {
-      toast.error("O valor confirmado está preservado. Valida o seguro antes de confirmar a inscrição.");
-      return;
-    }
-    const change = kind === "insurance"
-      ? { seguro_existente_declarado: approved, seguro_validado: approved, seguro_valor: approved ? 0 : 10, valor_total: 80 + (approved ? 0 : 10), desconto_valor: 0 }
-      : { kit_elegivel: approved };
-    const { error } = await supabase.from("marcacoes").update(change).eq("id", m.id);
-    if (error) { toast.error("Não foi possível guardar a validação"); return; }
-    setMarcacoes(prev => prev.map(row => row.id === m.id ? { ...row, ...change } : row));
-    toast.success("Validação guardada");
+  const saveAutumn = async (m: Marcacao, change: Partial<Marcacao>) => {
+    const { data, error } = await supabase.from("marcacoes").update(change).eq("id", m.id).select("*").single();
+    if (error || !data) { toast.error("Não foi possível guardar a alteração"); return; }
+    setMarcacoes(prev => prev.map(row => row.id === m.id ? data as unknown as Marcacao : row));
+    toast.success("Alteração guardada");
   };
 
-  const AutumnValidation = ({ m }: { m: Marcacao }) => editionOf(m) !== AUTUMN_EDITION ? null : (
-    <div className="space-y-2 border border-primary/30 rounded-lg p-3 text-sm">
-      <p className="font-heading text-primary">Outono 2026 · Participação: 80€ · Seguro: {m.estado === "confirmado" ? m.seguro_valor ?? 10 : m.seguro_existente_declarado && m.seguro_validado ? 0 : 10}€ · Desconto aplicado: {m.desconto_valor ?? 0}€</p>
-      <p>Participação anterior: {m.participou_anterior ? "Sim" : "Não"} · Kit: {m.kit_elegivel == null ? "Por validar" : m.kit_elegivel ? "Elegível" : "Não elegível"}</p>
-      {m.seguro_existente_declarado && m.estado !== "confirmado" && <div className="flex flex-wrap gap-2">
-        <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "insurance", true)}>Confirmar cobertura anual</Button>
-        <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "insurance", false)}>Necessita de novo seguro (+10€)</Button>
-      </div>}
-      {m.participou_anterior && <div className="flex flex-wrap gap-2">
-        <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "kit", true)}>Kit elegível</Button>
-        <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "kit", false)}>Kit não elegível</Button>
-      </div>}
-    </div>
+  const validateAutumn = async (m: Marcacao, kind: "insurance" | "kit", approved: boolean) => {
+    if (kind === "kit") { await saveAutumn(m, { kit_elegivel: approved }); return; }
+    const coverage = { seguro_existente_declarado: approved, seguro_validado: true };
+    await saveAutumn(m, { ...coverage, ...autumnFinancialUpdate({ ...m, ...coverage }, siblingEligible(m)) });
+  };
+
+  const FinancialAction = ({ m, label, onConfirm }: { m: Marcacao; label: string; onConfirm: () => void }) => (
+    <AlertDialog>
+      <AlertDialogTrigger asChild><Button size="sm" variant="outline">{label}</Button></AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Guardar alteração financeira?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Esta ação recalcula e guarda a participação, o seguro, o desconto e o total desta inscrição.
+            {m.estado === "confirmado" && " O pagamento já está confirmado. Confirma apenas se pretendes corrigir explicitamente o valor registado."}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter><AlertDialogCancel>Cancelar</AlertDialogCancel><AlertDialogAction onClick={onConfirm}>Confirmar e guardar</AlertDialogAction></AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 
+  const AutumnValidation = ({ m }: { m: Marcacao }) => {
+    if (editionOf(m) !== AUTUMN_EDITION) return null;
+    const financial = autumnFinancialDetail(m);
+    const included = autumnKitIncluded(m);
+    const recalculated = autumnFinancialUpdate(m, siblingEligible(m));
+    const needsRecalculation = !financial.consistent || financial.total !== recalculated.valor_total || financial.discount !== recalculated.desconto_valor;
+    return (
+      <div className="space-y-2 border border-primary/30 rounded-lg p-3 text-sm">
+        <p className="font-heading text-primary">Outono 2026 · Participação: {financial.base}€ · Seguro: {financial.insurance}€ · Desconto aplicado: {financial.discount}€ · Total: {financial.total ?? "—"}€</p>
+        <p>Seguro: {seguroLabel(m)}</p>
+        <p>Kit: {included ? (m.participou_anterior ? "Oferecido — exceção manual" : "Oferecido") : m.participou_anterior ? "Não incluído — atleta anterior" : "Não incluído — exceção manual"}</p>
+        {m.participou_anterior && !m.seguro_validado && <p className="text-muted-foreground">Seguro provisório de 10€ incluído até confirmação.</p>}
+        {!financial.consistent && <p className="text-destructive">Os valores guardados não coincidem. Revê e guarda a correção; o histórico não foi alterado.</p>}
+        <div className="flex flex-wrap gap-2">
+          <FinancialAction m={m} label="Confirmar cobertura anual" onConfirm={() => validateAutumn(m, "insurance", true)} />
+          <FinancialAction m={m} label="Necessita de novo seguro (+10€)" onConfirm={() => validateAutumn(m, "insurance", false)} />
+          {needsRecalculation && <FinancialAction m={m} label={siblingEligible(m) ? "Aplicar desconto e recalcular" : "Recalcular valores"} onConfirm={() => saveAutumn(m, autumnFinancialUpdate(m, siblingEligible(m)))} />}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "kit", !included)}>{included ? "Não incluir kit (exceção)" : "Oferecer kit (exceção)"}</Button>
+        </div>
+      </div>
+    );
+  };
 
   const confirmados = useMemo(() => editionMarcacoes.filter((m) => m.estado === "confirmado").length, [editionMarcacoes]);
   const pendentes = useMemo(() => editionMarcacoes.filter((m) => m.estado === "pendente").length, [editionMarcacoes]);
@@ -327,7 +346,7 @@ const Marcacoes = () => {
   // Equipamento (footcamp, apenas confirmados)
   const TAMANHOS = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
   const equipamentoStats = useMemo(() => {
-    const fc = editionMarcacoes.filter((m) => m.tipo === "footcamp" && m.estado === "confirmado" && (editionOf(m) !== AUTUMN_EDITION || m.kit_elegivel === true));
+    const fc = editionMarcacoes.filter((m) => m.tipo === "footcamp" && m.estado === "confirmado" && (editionOf(m) !== AUTUMN_EDITION || autumnKitIncluded(m)));
     const tshirts: Record<string, number> = {};
     const calcas: Record<string, number> = {};
     TAMANHOS.forEach((t) => { tshirts[t] = 0; calcas[t] = 0; });
@@ -399,15 +418,10 @@ const Marcacoes = () => {
     if (!record) return;
     const change: Partial<Marcacao> = { estado: novoEstado, confirmado: novoEstado === "confirmado" };
     if (editionOf(record) === AUTUMN_EDITION && novoEstado === "confirmado" && record.estado !== "confirmado") {
-      if (record.seguro_existente_declarado && !record.seguro_validado && record.seguro_valor === 0) {
-        toast.error("Valida a cobertura anual ou indica a necessidade de novo seguro antes de confirmar."); return;
+      if (record.participou_anterior && !record.seguro_validado) {
+        toast.error("Confirma a cobertura anual ou indica a necessidade de novo seguro antes de confirmar."); return;
       }
-      const price = autumnPrice(!(record.seguro_existente_declarado && record.seguro_validado), !!record.desconto_irmaos && (familyMap.get(id)?.matched.length ?? 0) > 0);
-      change.valor_total = price.total;
-      change.preco_base = price.base;
-      change.seguro_valor = price.insurance;
-      change.desconto_valor = price.discount;
-      change.desconto_percentagem = 10;
+      Object.assign(change, autumnFinancialUpdate(record, siblingEligible(record)));
     }
     const { error } = await supabase.from("marcacoes").update(change).eq("id", id);
     if (error) toast.error("Erro ao atualizar estado");
@@ -888,7 +902,7 @@ const Marcacoes = () => {
                                           return (
                                             <>
                                               <p className="text-foreground">
-                                                {validated ? (editionOf(m) === AUTUMN_EDITION ? "Sim (-10% sobre participação)" : "Sim (-15% aplicado)") : "Solicitado (não aplicado)"}
+                                                {validated ? (editionOf(m) === AUTUMN_EDITION ? (autumnFinancialDetail(m).discount > 0 ? "Sim (-10% sobre o total)" : "Elegível — por aplicar") : "Sim (-15% aplicado)") : "Solicitado (não aplicado)"}
                                               </p>
                                               {m.nome_irmaos && (
                                                 <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
@@ -905,7 +919,7 @@ const Marcacoes = () => {
                                         <p className="text-foreground">{m.autorizacao_imagem == null ? "—" : m.autorizacao_imagem ? "Sim" : "Não"}</p>
                                       </div>
                                       <div className="col-span-2 md:col-span-2">
-                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Semanas</p>
+                                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{editionOf(m) === AUTUMN_EDITION ? "Período" : "Semanas"}</p>
                                         <ul className="text-foreground space-y-0.5">
                                           {(m.semanas || []).map((s, i) => <li key={i}>• {s}</li>)}
                                         </ul>
@@ -914,7 +928,7 @@ const Marcacoes = () => {
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Valor final</p>
                                         {(() => {
                                           const eff = effectiveValor(m);
-                                          const adjusted = eff != null && m.valor_total != null && eff !== m.valor_total;
+                                          const adjusted = editionOf(m) !== AUTUMN_EDITION && eff != null && m.valor_total != null && eff !== m.valor_total;
                                           return (
                                             <p className="text-foreground font-semibold text-primary">
                                               {eff != null ? `${eff}€` : "—"}
@@ -1005,7 +1019,7 @@ const Marcacoes = () => {
                             <AutumnValidation m={m} />
                             {isFootcamp && m.semanas && m.semanas.length > 0 && (
                               <div className="pt-3">
-                                <p className="text-[11px] uppercase tracking-wider text-primary/80 mb-1">Semanas</p>
+                                <p className="text-[11px] uppercase tracking-wider text-primary/80 mb-1">{editionOf(m) === AUTUMN_EDITION ? "Período" : "Semanas"}</p>
                                 <ul className="text-sm text-foreground space-y-0.5">
                                   {m.semanas.map((s, i) => <li key={i}>• {s}</li>)}
                                 </ul>
@@ -1062,7 +1076,7 @@ const Marcacoes = () => {
                                       <span>
                                         <span className="text-muted-foreground">Irmãos: </span>
                                         <span className="text-foreground">
-                                          {!claimed ? "Não" : validated ? (editionOf(m) === AUTUMN_EDITION ? "Sim (-10% sobre participação)" : "Sim (-15% aplicado)") : "Solicitado (não aplicado)"}
+                                          {!claimed ? "Não" : validated ? (editionOf(m) === AUTUMN_EDITION ? (autumnFinancialDetail(m).discount > 0 ? "Sim (-10% sobre o total)" : "Elegível — por aplicar") : "Sim (-15% aplicado)") : "Solicitado (não aplicado)"}
                                         </span>
                                       </span>
                                     );
@@ -1074,7 +1088,7 @@ const Marcacoes = () => {
                                 {(() => {
                                   const eff = effectiveValor(m);
                                   if (eff == null) return null;
-                                  const adjusted = m.valor_total != null && eff !== m.valor_total;
+                                  const adjusted = editionOf(m) !== AUTUMN_EDITION && m.valor_total != null && eff !== m.valor_total;
                                   return (
                                     <div className="text-xs">
                                       <span className="text-muted-foreground">Valor final: </span>
