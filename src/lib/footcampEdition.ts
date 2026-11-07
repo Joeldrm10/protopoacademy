@@ -13,8 +13,10 @@ export const AUTUMN = {
 export function autumnPrice(newInsurance: boolean, validatedSiblings = false) {
   const base = AUTUMN.base;
   const insurance = newInsurance ? AUTUMN.insurance : 0;
-  const discount = validatedSiblings ? base * AUTUMN.siblingRate : 0;
-  return { base, insurance, discount, total: base - discount + insurance };
+  const subtotal = base + insurance;
+  // O desconto de irmãos incide sobre o valor total da inscrição, incluindo o seguro.
+  const discount = validatedSiblings ? Math.round(subtotal * AUTUMN.siblingRate * 100) / 100 : 0;
+  return { base, insurance, discount, total: subtotal - discount };
 }
 
 export function editionOf(record: { edicao?: string | null }) {

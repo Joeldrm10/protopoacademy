@@ -39,7 +39,7 @@ const TermosCondicoes = () => {
 
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">Condições do Outono 2026</h2>
-            <p className="text-muted-foreground">16 a 20 de novembro de 2026, das 09h00 às 12h30, no Clube Atlético Ouriense — Campo da Caridade, Ourém. Participação: 80€. Desconto de irmãos: 10% sobre a participação, após validação bidirecional, sem desconto sobre o seguro. Kit oficial oferecido aos atletas que se inscrevem pela primeira vez na ProTopo Academy: T-shirt oficial, calções, meias e saco. Lanche diário: barras, água e fruta. Balneários disponíveis para os atletas se equiparem e tomarem banho com água quente após os treinos. As condições e documentos da edição de verão mantêm-se inalterados para as inscrições antigas.</p>
+            <p className="text-muted-foreground">16 a 20 de novembro de 2026, das 09h00 às 12h30, no Clube Atlético Ouriense — Campo da Caridade, Ourém. Participação: 80€. Desconto de irmãos: 10% sobre o valor total da inscrição, incluindo o seguro anual, quando aplicável, após validação bidirecional. Kit oficial oferecido aos atletas que se inscrevem pela primeira vez na ProTopo Academy: T-shirt oficial, calções, meias e saco. Lanche diário: barras, água e fruta. Balneários disponíveis para os atletas se equiparem e tomarem banho com água quente após os treinos. As condições e documentos da edição de verão mantêm-se inalterados para as inscrições antigas.</p>
           </section>
           <section>
             <h2 className="font-heading font-bold text-2xl mb-3 text-foreground">2. Pagamentos</h2>

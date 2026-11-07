@@ -437,7 +437,7 @@ const Footcamp = () => {
             <AnimateOnScroll delay={200}>
               <div className="bg-card border border-border rounded-xl p-5 h-full">
                 <p className="text-primary font-heading font-semibold uppercase tracking-wider text-xs mb-2">👨‍👦 Desconto irmãos</p>
-                <p className="text-foreground"><span className="font-bold">10%</span> de desconto sobre a participação, sem desconto sobre o seguro. Aplicação após validação bidirecional dos irmãos.</p>
+                <p className="text-foreground"><span className="font-bold">10%</span> de desconto sobre o valor total da inscrição, incluindo o seguro anual, quando aplicável. Aplicação após validação bidirecional dos irmãos.</p>
               </div>
             </AnimateOnScroll>
           </div>
@@ -894,7 +894,7 @@ const Footcamp = () => {
         subtitle="Tudo o que pais e atletas precisam de saber sobre a Edição Outono 2026."
         faqs={[
           { question: "Quando e onde decorre?", answer: "De 16 a 20 de novembro de 2026, segunda a sexta-feira, das 09h00 às 12h30, no Clube Atlético Ouriense — Campo da Caridade, Ourém." },
-          { question: "Quanto custa?", answer: "80€ por atleta pela semana completa. Desconto de irmãos de 10% sobre a participação, após validação bidirecional; não incide sobre o seguro." },
+          { question: "Quanto custa?", answer: "80€ por atleta pela semana completa. Desconto de irmãos de 10% sobre o valor total da inscrição, incluindo o seguro anual, quando aplicável, após validação bidirecional." },
           { question: "Preciso de novo seguro?", answer: "Na primeira inscrição na ProTopo Academy, acresce 10€ de seguro anual, válido durante um ano e utilizável em futuras edições enquanto estiver em vigor. Os atletas que já participaram e tenham seguro anual ainda válido não precisam de pagar novamente." },
           { question: "Quem recebe o kit?", answer: "O kit oficial ProTopo é oferecido aos atletas que se inscrevem pela primeira vez na ProTopo Academy: T-shirt oficial, calções, meias e saco." },
           { question: "O lanche está incluído?", answer: "Sim, o lanche diário inclui barras, água e fruta. Indica as restrições alimentares no formulário." },
