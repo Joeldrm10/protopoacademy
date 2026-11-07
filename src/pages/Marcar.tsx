@@ -26,8 +26,8 @@ const Marcar = () => {
       <div className="min-h-screen bg-background flex flex-col">
         <SEO
           title="Inscrições encerradas | ProTopo Academy"
-          description="As inscrições para o ProTopo Footcamp Verão 2026 já terminaram. Em breve serão anunciadas novas edições."
-          ogTitle="Inscrições encerradas — ProTopo Footcamp Verão 2026"
+          description="As inscrições para o ProTopo Footcamp Outono 2026 já terminaram. Em breve serão anunciadas novas edições."
+          ogTitle="Inscrições encerradas — ProTopo Footcamp Outono 2026"
           ogDescription="Em breve serão anunciadas novas edições do ProTopo Footcamp."
           path="/marcar"
         />
@@ -42,13 +42,13 @@ const Marcar = () => {
                 <CalendarX className="w-7 h-7 text-primary" />
               </div>
               <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-4">
-                Footcamp Verão 2026 concluído
+                Footcamp Outono 2026 concluído
               </span>
               <h1 className="font-heading font-bold text-3xl md:text-5xl mb-4 text-foreground">
                 Inscrições <span className="text-gradient-gold">encerradas</span>
               </h1>
               <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
-                As inscrições para o ProTopo Footcamp Verão 2026 já terminaram. O Footcamp Outono 2026 (16 a 20 de novembro) já foi anunciado —
+                As inscrições para o ProTopo Footcamp Outono 2026 já terminaram. O Footcamp Outono 2026 (16 a 20 de novembro) já foi anunciado —
                 os pormenores e as inscrições serão divulgados em breve.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
@@ -84,13 +84,13 @@ const Marcar = () => {
         title={isFootcamp ? "Inscrição Footcamp | ProTopo Academy" : "Marcar Treino | ProTopo Academy"}
         description={
           isFootcamp
-            ? "Inscreve-te na ProTopo Footcamp — Edição Verão 2026. Preenche o formulário e a equipa entra em contacto."
+            ? "Inscreve-te na ProTopo Footcamp — Edição Outono 2026. Preenche o formulário e a equipa entra em contacto."
             : "Marca já o teu treino na ProTopo Academy. Preenche o formulário e envia diretamente para o WhatsApp."
         }
-        ogTitle={isFootcamp ? "Inscrição ProTopo Footcamp — Verão 2026" : "Marca já o teu treino"}
+        ogTitle={isFootcamp ? "Inscrição ProTopo Footcamp — Outono 2026" : "Marca já o teu treino"}
         ogDescription={
           isFootcamp
-            ? "Garante o teu lugar na Edição Verão 2026 da ProTopo Footcamp."
+            ? "Garante o teu lugar na Edição Outono 2026 da ProTopo Footcamp."
             : "Preenche o formulário e envia diretamente para o WhatsApp."
         }
         path={isFootcamp ? "/marcar?tipo=footcamp" : "/marcar"}
@@ -103,7 +103,7 @@ const Marcar = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-lg mx-auto text-center mb-3 animate-fade-in-up">
             <span className="inline-block bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full font-heading font-semibold uppercase tracking-[0.2em] text-xs mb-3">
-              {isFootcamp ? "Footcamp · Verão 2026" : "Marcação"}
+              {isFootcamp ? "Footcamp · Outono 2026" : "Marcação"}
             </span>
             <h1 className="font-heading font-bold text-4xl md:text-5xl mb-3 text-foreground">
               {isFootcamp ? (

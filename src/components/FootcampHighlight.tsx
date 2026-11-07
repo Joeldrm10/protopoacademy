@@ -10,13 +10,13 @@ const highlights = FOOTCAMP_ENCERRADO
       { icon: "✅", label: "Edição concluída" },
       { icon: "🔜", label: "Outono 2026 · 16 a 20 nov" },
       { icon: "⚽", label: "Dos 6 aos 16 anos" },
-      { icon: "🎁", label: "Kit ProTopo Incluído" },
+      { icon: "🎁", label: "Kit para novos inscritos" },
     ]
   : [
   { icon: "🔥", label: "Vagas Limitadas" },
-  { icon: "📅", label: "Julho 2026" },
+  { icon: "📅", label: "16 a 20 novembro" },
   { icon: "⚽", label: "Dos 6 aos 16 anos" },
-  { icon: "🎁", label: "Kit ProTopo Incluído" },
+  { icon: "🎁", label: "Kit para novos inscritos" },
 ];
 
 const FootcampHighlight = () => {
@@ -28,7 +28,7 @@ const FootcampHighlight = () => {
           <div className="absolute inset-0 overflow-hidden">
             <img
               src={footcampHero}
-              alt="ProTopo Footcamp - Edição Verão 2026"
+              alt="ProTopo Footcamp - Edição Outono 2026"
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-105"
               style={{ objectPosition: "50% 35%" }}
@@ -42,7 +42,7 @@ const FootcampHighlight = () => {
             <AnimateOnScroll>
               <span className="relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full font-heading font-bold uppercase tracking-[0.2em] text-xs mb-6 shadow-lg overflow-hidden">
                 <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
-                {FOOTCAMP_ENCERRADO ? "Edição anterior · Verão 2026 concluído" : "Edição Verão 2026 · Inscrições Abertas"}
+                {FOOTCAMP_ENCERRADO ? "Edição anterior · Verão 2026 concluído" : "Edição Outono 2026 · Inscrições Abertas"}
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-[marquee_3s_linear_infinite]" />
               </span>
               <h2 className="font-heading font-black text-4xl md:text-6xl leading-[0.95] mb-4">
@@ -53,7 +53,7 @@ const FootcampHighlight = () => {
                 {FOOTCAMP_ENCERRADO ? (
                   <>A edição de <span className="text-primary font-bold">Verão 2026</span> terminou a 31 de julho. Obrigado a todos os atletas, famílias e equipa técnica.</>
                 ) : (
-                  <><span className="text-primary font-bold">4 semanas</span> de treino intensivo, evolução técnica e experiências únicas para atletas dos 6 aos 16 anos.</>
+                  <><span className="text-primary font-bold">1 semana</span> de treino intensivo, evolução técnica e experiências únicas para atletas dos 6 aos 16 anos.</>
                 )}
               </p>
 

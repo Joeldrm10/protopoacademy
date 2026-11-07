@@ -30,18 +30,14 @@ import {
 import AnimateOnScroll from "./AnimateOnScroll";
 import { WHATSAPP_NUMBER_EXPORT as WHATSAPP_NUMBER, WHATSAPP_URL_FOOTCAMP_INFO } from "@/lib/constants";
 
+import { AUTUMN, AUTUMN_EDITION, autumnPrice } from "@/lib/footcampEdition";
+
 const COOLDOWN_MS = 60_000;
 
-const semanasOptions = [
-  { id: "s1", label: "1 SEMANA — 6 a 10 de julho" },
-  { id: "s2", label: "2 SEMANAS — 13 a 17 de julho" },
-  { id: "s3", label: "3 SEMANAS — 20 a 24 de julho" },
-  { id: "s4", label: "4 SEMANAS — 27 a 31 de julho" },
-];
+const semanasOptions = [{ id: "outono", label: AUTUMN.week }];
 
-const precosTabela: Record<number, number> = { 1: 95, 2: 170, 3: 250, 4: 340 };
-const SEGURO_1_SEMANA = 10;
-const DESCONTO_IRMAOS = 0.15;
+const SEGURO_1_SEMANA = AUTUMN.insurance;
+const DESCONTO_IRMAOS = AUTUMN.siblingRate;
 
 const ptPhoneRegex = /^9\d{8}$/;
 
@@ -93,6 +89,9 @@ const schema = z.object({
     "Telemóvel inválido. 9 dígitos a começar por 9."
   ),
   semanas: z.array(z.string()).min(1, "Seleciona pelo menos uma semana"),
+  participou_anterior: z.boolean().default(false),
+  seguro_existente: z.boolean().default(false),
+  aceita_termos: z.literal(true, { errorMap: () => ({ message: "Aceita os Termos e Condições" }) }),
   irmaos: z.boolean().optional(),
   nome_irmaos: z.string().trim().max(200).optional(),
   tamanho_tshirt: z.enum(tamanhos, { errorMap: () => ({ message: "Seleciona um tamanho" }) }),
@@ -169,7 +168,10 @@ const FootcampSignupForm = () => {
       emergencia_nome: "",
       emergencia_parentesco: "",
       emergencia_telemovel: "",
-      semanas: [],
+      semanas: ["outono"],
+      participou_anterior: false,
+      seguro_existente: false,
+      aceita_termos: false as unknown as true,
       irmaos: false,
       nome_irmaos: "",
       tamanho_tshirt: undefined as unknown as "M",
@@ -203,9 +205,9 @@ const FootcampSignupForm = () => {
   }, [dataNascimento]);
 
   const numSemanas = semanasSelecionadas.length;
-  const precoBase = precosTabela[numSemanas] ?? 0;
-  const seguroOferta = numSemanas >= 2;
-  const seguroCusto = numSemanas === 1 ? SEGURO_1_SEMANA : 0;
+  const precoBase = AUTUMN.base;
+  const seguroOferta = !!form.watch("seguro_existente");
+  const seguroCusto = autumnPrice(!seguroOferta).insurance;
   const subtotal = precoBase + seguroCusto;
   // O desconto irmãos só é aplicado após validação bidirecional no Admin.
   // No formulário mostramos sempre o subtotal como valor previsto.
@@ -238,8 +240,15 @@ const FootcampSignupForm = () => {
         idade: data.idade,
         telemovel: data.telemovel,
         tipo: "footcamp",
-        data: null,
-        hora: null,
+        data: "2026-11-16",
+        hora: "09:00–12:30",
+        edicao: AUTUMN_EDITION,
+        participou_anterior: data.participou_anterior,
+        seguro_existente_declarado: data.seguro_existente,
+        preco_base: precoBase,
+        seguro_valor: seguroCusto,
+        desconto_percentagem: 10,
+        desconto_valor: 0,
         encarregado: data.encarregado,
         semanas: semanasLabels,
         seguro_anual: seguroOferta,
@@ -275,9 +284,9 @@ const FootcampSignupForm = () => {
         return;
       }
 
-      const seguroTxt = seguroOferta ? "Oferta 🎁 (2, 3 ou 4 semanas)" : `${SEGURO_1_SEMANA}€`;
+      const seguroTxt = seguroOferta ? "Anual existente: 0€ (cobertura a validar)" : `${SEGURO_1_SEMANA}€`;
       const parts = [
-        `📋 NOVA INSCRIÇÃO FOOTCAMP VERÃO 2026`,
+        `📋 NOVA INSCRIÇÃO FOOTCAMP OUTONO 2026`,
         ``,
         `👤 ATLETA`,
         `Nome: ${data.nome}`,
@@ -297,7 +306,10 @@ const FootcampSignupForm = () => {
         `Parentesco: ${data.emergencia_parentesco}`,
         `Telemóvel: ${data.emergencia_telemovel}`,
         ``,
-        `📅 SEMANAS PRETENDIDAS`,
+        `📅 PERÍODO: ${AUTUMN.dates}`,
+        `Horário: ${AUTUMN.hours}`,
+        `Participou anteriormente: ${data.participou_anterior ? "Sim" : "Não"}`,
+        `Kit: ${data.participou_anterior ? "Elegibilidade a validar" : "Novo inscrito — oferecido"}`,
         ...semanasLabels.map((l) => `- ${l}`),
         ``,
         `👕 EQUIPAMENTO`,
@@ -331,10 +343,10 @@ const FootcampSignupForm = () => {
         data.observacoes || "Sem observações",
         ``,
         `💰 VALOR`,
-        `Valor das semanas: ${precoBase}€`,
+        `Participação: ${precoBase}€`,
         `Seguro: ${seguroTxt}`,
         data.irmaos
-          ? `Valor sem desconto: ${precoPrevisto}€\nDesconto irmãos (-15%): A aguardar validação\nValor estimado após validação: ${(precoPrevisto * (1 - DESCONTO_IRMAOS)).toFixed(2).replace(".", ",")}€\n\nNota: O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).`
+          ? `Valor sem desconto: ${precoPrevisto}€\nDesconto irmãos (-10%): A aguardar validação\nValor estimado após validação: ${(precoBase * (1 - DESCONTO_IRMAOS) + seguroCusto).toFixed(2).replace(".", ",")}€\n\nNota: O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).`
           : `Valor previsto a pagar: ${precoPrevisto}€`,
 
         ``,
@@ -381,7 +393,7 @@ const FootcampSignupForm = () => {
                   <div className="space-y-1.5 text-sm text-foreground">
                     <div className="flex justify-between gap-3"><span className="text-muted-foreground">Atleta</span><span className="font-medium text-right">{lastSummary.nome}</span></div>
                     <div>
-                      <span className="text-muted-foreground">Semanas ({lastSummary.numSemanas})</span>
+                      <span className="text-muted-foreground">Período · Outono 2026</span>
                       <ul className="mt-1 space-y-0.5">
                         {lastSummary.semanasLabels.map((l) => (
                           <li key={l} className="text-xs text-foreground">• {l}</li>
@@ -390,22 +402,22 @@ const FootcampSignupForm = () => {
                     </div>
                     <div className="space-y-1.5 border-t border-primary/20 pt-3">
                       <div className="flex justify-between gap-3 text-sm">
-                        <span className="text-muted-foreground">Valor sem desconto</span>
-                        <span className="text-foreground font-medium">{lastSummary.precoPrevisto}€</span>
+                        <span className="text-muted-foreground">Participação</span>
+                        <span className="text-foreground font-medium">{lastSummary.precoBase}€</span>
                       </div>
                       <div className="flex justify-between gap-3 text-sm">
                         <span className="text-muted-foreground">Seguro</span>
-                        <span className="text-foreground font-medium">{lastSummary.seguroOferta ? "Oferta 🎁" : `${lastSummary.seguroCusto}€`}</span>
+                        <span className="text-foreground font-medium">{lastSummary.seguroOferta ? "0€ · Cobertura a validar" : `${lastSummary.seguroCusto}€`}</span>
                       </div>
                       {lastSummary.irmaos ? (
                         <>
                           <div className="flex justify-between gap-3 text-sm">
-                            <span className="text-muted-foreground">Desconto irmãos (-15%)</span>
+                            <span className="text-muted-foreground">Desconto irmãos (-10%)</span>
                             <span className="text-amber-400 font-medium text-xs text-right">A aguardar validação</span>
                           </div>
                           <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
                             <span className="text-foreground font-semibold">Valor estimado após validação</span>
-                            <span className="font-heading font-bold text-xl text-gradient-gold">{(lastSummary.precoPrevisto * (1 - DESCONTO_IRMAOS)).toFixed(2).replace(".", ",")}€</span>
+                            <span className="font-heading font-bold text-xl text-gradient-gold">{(lastSummary.precoBase * (1 - DESCONTO_IRMAOS) + seguroCusto).toFixed(2).replace(".", ",")}€</span>
                           </div>
                           <p className="text-xs text-amber-400/90 leading-snug pt-1">
                             O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).
@@ -652,48 +664,22 @@ const FootcampSignupForm = () => {
                   />
                 </div>
 
-                <SectionHeader icon={UserIcon} title="Semanas e equipamento" />
-                <FormField
-                  control={form.control}
-                  name="semanas"
-                  render={() => (
-                    <FormItem>
-                      <FormLabel className="text-foreground">Semanas pretendidas</FormLabel>
-                      <div className="space-y-2">
-                        {semanasOptions.map((opt) => (
-                          <FormField
-                            key={opt.id}
-                            control={form.control}
-                            name="semanas"
-                            render={({ field }) => {
-                              const checked = field.value?.includes(opt.id);
-                              return (
-                                <label
-                                  className={cn(
-                                    "flex items-center gap-3 border rounded-xl p-3 cursor-pointer transition-all",
-                                    checked ? "border-primary bg-primary/10" : "border-border hover:border-primary/40"
-                                  )}
-                                >
-                                  <Checkbox
-                                    checked={checked}
-                                    onCheckedChange={(c) => {
-                                      const next = c
-                                        ? [...(field.value || []), opt.id]
-                                        : (field.value || []).filter((v: string) => v !== opt.id);
-                                      field.onChange(next);
-                                    }}
-                                  />
-                                  <span className="text-sm text-foreground">{opt.label}</span>
-                                </label>
-                              );
-                            }}
-                          />
-                        ))}
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <SectionHeader icon={UserIcon} title="Período, seguro e equipamento" />
+                <p className="text-foreground font-semibold">{AUTUMN.week} · {AUTUMN.hours}</p>
+                <FormField control={form.control} name="participou_anterior" render={({ field }) => (
+                  <FormItem className="flex items-center gap-3 border border-border rounded-lg p-3">
+                    <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl>
+                    <FormLabel>O atleta já participou numa edição anterior</FormLabel>
+                  </FormItem>
+                )} />
+                <p className="text-xs text-muted-foreground">Kit oficial oferecido aos novos inscritos: T-shirt de treino, calções, meias e saco. Para atletas anteriores, elegibilidade sujeita a confirmação.</p>
+                <FormField control={form.control} name="seguro_existente" render={({ field }) => (
+                  <FormItem className="flex items-center gap-3 border border-border rounded-lg p-3">
+                    <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl>
+                    <FormLabel>O atleta tem seguro anual ainda válido</FormLabel>
+                  </FormItem>
+                )} />
+                <p className="text-xs text-muted-foreground">Cobertura sujeita a validação pela equipa. Novo seguro: 10€. Seguro existente válido: 0€.</p>
 
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -751,7 +737,7 @@ const FootcampSignupForm = () => {
                         <Checkbox checked={!!field.value} onCheckedChange={field.onChange} />
                       </FormControl>
                       <FormLabel className="text-sm text-foreground font-normal cursor-pointer !mt-0">
-                        Tenho irmãos também inscritos (-15%)
+                        Tenho irmãos também inscritos (-10%)
                       </FormLabel>
                     </FormItem>
                   )}
@@ -779,12 +765,9 @@ const FootcampSignupForm = () => {
                 {numSemanas > 0 && (
                   <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-sm text-foreground font-semibold">Total estimado</span>
+                      <span className="text-sm text-foreground font-semibold">Total previsto (sem desconto)</span>
                       <span className="font-heading font-bold text-2xl text-gradient-gold">
-                        {irmaos
-                          ? `${(precoPrevisto * (1 - DESCONTO_IRMAOS)).toFixed(2).replace(".", ",")}€`
-                          : `${precoPrevisto}€`
-                        }
+                        {precoPrevisto}€
                       </span>
                     </div>
                   </div>
@@ -976,6 +959,13 @@ const FootcampSignupForm = () => {
                   )}
                 />
 
+                <FormField control={form.control} name="aceita_termos" render={({ field }) => (
+                  <FormItem className="flex items-start gap-3 border border-border rounded-lg p-4">
+                    <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl>
+                    <div><FormLabel>Li e aceito os <Link to="/termos-condicoes" target="_blank" className="text-primary underline">Termos e Condições do Outono 2026</Link>.</FormLabel><FormMessage /></div>
+                  </FormItem>
+                )} />
+
                 <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Phone className="w-5 h-5 text-primary flex-shrink-0" />
@@ -983,7 +973,7 @@ const FootcampSignupForm = () => {
                   </div>
                   <ol className="space-y-1.5 text-sm text-foreground">
                     <li><span className="text-primary font-semibold">1.</span> Recebemos a tua inscrição.</li>
-                    <li><span className="text-primary font-semibold">2.</span> Confirmamos a disponibilidade das semanas escolhidas.</li>
+                    <li><span className="text-primary font-semibold">2.</span> Confirmamos a disponibilidade e a cobertura do seguro.</li>
                     <li><span className="text-primary font-semibold">3.</span> Entramos em contacto por WhatsApp.</li>
                     <li><span className="text-primary font-semibold">4.</span> Enviamos os dados de pagamento.</li>
                     <li><span className="text-primary font-semibold">5.</span> A vaga fica reservada após validação do pagamento.</li>
@@ -1001,7 +991,7 @@ const FootcampSignupForm = () => {
                     <h4 className="font-heading text-sm uppercase tracking-wider text-primary">Resumo da inscrição</h4>
 
                     <div>
-                      <p className="text-xs text-muted-foreground mb-1">Semanas selecionadas ({numSemanas})</p>
+                      <p className="text-xs text-muted-foreground mb-1">Período · Outono 2026</p>
                       <ul className="space-y-0.5">
                         {semanasSelecionadas.map((id) => {
                           const label = semanasOptions.find((s) => s.id === id)?.label;
@@ -1012,22 +1002,22 @@ const FootcampSignupForm = () => {
 
                     <div className="space-y-1.5 border-t border-primary/20 pt-3">
                       <div className="flex justify-between gap-3 text-sm">
-                        <span className="text-muted-foreground">Valor sem desconto</span>
-                        <span className="text-foreground font-medium">{precoPrevisto}€</span>
+                        <span className="text-muted-foreground">Participação</span>
+                        <span className="text-foreground font-medium">{precoBase}€</span>
                       </div>
                       <div className="flex justify-between gap-3 text-sm">
                         <span className="text-muted-foreground">Seguro</span>
-                        <span className="text-foreground font-medium">{seguroOferta ? "Oferta 🎁" : `${seguroCusto}€`}</span>
+                        <span className="text-foreground font-medium">{seguroOferta ? "0€ · Cobertura a validar" : `${seguroCusto}€`}</span>
                       </div>
                       {irmaos ? (
                         <>
                           <div className="flex justify-between gap-3 text-sm">
-                            <span className="text-muted-foreground">Desconto irmãos (-15%)</span>
+                            <span className="text-muted-foreground">Desconto irmãos (-10%)</span>
                             <span className="text-amber-400 font-medium text-xs text-right">A aguardar validação</span>
                           </div>
                           <div className="flex items-baseline justify-between gap-3 border-t border-primary/20 pt-2 mt-1">
                             <span className="text-foreground font-semibold">Valor estimado após validação</span>
-                            <span className="font-heading font-bold text-2xl text-gradient-gold">{(precoPrevisto * (1 - DESCONTO_IRMAOS)).toFixed(2).replace(".", ",")}€</span>
+                            <span className="font-heading font-bold text-2xl text-gradient-gold">{(precoBase * (1 - DESCONTO_IRMAOS) + seguroCusto).toFixed(2).replace(".", ",")}€</span>
                           </div>
                           <p className="text-xs text-amber-400/90 leading-snug pt-1">
                             O desconto será confirmado pela equipa ProTopo após validação da inscrição do(s) irmão(s).

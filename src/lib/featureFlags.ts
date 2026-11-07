@@ -15,4 +15,4 @@ export const SHOW_INDIVIDUAL_GROUP_TRAININGS = false;
  *  - textos de "Inscrições abertas" / "Vagas limitadas" passam a estado concluído.
  * Para abrir a próxima edição: colocar a false (nada é apagado).
  */
-export const FOOTCAMP_ENCERRADO = true;
+export const FOOTCAMP_ENCERRADO = false;

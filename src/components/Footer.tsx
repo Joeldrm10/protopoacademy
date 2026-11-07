@@ -54,7 +54,7 @@ const Footer = () => {
                   ? "Obrigado a todos os atletas. Footcamp Outono 2026: 16 a 20 de novembro."
                   : SHOW_INDIVIDUAL_GROUP_TRAININGS
                   ? "Dá o próximo passo na tua evolução. Reserva o teu lugar hoje."
-                  : "Edição Verão 2026. Garante já o lugar do teu atleta."}
+                  : "Edição Outono 2026. Garante já o lugar do teu atleta."}
               </p>
             </div>
             {FOOTCAMP_ENCERRADO ? (

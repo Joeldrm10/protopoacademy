@@ -3,15 +3,15 @@ import { FOOTCAMP_ENCERRADO } from "@/lib/featureFlags";
 
 const ITEMS = FOOTCAMP_ENCERRADO
   ? [
-      "✅ FOOTCAMP VERÃO 2026 CONCLUÍDO",
+      "✅ FOOTCAMP OUTONO 2026 CONCLUÍDO",
       "OBRIGADO A TODOS OS ATLETAS",
       "🍂 FOOTCAMP OUTONO 2026 · 16 A 20 NOVEMBRO",
     ]
   : [
       "🔥 INSCRIÇÕES ABERTAS",
-      "FOOTCAMP VERÃO 2026",
+      "FOOTCAMP OUTONO 2026",
       "⚠️ VAGAS LIMITADAS",
-      "📅 JULHO 2026",
+      "📅 16 A 20 NOVEMBRO · 09H00–12H30",
     ];
 
 const MarqueeBanner = () => {
