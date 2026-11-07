@@ -888,7 +888,7 @@ const Marcacoes = () => {
                                           return (
                                             <>
                                               <p className="text-foreground">
-                                                {validated ? (editionOf(m) === AUTUMN_EDITION ? "Sim (-10% sobre participação)" : "Pedido registado na edição de verão") : "Solicitado (não aplicado)"}
+                                                {validated ? (editionOf(m) === AUTUMN_EDITION ? "Sim (-10% sobre participação)" : "Sim (-15% aplicado)") : "Solicitado (não aplicado)"}
                                               </p>
                                               {m.nome_irmaos && (
                                                 <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
@@ -1062,7 +1062,7 @@ const Marcacoes = () => {
                                       <span>
                                         <span className="text-muted-foreground">Irmãos: </span>
                                         <span className="text-foreground">
-                                          {!claimed ? "Não" : validated ? (editionOf(m) === AUTUMN_EDITION ? "Sim (-10% sobre participação)" : "Pedido registado na edição de verão") : "Solicitado (não aplicado)"}
+                                          {!claimed ? "Não" : validated ? (editionOf(m) === AUTUMN_EDITION ? "Sim (-10% sobre participação)" : "Sim (-15% aplicado)") : "Solicitado (não aplicado)"}
                                         </span>
                                       </span>
                                     );
