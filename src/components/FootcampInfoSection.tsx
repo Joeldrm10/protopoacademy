@@ -18,8 +18,8 @@ const resumoItems = [
 const incluidoCards = [
   {
     icon: Shirt,
-    title: "Kit para novos inscritos",
-    items: ["T-shirt de treino ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo", "Atletas anteriores: elegibilidade a validar"],
+    title: "Kit oficial oferecido",
+    items: ["T-shirt oficial ProTopo", "Calções ProTopo", "Par de meias", "Saco ProTopo", "Oferecido a quem se inscreve pela primeira vez"],
   },
   {
     icon: Apple,
@@ -30,17 +30,17 @@ const incluidoCards = [
   {
     icon: ShowerHead,
     title: "Condições no local",
-    items: ["Balneários com água quente", "Acompanhamento técnico especializado"],
+    items: ["Balneários disponíveis para os atletas se equiparem e tomarem banho com água quente após os treinos"],
   },
 ];
 
 const pacotes: { sem: string; preco: string; featured: boolean; badge?: string; seguroInfo?: string }[] = [
-  { sem: "1 SEMANA", preco: "80€", featured: false, seguroInfo: "Seguro: +10€ apenas se necessário" },
+  { sem: "1 SEMANA", preco: "80€", featured: false },
 ];
 
 const aposPassos = [
   "A equipa ProTopo analisa a inscrição",
-  "Confirmamos a disponibilidade e a cobertura do seguro",
+  "Confirmamos a disponibilidade da vaga",
   "Entramos em contacto por WhatsApp",
   "Enviamos os dados de pagamento",
   "A vaga fica reservada após confirmação do pagamento",
@@ -148,15 +148,11 @@ const FootcampInfoSection = () => {
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span><span className="font-semibold text-foreground">10€</span> apenas para quem necessita de novo seguro</span>
+                    <span>Na primeira inscrição na ProTopo Academy, acresce <span className="font-semibold text-foreground">10€</span> de seguro anual, válido durante um ano e utilizável em futuras edições enquanto estiver em vigor.</span>
                   </li>
                   <li className="flex items-start gap-2 text-foreground/90 text-sm">
                     <span className="text-primary mt-0.5">•</span>
-                    <span><span className="font-semibold text-foreground">0€</span> com seguro anual válido, após confirmação da cobertura</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-foreground/90 text-sm">
-                    <span className="text-primary mt-0.5">•</span>
-                    <span>Válido durante <span className="font-semibold text-foreground">1 ano</span></span>
+                    <span>Atletas que já participaram e tenham seguro anual ainda válido: <span className="font-semibold text-foreground">0€ — já incluído</span>.</span>
                   </li>
                 </ul>
               </div>
