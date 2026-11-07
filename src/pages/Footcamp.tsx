@@ -458,10 +458,10 @@ const Footcamp = () => {
                 Vagas Limitadas
               </h3>
               <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                Para garantir qualidade de acompanhamento e atenção individualizada, cada semana possui um número limitado de atletas.
+                Para garantir a qualidade dos treinos e uma atenção individualizada, o Footcamp de Outono terá um número limitado de atletas.
               </p>
               <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed mt-3">
-                As inscrições serão confirmadas por ordem de receção e validação do pagamento.
+                As inscrições serão confirmadas por ordem de receção e após validação do pagamento.
               </p>
             </div>
           </AnimateOnScroll>
