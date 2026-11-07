@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, useLocation, Link } from "react-router-dom";
 import { CalendarX, MessageCircle, ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
@@ -12,13 +12,33 @@ import { WHATSAPP_URL_PROXIMA_EDICAO } from "@/lib/constants";
 
 const Marcar = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   // Treinos individuais/grupo ocultos — força sempre o formulário Footcamp.
   // Para reativar: SHOW_INDIVIDUAL_GROUP_TRAININGS = true.
   const isFootcamp = !SHOW_INDIVIDUAL_GROUP_TRAININGS || searchParams.get("tipo") === "footcamp";
 
   useEffect(() => {
+    // Âncora #formulario: faz scroll até ao início do formulário (ex.: abertura via QR Code),
+    // mesmo quando a página demora a carregar. O scroll-margin-top do elemento compensa o cabeçalho fixo.
+    if (location.hash === "#formulario") {
+      let attempts = 0;
+      let timer: ReturnType<typeof setTimeout>;
+      const scrollToForm = () => {
+        const el = document.getElementById("formulario");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (attempts++ < 30) {
+          timer = setTimeout(scrollToForm, 100);
+        }
+      };
+      const raf = requestAnimationFrame(scrollToForm);
+      return () => {
+        cancelAnimationFrame(raf);
+        clearTimeout(timer);
+      };
+    }
     window.scrollTo(0, 0);
-  }, []);
+  }, [location.hash]);
 
   // Estado pós-evento: formulário de inscrição desativado.
   if (FOOTCAMP_ENCERRADO) {
