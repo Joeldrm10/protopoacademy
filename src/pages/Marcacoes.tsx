@@ -1,3 +1,4 @@
+import { AUTUMN_EDITION, SUMMER_EDITION, autumnPrice, editionOf, effectiveBookingValue } from "@/lib/footcampEdition";
 import { useEffect, useMemo, useState, Fragment } from "react";
 import AdminAuth from "@/components/AdminAuth";
 import { useAuth } from "@/hooks/useAuth";
@@ -29,6 +30,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TestemunhosPanel from "@/components/admin/TestemunhosPanel";
 
 type Marcacao = {
+  edicao: string | null;
+  participou_anterior: boolean | null;
+  seguro_existente_declarado: boolean | null;
+  seguro_validado: boolean | null;
+  kit_elegivel: boolean | null;
+  preco_base: number | null;
+  seguro_valor: number | null;
+  desconto_valor: number | null;
+  desconto_percentagem: number | null;
   id: string;
   nome: string;
   idade: string;
@@ -153,13 +163,13 @@ const MedicalAlerts = ({ m }: { m: Marcacao }) => {
 
 
 // Build WhatsApp URL from a Portuguese phone number
-const waUrl = (phone: string | null | undefined, nome?: string, tipo?: string) => {
+const waUrl = (phone: string | null | undefined, nome?: string, tipo?: string, edicao?: string | null) => {
   const digits = (phone || "").replace(/\D/g, "");
   if (!digits) return "#";
   const intl = digits.startsWith("351") ? digits : `351${digits}`;
   const atleta = nome || "—";
   const msg = tipo === "footcamp"
-    ? `Olá, sou da ProTopo Academy relativamente à inscrição de ${atleta} no Footcamp Verão 2026.`
+    ? `Olá, sou da ProTopo Academy relativamente à inscrição de ${atleta} no Footcamp ${edicao === AUTUMN_EDITION ? "Outono" : "Verão"} 2026.`
     : `Olá${nome ? ` ${nome.split(" ")[0]}` : ""}! Contacto da ProTopo Academy sobre a tua inscrição.`;
   return `https://wa.me/${intl}?text=${encodeURIComponent(msg)}`;
 };
@@ -171,6 +181,8 @@ const Marcacoes = () => {
   const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [filterEdicao, setFilterEdicao] = useState(AUTUMN_EDITION);
+  const editionMarcacoes = useMemo(() => marcacoes.filter(m => filterEdicao === "todos" || editionOf(m) === filterEdicao), [marcacoes, filterEdicao]);
   const [filterSemana, setFilterSemana] = useState<string>("todos");
   const [filterTipo, setFilterTipo] = useState<string>("todos");
   const [filterEstado, setFilterEstado] = useState<string>("todos");
@@ -186,7 +198,7 @@ const Marcacoes = () => {
   };
 
   const filteredMarcacoes = useMemo(() => {
-    return marcacoes.filter((m) => {
+    return editionMarcacoes.filter((m) => {
       if (filterTipo !== "todos" && m.tipo !== filterTipo) return false;
       if (filterEstado !== "todos" && m.estado !== filterEstado) return false;
       if (filterSemana !== "todos") {
@@ -200,7 +212,7 @@ const Marcacoes = () => {
       if (searchNome && !m.nome.toLowerCase().includes(searchNome.toLowerCase())) return false;
       return true;
     });
-  }, [marcacoes, filterSemana, filterTipo, filterEstado, searchNome]);
+  }, [editionMarcacoes, filterSemana, filterTipo, filterEstado, searchNome]);
 
   // Family detection: APENAS quando a PRÓPRIA inscrição tem
   // "desconto_irmaos" ativo E o campo "nome_irmaos" preenchido.
@@ -223,6 +235,7 @@ const Marcacoes = () => {
     // cada irmão indicado (apenas se essa inscrição também marcou o desconto).
     const data = marcacoes.map((m) => ({
       id: m.id,
+      edition: editionOf(m),
       nameTokens: tokens(m.nome),
       siblings: m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [],
       siblingTokens: (m.desconto_irmaos ? splitSiblings(m.nome_irmaos) : [])
@@ -244,6 +257,7 @@ const Marcacoes = () => {
         return data.some(
           (r) =>
             r.id !== m.id &&
+            r.edition === m.edition &&
             sibTokens.every((t) => r.nameTokens.includes(t)) &&
             indicates(r.siblingTokens, m.nameTokens)
         );
@@ -258,37 +272,62 @@ const Marcacoes = () => {
   // SEM desconto de irmãos. O desconto -15% só é aplicado quando a família
   // está validada bidirecionalmente (pelo menos um irmão indicado existe e
   // também indicou de volta este atleta).
-  const effectiveValor = (m: Marcacao): number | null => {
-    if (m.valor_total == null) return null;
-    const fam = familyMap.get(m.id);
-    const claimed = !!m.desconto_irmaos;
-    const validated = (fam?.matched.length ?? 0) > 0;
-    if (claimed && validated) {
-      return Math.round(m.valor_total * 0.85 * 100) / 100;
+  const effectiveValor = (m: Marcacao): number | null =>
+    effectiveBookingValue(m, (familyMap.get(m.id)?.matched.length ?? 0) > 0);
+
+  const seguroLabel = (m: Marcacao) => editionOf(m) === AUTUMN_EDITION
+    ? `${m.seguro_valor ?? 10}€ · ${m.seguro_existente_declarado ? (m.seguro_validado ? "Cobertura validada" : "Cobertura por validar") : "Novo seguro"}`
+    : m.seguro_anual ? "Oferta 🎁" : "Incluído no valor total";
+
+  const validateAutumn = async (m: Marcacao, kind: "insurance" | "kit", approved: boolean) => {
+    if (m.estado === "confirmado" && kind === "insurance") {
+      toast.error("O valor confirmado está preservado. Valida o seguro antes de confirmar a inscrição.");
+      return;
     }
-    return m.valor_total;
+    const change = kind === "insurance"
+      ? { seguro_validado: approved, seguro_valor: approved ? 0 : 10, valor_total: 80 + (approved ? 0 : 10) }
+      : { kit_elegivel: approved };
+    const { error } = await supabase.from("marcacoes").update(change).eq("id", m.id);
+    if (error) { toast.error("Não foi possível guardar a validação"); return; }
+    setMarcacoes(prev => prev.map(row => row.id === m.id ? { ...row, ...change } : row));
+    toast.success("Validação guardada");
   };
 
+  const AutumnValidation = ({ m }: { m: Marcacao }) => editionOf(m) !== AUTUMN_EDITION ? null : (
+    <div className="space-y-2 border border-primary/30 rounded-lg p-3 text-sm">
+      <p className="font-heading text-primary">Outono 2026 · Participação: 80€ · Seguro: {m.seguro_valor ?? 10}€ · Desconto aplicado: {m.desconto_valor ?? 0}€</p>
+      <p>Participação anterior: {m.participou_anterior ? "Sim" : "Não"} · Kit: {m.kit_elegivel == null ? "Por validar" : m.kit_elegivel ? "Elegível" : "Não elegível"}</p>
+      {m.seguro_existente_declarado && m.estado !== "confirmado" && <div className="flex flex-wrap gap-2">
+        <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "insurance", true)}>Confirmar cobertura anual</Button>
+        <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "insurance", false)}>Necessita de novo seguro (+10€)</Button>
+      </div>}
+      {m.participou_anterior && <div className="flex flex-wrap gap-2">
+        <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "kit", true)}>Kit elegível</Button>
+        <Button size="sm" variant="outline" onClick={() => validateAutumn(m, "kit", false)}>Kit não elegível</Button>
+      </div>}
+    </div>
+  );
 
-  const confirmados = useMemo(() => marcacoes.filter((m) => m.estado === "confirmado").length, [marcacoes]);
-  const pendentes = useMemo(() => marcacoes.filter((m) => m.estado === "pendente").length, [marcacoes]);
-  const cancelados = useMemo(() => marcacoes.filter((m) => m.estado === "cancelado").length, [marcacoes]);
+
+  const confirmados = useMemo(() => editionMarcacoes.filter((m) => m.estado === "confirmado").length, [editionMarcacoes]);
+  const pendentes = useMemo(() => editionMarcacoes.filter((m) => m.estado === "pendente").length, [editionMarcacoes]);
+  const cancelados = useMemo(() => editionMarcacoes.filter((m) => m.estado === "cancelado").length, [editionMarcacoes]);
 
   // Receita prevista — usa o valor efetivo (desconto só conta com família validada)
   const receita = useMemo(() => {
-    const confirmado = marcacoes
+    const confirmado = editionMarcacoes
       .filter((m) => m.estado === "confirmado")
       .reduce((s, m) => s + (effectiveValor(m) || 0), 0);
-    const pendente = marcacoes
+    const pendente = editionMarcacoes
       .filter((m) => m.estado === "pendente")
       .reduce((s, m) => s + (effectiveValor(m) || 0), 0);
     return { total: confirmado, confirmado, pendente };
-  }, [marcacoes, familyMap]);
+  }, [editionMarcacoes, familyMap]);
 
   // Equipamento (footcamp, apenas confirmados)
   const TAMANHOS = ["6/8", "8/10", "10/12", "12/14", "XS", "S", "M", "L", "XL"] as const;
   const equipamentoStats = useMemo(() => {
-    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado === "confirmado");
+    const fc = editionMarcacoes.filter((m) => m.tipo === "footcamp" && m.estado === "confirmado" && (editionOf(m) !== AUTUMN_EDITION || m.kit_elegivel === true));
     const tshirts: Record<string, number> = {};
     const calcas: Record<string, number> = {};
     TAMANHOS.forEach((t) => { tshirts[t] = 0; calcas[t] = 0; });
@@ -297,12 +336,12 @@ const Marcacoes = () => {
       if (m.tamanho_calcas && calcas[m.tamanho_calcas] != null) calcas[m.tamanho_calcas]++;
     });
     return { tshirts, calcas };
-  }, [marcacoes]);
+  }, [editionMarcacoes]);
 
 
   // Footcamp stats — apenas inscrições confirmadas
   const footcampStats = useMemo(() => {
-    const fc = marcacoes.filter((m) => m.tipo === "footcamp" && m.estado === "confirmado");
+    const fc = editionMarcacoes.filter((m) => m.tipo === "footcamp" && m.estado === "confirmado");
     const weekCounts = [0, 0, 0, 0];
     fc.forEach((m) => {
       (m.semanas || []).forEach((s) => {
@@ -319,7 +358,7 @@ const Marcacoes = () => {
       (m) => m.desconto_irmaos && splitSiblings(m.nome_irmaos).length > 0
     ).length;
     return { total: fc.length, weeks: weekCounts, families: familiesCount };
-  }, [marcacoes]);
+  }, [editionMarcacoes]);
 
 
   const fetchMarcacoes = async () => {
@@ -356,17 +395,23 @@ const Marcacoes = () => {
   };
 
   const handleEstadoChange = async (id: string, novoEstado: string) => {
-    const { error } = await supabase
-      .from("marcacoes")
-      .update({ estado: novoEstado, confirmado: novoEstado === "confirmado" } as any)
-      .eq("id", id);
-    if (error) {
-      toast.error("Erro ao atualizar estado");
-    } else {
-      setMarcacoes((prev) =>
-        prev.map((m) => (m.id === id ? { ...m, estado: novoEstado, confirmado: novoEstado === "confirmado" } : m))
-      );
+    const record = marcacoes.find(m => m.id === id);
+    if (!record) return;
+    const change: Partial<Marcacao> = { estado: novoEstado, confirmado: novoEstado === "confirmado" };
+    if (editionOf(record) === AUTUMN_EDITION && novoEstado === "confirmado" && record.estado !== "confirmado") {
+      if (record.seguro_existente_declarado && !record.seguro_validado && record.seguro_valor === 0) {
+        toast.error("Valida a cobertura anual ou indica a necessidade de novo seguro antes de confirmar."); return;
+      }
+      const price = autumnPrice((record.seguro_valor ?? 10) > 0, !!record.desconto_irmaos && (familyMap.get(id)?.matched.length ?? 0) > 0);
+      change.valor_total = price.total;
+      change.preco_base = price.base;
+      change.seguro_valor = price.insurance;
+      change.desconto_valor = price.discount;
+      change.desconto_percentagem = 10;
     }
+    const { error } = await supabase.from("marcacoes").update(change).eq("id", id);
+    if (error) toast.error("Erro ao atualizar estado");
+    else setMarcacoes(prev => prev.map(m => m.id === id ? { ...m, ...change } : m));
   };
 
   useEffect(() => {
@@ -453,7 +498,7 @@ const Marcacoes = () => {
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-6">
               <div className="bg-card border border-border rounded-xl p-4">
                 <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Total</p>
-                <p className="font-heading text-2xl text-foreground">{marcacoes.length}</p>
+                <p className="font-heading text-2xl text-foreground">{editionMarcacoes.length}</p>
               </div>
               <div className="bg-card border border-border rounded-xl p-4">
                 <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Filtrados</p>
@@ -485,7 +530,7 @@ const Marcacoes = () => {
                     <p className="text-xs text-muted-foreground">👥 Atletas</p>
                     <p className="font-heading text-xl text-foreground">{footcampStats.total}</p>
                   </div>
-                  {footcampStats.weeks.map((c, i) => (
+                  {(filterEdicao === AUTUMN_EDITION ? footcampStats.weeks.slice(0, 1) : footcampStats.weeks).map((c, i) => (
                     <div key={i} className="bg-surface-elevated/40 rounded-lg p-2.5">
                       <p className="text-xs text-muted-foreground">⚽ Semana {i + 1}</p>
                       <p className="font-heading text-xl text-foreground">{c}</p>
@@ -565,6 +610,14 @@ const Marcacoes = () => {
             <div className="bg-card border border-border rounded-xl p-4 mb-6">
               <div className="flex flex-wrap items-center gap-3">
                 <Filter className="w-4 h-4 text-primary" />
+                <Select value={filterEdicao} onValueChange={value => { setFilterEdicao(value); setFilterSemana("todos"); }}>
+                  <SelectTrigger className="w-[220px]" aria-label="Edição"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={AUTUMN_EDITION}>Footcamp Outono 2026</SelectItem>
+                    <SelectItem value={SUMMER_EDITION}>Footcamp Verão 2026</SelectItem>
+                    <SelectItem value="todos">Todas as edições</SelectItem>
+                  </SelectContent>
+                </Select>
                 <div className="relative">
                   <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <Input
@@ -575,13 +628,13 @@ const Marcacoes = () => {
                   />
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  {[
+                  {(filterEdicao === AUTUMN_EDITION ? [{value:"todos",label:"Todos os atletas"}] : [
                     { value: "todos", label: "Todos os atletas" },
                     { value: "1", label: "Semana 1" },
                     { value: "2", label: "Semana 2" },
                     { value: "3", label: "Semana 3" },
                     { value: "4", label: "Semana 4" },
-                  ].map((opt) => {
+                  ]).map((opt) => {
                     const active = filterSemana === opt.value;
                     return (
                       <Button
@@ -709,6 +762,7 @@ const Marcacoes = () => {
                                   <FamilyBadge siblings={related.siblings} matched={related.matched} />
 
                                 </div>
+                                {isFootcamp && <p className="text-xs text-primary">{editionOf(m) === AUTUMN_EDITION ? "Outono 2026" : "Verão 2026"}</p>}
                                 {isFootcamp && m.encarregado && (
                                   <p className="text-xs text-muted-foreground font-normal mt-0.5">
                                     Enc: <span className="text-foreground">{m.encarregado}</span>
@@ -720,7 +774,7 @@ const Marcacoes = () => {
                                 <div className="flex items-center gap-2">
                                   <span>{m.telemovel}</span>
                                   <a
-                                    href={waUrl(m.telemovel, m.nome, m.tipo)}
+                                    href={waUrl(m.telemovel, m.nome, m.tipo, m.edicao)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     title="Abrir WhatsApp"
@@ -779,6 +833,7 @@ const Marcacoes = () => {
                               <TableRow key={m.id + "-details"} className="border-border/50 bg-surface-elevated/30">
                                 <TableCell colSpan={9} className="py-4">
                                   <div className="space-y-4">
+                                    <AutumnValidation m={m} />
                                     {/* Atleta */}
                                     <div>
                                       <p className="text-xs uppercase tracking-wider text-primary/80 mb-2">👤 Atleta</p>
@@ -821,7 +876,7 @@ const Marcacoes = () => {
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Seguro</p>
-                                        <p className="text-foreground">{m.seguro_anual ? "Oferta 🎁" : "Incluído no valor total"}</p>
+                                        <p className="text-foreground">{seguroLabel(m)}</p>
                                       </div>
                                       <div>
                                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Desconto irmãos</p>
@@ -833,7 +888,7 @@ const Marcacoes = () => {
                                           return (
                                             <>
                                               <p className="text-foreground">
-                                                {validated ? "Sim (-15% aplicado)" : "Solicitado (não aplicado)"}
+                                                {validated ? (editionOf(m) === AUTUMN_EDITION ? "Sim (-10% sobre participação)" : "Pedido registado na edição de verão") : "Solicitado (não aplicado)"}
                                               </p>
                                               {m.nome_irmaos && (
                                                 <p className="text-xs text-muted-foreground mt-1">Irmão(s): <span className="text-foreground">{m.nome_irmaos}</span></p>
@@ -916,7 +971,7 @@ const Marcacoes = () => {
                               </span>
                               {isFootcamp && (
                                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/25">
-                                  <Trophy className="w-3 h-3" />Footcamp
+                                  <Trophy className="w-3 h-3" />{editionOf(m) === AUTUMN_EDITION ? "Outono 2026" : "Verão 2026"}
                                 </span>
                               )}
                               {related.siblings.length > 0 && <FamilyBadge siblings={related.siblings} matched={related.matched} />}
@@ -947,6 +1002,7 @@ const Marcacoes = () => {
                         {/* Expanded details */}
                         {isOpen && (
                           <div className="px-4 pb-4 pt-0 space-y-3 border-t border-border/50">
+                            <AutumnValidation m={m} />
                             {isFootcamp && m.semanas && m.semanas.length > 0 && (
                               <div className="pt-3">
                                 <p className="text-[11px] uppercase tracking-wider text-primary/80 mb-1">Semanas</p>
@@ -997,7 +1053,7 @@ const Marcacoes = () => {
                                 )}
 
                                 <div className="flex gap-4 flex-wrap text-xs">
-                                  <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{m.seguro_anual ? "Oferta 🎁" : "Incluído no valor total"}</span></span>
+                                  <span><span className="text-muted-foreground">Seguro: </span><span className="text-foreground">{seguroLabel(m)}</span></span>
                                   {(() => {
                                     const fam = familyMap.get(m.id);
                                     const claimed = !!m.desconto_irmaos;
@@ -1006,7 +1062,7 @@ const Marcacoes = () => {
                                       <span>
                                         <span className="text-muted-foreground">Irmãos: </span>
                                         <span className="text-foreground">
-                                          {!claimed ? "Não" : validated ? "Sim (-15% aplicado)" : "Solicitado (não aplicado)"}
+                                          {!claimed ? "Não" : validated ? (editionOf(m) === AUTUMN_EDITION ? "Sim (-10% sobre participação)" : "Pedido registado na edição de verão") : "Solicitado (não aplicado)"}
                                         </span>
                                       </span>
                                     );
@@ -1072,7 +1128,7 @@ const Marcacoes = () => {
                               </Select>
                               <div className="flex items-center gap-2">
                                 <a
-                                  href={waUrl(m.telemovel, m.nome, m.tipo)}
+                                  href={waUrl(m.telemovel, m.nome, m.tipo, m.edicao)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/15 text-green-500 border border-green-500/30 text-xs font-bold uppercase tracking-wider hover:bg-green-500/25 transition-colors"
