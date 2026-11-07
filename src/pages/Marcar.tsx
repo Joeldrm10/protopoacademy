@@ -27,6 +27,9 @@ const Marcar = () => {
 
     let stopped = false;
     let frame = 0;
+    const html = document.documentElement;
+    const previousScrollBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
     const scrollToForm = () => {
       if (stopped) return;
       cancelAnimationFrame(frame);
@@ -34,12 +37,8 @@ const Marcar = () => {
         const target = document.getElementById("formulario");
         if (!target || stopped) return;
         // Override the site's smooth scrolling for an immediate QR-code arrival.
-        const html = document.documentElement;
-        const previous = html.style.scrollBehavior;
-        html.style.scrollBehavior = "auto";
         const headerOffset = Number.parseFloat(getComputedStyle(html).getPropertyValue("--header-offset")) || 96;
         window.scrollTo({ top: Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerOffset - 16), behavior: "auto" });
-        html.style.scrollBehavior = previous;
       });
     };
     const mutationObserver = new MutationObserver(scrollToForm);
@@ -53,6 +52,7 @@ const Marcar = () => {
     const settleTimers = [100, 500, 1500].map((delay) => window.setTimeout(scrollToForm, delay));
     const stop = () => {
       stopped = true;
+      html.style.scrollBehavior = previousScrollBehavior;
       cancelAnimationFrame(frame);
       settleTimers.forEach(window.clearTimeout);
       mutationObserver.disconnect();
