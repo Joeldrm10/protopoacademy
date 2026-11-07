@@ -4,9 +4,11 @@ interface AnimateOnScrollProps {
   children: ReactNode;
   className?: string;
   delay?: number;
+  disabled?: boolean;
+  threshold?: number;
 }
 
-const AnimateOnScroll = ({ children, className = "", delay = 0 }: AnimateOnScrollProps) => {
+const AnimateOnScroll = ({ children, className = "", delay = 0, disabled = false, threshold = 0.15 }: AnimateOnScrollProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -16,6 +18,7 @@ const AnimateOnScroll = ({ children, className = "", delay = 0 }: AnimateOnScrol
   }, []);
 
   useEffect(() => {
+    if (disabled) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -23,12 +26,12 @@ const AnimateOnScroll = ({ children, className = "", delay = 0 }: AnimateOnScrol
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.15 }
+      { threshold }
     );
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
+  }, [disabled, threshold]);
 
   const offset = isMobile ? 16 : 30;
 
@@ -37,9 +40,9 @@ const AnimateOnScroll = ({ children, className = "", delay = 0 }: AnimateOnScrol
       ref={ref}
       className={className}
       style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : `translateY(${offset}px)`,
-        transition: `opacity 0.7s ease-out ${delay}ms, transform 0.7s ease-out ${delay}ms`,
+        opacity: disabled || isVisible ? 1 : 0,
+        transform: disabled || isVisible ? "translateY(0)" : `translateY(${offset}px)`,
+        transition: disabled ? "none" : `opacity 0.7s ease-out ${delay}ms, transform 0.7s ease-out ${delay}ms`,
       }}
     >
       {children}

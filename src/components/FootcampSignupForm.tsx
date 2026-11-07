@@ -150,7 +150,7 @@ type Summary = {
   precoPrevisto: number;
 };
 
-const FootcampSignupForm = () => {
+const FootcampSignupForm = ({ directAccess = false }: { directAccess?: boolean }) => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [lastSummary, setLastSummary] = useState<Summary | null>(null);
@@ -485,12 +485,12 @@ const FootcampSignupForm = () => {
   );
 
   return (
-    <section id="formulario" className="py-16 bg-secondary relative overflow-hidden scroll-mt-24 md:scroll-mt-28">
+    <section className="py-16 bg-secondary relative overflow-hidden">
       <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <AnimateOnScroll delay={150}>
-          <div className="max-w-lg mx-auto bg-card border border-border rounded-2xl p-6 md:p-10 shadow-xl">
+        <AnimateOnScroll delay={150} disabled={directAccess} threshold={0}>
+          <div id="formulario" className="max-w-lg mx-auto bg-card border border-border rounded-2xl p-6 md:p-10 shadow-xl scroll-mt-[calc(var(--header-offset,96px)+16px)]">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                 <SectionHeader icon={UserIcon} title="Dados do atleta" />
