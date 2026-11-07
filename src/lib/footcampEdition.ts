@@ -26,7 +26,12 @@ export function editionOf(record: { edicao?: string | null }) {
 export type FinancialRecord = {
   edicao?: string | null; estado: string; valor_total: number | null;
   seguro_valor?: number | null; desconto_irmaos?: boolean | null;
+  seguro_existente_declarado?: boolean | null; seguro_validado?: boolean | null;
 };
+
+export function hasValidatedCoverage(record: Pick<FinancialRecord, "seguro_existente_declarado" | "seguro_validado">) {
+  return record.seguro_existente_declarado === true && record.seguro_validado === true;
+}
 
 export function effectiveBookingValue(record: FinancialRecord, validated: boolean) {
   if (record.valor_total == null) return null;
@@ -37,5 +42,5 @@ export function effectiveBookingValue(record: FinancialRecord, validated: boolea
       : record.valor_total;
   }
   if (record.estado === "confirmado") return record.valor_total;
-  return autumnPrice((record.seguro_valor ?? 10) > 0, !!record.desconto_irmaos && validated).total;
+  return autumnPrice(!hasValidatedCoverage(record), !!record.desconto_irmaos && validated).total;
 }
