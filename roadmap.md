@@ -12,3 +12,9 @@
 - [x] Matemática verificada (90/80/72/82) no formulário, WhatsApp e base de dados; testes unitários passam.
 - [x] Balneários com água quente garantidos; "Acompanhamento técnico especializado" removido.
 - [x] Testes: cenários no navegador, inscrição real (90€ na BD, registo de teste removido), 91 legados intactos, mobile sem overflow.
+
+# Revisão final do formulário
+- [ ] Simplificar kit e horário; exigir tamanhos apenas para novos atletas.
+- [ ] Cobrar seguro provisoriamente até confirmação de cobertura válida no Admin, preservando históricos.
+- [ ] Confirmar validações, consentimentos independentes, valores e envio WhatsApp sem duplicações.
+- [ ] Testar formulário/Admin em desktop e mobile; não publicar nem executar operações destrutivas.
