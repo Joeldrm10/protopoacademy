@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TestemunhosPanel from "@/components/admin/TestemunhosPanel";
+import ExportMarcacoesExcel from "@/components/admin/ExportMarcacoesExcel";
 
 type Marcacao = {
   edicao: string | null;
@@ -507,6 +508,7 @@ const Marcacoes = () => {
 
               <TabsContent value="marcacoes" className="mt-0">
 
+            <ExportMarcacoesExcel />
 
             {/* Stats Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-6">
