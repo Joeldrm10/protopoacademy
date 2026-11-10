@@ -79,7 +79,10 @@ describe("exportação Excel de marcações", () => {
     const resumo = workbook.getWorksheet("Resumo Geral")!;
     const indicators = new Map<string, number>();
     resumo.eachRow((row, index) => {
-      if (index > 1) indicators.set(String(row.getCell(1).value), Number((row.getCell(2).value as ExcelJS.CellFormulaValue).result));
+      if (index === 1) return;
+      const value = row.getCell(2).value;
+      const result = value && typeof value === "object" && "result" in value ? value.result : value;
+      indicators.set(String(row.getCell(1).value), Number(result));
     });
     expect(indicators.get("Total de inscrições")).toBe(3);
     expect(indicators.get("Total de marcações")).toBe(0);
