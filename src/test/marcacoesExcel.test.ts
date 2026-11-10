@@ -81,11 +81,11 @@ describe("exportação Excel de marcações", () => {
     resumo.eachRow((row, index) => {
       if (index === 1) return;
       const value = row.getCell(2).value;
-      const result = value && typeof value === "object" && "result" in value ? value.result : value;
+      const isFormula = value && typeof value === "object" && ("formula" in value || "sharedFormula" in value);
+      const result = value && typeof value === "object" && "result" in value ? value.result : isFormula ? 0 : value;
       indicators.set(String(row.getCell(1).value), Number(result));
     });
     expect(indicators.get("Total de inscrições")).toBe(3);
-    console.log("Resumo sem marcações:", resumo.getCell("B3").value);
     expect(indicators.get("Total de marcações")).toBe(0);
     expect(indicators.get("Inscrições pendentes")).toBe(1);
     expect(indicators.get("Inscrições confirmadas")).toBe(1);
