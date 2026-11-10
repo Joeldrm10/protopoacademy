@@ -3,6 +3,15 @@ import ExcelJS from "exceljs";
 import { buildMarcacoesExcel, deduplicateRecords, partitionRecords } from "@/lib/marcacoesExcel";
 import type { MarcacaoExportRow } from "@/lib/marcacoesExcel";
 
+async function blobBuffer(blob: Blob) {
+  return new Promise<ArrayBuffer>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as ArrayBuffer);
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(blob);
+  });
+}
+
 function record(overrides: Partial<MarcacaoExportRow> = {}): MarcacaoExportRow {
   return {
     id: "inscricao-1", nome: "Atleta Teste", idade: "10", telemovel: "912345678",
@@ -41,7 +50,7 @@ describe("exportação Excel de marcações", () => {
     const blob = await buildMarcacoesExcel(rows);
     expect(blob.type).toBe("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.load(await blob.arrayBuffer());
+    await workbook.xlsx.load(await blobBuffer(blob));
 
     expect(workbook.worksheets.map((sheet) => sheet.name)).toEqual([
       "Resumo Geral", "Inscrições", "Marcações", "Pagamentos e Valores",
@@ -66,7 +75,7 @@ describe("exportação Excel de marcações", () => {
       record({ id: "inscricao-3", estado: "cancelado", valor_total: 72 }),
     ]);
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.load(await blob.arrayBuffer());
+    await workbook.xlsx.load(await blobBuffer(blob));
     const resumo = workbook.getWorksheet("Resumo Geral")!;
     const indicators = new Map<string, number>();
     resumo.eachRow((row, index) => {
@@ -89,7 +98,7 @@ describe("exportação Excel de marcações", () => {
   it("cria folhas válidas mesmo sem marcações fora do Footcamp", async () => {
     const blob = await buildMarcacoesExcel([record()]);
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.load(await blob.arrayBuffer());
+    await workbook.xlsx.load(await blobBuffer(blob));
     const sheet = workbook.getWorksheet("Marcações")!;
     expect(sheet.rowCount).toBe(1);
     expect(sheet.autoFilter).toMatchObject({ from: "A1" });
