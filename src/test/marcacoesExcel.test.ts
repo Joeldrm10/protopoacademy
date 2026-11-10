@@ -104,7 +104,7 @@ describe("exportação Excel de marcações", () => {
     await workbook.xlsx.load(await blobBuffer(blob));
     const sheet = workbook.getWorksheet("Marcações")!;
     expect(sheet.rowCount).toBe(1);
-    expect(sheet.autoFilter).toMatchObject({ from: "A1" });
+    expect(sheet.autoFilter).toBe("A1:AR1");
     expect(sheet.getCell("A1").value).toBe("ID");
   });
 });
