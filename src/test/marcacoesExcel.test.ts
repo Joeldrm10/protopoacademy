@@ -93,10 +93,10 @@ describe("exportação Excel de marcações", () => {
     expect(resumo.getCell("B2").value).toMatchObject({ formula: expect.stringContaining("COUNTA"), result: 3 });
 
     const financial = workbook.getWorksheet("Pagamentos e Valores")!;
-    expect(financial.getCell("R2").value).toMatchObject({ result: 0 });
+    expect(financial.getCell("R2").value).toMatchObject({ formula: expect.stringContaining("IF") });
     expect(financial.getCell("S2").value).toMatchObject({ result: 90 });
     expect(financial.getCell("R3").value).toMatchObject({ result: 81 });
-    expect(financial.getCell("S3").value).toMatchObject({ result: 0 });
+    expect(financial.getCell("S3").value).toMatchObject({ formula: expect.stringContaining("Q3-R3") });
   });
 
   it("cria folhas válidas mesmo sem marcações fora do Footcamp", async () => {
