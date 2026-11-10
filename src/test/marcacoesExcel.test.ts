@@ -85,6 +85,7 @@ describe("exportação Excel de marcações", () => {
       indicators.set(String(row.getCell(1).value), Number(result));
     });
     expect(indicators.get("Total de inscrições")).toBe(3);
+    console.log("Resumo sem marcações:", resumo.getCell("B3").value);
     expect(indicators.get("Total de marcações")).toBe(0);
     expect(indicators.get("Inscrições pendentes")).toBe(1);
     expect(indicators.get("Inscrições confirmadas")).toBe(1);
