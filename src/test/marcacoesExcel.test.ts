@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import ExcelJS from "exceljs";
-import { buildMarcacoesExcel, deduplicateRecords, selectAthletes } from "@/lib/marcacoesExcel";
+import { buildMarcacoesExcel, DEFAULT_EXPORT_EDITION, deduplicateRecords, exportExcelFilename, selectAthletes } from "@/lib/marcacoesExcel";
 import type { MarcacaoExportRow } from "@/lib/marcacoesExcel";
 
 async function blobBuffer(blob: Blob) {
@@ -31,6 +31,32 @@ function record(overrides: Partial<MarcacaoExportRow> = {}): MarcacaoExportRow {
 }
 
 describe("exportação Excel de atletas", () => {
+  it("seleciona Outono por defeito e usa os nomes de ficheiro pedidos", () => {
+    expect(DEFAULT_EXPORT_EDITION).toBe("outono-2026");
+    expect(exportExcelFilename()).toBe("ProTopo_Footcamp_Outono_2026.xlsx");
+    expect(exportExcelFilename("verao-2026")).toBe("ProTopo_Footcamp_Verao_2026.xlsx");
+    expect(exportExcelFilename("todos")).toBe("ProTopo_Todas_Edicoes.xlsx");
+  });
+
+  it("não inclui anteriores nem inscrições sem edição no Outono e preserva valores por inscrição", async () => {
+    const rows = [
+      record({ id: "verao", edicao: "verao-2026", valor_total: 170, confirmado: true }),
+      record({ id: "outono", participou_anterior: true, valor_total: 72, confirmado: false }),
+      record({ id: "legado", edicao: null, participou_anterior: true, valor_total: 105 }),
+    ];
+    expect(selectAthletes(rows, "outono-2026").map(r => r.id)).toEqual(["outono"]);
+    expect(selectAthletes(rows, "verao-2026").map(r => r.id)).toEqual(["legado", "verao"]);
+    expect(selectAthletes(rows, "todos")).toHaveLength(3);
+    for (const [edition, total, paid] of [["outono-2026", 72, "Não"], ["verao-2026", 170, "Sim"]] as const) {
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.load(await blobBuffer(await buildMarcacoesExcel(rows.filter(r => r.id !== "legado"), edition)));
+      const sheet = workbook.getWorksheet("Atletas");
+      if (!sheet) throw new Error("Folha Atletas ausente");
+      expect(sheet.rowCount).toBe(2);
+      expect(sheet.getCell("F2").value).toBe(total);
+      expect(sheet.getCell("C2").value).toBe(paid);
+    }
+  });
   it("remove apenas IDs repetidos e mantém uma inscrição por edição", () => {
     const rows = [record(), record(), record({ id: "verao", edicao: null }), record({ id: "treino", tipo: "individual" })];
     expect(deduplicateRecords(rows)).toHaveLength(3);

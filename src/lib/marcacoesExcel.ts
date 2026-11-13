@@ -4,6 +4,7 @@ import { AUTUMN_EDITION, SUMMER_EDITION, editionOf } from "@/lib/footcampEdition
 
 export type MarcacaoExportRow = Tables<"marcacoes">;
 export type ExportEdition = "todos" | typeof AUTUMN_EDITION | typeof SUMMER_EDITION;
+export const DEFAULT_EXPORT_EDITION: ExportEdition = AUTUMN_EDITION;
 const EURO_FORMAT = '#,##0.00 "€"';
 const cleanText = (value: string | null) => (value ?? "").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
 const yesNo = (value: boolean | null) => value === true ? "Sim" : "Não";
@@ -63,6 +64,8 @@ export async function buildMarcacoesExcel(records: MarcacaoExportRow[], edition:
   return new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 }
 
-export function exportExcelFilename(date = new Date(), edition: ExportEdition = "todos") {
-  return `ProTopo_Atletas_${edition === "todos" ? "Todas_Edicoes" : edition}_${date.toISOString().slice(0, 10)}.xlsx`;
+export function exportExcelFilename(edition: ExportEdition = DEFAULT_EXPORT_EDITION) {
+  if (edition === AUTUMN_EDITION) return "ProTopo_Footcamp_Outono_2026.xlsx";
+  if (edition === SUMMER_EDITION) return "ProTopo_Footcamp_Verao_2026.xlsx";
+  return "ProTopo_Todas_Edicoes.xlsx";
 }
