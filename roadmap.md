@@ -1,3 +1,7 @@
+# Simplificação da exportação Excel
+- [ ] Exportar uma folha Atletas com dez colunas, ordem alfabética e escolha de edição.
+- [ ] Testar dados reais, filtros de edição e download em computador/telemóvel sem modificar inscrições.
+
 # Exportação Excel para Admin
 - [x] Adicionar exportação completa, exclusiva a administradores, com quatro folhas e todos os registos reais.
 - [x] Testar conteúdo, formatação, ausência de duplicados e abertura do ficheiro em desktop/mobile sem alterar dados: 35 testes, 97 IDs coincidentes, 204 fórmulas sem erros e impressão digital da base preservada.
