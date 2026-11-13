@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import ExcelJS from "exceljs";
-import { buildMarcacoesExcel, deduplicateRecords, partitionRecords } from "@/lib/marcacoesExcel";
+import { buildMarcacoesExcel, deduplicateRecords, selectAthletes } from "@/lib/marcacoesExcel";
 import type { MarcacaoExportRow } from "@/lib/marcacoesExcel";
 
 async function blobBuffer(blob: Blob) {
@@ -30,82 +30,61 @@ function record(overrides: Partial<MarcacaoExportRow> = {}): MarcacaoExportRow {
   };
 }
 
-describe("exportação Excel de marcações", () => {
-  it("não duplica IDs e separa inscrições Footcamp das restantes marcações", () => {
-    const rows = [
-      record(), record(), record({ id: "inscricao-2", estado: "confirmado", confirmado: true }),
-      record({ id: "marcacao-1", tipo: "individual", valor_total: null }),
-    ];
+describe("exportação Excel de atletas", () => {
+  it("remove apenas IDs repetidos e mantém uma inscrição por edição", () => {
+    const rows = [record(), record(), record({ id: "verao", edicao: null }), record({ id: "treino", tipo: "individual" })];
     expect(deduplicateRecords(rows)).toHaveLength(3);
-    const parts = partitionRecords(rows);
-    expect(parts.inscricoes.map((r) => r.id)).toEqual(["inscricao-1", "inscricao-2"]);
-    expect(parts.marcacoes.map((r) => r.id)).toEqual(["marcacao-1"]);
+    expect(selectAthletes(rows)).toHaveLength(2);
+    expect(selectAthletes(rows, "outono-2026").map(r => r.id)).toEqual(["inscricao-1"]);
+    expect(selectAthletes(rows, "verao-2026").map(r => r.id)).toEqual(["verao"]);
   });
 
-  it("cria as quatro folhas com todos os registos, filtros, cabeçalho fixo e formatos", async () => {
-    const rows = [
-      record(), record({ id: "inscricao-2", estado: "confirmado", confirmado: true, valor_total: 81, desconto_valor: 9, desconto_percentagem: 10 }),
-      record({ id: "marcacao-1", tipo: "grupo", edicao: null, data: "2026-08-01", valor_total: null }),
-    ];
-    const blob = await buildMarcacoesExcel(rows);
-    expect(blob.type).toBe("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-    const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.load(await blobBuffer(blob));
-
-    expect(workbook.worksheets.map((sheet) => sheet.name)).toEqual([
-      "Resumo Geral", "Inscrições", "Marcações", "Pagamentos e Valores",
-    ]);
-    const inscricoes = workbook.getWorksheet("Inscrições")!;
-    const marcacoes = workbook.getWorksheet("Marcações")!;
-    expect(inscricoes.rowCount).toBe(3);
-    expect(marcacoes.rowCount).toBe(2);
-    expect(inscricoes.views[0]).toMatchObject({ state: "frozen", ySplit: 1 });
-    expect(inscricoes.getTable("TabelaInscricoes")).toBeDefined();
-    expect(inscricoes.getCell("D2").numFmt).toBe("dd/mm/yyyy");
-    expect(inscricoes.getCell("D2").value).toBeInstanceOf(Date);
-    expect(inscricoes.getCell("AR2").numFmt).toBe('#,##0.00 "€"');
-    expect(inscricoes.getCell("AR2").value).toBe(90);
-    expect(marcacoes.getCell("L2").value).toBe("Footcamp Verão 2026");
+  it("ordena alfabeticamente sem juntar atletas com o mesmo nome", () => {
+    const rows = [record({ id: "z", nome: "Zé" }), record({ id: "a", nome: "Ana" }), record({ id: "b", nome: "Ana" })];
+    expect(selectAthletes(rows).map(r => r.id)).toEqual(["a", "b", "z"]);
   });
 
-  it("usa fórmulas para os totais e mantém os resultados de pagamento coerentes", async () => {
-    const blob = await buildMarcacoesExcel([
-      record(),
-      record({ id: "inscricao-2", estado: "confirmado", confirmado: true, valor_total: 81 }),
-      record({ id: "inscricao-3", estado: "cancelado", valor_total: 72 }),
-    ]);
+  it("exporta os dez dados guardados sem recalcular preços ou descontos", async () => {
+    const blob = await buildMarcacoesExcel([record({ confirmado: true, desconto_irmaos: true, valor_total: 81,
+      autorizacao_imagem: true, restricao_alimentar: true, restricao_alimentar_desc: "Lactose" })]);
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.load(await blobBuffer(blob));
-    const resumo = workbook.getWorksheet("Resumo Geral")!;
-    const indicators = new Map<string, number>();
-    resumo.eachRow((row, index) => {
-      if (index === 1) return;
-      const value = row.getCell(2).value;
-      const isFormula = value && typeof value === "object" && ("formula" in value || "sharedFormula" in value);
-      const result = value && typeof value === "object" && "result" in value ? value.result : isFormula ? 0 : value;
-      indicators.set(String(row.getCell(1).value), Number(result));
-    });
-    expect(indicators.get("Total de inscrições")).toBe(3);
-    expect(indicators.get("Total de marcações")).toBe(0);
-    expect(indicators.get("Inscrições pendentes")).toBe(1);
-    expect(indicators.get("Inscrições confirmadas")).toBe(1);
-    expect(indicators.get("Inscrições canceladas")).toBe(1);
-    expect(resumo.getCell("B2").value).toMatchObject({ formula: expect.stringContaining("COUNTA"), result: 3 });
-
-    const financial = workbook.getWorksheet("Pagamentos e Valores")!;
-    expect(financial.getCell("R2").value).toMatchObject({ formula: expect.stringContaining("IF") });
-    expect(financial.getCell("S2").value).toMatchObject({ result: 90 });
-    expect(financial.getCell("R3").value).toMatchObject({ result: 81 });
-    expect(financial.getCell("S3").value).toMatchObject({ formula: expect.stringContaining("Q3-R3") });
+    expect(workbook.worksheets.map(s => s.name)).toEqual(["Atletas"]);
+    const sheet = workbook.getWorksheet("Atletas");
+    if (!sheet) throw new Error("Folha Atletas ausente");
+    expect(sheet.getRow(2).values).toEqual([undefined, "Atleta Teste", "10", "Sim", "Encarregado Teste", "912345678", 81, "Sim", "Sim", "Lactose", "T-shirt: 10/12 · Calções: 10/12"]);
+    expect(sheet.getCell("F2").numFmt).toBe('#,##0.00 "€"');
   });
 
-  it("cria folhas válidas mesmo sem marcações fora do Footcamp", async () => {
-    const blob = await buildMarcacoesExcel([record()]);
+  it("usa Não para pagamento ou imagem não confirmados, e Nenhuma sem restrições", async () => {
+    const blob = await buildMarcacoesExcel([record({ tamanho_tshirt: null, tamanho_calcas: null } as Partial<MarcacaoExportRow>)]);
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.load(await blobBuffer(blob));
-    const sheet = workbook.getWorksheet("Marcações")!;
+    const sheet = workbook.getWorksheet("Atletas");
+    if (!sheet) throw new Error("Folha Atletas ausente");
+    expect(sheet.getCell("C2").value).toBe("Não");
+    expect(sheet.getCell("H2").value).toBe("Não");
+    expect(sheet.getCell("I2").value).toBe("Nenhuma");
+    expect(sheet.getCell("J2").value ?? "").toBe("");
+  });
+
+  it("preserva um valor desconhecido e sinaliza restrições sem descrição", async () => {
+    const blob = await buildMarcacoesExcel([record({ valor_total: null, restricao_alimentar: true })]);
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(await blobBuffer(blob));
+    const sheet = workbook.getWorksheet("Atletas");
+    if (!sheet) throw new Error("Folha Atletas ausente");
+    expect(sheet.getCell("F2").value).toBeNull();
+    expect(sheet.getCell("I2").value).toBe("Restrição registada sem descrição");
+  });
+
+  it("permite exportar uma edição vazia", async () => {
+    const blob = await buildMarcacoesExcel([record()], "verao-2026");
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(await blobBuffer(blob));
+    const sheet = workbook.getWorksheet("Atletas");
+    if (!sheet) throw new Error("Folha Atletas ausente");
     expect(sheet.rowCount).toBe(1);
-    expect(sheet.autoFilter).toBe("A1:AR1");
-    expect(sheet.getCell("A1").value).toBe("ID");
+    expect(sheet.getTable("TabelaAtletas")).toBeDefined();
   });
 });

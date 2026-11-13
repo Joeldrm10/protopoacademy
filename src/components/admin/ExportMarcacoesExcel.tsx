@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Download, FileSpreadsheet, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { buildMarcacoesExcel, exportExcelFilename } from "@/lib/marcacoesExcel";
+import { buildMarcacoesExcel, exportExcelFilename, selectAthletes, type ExportEdition } from "@/lib/marcacoesExcel";
+import { AUTUMN_EDITION, SUMMER_EDITION } from "@/lib/footcampEdition";
 import { deliverFile, downloadBlob } from "@/lib/downloadFile";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -39,6 +41,7 @@ const ExportMarcacoesExcel = () => {
   const [checkingRole, setCheckingRole] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [prepared, setPrepared] = useState<PreparedFile | null>(null);
+  const [edition, setEdition] = useState<ExportEdition>("todos");
 
   useEffect(() => {
     let active = true;
@@ -75,15 +78,15 @@ const ExportMarcacoesExcel = () => {
       }
 
       const records = await fetchEveryMarcacao();
-      const blob = await buildMarcacoesExcel(records);
-      const file = { blob, filename: exportExcelFilename() };
+      const blob = await buildMarcacoesExcel(records, edition);
+      const file = { blob, filename: exportExcelFilename(new Date(), edition) };
 
       if (matchMedia("(pointer: coarse)").matches) {
         setPrepared(file);
         toast.success("Excel preparado. Carrega em «Descarregar Excel» para o guardar ou partilhar.");
       } else {
         downloadBlob(file.blob, file.filename);
-        toast.success(`${records.length} registos exportados para Excel.`);
+        toast.success(`${selectAthletes(records, edition).length} inscrições exportadas para Excel.`);
       }
     } catch (error) {
       console.error("Erro ao exportar marcações:", error);
@@ -110,20 +113,31 @@ const ExportMarcacoesExcel = () => {
           <FileSpreadsheet className="w-5 h-5 text-primary" />
         </div>
         <div>
-          <h2 className="font-heading text-sm uppercase tracking-wider text-foreground">Exportação completa</h2>
-          <p className="text-xs text-muted-foreground mt-1">
-            Todas as edições e todos os registos, sem aplicar os filtros apresentados no ecrã.
-          </p>
+          <h2 className="font-heading text-sm uppercase tracking-wider text-foreground">Exportação de atletas</h2>
         </div>
       </div>
+      <Select value={edition} disabled={exporting} onValueChange={(value) => {
+        if (value !== "todos" && value !== SUMMER_EDITION && value !== AUTUMN_EDITION) return;
+        setEdition(value);
+        setPrepared(null);
+      }}>
+        <SelectTrigger className="w-full sm:w-[200px] shrink-0" aria-label="Edição para exportar">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value={SUMMER_EDITION}>Verão 2026</SelectItem>
+          <SelectItem value={AUTUMN_EDITION}>Outono 2026</SelectItem>
+          <SelectItem value="todos">Todas as edições</SelectItem>
+        </SelectContent>
+      </Select>
       <Button
         type="button"
         onClick={handleClick}
         disabled={exporting}
-        className="w-full sm:w-auto font-heading tracking-wider"
+        className="w-full sm:w-auto h-auto min-h-10 whitespace-normal font-heading tracking-wider"
       >
         {exporting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Download className="w-4 h-4 mr-2" />}
-        {exporting ? "A PREPARAR EXCEL..." : prepared ? "DESCARREGAR EXCEL" : "EXPORTAR TUDO PARA EXCEL"}
+        {exporting ? "A PREPARAR EXCEL..." : prepared ? "DESCARREGAR EXCEL" : "Exportar Atletas para Excel"}
       </Button>
     </div>
   );

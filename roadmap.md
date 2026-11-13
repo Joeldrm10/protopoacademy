@@ -1,3 +1,7 @@
+# Simplificação da exportação Excel
+- [x] Exportar uma folha Atletas com dez colunas, ordem alfabética e escolha de edição.
+- [x] Verificados downloads desktop/mobile e 113 inscrições reais (91 verão, 22 outono), dez campos coincidentes, acesso só autenticado, sem gravações; 36 testes passaram e LibreOffice abriu o XLSX. Microsoft Excel não disponível para teste direto.
+
 # Exportação Excel para Admin
 - [x] Adicionar exportação completa, exclusiva a administradores, com quatro folhas e todos os registos reais.
 - [x] Testar conteúdo, formatação, ausência de duplicados e abertura do ficheiro em desktop/mobile sem alterar dados: 35 testes, 97 IDs coincidentes, 204 fórmulas sem erros e impressão digital da base preservada.
