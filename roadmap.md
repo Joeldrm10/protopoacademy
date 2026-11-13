@@ -1,6 +1,6 @@
 # Correção dos filtros de exportação
-- [ ] Selecionar Outono por defeito, filtrar a leitura pelo identificador da edição, sinalizar legados e corrigir nomes dos ficheiros.
-- [ ] Verificar downloads reais de Outono, Verão e todas as edições; comparar valores e pagamentos sem alterar dados.
+- [x] Selecionar Outono por defeito, filtrar a leitura pelo identificador da edição, sinalizar legados e corrigir nomes dos ficheiros.
+- [x] Downloads reais verificados: 22 Outono, 91 Verão (legados sem edição), 113 todas; dez colunas e nomes coincidem, sem gravações, acesso reservado, oito testes passaram.
 
 # Simplificação da exportação Excel
 - [x] Exportar uma folha Atletas com dez colunas, ordem alfabética e escolha de edição.
