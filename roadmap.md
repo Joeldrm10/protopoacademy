@@ -1,3 +1,7 @@
+# Correção dos filtros de exportação
+- [ ] Selecionar Outono por defeito, filtrar a leitura pelo identificador da edição, sinalizar legados e corrigir nomes dos ficheiros.
+- [ ] Verificar downloads reais de Outono, Verão e todas as edições; comparar valores e pagamentos sem alterar dados.
+
 # Simplificação da exportação Excel
 - [x] Exportar uma folha Atletas com dez colunas, ordem alfabética e escolha de edição.
 - [x] Verificados downloads desktop/mobile e 113 inscrições reais (91 verão, 22 outono), dez campos coincidentes, acesso só autenticado, sem gravações; 36 testes passaram e LibreOffice abriu o XLSX. Microsoft Excel não disponível para teste direto.
