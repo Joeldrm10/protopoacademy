@@ -5,21 +5,25 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { buildMarcacoesExcel, exportExcelFilename, selectAthletes, type ExportEdition } from "@/lib/marcacoesExcel";
+import { buildMarcacoesExcel, DEFAULT_EXPORT_EDITION, exportExcelFilename, selectAthletes, type ExportEdition } from "@/lib/marcacoesExcel";
 import { AUTUMN_EDITION, SUMMER_EDITION } from "@/lib/footcampEdition";
 import { deliverFile, downloadBlob } from "@/lib/downloadFile";
 import type { Tables } from "@/integrations/supabase/types";
 
 const PAGE_SIZE = 1000;
 
-async function fetchEveryMarcacao() {
+async function fetchEveryMarcacao(edition: ExportEdition) {
   const records = new Map<string, Tables<"marcacoes">>();
   let from = 0;
 
   while (true) {
-    const { data, error } = await supabase
+    let query = supabase
       .from("marcacoes")
       .select("*")
+      .eq("tipo", "footcamp");
+    if (edition === AUTUMN_EDITION) query = query.eq("edicao", AUTUMN_EDITION);
+    if (edition === SUMMER_EDITION) query = query.or(`edicao.eq.${SUMMER_EDITION},edicao.is.null`);
+    const { data, error } = await query
       .order("created_at", { ascending: false })
       .order("id", { ascending: false })
       .range(from, from + PAGE_SIZE - 1);
@@ -41,7 +45,8 @@ const ExportMarcacoesExcel = () => {
   const [checkingRole, setCheckingRole] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [prepared, setPrepared] = useState<PreparedFile | null>(null);
-  const [edition, setEdition] = useState<ExportEdition>("todos");
+  const [edition, setEdition] = useState<ExportEdition>(DEFAULT_EXPORT_EDITION);
+  const [unidentifiedCount, setUnidentifiedCount] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -57,6 +62,11 @@ const ExportMarcacoesExcel = () => {
       if (active) {
         setIsAdmin(!error && data === true);
         setCheckingRole(false);
+      }
+      if (!error && data === true) {
+        const { count } = await supabase.from("marcacoes")
+          .select("id", { count: "exact", head: true }).eq("tipo", "footcamp").is("edicao", null);
+        if (active) setUnidentifiedCount(count ?? 0);
       }
     };
     void checkRole();
@@ -77,9 +87,9 @@ const ExportMarcacoesExcel = () => {
         throw new Error("A exportação está reservada a administradores.");
       }
 
-      const records = await fetchEveryMarcacao();
+      const records = await fetchEveryMarcacao(edition);
       const blob = await buildMarcacoesExcel(records, edition);
-      const file = { blob, filename: exportExcelFilename(new Date(), edition) };
+      const file = { blob, filename: exportExcelFilename(edition) };
 
       if (matchMedia("(pointer: coarse)").matches) {
         setPrepared(file);
@@ -114,6 +124,12 @@ const ExportMarcacoesExcel = () => {
         </div>
         <div>
           <h2 className="font-heading text-sm uppercase tracking-wider text-foreground">Exportação de atletas</h2>
+          {unidentifiedCount > 0 && (
+            <p className="text-xs text-muted-foreground mt-2">
+              {unidentifiedCount} inscrições antigas sem edição identificada: verificar no Admin.
+              {" "}Mantidas no histórico do Verão; excluídas do Outono.
+            </p>
+          )}
         </div>
       </div>
       <Select value={edition} disabled={exporting} onValueChange={(value) => {
@@ -121,12 +137,12 @@ const ExportMarcacoesExcel = () => {
         setEdition(value);
         setPrepared(null);
       }}>
-        <SelectTrigger className="w-full sm:w-[200px] shrink-0" aria-label="Edição para exportar">
+        <SelectTrigger className="w-full sm:w-[230px] shrink-0" aria-label="Edição para exportar">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={SUMMER_EDITION}>Verão 2026</SelectItem>
-          <SelectItem value={AUTUMN_EDITION}>Outono 2026</SelectItem>
+          <SelectItem value={SUMMER_EDITION}>Footcamp Verão 2026</SelectItem>
+          <SelectItem value={AUTUMN_EDITION}>Footcamp Outono 2026</SelectItem>
           <SelectItem value="todos">Todas as edições</SelectItem>
         </SelectContent>
       </Select>
